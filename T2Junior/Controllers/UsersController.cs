@@ -26,10 +26,10 @@ namespace T2Junior.Controllers
             {
                 IdUser = user.IdUser,
                 RoleName = user.IdRoleNavigation.Name, // Получаем название роли
+                OrganizationName = user.IdOrganizationNavigation.Name,
                 FirstName = user.FirstName,
                 LastName = user.LastName,
                 Patronymic = user.Patronymic,
-               // Organization = user.Organization,
                 Post = user.Post,
                 Age = user.Age,
                 Sex = user.Sex,
@@ -51,7 +51,7 @@ namespace T2Junior.Controllers
         {
             try
             {
-                var users = _context.Users.Include(u => u.IdRoleNavigation).ToList();
+                var users = _context.Users.Include(u => u.IdRoleNavigation).Include(u => u.IdOrganizationNavigation).ToList();
                 var userDtos = users.Select(user => ConvertToDTO(user)).ToList();
                 return Ok(userDtos);
             }
