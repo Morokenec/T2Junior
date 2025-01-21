@@ -23,18 +23,16 @@
              />
 
             <Button
-             x:Name="CounterBtn"
+             x:Name="CounterBtn1"
              Text="Войти" 
              SemanticProperties.Hint="Counts the number of times you click"
-             Clicked="OnCounterClicked"
              HorizontalOptions="Fill"
              />
 
             <Button
-             x:Name="CounterBtn"
+             x:Name="CounterBtn2"
              Text="Регистрация" 
              SemanticProperties.Hint="Counts the number of times you click"
-             Clicked="OnCounterClicked"
              HorizontalOptions="Fill"
              BackgroundColor="#4495D1"
              />
