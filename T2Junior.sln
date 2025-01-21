@@ -5,6 +5,8 @@ VisualStudioVersion = 17.12.35707.178 d17.12
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "T2Junior", "T2Junior\T2Junior.csproj", "{0C952EBD-9793-4C1D-82E4-F9812F6AD4BF}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "T2JuniorMobile", "T2JuniorMobile\T2JuniorMobile.csproj", "{9FC8574C-564D-47AC-A438-5770BFCCE0AD}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +17,12 @@ Global
 		{0C952EBD-9793-4C1D-82E4-F9812F6AD4BF}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0C952EBD-9793-4C1D-82E4-F9812F6AD4BF}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0C952EBD-9793-4C1D-82E4-F9812F6AD4BF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9FC8574C-564D-47AC-A438-5770BFCCE0AD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9FC8574C-564D-47AC-A438-5770BFCCE0AD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9FC8574C-564D-47AC-A438-5770BFCCE0AD}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
+		{9FC8574C-564D-47AC-A438-5770BFCCE0AD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9FC8574C-564D-47AC-A438-5770BFCCE0AD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9FC8574C-564D-47AC-A438-5770BFCCE0AD}.Release|Any CPU.Deploy.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
