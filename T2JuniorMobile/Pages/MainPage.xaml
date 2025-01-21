@@ -8,20 +8,20 @@
          Padding="30,0"
          Spacing="25">
             <Image
-             Source="logo.jpg"
+             Source="logo.png"
              HeightRequest="300"
              Aspect="AspectFit"
              SemanticProperties.Description="dot net bot in a race car number eight" />
 
 
             <Frame CornerRadius="90" 
-               Padding="0 0 0 10" 
+                Padding="0 0 0 10"
                HasShadow="False">
                 <Entry Placeholder="Логин" />
             </Frame>
 
             <Frame CornerRadius="90" 
-               Padding="0 0 0 10" 
+                Padding="0 0 0 10"
                HasShadow="False">
                 <Entry Placeholder="Пароль" />
             </Frame>
