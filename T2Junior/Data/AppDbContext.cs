@@ -6,13 +6,13 @@ using T2Junior.Models;
 
 namespace T2Junior.Data;
 
-public partial class AppContext : DbContext
+public partial class AppDbContext : DbContext
 {
-    public AppContext()
+    public AppDbContext()
     {
     }
 
-    public AppContext(DbContextOptions<AppContext> options)
+    public AppDbContext(DbContextOptions<AppDbContext> options)
         : base(options)
     {
     }
@@ -295,9 +295,16 @@ public partial class AppContext : DbContext
 
             entity.HasIndex(e => e.IdRole, "FK_URoles_Users_idx");
 
+            entity.HasIndex(e => e.Email, "email_UNIQUE").IsUnique();
+
+            entity.HasIndex(e => e.Phone, "phone_UNIQUE").IsUnique();
+
             entity.Property(e => e.IdUser).HasColumnName("id_user");
             entity.Property(e => e.AccumulatedPoints).HasColumnName("accumulated_points");
             entity.Property(e => e.Age).HasColumnName("age");
+            entity.Property(e => e.Email)
+                .HasMaxLength(100)
+                .HasColumnName("email");
             entity.Property(e => e.FirstName)
                 .HasMaxLength(45)
                 .HasColumnName("first_name")
@@ -314,11 +321,19 @@ public partial class AppContext : DbContext
                 .HasColumnName("organization")
                 .UseCollation("utf8mb3_general_ci")
                 .HasCharSet("utf8mb3");
+            entity.Property(e => e.Password)
+                .HasMaxLength(255)
+                .HasColumnName("password")
+                .UseCollation("utf8mb3_general_ci")
+                .HasCharSet("utf8mb3");
             entity.Property(e => e.Patronymic)
                 .HasMaxLength(45)
                 .HasColumnName("patronymic")
                 .UseCollation("utf8mb3_general_ci")
                 .HasCharSet("utf8mb3");
+            entity.Property(e => e.Phone)
+                .HasMaxLength(12)
+                .HasColumnName("phone");
             entity.Property(e => e.Post)
                 .HasMaxLength(45)
                 .HasColumnName("post")

@@ -14,28 +14,42 @@
              SemanticProperties.Description="dot net bot in a race car number eight" />
 
 
-            <Entry
-             Placeholder="Логин"
-             />
+            <Frame CornerRadius="90" 
+               Padding="0 0 0 10" 
+               HasShadow="False">
+                <Entry Placeholder="Логин" />
+            </Frame>
 
-            <Entry
-             Placeholder="Пароль"
-             />
+            <Frame CornerRadius="90" 
+               Padding="0 0 0 10" 
+               HasShadow="False">
+                <Entry Placeholder="Пароль" />
+            </Frame>
 
-            <Button
-             x:Name="CounterBtn1"
-             Text="Войти" 
-             SemanticProperties.Hint="Counts the number of times you click"
-             HorizontalOptions="Fill"
-             />
 
-            <Button
+            <Frame CornerRadius="90" 
+               Padding="0" 
+               HasShadow="False">
+                <Button
+                 x:Name="CounterBtn1"
+                 Text="Войти" 
+                 SemanticProperties.Hint="Counts the number of times you click"
+                 HorizontalOptions="Fill"/>
+            </Frame>
+
+            <Frame CornerRadius="90" 
+             Padding="0" 
+             HasShadow="False">
+                <Button
              x:Name="CounterBtn2"
              Text="Регистрация" 
              SemanticProperties.Hint="Counts the number of times you click"
              HorizontalOptions="Fill"
              BackgroundColor="#4495D1"
              />
+            </Frame>
+
+
         </VerticalStackLayout>
     </ScrollView>
 
