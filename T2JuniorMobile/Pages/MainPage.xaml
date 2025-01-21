@@ -19,7 +19,7 @@
              />
 
             <Entry
-             Placeholder="Пароль"
+             Placeholder="пароль"
              />
 
             <Button

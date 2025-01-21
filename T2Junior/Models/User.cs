@@ -25,6 +25,12 @@ public partial class User
 
     public int AccumulatedPoints { get; set; }
 
+    public string Email { get; set; } = null!;
+
+    public string Phone { get; set; } = null!;
+
+    public string Password { get; set; } = null!;
+
     public virtual ICollection<ClubUser> ClubUsers { get; set; } = new List<ClubUser>();
 
     public virtual ICollection<Comment> Comments { get; set; } = new List<Comment>();
