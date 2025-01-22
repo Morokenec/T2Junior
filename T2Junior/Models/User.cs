@@ -31,6 +31,8 @@ public partial class User
 
     public string Password { get; set; } = null!;
 
+    public sbyte IsActive { get; set; }
+
     public virtual ICollection<ClubUser> ClubUsers { get; set; } = new List<ClubUser>();
 
     public virtual ICollection<Comment> Comments { get; set; } = new List<Comment>();

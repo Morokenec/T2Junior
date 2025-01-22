@@ -358,6 +358,9 @@ public partial class AppDbContext : DbContext
             entity.Property(e => e.Sex)
                 .HasDefaultValueSql("'1'")
                 .HasColumnName("sex");
+            entity.Property(e => e.IsActive)
+                .HasDefaultValueSql("'0'")
+                .HasColumnName("is_active");
 
             entity.HasOne(d => d.IdOrganizationNavigation).WithMany(p => p.Users)
                 .HasForeignKey(d => d.IdOrganization)
