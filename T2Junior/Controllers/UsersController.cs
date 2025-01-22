@@ -20,6 +20,7 @@ namespace T2Junior.Controllers
         {
             _context = context;
         }
+
         private UserProfileDTO ConvertToDTO(User user)
         {
             return new UserProfileDTO
@@ -45,15 +46,42 @@ namespace T2Junior.Controllers
             return await _context.Users.ToListAsync();
         }
         
-        // GET: api/Users/dto
-        [HttpGet("dto")]
-        public ActionResult<ActionResult<IEnumerable<UserProfileDTO>>> GetUsersDTO()
+        // GET: api/Users/profiles
+        [HttpGet("profiles")]
+        public ActionResult<ActionResult<IEnumerable<UserProfileDTO>>> GetUsersProfiles()
         {
             try
             {
                 var users = _context.Users.Include(u => u.IdRoleNavigation).Include(u => u.IdOrganizationNavigation).ToList();
                 var userDtos = users.Select(user => ConvertToDTO(user)).ToList();
                 return Ok(userDtos);
+            }
+            catch (Exception ex)
+            {
+                // Логируем ошибку
+                Console.WriteLine(ex.Message);
+                return StatusCode(500, "Internal server error");
+            }
+        }
+
+        // GET: api/Users/profiles/5
+        [HttpGet("profiles/{id}")]
+        public ActionResult<UserProfileDTO> GetUserProfileById(int id)
+        {
+            try
+            {
+                // Находим пользователя по ID
+                var user = _context.Users.Include(u => u.IdRoleNavigation).Include(u => u.IdOrganizationNavigation).FirstOrDefault(u => u.IdUser == id);
+
+                // Если пользователь не найден, возвращаем 404 Not Found
+                if (user == null)
+                {
+                    return NotFound();
+                }
+
+                // Преобразуем пользователя в DTO
+                var userDto = ConvertToDTO(user);
+                return Ok(userDto);
             }
             catch (Exception ex)
             {
