@@ -6,13 +6,13 @@ using T2Junior.Models;
 
 namespace T2Junior.Data;
 
-public partial class AppContext : DbContext
+public partial class AppDbContext : DbContext
 {
-    public AppContext()
+    public AppDbContext()
     {
     }
 
-    public AppContext(DbContextOptions<AppContext> options)
+    public AppDbContext(DbContextOptions<AppDbContext> options)
         : base(options)
     {
     }
@@ -32,6 +32,8 @@ public partial class AppContext : DbContext
     public virtual DbSet<Note> Notes { get; set; }
 
     public virtual DbSet<NoteStatus> NoteStatuses { get; set; }
+
+    public virtual DbSet<Organization> Organizations { get; set; }
 
     public virtual DbSet<User> Users { get; set; }
 
@@ -287,31 +289,57 @@ public partial class AppContext : DbContext
                 .HasCharSet("utf8mb3");
         });
 
+        modelBuilder.Entity<Organization>(entity =>
+        {
+            entity.HasKey(e => e.IdOrganization).HasName("PRIMARY");
+
+            entity.ToTable("organizations");
+
+            entity.HasIndex(e => e.Name, "name_UNIQUE").IsUnique();
+
+            entity.Property(e => e.IdOrganization).HasColumnName("id_organization");
+            entity.Property(e => e.Name)
+                .HasMaxLength(200)
+                .HasColumnName("name")
+                .UseCollation("utf8mb3_general_ci")
+                .HasCharSet("utf8mb3");
+        });
+
         modelBuilder.Entity<User>(entity =>
         {
             entity.HasKey(e => e.IdUser).HasName("PRIMARY");
 
             entity.ToTable("users");
 
+            entity.HasIndex(e => e.IdOrganization, "FK_Organizations_Users_idx");
+
             entity.HasIndex(e => e.IdRole, "FK_URoles_Users_idx");
+
+            entity.HasIndex(e => e.Email, "email_UNIQUE").IsUnique();
+
+            entity.HasIndex(e => e.Phone, "phone_UNIQUE").IsUnique();
 
             entity.Property(e => e.IdUser).HasColumnName("id_user");
             entity.Property(e => e.AccumulatedPoints).HasColumnName("accumulated_points");
             entity.Property(e => e.Age).HasColumnName("age");
+            entity.Property(e => e.Email)
+                .HasMaxLength(100)
+                .HasColumnName("email");
             entity.Property(e => e.FirstName)
                 .HasMaxLength(45)
                 .HasColumnName("first_name")
                 .UseCollation("utf8mb3_general_ci")
                 .HasCharSet("utf8mb3");
+            entity.Property(e => e.IdOrganization).HasColumnName("id_organization");
             entity.Property(e => e.IdRole).HasColumnName("id_role");
             entity.Property(e => e.LastName)
                 .HasMaxLength(45)
                 .HasColumnName("last_name")
                 .UseCollation("utf8mb3_general_ci")
                 .HasCharSet("utf8mb3");
-            entity.Property(e => e.Organization)
-                .HasMaxLength(45)
-                .HasColumnName("organization")
+            entity.Property(e => e.Password)
+                .HasMaxLength(255)
+                .HasColumnName("password")
                 .UseCollation("utf8mb3_general_ci")
                 .HasCharSet("utf8mb3");
             entity.Property(e => e.Patronymic)
@@ -319,6 +347,9 @@ public partial class AppContext : DbContext
                 .HasColumnName("patronymic")
                 .UseCollation("utf8mb3_general_ci")
                 .HasCharSet("utf8mb3");
+            entity.Property(e => e.Phone)
+                .HasMaxLength(12)
+                .HasColumnName("phone");
             entity.Property(e => e.Post)
                 .HasMaxLength(45)
                 .HasColumnName("post")
@@ -327,6 +358,10 @@ public partial class AppContext : DbContext
             entity.Property(e => e.Sex)
                 .HasDefaultValueSql("'1'")
                 .HasColumnName("sex");
+
+            entity.HasOne(d => d.IdOrganizationNavigation).WithMany(p => p.Users)
+                .HasForeignKey(d => d.IdOrganization)
+                .HasConstraintName("FK_Organizations_Users");
 
             entity.HasOne(d => d.IdRoleNavigation).WithMany(p => p.Users)
                 .HasForeignKey(d => d.IdRole)
