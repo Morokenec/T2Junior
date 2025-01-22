@@ -6,13 +6,13 @@
 
         public string RoleName { get; set; } = null!;
 
+        public string OrganizationName { get; set; } = null!;
+
         public string FirstName { get; set; } = null!;
 
         public string LastName { get; set; } = null!;
 
         public string? Patronymic { get; set; }
-
-        public string? Organization { get; set; }
 
         public string? Post { get; set; }
 
