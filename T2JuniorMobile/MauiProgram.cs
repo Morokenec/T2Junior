@@ -1,4 +1,5 @@
 ﻿using Microsoft.Extensions.Logging;
+using T2JuniorMobile.Services;
 
 namespace T2JuniorMobile
 {
@@ -14,9 +15,17 @@ namespace T2JuniorMobile
                     fonts.AddFont("OpenSans-Regular.ttf", "OpenSansRegular");
                     fonts.AddFont("OpenSans-Semibold.ttf", "OpenSansSemibold");
                 });
+   
+            builder.Services.AddSingleton<HttpClient>();
+            builder.Services.AddSingleton<AuthService>();
 
+            // Регистрация ViewModel
+            builder.Services.AddTransient<AuthViewModel>();
+
+            // Регистрация страницы
+            builder.Services.AddTransient<MainPage>();
 #if DEBUG
-    		builder.Logging.AddDebug();
+            builder.Logging.AddDebug();
 #endif
 
             return builder.Build();
