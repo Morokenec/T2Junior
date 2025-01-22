@@ -1,9 +1,12 @@
-﻿namespace T2JuniorMobile
+﻿using T2JuniorMobile.View.Pages;
+
+namespace T2JuniorMobile
 {
     public partial class AppShell : Shell
     {
         public AppShell()
         {
+            Routing.RegisterRoute("RegisterPage", typeof(RegisterPage));
             InitializeComponent();
         }
     }

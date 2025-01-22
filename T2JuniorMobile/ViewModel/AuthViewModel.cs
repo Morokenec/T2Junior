@@ -2,6 +2,7 @@
 using System.Windows.Input;
 using Microsoft.Maui.Controls;
 using T2JuniorMobile.Services;
+using T2JuniorMobile.View.Pages;
 
 public class AuthViewModel : BaseViewModel
 {
@@ -14,6 +15,7 @@ public class AuthViewModel : BaseViewModel
     {
         _authService = authService;
         LoginCommand = new Command(async () => await LoginAsync());
+        NavigateRegisterCommand = new Command(async () => await NavigateToRegisterPageAsync());
     }
 
     public string Email
@@ -36,6 +38,8 @@ public class AuthViewModel : BaseViewModel
 
     public ICommand LoginCommand { get; }
 
+    public ICommand NavigateRegisterCommand { get; }
+
     private async Task LoginAsync()
     {
         Token = await _authService.LoginAsync(Email, Password);
@@ -49,5 +53,10 @@ public class AuthViewModel : BaseViewModel
             await Shell.Current.DisplayAlert("Успех", "Авторизация прошла успешно", "OK");
             await SecureStorage.SetAsync("jwt_token", Token);
         }
+    }
+
+    private async Task NavigateToRegisterPageAsync()
+    {
+        await Shell.Current.GoToAsync("/RegisterPage");
     }
 }

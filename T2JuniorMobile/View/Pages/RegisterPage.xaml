@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+              xmlns:components="clr-namespace:T2JuniorMobile.View.Components"
+             x:Class="T2JuniorMobile.View.Pages.RegisterPage"
+             Title="Регистарция в приложение">
+    <ScrollView>
+        <VerticalStackLayout
+         Padding="30,10,30,0"
+         Spacing="25">
+            <components:RegisterEntry Placeholder="ФИО"
+                                      CornerRadius="10"
+                                      BorderColor="Gray"
+                                      ShadowColor="Black"
+                                      Text="{Binding Email}"/>
+            <components:RegisterEntry Placeholder="Номер телефона"
+                                      CornerRadius="10"
+                                      BorderColor="Gray"
+                                      ShadowColor="Black"
+                                      Text="{Binding Email}"/>
+            <components:RegisterEntry Placeholder="Email"
+                                      CornerRadius="10"
+                                      BorderColor="Gray"
+                                      ShadowColor="Black"
+                                      Text="{Binding Email}"/>
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>

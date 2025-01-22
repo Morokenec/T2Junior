@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="T2JuniorMobile.View.Components.RegisterEntry">
+
+    <ContentView.Resources>
+        <Style TargetType="Frame">
+            <Setter Property="CornerRadius" Value="10" />
+            <Setter Property="BorderColor" Value="{Binding BorderColor, Source={x:Reference Name=RegisterEntry}}" />
+            <Setter Property="BackgroundColor" Value="White" />
+            <Setter Property="Padding" Value="10" />
+            <Setter Property="HasShadow" Value="True" />
+        </Style>
+    </ContentView.Resources>
+
+    <Frame x:Name="frame"
+           HeightRequest="50"
+           BorderColor="{Binding BorderColor, Source={x:Reference Name=RegisterEntry}}"
+           CornerRadius="10">
+        <Entry x:Name="entry"
+               ClearButtonVisibility="WhileEditing"
+               BackgroundColor="Transparent"
+               Placeholder="{Binding Placeholder, Source={x:Reference Name=RegisterEntry}}"
+               Text="{Binding Text, Source={x:Reference Name=RegisterEntry}, Mode=TwoWay}"
+               HeightRequest="50"
+               IsEnabled="True"
+               Margin="0,10,10,10">
+        </Entry>
+    </Frame>
+</ContentView>

@@ -1,0 +1,53 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="T2JuniorMobile.View.Pages.AuthPage"
+             xmlns:components="clr-namespace:T2JuniorMobile.View.Components"
+             xmlns:local="clr-namespace:T2JuniorMobile.View.Pages">
+
+    <ScrollView>
+        <VerticalStackLayout
+         Padding="30,0"
+         Spacing="25">
+            <Image
+             Source="logo.png"
+             HeightRequest="300"
+             Aspect="AspectFit"
+             />
+
+            <components:RegisterEntry Placeholder="Email"
+                                  CornerRadius="10"
+                                  BorderColor="Gray"
+                                  ShadowColor="Black"
+                                  Text="{Binding Email}"/>
+
+            <components:RegisterEntry Placeholder="Пароль"
+                               CornerRadius="10"
+                               BorderColor="Gray"
+                               ShadowColor="Black"
+                               Text="{Binding Password}"
+                                />
+
+            <components:RegisterButton
+                ButtonBackgroundColor="#0057a6"
+                TextColor="White"
+                CornerRadius="15"
+                Height="10"
+                Text="Войти"
+                Command="{Binding LoginCommand}"
+                />
+
+            <components:RegisterButton
+                TextColor="#0057a6"
+                ButtonBackgroundColor="White"
+                CornerRadius="15"
+                BorderColor="#0057a6"
+                Height="10"
+                Text="Регистрация"
+                Command="{Binding NavigateRegisterCommand}"
+                />
+
+        </VerticalStackLayout>
+    </ScrollView>
+
+</ContentPage>

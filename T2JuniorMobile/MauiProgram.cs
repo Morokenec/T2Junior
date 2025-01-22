@@ -1,5 +1,6 @@
 ﻿using Microsoft.Extensions.Logging;
 using T2JuniorMobile.Services;
+using T2JuniorMobile.View.Pages;
 
 namespace T2JuniorMobile
 {
@@ -7,6 +8,7 @@ namespace T2JuniorMobile
     {
         public static MauiApp CreateMauiApp()
         {
+
             var builder = MauiApp.CreateBuilder();
             builder
                 .UseMauiApp<App>()
@@ -23,7 +25,8 @@ namespace T2JuniorMobile
             builder.Services.AddTransient<AuthViewModel>();
 
             // Регистрация страницы
-            builder.Services.AddTransient<MainPage>();
+            builder.Services.AddTransient<AuthPage>();
+            builder.Services.AddTransient<RegisterPage>();
 #if DEBUG
             builder.Logging.AddDebug();
 #endif
