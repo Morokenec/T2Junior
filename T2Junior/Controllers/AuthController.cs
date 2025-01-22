@@ -74,7 +74,6 @@ public class AuthController : ControllerBase
             FirstName = model.FirstName,
             LastName = model.LastName,
             Patronymic = model.Patronymic,
-            Organization = model.Organization,
             Post = model.Post,
             Age = model.Age,
             Sex = model.Sex,
