@@ -29,7 +29,7 @@ namespace T2Junior.Controllers
                 FirstName = user.FirstName,
                 LastName = user.LastName,
                 Patronymic = user.Patronymic,
-               // Organization = user.Organization,
+                Organization = null,
                 Post = user.Post,
                 Age = user.Age,
                 Sex = user.Sex,
