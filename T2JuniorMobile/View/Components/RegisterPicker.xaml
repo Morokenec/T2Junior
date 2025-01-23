@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="T2JuniorMobile.View.Components.RegisterPicker">
+    <ContentView.Resources>
+        <Style TargetType="Frame">
+            <Setter Property="CornerRadius" Value="10" />
+            <Setter Property="BorderColor" Value="LightGray" />
+            <Setter Property="BackgroundColor" Value="White" />
+            <Setter Property="Padding" Value="0" />
+            <Setter Property="HasShadow" Value="True" />
+            <Setter Property="HeightRequest" Value="40" />
+        </Style>
+    </ContentView.Resources>
+
+    <Frame x:Name="frame"
+           HeightRequest="50"
+           BorderColor="LightGray"
+           CornerRadius="10">
+        <Grid ColumnDefinitions="*,40">
+            <!-- Picker с привязкой к Title и ItemsSource -->
+            <Picker x:Name="sexPicker" 
+                    Title="{Binding Title}" 
+                    VerticalOptions="Center"
+                    Margin="10,0,0,0"
+                    HeightRequest="70"
+                    ItemsSource="{Binding Items}">
+            </Picker>
+
+            <Image Source="dropdown_icon.svg" 
+                   Grid.Column="1"
+                   VerticalOptions="Center"
+                   HorizontalOptions="Center"
+                   HeightRequest="24"
+                   WidthRequest="24" />
+        </Grid>
+    </Frame>
+</ContentView>

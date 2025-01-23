@@ -67,8 +67,8 @@
 	</ItemGroup>
 
 	<ItemGroup>
-	  <Compile Update="Resources\Styles\RegistrationStyle.xaml.cs">
-	    <DependentUpon>RegistrationStyle.xaml</DependentUpon>
+	  <Compile Update="View\Components\RegisterDatePicker.xaml.cs">
+	    <DependentUpon>RegisterDatePicker.xaml</DependentUpon>
 	  </Compile>
 	  <Compile Update="View\Components\RegisterEntry.xaml.cs">
 	    <DependentUpon>RegisterEntry.xaml</DependentUpon>
@@ -79,13 +79,16 @@
 	</ItemGroup>
 
 	<ItemGroup>
-	  <MauiXaml Update="Resources\Styles\RegistrationStyle.xaml">
+	  <MauiXaml Update="View\Components\RegisterDatePicker.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	  <MauiXaml Update="View\Components\RegisterButton.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	  <MauiXaml Update="View\Components\RegisterEntry.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="View\Components\RegisterPicker.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	  <MauiXaml Update="View\Pages\RegisterPage.xaml">

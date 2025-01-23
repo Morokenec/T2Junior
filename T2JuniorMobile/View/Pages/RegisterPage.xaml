@@ -1,28 +1,43 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-              xmlns:components="clr-namespace:T2JuniorMobile.View.Components"
+             xmlns:components="clr-namespace:T2JuniorMobile.View.Components"
              x:Class="T2JuniorMobile.View.Pages.RegisterPage"
-             Title="Регистарция в приложение">
+             Title="Регистрация в приложение"
+             Shell.TitleColor="#0057a6"
+             >
+  
     <ScrollView>
         <VerticalStackLayout
          Padding="30,10,30,0"
          Spacing="25">
+
             <components:RegisterEntry Placeholder="ФИО"
-                                      CornerRadius="10"
-                                      BorderColor="Gray"
-                                      ShadowColor="Black"
                                       Text="{Binding Email}"/>
             <components:RegisterEntry Placeholder="Номер телефона"
-                                      CornerRadius="10"
-                                      BorderColor="Gray"
-                                      ShadowColor="Black"
                                       Text="{Binding Email}"/>
             <components:RegisterEntry Placeholder="Email"
-                                      CornerRadius="10"
-                                      BorderColor="Gray"
-                                      ShadowColor="Black"
                                       Text="{Binding Email}"/>
+            
+            <components:RegisterDatePicker />
+
+            <components:RegisterPicker 
+            Items="{Binding GenderOptions}" 
+            Title="Выберите пол" />
+
+            <components:RegisterPicker 
+            Items="{Binding OrganizationOptions}" 
+            Title="Организации" />
+
+            <components:RegisterButton        
+                ButtonBackgroundColor="#0057a6"
+                TextColor="White"
+                CornerRadius="10"
+                Height="10"
+                Text="Создать аккаунт"
+                Command="{Binding NavigateRegisterCommand}"
+                />
+
         </VerticalStackLayout>
     </ScrollView>
 </ContentPage>

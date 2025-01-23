@@ -6,8 +6,7 @@
     <Frame x:Name="frame"
            CornerRadius="{Binding CornerRadius, Source={x:Reference .}}"
            Padding="0"
-           HasShadow="False"
-           BackgroundColor="{Binding FrameBackgroundColor, Source={x:Reference .}}">
+           BackgroundColor="Transparent">
         <Grid>
             <BoxView x:Name="borderBoxView"
                      Color="{Binding BorderColor, Source={x:Reference .}}"
