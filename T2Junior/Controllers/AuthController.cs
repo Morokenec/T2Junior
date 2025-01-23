@@ -75,7 +75,7 @@ public partial class AuthController : ControllerBase
             LastName = model.LastName,
             Patronymic = model.Patronymic,
             Post = model.Post,
-            Age = model.Age,
+            Birthday = model.Birthday,
             Sex = model.Sex,
             Email = model.Email,
             Phone = model.Phone,
@@ -88,5 +88,25 @@ public partial class AuthController : ControllerBase
         await _context.SaveChangesAsync();
 
         return Ok(new { message = "Пользователь успешно зарегистрирован" });
+    }
+
+    public class RegisterModel
+    {
+        public string FirstName { get; set; } = null!;
+        public string LastName { get; set; } = null!;
+        public string? Patronymic { get; set; }
+        public string? Organization { get; set; }
+        public string? Post { get; set; }
+        public DateTime? Birthday { get; set; }
+        public sbyte Sex { get; set; }
+        public string Email { get; set; } = null!;
+        public string Phone { get; set; } = null!;
+        public string Password { get; set; } = null!;
+    }
+
+    public class LoginModel
+    {
+        public string Email { get; set; } = null!;
+        public string Password { get; set; } = null!;
     }
 }
