@@ -8,12 +8,6 @@ namespace T2JuniorMobile.View.Components
         public RegisterButton()
         {
             InitializeComponent();
-            BindingContext = this;
-        }
-
-        private void OnButtonClicked(object sender, EventArgs e)
-        {
-            Command?.Execute(CommandParameter);
         }
 
         public static readonly BindableProperty CornerRadiusProperty =
@@ -50,6 +44,15 @@ namespace T2JuniorMobile.View.Components
         {
             get => (string)GetValue(TextProperty);
             set => SetValue(TextProperty, value);
+        }
+
+        public static readonly BindableProperty BorderColorProperty =
+            BindableProperty.Create(nameof(BorderColor), typeof(Color), typeof(RegisterButton), Colors.Transparent);
+
+        public Color BorderColor
+        {
+            get => (Color)GetValue(BorderColorProperty);
+            set => SetValue(BorderColorProperty, value);
         }
 
         public static readonly BindableProperty CommandProperty =
