@@ -9,17 +9,17 @@ public partial class User
 
     public int IdRole { get; set; }
 
+    public int IdOrganization { get; set; }
+
     public string FirstName { get; set; } = null!;
 
     public string LastName { get; set; } = null!;
 
     public string? Patronymic { get; set; }
 
-    public string? Organization { get; set; }
-
     public string? Post { get; set; }
 
-    public int? Age { get; set; }
+    public DateTime? Birthday { get; set; }
 
     public sbyte Sex { get; set; }
 
@@ -31,9 +31,13 @@ public partial class User
 
     public string Password { get; set; } = null!;
 
+    public sbyte IsActive { get; set; }
+
     public virtual ICollection<ClubUser> ClubUsers { get; set; } = new List<ClubUser>();
 
     public virtual ICollection<Comment> Comments { get; set; } = new List<Comment>();
+
+    public virtual Organization IdOrganizationNavigation { get; set; } = null!;
 
     public virtual UserRole IdRoleNavigation { get; set; } = null!;
 
