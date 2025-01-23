@@ -7,15 +7,10 @@ using static Microsoft.EntityFrameworkCore.DbLoggerCategory.Database;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
-
 builder.Services.AddControllers();
 builder.Services.AddDbContext<AppDbContext>();
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
-
-
 
 builder.Services.AddAuthorization();
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
@@ -23,20 +18,13 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
     {
         options.TokenValidationParameters = new TokenValidationParameters
         {
-            // указывает, будет ли валидироваться издатель при валидации токена
-            ValidateIssuer = true,
-            // строка, представляющая издателя
-            ValidIssuer = AuthOptions.ISSUER,
-            // будет ли валидироваться потребитель токена
-            ValidateAudience = true,
-            // установка потребителя токена
-            ValidAudience = AuthOptions.AUDIENCE,
-            // будет ли валидироваться время существования
-            ValidateLifetime = true,
-            // установка ключа безопасности
-            IssuerSigningKey = AuthOptions.GetSymmetricSecurityKey(),
-            // валидация ключа безопасности
-            ValidateIssuerSigningKey = true,
+            ValidateIssuer = true, // указывает, будет ли валидироваться издатель при валидации токена
+            ValidIssuer = AuthOptions.ISSUER, // строка, представляющая издателя
+            ValidateAudience = true, // будет ли валидироваться потребитель токена
+            ValidAudience = AuthOptions.AUDIENCE, // установка потребителя токена
+            ValidateLifetime = true, // будет ли валидироваться время существования
+            IssuerSigningKey = AuthOptions.GetSymmetricSecurityKey(), // установка ключа безопасности
+            ValidateIssuerSigningKey = true, // валидация ключа безопасности
         };
     });
 
@@ -44,8 +32,6 @@ var app = builder.Build();
 app.UseAuthentication();
 app.UseAuthorization();
 
-
-// Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();

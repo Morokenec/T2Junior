@@ -1,0 +1,56 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="T2JuniorMobile.MainPage">
+
+    <ScrollView>
+        <VerticalStackLayout
+         Padding="30,0"
+         Spacing="25">
+            <Image
+             Source="logo.png"
+             HeightRequest="300"
+             Aspect="AspectFit"
+             SemanticProperties.Description="dot net bot in a race car number eight" />
+
+
+            <Frame CornerRadius="90" 
+                Padding="0 0 0 10"
+               HasShadow="False">
+                <Entry Placeholder="Логин" />
+            </Frame>
+
+            <Frame CornerRadius="90" 
+                Padding="0 0 0 10"
+               HasShadow="False">
+                <Entry Placeholder="Пароль" />
+            </Frame>
+
+
+            <Frame CornerRadius="90" 
+               Padding="0" 
+               HasShadow="False">
+                <Button
+                 x:Name="CounterBtn1"
+                 Text="Войти" 
+                 SemanticProperties.Hint="Counts the number of times you click"
+                 HorizontalOptions="Fill"/>
+            </Frame>
+
+            <Frame CornerRadius="90" 
+             Padding="0" 
+             HasShadow="False">
+                <Button
+             x:Name="CounterBtn2"
+             Text="Регистрация" 
+             SemanticProperties.Hint="Counts the number of times you click"
+             HorizontalOptions="Fill"
+             BackgroundColor="#4495D1"
+             />
+            </Frame>
+
+
+        </VerticalStackLayout>
+    </ScrollView>
+
+</ContentPage>
