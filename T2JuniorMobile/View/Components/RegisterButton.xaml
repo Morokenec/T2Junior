@@ -1,0 +1,30 @@
+<ContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="T2JuniorMobile.View.Components.RegisterButton">
+
+    <Frame x:Name="frame"
+           CornerRadius="{Binding CornerRadius}"
+           BorderColor="Transparent"
+           Padding="0"
+           BackgroundColor="Transparent">
+        <Grid>
+            <BoxView x:Name="borderBoxView"
+                     Color="{Binding BorderColor}"
+                     CornerRadius="{Binding CornerRadius}"
+                     HeightRequest="{Binding BorderWidth}"
+                     WidthRequest="{Binding BorderWidth}"
+                     HorizontalOptions="Fill"
+                     VerticalOptions="Fill" />
+            <Button x:Name="button"
+                Text="{Binding Text}"
+                BackgroundColor="{Binding ButtonBackgroundColor}"
+                TextColor="{Binding TextColor}"
+                HorizontalOptions="Fill"
+                VerticalOptions="Fill"
+                CornerRadius="{Binding CornerRadius}"
+                Command="{Binding Command}"
+                CommandParameter="{Binding CommandParameter}"
+                Clicked="OnButtonClicked" />
+        </Grid>
+    </Frame>
+</ContentView>

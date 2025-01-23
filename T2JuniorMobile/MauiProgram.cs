@@ -1,4 +1,7 @@
 ﻿using Microsoft.Extensions.Logging;
+using Microsoft.Maui.Handlers;
+using T2JuniorMobile.Services;
+using T2JuniorMobile.View.Pages;
 
 namespace T2JuniorMobile
 {
@@ -6,6 +9,8 @@ namespace T2JuniorMobile
     {
         public static MauiApp CreateMauiApp()
         {
+
+
             var builder = MauiApp.CreateBuilder();
             builder
                 .UseMauiApp<App>()
@@ -15,8 +20,17 @@ namespace T2JuniorMobile
                     fonts.AddFont("OpenSans-Semibold.ttf", "OpenSansSemibold");
                 });
 
+            builder.Services.AddSingleton<HttpClient>();
+            builder.Services.AddSingleton<AuthService>();
+
+            // Регистрация ViewModel
+            builder.Services.AddTransient<AuthViewModel>();
+
+            // Регистрация страницы
+            builder.Services.AddTransient<AuthPage>();
+            builder.Services.AddTransient<RegisterPage>();
 #if DEBUG
-    		builder.Logging.AddDebug();
+            builder.Logging.AddDebug();
 #endif
 
             return builder.Build();

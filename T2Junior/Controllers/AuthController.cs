@@ -13,7 +13,7 @@ using T2Junior.Options;
 
 [Route("api/[controller]")]
 [ApiController]
-public class AuthController : ControllerBase
+public partial class AuthController : ControllerBase
 {
     private readonly AppDbContext _context;
 
@@ -74,7 +74,6 @@ public class AuthController : ControllerBase
             FirstName = model.FirstName,
             LastName = model.LastName,
             Patronymic = model.Patronymic,
-            Organization = model.Organization,
             Post = model.Post,
             Age = model.Age,
             Sex = model.Sex,
@@ -89,25 +88,5 @@ public class AuthController : ControllerBase
         await _context.SaveChangesAsync();
 
         return Ok(new { message = "Пользователь успешно зарегистрирован" });
-    }
-
-    public class RegisterModel
-    {
-        public string FirstName { get; set; } = null!;
-        public string LastName { get; set; } = null!;
-        public string? Patronymic { get; set; }
-        public string? Organization { get; set; }
-        public string? Post { get; set; }
-        public int? Age { get; set; }
-        public sbyte Sex { get; set; }
-        public string Email { get; set; } = null!;
-        public string Phone { get; set; } = null!;
-        public string Password { get; set; } = null!;
-    }
-
-    public class LoginModel
-    {
-        public string Email { get; set; } = null!;
-        public string Password { get; set; } = null!;
     }
 }

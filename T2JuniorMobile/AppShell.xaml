@@ -1,25 +1,33 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <Shell
     x:Class="T2JuniorMobile.AppShell"
+    xmlns:components="clr-namespace:T2JuniorMobile.View.Components"
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-    xmlns:local="clr-namespace:T2JuniorMobile"
+    xmlns:local="clr-namespace:T2JuniorMobile.View.Pages"
     Shell.FlyoutBehavior="Disabled"
     Title="T2JuniorMobile">
 
-    <TabBar>
+    <TabBar IsVisible="False">
         <Tab Title="Новости" Icon="newspaper.svg">
-            <ShellContent ContentTemplate="{DataTemplate local:MainPage}" />
+            <ShellContent ContentTemplate="{DataTemplate local:AuthPage}" />
         </Tab>
         <Tab Title="Сообщения" Icon="message_square.svg">
-            <ShellContent ContentTemplate="{DataTemplate local:MainPage}" />
+            <ShellContent ContentTemplate="{DataTemplate local:AuthPage}" />
         </Tab>
         <Tab Title="Клубы" Icon="users.svg">
-            <ShellContent ContentTemplate="{DataTemplate local:MainPage}" />
+            <ShellContent ContentTemplate="{DataTemplate local:AuthPage}" />
         </Tab>
         <Tab Title="Настройки" Icon="settings.svg">
-            <ShellContent ContentTemplate="{DataTemplate local:MainPage}" />
+            <ShellContent ContentTemplate="{DataTemplate local:AuthPage}" />
         </Tab>
     </TabBar>
 
+    <ShellContent
+        ContentTemplate="{DataTemplate local:AuthPage}"
+        Route="MainPage"
+     />
+    
+    <ShellContent Title="Register" ContentTemplate="{DataTemplate local:RegisterPage}" />
+    <ShellContent Title="Confim" ContentTemplate="{DataTemplate local:ConfimPage}" />
 </Shell>
