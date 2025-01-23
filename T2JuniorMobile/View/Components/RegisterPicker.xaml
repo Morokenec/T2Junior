@@ -18,7 +18,6 @@
            BorderColor="LightGray"
            CornerRadius="10">
         <Grid ColumnDefinitions="*,40">
-            <!-- Picker с привязкой к Title и ItemsSource -->
             <Picker x:Name="sexPicker" 
                     Title="{Binding Title}" 
                     VerticalOptions="Center"
