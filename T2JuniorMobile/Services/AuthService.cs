@@ -11,7 +11,7 @@ namespace T2JuniorMobile.Services
     public class AuthService
     {
         private readonly HttpClient _httpClient;
-        private const string AuthEndpoint = "http://localhost:5053/api/Auth/login"; 
+        private const string AuthEndpoint = "http://localhost:5138/api/Account/login"; 
 
         public AuthService(HttpClient httpClient)
         {
@@ -29,7 +29,6 @@ namespace T2JuniorMobile.Services
                 var authResponse = await response.Content.ReadFromJsonAsync<AuthResponse>();
                 return authResponse.Token;
             }
-         
             return null;
         }
     }

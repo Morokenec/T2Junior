@@ -1,0 +1,6 @@
+@T2JuniorAPI_HostAddress = http://localhost:5138
+
+GET {{T2JuniorAPI_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
