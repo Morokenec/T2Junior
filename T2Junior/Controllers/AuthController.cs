@@ -75,7 +75,7 @@ public class AuthController : ControllerBase
             LastName = model.LastName,
             Patronymic = model.Patronymic,
             Post = model.Post,
-            Age = model.Age,
+            Birthday = model.Birthday,
             Sex = model.Sex,
             Email = model.Email,
             Phone = model.Phone,
@@ -97,7 +97,7 @@ public class AuthController : ControllerBase
         public string? Patronymic { get; set; }
         public string? Organization { get; set; }
         public string? Post { get; set; }
-        public int? Age { get; set; }
+        public DateTime? Birthday { get; set; }
         public sbyte Sex { get; set; }
         public string Email { get; set; } = null!;
         public string Phone { get; set; } = null!;

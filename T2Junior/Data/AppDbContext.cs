@@ -321,7 +321,7 @@ public partial class AppDbContext : DbContext
 
             entity.Property(e => e.IdUser).HasColumnName("id_user");
             entity.Property(e => e.AccumulatedPoints).HasColumnName("accumulated_points");
-            entity.Property(e => e.Age).HasColumnName("age");
+            entity.Property(e => e.Birthday).HasColumnName("birthday");
             entity.Property(e => e.Email)
                 .HasMaxLength(100)
                 .HasColumnName("email");

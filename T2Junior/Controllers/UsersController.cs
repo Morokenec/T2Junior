@@ -32,7 +32,7 @@ namespace T2Junior.Controllers
                 LastName = user.LastName,
                 Patronymic = user.Patronymic,
                 Post = user.Post,
-                Age = user.Age,
+                Birthday = user.Birthday,
                 Sex = user.Sex,
                 AccumulatedPoints = user.AccumulatedPoints,
             };
