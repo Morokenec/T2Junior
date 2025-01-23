@@ -9,9 +9,9 @@ namespace T2JuniorMobile.ViewModel
 {
     public partial class RegisterViewModel : BaseViewModel
     {
-        private string _fullName;
-        private string _email;
-        private string _numberPhone;
+        private string? _fullName;
+        private string? _email;
+        private string? _numberPhone;
         private DateTime _date;
 
         public ICommand NavigateConfimCommand { get; }

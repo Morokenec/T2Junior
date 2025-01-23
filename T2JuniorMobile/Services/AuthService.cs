@@ -20,6 +20,7 @@ namespace T2JuniorMobile.Services
 
         public async Task<string> LoginAsync(string email, string password)
         {
+           
             var authRequest = new AuthRequest { Email = email, Password = password };
             var response = await _httpClient.PostAsJsonAsync(AuthEndpoint, authRequest);
 
@@ -28,7 +29,7 @@ namespace T2JuniorMobile.Services
                 var authResponse = await response.Content.ReadFromJsonAsync<AuthResponse>();
                 return authResponse.Token;
             }
-
+         
             return null;
         }
     }

@@ -42,16 +42,23 @@ public class AuthViewModel : BaseViewModel
 
     private async Task LoginAsync()
     {
-        Token = await _authService.LoginAsync(Email, Password);
+        try
+        {
+            Token = await _authService.LoginAsync(Email, Password);
 
-        if (string.IsNullOrEmpty(Token))
-        {
-            await Shell.Current.DisplayAlert("Ошибка", "Неверный email или пароль", "OK");
+            if (string.IsNullOrEmpty(Token))
+            {
+                await Shell.Current.DisplayAlert("Ошибка", "Неверный email или пароль", "OK");
+            }
+            else
+            {
+                await Shell.Current.DisplayAlert("Успех", "Авторизация прошла успешно", "OK");
+                await SecureStorage.SetAsync("jwt_token", Token);
+            }
         }
-        else
+        catch (Exception ex)
         {
-            await Shell.Current.DisplayAlert("Успех", "Авторизация прошла успешно", "OK");
-            await SecureStorage.SetAsync("jwt_token", Token);
+            await Shell.Current.DisplayAlert("Ошибка", "Сервер недоступен", "OK");
         }
     }
 

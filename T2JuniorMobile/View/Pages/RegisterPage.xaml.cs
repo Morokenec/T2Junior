@@ -9,9 +9,8 @@ public partial class RegisterPage : ContentPage
     public ObservableCollection<string> OrganizationOptions { get; set; }
     public RegisterPage()
 	{
-        
-		InitializeComponent();
         BindingContext = new RegisterViewModel();
+        InitializeComponent();
         GenderOptions = new ObservableCollection<string>
             {
                 "Ìóæñêîé",
@@ -25,6 +24,5 @@ public partial class RegisterPage : ContentPage
                 "ÎÎÎ ÀÉ ÁÈ ÊÅÉ",
                 "ÎÎÎ ÏÈ İÌ ÄÈ"
             };
-        BindingContext = this;
     }
 }
