@@ -1,6 +1,5 @@
 using System.Windows.Input;
 using Microsoft.Maui.Controls;
-using static System.Net.Mime.MediaTypeNames;
 
 namespace T2JuniorMobile.View.Components
 {
@@ -9,16 +8,18 @@ namespace T2JuniorMobile.View.Components
         public RegisterButton()
         {
             InitializeComponent();
+            BindingContext = this; 
         }
 
         private void OnButtonClicked(object sender, EventArgs e)
         {
+            // Выполнение команды, если она была передана
             Command?.Execute(CommandParameter);
         }
 
+        // Привязки для свойств кнопки
         public static readonly BindableProperty CornerRadiusProperty =
-            BindableProperty.Create(nameof(CornerRadius), typeof(double), typeof(RegisterButton), 90.0,
-                propertyChanged: OnCornerRadiusChanged);
+            BindableProperty.Create(nameof(CornerRadius), typeof(double), typeof(RegisterButton), 90.0);
 
         public double CornerRadius
         {
@@ -26,33 +27,8 @@ namespace T2JuniorMobile.View.Components
             set => SetValue(CornerRadiusProperty, value);
         }
 
-        private static void OnCornerRadiusChanged(BindableObject bindable, object oldValue, object newValue)
-        {
-            var control = (RegisterButton)bindable;
-            control.frame.CornerRadius = (int)(double)newValue;
-            control.button.CornerRadius = (int)(double)newValue;
-            control.borderBoxView.CornerRadius = new CornerRadius((int)(double)newValue);
-        }
-
-        public static readonly BindableProperty FrameBackgroundColorProperty =
-            BindableProperty.Create(nameof(FrameBackgroundColor), typeof(Color), typeof(RegisterButton), Colors.Transparent,
-                propertyChanged: OnFrameBackgroundColorChanged);
-
-        public Color FrameBackgroundColor
-        {
-            get => (Color)GetValue(FrameBackgroundColorProperty);
-            set => SetValue(FrameBackgroundColorProperty, value);
-        }
-
-        private static void OnFrameBackgroundColorChanged(BindableObject bindable, object oldValue, object newValue)
-        {
-            var control = (RegisterButton)bindable;
-            control.frame.BackgroundColor = (Color)newValue;
-        }
-
         public static readonly BindableProperty ButtonBackgroundColorProperty =
-            BindableProperty.Create(nameof(ButtonBackgroundColor), typeof(Color), typeof(RegisterButton), Colors.Blue,
-                propertyChanged: OnButtonBackgroundColorChanged);
+            BindableProperty.Create(nameof(ButtonBackgroundColor), typeof(Color), typeof(RegisterButton), Colors.Blue);
 
         public Color ButtonBackgroundColor
         {
@@ -60,15 +36,8 @@ namespace T2JuniorMobile.View.Components
             set => SetValue(ButtonBackgroundColorProperty, value);
         }
 
-        private static void OnButtonBackgroundColorChanged(BindableObject bindable, object oldValue, object newValue)
-        {
-            var control = (RegisterButton)bindable;
-            control.button.BackgroundColor = (Color)newValue;
-        }
-
         public static readonly BindableProperty TextColorProperty =
-            BindableProperty.Create(nameof(TextColor), typeof(Color), typeof(RegisterButton), Colors.White,
-                propertyChanged: OnTextColorChanged);
+            BindableProperty.Create(nameof(TextColor), typeof(Color), typeof(RegisterButton), Colors.White);
 
         public Color TextColor
         {
@@ -76,15 +45,8 @@ namespace T2JuniorMobile.View.Components
             set => SetValue(TextColorProperty, value);
         }
 
-        private static void OnTextColorChanged(BindableObject bindable, object oldValue, object newValue)
-        {
-            var control = (RegisterButton)bindable;
-            control.button.TextColor = (Color)newValue;
-        }
-
         public static readonly BindableProperty TextProperty =
-            BindableProperty.Create(nameof(Text), typeof(string), typeof(RegisterButton), string.Empty,
-                propertyChanged: OnTextChanged);
+            BindableProperty.Create(nameof(Text), typeof(string), typeof(RegisterButton), string.Empty);
 
         public string Text
         {
@@ -92,44 +54,8 @@ namespace T2JuniorMobile.View.Components
             set => SetValue(TextProperty, value);
         }
 
-        private static void OnTextChanged(BindableObject bindable, object oldValue, object newValue)
-        {
-            var control = (RegisterButton)bindable;
-            control.button.Text = (string)newValue;
-        }
-
-        public static readonly BindableProperty HeightProperty =
-            BindableProperty.Create(nameof(Height), typeof(double), typeof(RegisterButton), 10.0,
-                propertyChanged: OnHeightChanged);
-
-        public double Height
-        {
-            get => (double)GetValue(HeightProperty);
-            set => SetValue(HeightProperty, value);
-        }
-
-        private static void OnHeightChanged(BindableObject bindable, object oldValue, object newValue)
-        {
-            // Здесь можно добавить логику для изменения высоты, если это необходимо
-        }
-
-        public static readonly BindableProperty WidthProperty =
-            BindableProperty.Create(nameof(Width), typeof(double), typeof(RegisterButton), 50.0,
-                propertyChanged: OnWidthChanged);
-
-        public double Width
-        {
-            get => (double)GetValue(WidthProperty);
-            set => SetValue(WidthProperty, value);
-        }
-
-        private static void OnWidthChanged(BindableObject bindable, object oldValue, object newValue)
-        {
-            // Здесь можно добавить логику для изменения ширины, если это необходимо
-        }
-
         public static readonly BindableProperty CommandProperty =
-            BindableProperty.Create(nameof(Command), typeof(ICommand), typeof(RegisterButton), null);
+            BindableProperty.Create(nameof(Command), typeof(ICommand), typeof(RegisterButton));
 
         public ICommand Command
         {
@@ -138,45 +64,12 @@ namespace T2JuniorMobile.View.Components
         }
 
         public static readonly BindableProperty CommandParameterProperty =
-            BindableProperty.Create(nameof(CommandParameter), typeof(object), typeof(RegisterButton), null);
+            BindableProperty.Create(nameof(CommandParameter), typeof(object), typeof(RegisterButton));
 
         public object CommandParameter
         {
             get => GetValue(CommandParameterProperty);
             set => SetValue(CommandParameterProperty, value);
-        }
-
-        public static readonly BindableProperty BorderWidthProperty =
-            BindableProperty.Create(nameof(BorderWidth), typeof(double), typeof(RegisterButton), 0.0,
-                propertyChanged: OnBorderWidthChanged);
-
-        public double BorderWidth
-        {
-            get => (double)GetValue(BorderWidthProperty);
-            set => SetValue(BorderWidthProperty, value);
-        }
-
-        private static void OnBorderWidthChanged(BindableObject bindable, object oldValue, object newValue)
-        {
-            var control = (RegisterButton)bindable;
-            control.borderBoxView.HeightRequest = (double)newValue;
-            control.borderBoxView.WidthRequest = (double)newValue;
-        }
-
-        public static readonly BindableProperty BorderColorProperty =
-            BindableProperty.Create(nameof(BorderColor), typeof(Color), typeof(RegisterButton), Colors.Transparent,
-                propertyChanged: OnBorderColorChanged);
-
-        public Color BorderColor
-        {
-            get => (Color)GetValue(BorderColorProperty);
-            set => SetValue(BorderColorProperty, value);
-        }
-
-        private static void OnBorderColorChanged(BindableObject bindable, object oldValue, object newValue)
-        {
-            var control = (RegisterButton)bindable;
-            control.borderBoxView.Color = (Color)newValue;
         }
     }
 }

@@ -27,19 +27,24 @@ namespace T2JuniorMobile.View.Components
         private static void OnTextChanged(BindableObject bindable, object oldValue, object newValue)
         {
             var registerEntry = (RegisterEntry)bindable;
-            registerEntry.entry.Text = (string)newValue;
+            if (registerEntry.entry.Text != (string)newValue)
+            {
+                registerEntry.entry.Text = (string)newValue;
+            }
         }
 
         private static void OnPlaceholderChanged(BindableObject bindable, object oldValue, object newValue)
         {
             var registerEntry = (RegisterEntry)bindable;
-            registerEntry.entry.Placeholder = (string)newValue;
+            if (registerEntry.entry.Placeholder != (string)newValue)
+            {
+                registerEntry.entry.Placeholder = (string)newValue;
+            }
         }
 
         public RegisterEntry()
         {
             InitializeComponent();
-            BindingContext = this;
         }
     }
 }

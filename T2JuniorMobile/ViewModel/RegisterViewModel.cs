@@ -9,8 +9,16 @@ namespace T2JuniorMobile.ViewModel
 {
     public partial class RegisterViewModel : BaseViewModel
     {
-        ICommand command;
+        public RegisterViewModel()
+        {
+            NavigateConfimCommand = new Command(async () => await NavigateConfimCommandAsync());
+        }
 
+        public ICommand NavigateConfimCommand { get; }
 
+        private async Task NavigateConfimCommandAsync()
+        {
+            await Shell.Current.GoToAsync("/ConfimPage");
+        }
     }
 }

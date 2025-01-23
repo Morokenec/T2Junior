@@ -76,6 +76,9 @@
 	  <Compile Update="View\Pages\AuthPage.xaml.cs">
 	    <DependentUpon>AuthPage.xaml</DependentUpon>
 	  </Compile>
+	  <Compile Update="View\Pages\ConfimPage.xaml.cs">
+	    <DependentUpon>ConfimPage.xaml</DependentUpon>
+	  </Compile>
 	</ItemGroup>
 
 	<ItemGroup>
@@ -89,6 +92,9 @@
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	  <MauiXaml Update="View\Components\RegisterPicker.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="View\Pages\ConfimPage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	  <MauiXaml Update="View\Pages\RegisterPage.xaml">

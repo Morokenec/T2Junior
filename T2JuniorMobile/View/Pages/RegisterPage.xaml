@@ -9,33 +9,33 @@
   
     <ScrollView>
         <VerticalStackLayout
-         Padding="30,10,30,0"
-         Spacing="25">
+           Padding="15,50"
+           Spacing="50">
 
-            <components:RegisterEntry Placeholder="ФИО"
+            <VerticalStackLayout
+            Spacing="15">
+                <components:RegisterEntry Placeholder="ФИО"
                                       Text="{Binding Email}"/>
-            <components:RegisterEntry Placeholder="Номер телефона"
+                <components:RegisterEntry Placeholder="Номер телефона"
                                       Text="{Binding Email}"/>
-            <components:RegisterEntry Placeholder="Email"
+                <components:RegisterEntry Placeholder="Email"
                                       Text="{Binding Email}"/>
-            
-            <components:RegisterDatePicker />
-
-            <components:RegisterPicker 
+                <components:RegisterDatePicker />
+                <components:RegisterPicker 
             Items="{Binding GenderOptions}" 
             Title="Выберите пол" />
 
-            <components:RegisterPicker 
+                <components:RegisterPicker 
             Items="{Binding OrganizationOptions}" 
             Title="Организации" />
+            </VerticalStackLayout>
 
             <components:RegisterButton        
                 ButtonBackgroundColor="#0057a6"
                 TextColor="White"
                 CornerRadius="10"
-                Height="10"
                 Text="Создать аккаунт"
-                Command="{Binding NavigateRegisterCommand}"
+                Command="{Binding NavigateConfimCommand}"
                 />
 
         </VerticalStackLayout>

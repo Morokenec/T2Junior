@@ -29,4 +29,5 @@
      />
     
     <ShellContent Title="Register" ContentTemplate="{DataTemplate local:RegisterPage}" />
+    <ShellContent Title="Confim" ContentTemplate="{DataTemplate local:ConfimPage}" />
 </Shell>

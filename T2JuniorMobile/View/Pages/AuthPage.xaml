@@ -7,7 +7,7 @@
 
     <ScrollView>
         <VerticalStackLayout
-         Padding="30,0"
+         Padding="15,0"
          Spacing="25">
             <Image
              Source="logo.png"
@@ -20,14 +20,23 @@
                 TextColor="#0057a6"
                 FontSize="20"
                 />
-            <components:RegisterEntry Placeholder="Email"
+            <VerticalStackLayout
+                Spacing="15">
+                <components:RegisterEntry Placeholder="Email"
                                   Text="{Binding Email}"/>
-
-            <components:RegisterEntry Placeholder="Пароль"
+                <components:RegisterEntry Placeholder="Пароль"
                                Text="{Binding Password}"
                                 />
+                <Label Text="Забыли пароль?"
+               HorizontalOptions="End"
+               TextColor="#4986BE">
+                </Label>
+            </VerticalStackLayout>
 
-            <components:RegisterButton
+            <VerticalStackLayout
+                Spacing="15">
+
+                <components:RegisterButton
                 ButtonBackgroundColor="#0057a6"
                 TextColor="White"
                 CornerRadius="10"
@@ -36,16 +45,18 @@
                 Command="{Binding LoginCommand}"
                 />
 
-            <components:RegisterButton
-                TextColor="#0057a6"
-         
+                <components:RegisterButton
+                TextColor="#0057a6"  
                 ButtonBackgroundColor="White"
                 CornerRadius="10"
-                BorderColor="#0057a6"
                 Height="10"
                 Text="Регистрация"
                 Command="{Binding NavigateRegisterCommand}"
                 />
+
+            </VerticalStackLayout>
+
+
 
         </VerticalStackLayout>
     </ScrollView>
