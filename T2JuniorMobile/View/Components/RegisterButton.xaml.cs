@@ -8,16 +8,14 @@ namespace T2JuniorMobile.View.Components
         public RegisterButton()
         {
             InitializeComponent();
-            BindingContext = this; 
+            BindingContext = this;
         }
 
         private void OnButtonClicked(object sender, EventArgs e)
         {
-            // Выполнение команды, если она была передана
             Command?.Execute(CommandParameter);
         }
 
-        // Привязки для свойств кнопки
         public static readonly BindableProperty CornerRadiusProperty =
             BindableProperty.Create(nameof(CornerRadius), typeof(double), typeof(RegisterButton), 90.0);
 

@@ -2,6 +2,7 @@
 using Microsoft.Maui.Handlers;
 using T2JuniorMobile.Services;
 using T2JuniorMobile.View.Pages;
+using T2JuniorMobile.ViewModel;
 
 namespace T2JuniorMobile
 {
@@ -25,8 +26,10 @@ namespace T2JuniorMobile
 
             // Регистрация ViewModel
             builder.Services.AddTransient<AuthViewModel>();
+            builder.Services.AddTransient<RegisterViewModel>();
 
             // Регистрация страницы
+            builder.Services.AddTransient<ConfimPage>();
             builder.Services.AddTransient<AuthPage>();
             builder.Services.AddTransient<RegisterPage>();
 #if DEBUG
