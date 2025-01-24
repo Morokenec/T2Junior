@@ -6,17 +6,13 @@ using T2JuniorMobile.View.Pages;
 
 public class AuthViewModel : BaseViewModel
 {
+    public ICommand LoginCommand { get; }
+    public ICommand NavigateRegisterCommand { get; }
+
     private string _email;
     private string _password;
     private string _token;
-    private readonly AuthService _authService;
-
-    public AuthViewModel(AuthService authService)
-    {
-        _authService = authService;
-        LoginCommand = new Command(async () => await LoginAsync());
-        NavigateRegisterCommand = new Command(async () => await NavigateToRegisterPageAsync());
-    }
+    private readonly AccountService _authService;
 
     public string Email
     {
@@ -36,9 +32,12 @@ public class AuthViewModel : BaseViewModel
         set => SetProperty(ref _token, value);
     }
 
-    public ICommand LoginCommand { get; }
-
-    public ICommand NavigateRegisterCommand { get; }
+    public AuthViewModel(AccountService authService)
+    {
+        _authService = authService;
+        LoginCommand = new Command(async () => await LoginAsync());
+        NavigateRegisterCommand = new Command(async () => await NavigateToRegisterPageAsync());
+    }
 
     private async Task LoginAsync()
     {

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -9,6 +10,9 @@ namespace T2JuniorMobile.ViewModel
 {
     public partial class RegisterViewModel : BaseViewModel
     {
+        public ObservableCollection<string> GenderOptions { get; set; }
+        public ObservableCollection<string> OrganizationOptions { get; set; }
+
         private string? _fullName;
         private string? _email;
         private string? _numberPhone;
@@ -49,5 +53,6 @@ namespace T2JuniorMobile.ViewModel
         {
             await Shell.Current.GoToAsync("/ConfimPage");
         }
+
     }
 }

@@ -15,26 +15,28 @@
             <VerticalStackLayout
             Spacing="15">
                 <components:RegisterEntry Placeholder="ФИО"
-                                      Text="{Binding Email}"/>
+                                      Text="{Binding FullName}"/>
                 <components:RegisterEntry Placeholder="Номер телефона"
-                                      Text="{Binding Email}"/>
+                                      Text="{Binding NumberPhone}"/>
                 <components:RegisterEntry Placeholder="Email"
                                       Text="{Binding Email}"/>
                 <components:RegisterDatePicker />
                 <components:RegisterPicker 
-            Items="{Binding GenderOptions}" 
-            Title="Выберите пол" />
+                    Items="{Binding GenderOptions}" 
+                    Title="Выберите пол" 
+                        />
 
                 <components:RegisterPicker 
-            Items="{Binding OrganizationOptions}" 
-            Title="Организации" />
-            </VerticalStackLayout>
+                    Items="{Binding OrganizationOptions}" 
+                    Title="Организации" />
+                </VerticalStackLayout>
 
             <components:RegisterButton        
                 ButtonBackgroundColor="#0057a6"
                 TextColor="White"
                 CornerRadius="10"
                 Text="Создать аккаунт"
+                
                 Command="{Binding NavigateConfimCommand}"
                 />
 

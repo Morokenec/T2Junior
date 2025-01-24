@@ -7,11 +7,11 @@
            CornerRadius="{Binding Source={x:Reference RootView}, Path=CornerRadius}"
            BorderColor="{Binding Source={x:Reference RootView}, Path=BorderColor}"
            Padding="0"
-           BackgroundColor="Transparent">
+           BackgroundColor="{Binding Source={x:Reference RootView}, Path=ButtonBackgroundColor}">
         <Grid>
             <Button x:Name="button"
                     Text="{Binding Source={x:Reference RootView}, Path=Text}"
-                    BackgroundColor="{Binding Source={x:Reference RootView}, Path=ButtonBackgroundColor}"
+                    BackgroundColor="Transparent"
                     TextColor="{Binding Source={x:Reference RootView}, Path=TextColor}"
                     CornerRadius="{Binding Source={x:Reference RootView}, Path=CornerRadius}"
                     Command="{Binding Source={x:Reference RootView}, Path=Command}"

@@ -13,5 +13,6 @@ public class News
     public DateTime CreatedAt { get; set; }
 
     public string UserId { get; set; }
+
     public ApplicationUser User { get; set; }
 }

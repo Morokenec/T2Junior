@@ -36,15 +36,22 @@ public class AccountController : ControllerBase
     [HttpPost("login")]
     public async Task<IActionResult> Login([FromBody] LoginDto loginDto)
     {
-        var user = await _userManager.FindByEmailAsync(loginDto.Email);
-        if (user == null)
-            return Unauthorized("Invalid email or password.");
+        try
+        {
+            var user = await _userManager.FindByEmailAsync(loginDto.Email);
+            if (user == null)
+                return Unauthorized("Ошибка в E-Mail или пароле");
 
-        var isPasswordValid = await _userManager.CheckPasswordAsync(user, loginDto.Password);
-        if (!isPasswordValid)
-            return Unauthorized("Invalid email or password.");
+            var isPasswordValid = await _userManager.CheckPasswordAsync(user, loginDto.Password);
+            if (!isPasswordValid)
+                return Unauthorized("Ошибка в E-Mail или пароле");
 
-        var token = await _tokenService.GenerateToken(user);
-        return Ok(new { Token = token });
+            var token = await _tokenService.GenerateToken(user);
+            return Ok(new { Token = token });
+        }
+        catch (ApplicationException ex)
+        {
+            return BadRequest(new { Error = ex.Message });
+        }
     }
 }
