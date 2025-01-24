@@ -24,7 +24,6 @@ namespace T2JuniorMobile.ViewModel
                 {
                     _password = value;
                     OnPropertyChanged();
-                    ValidatePasswords();
                 }
             }
         }
@@ -38,7 +37,6 @@ namespace T2JuniorMobile.ViewModel
                 {
                     _confirmPassword = value;
                     OnPropertyChanged();
-                    ValidatePasswords();
                 }
             }
         }
@@ -61,50 +59,6 @@ namespace T2JuniorMobile.ViewModel
                 _confirmPasswordBorderColor = value;
                 OnPropertyChanged();
             }
-        }
-
-        public ICommand ConfirmCommand { get; }
-
-
-        private void ValidatePasswords()
-        {
-            if (string.IsNullOrWhiteSpace(Password) || string.IsNullOrWhiteSpace(ConfirmPassword))
-            {
-                PasswordBorderColor = Colors.Red;
-                ConfirmPasswordBorderColor = Colors.Red;
-                ((Command)ConfirmCommand).ChangeCanExecute();
-                return;
-            }
-
-            if (Password != ConfirmPassword)
-            {
-                PasswordBorderColor = Colors.Red;
-                ConfirmPasswordBorderColor = Colors.Red;
-                ((Command)ConfirmCommand).ChangeCanExecute();
-            }
-            else
-            {
-                PasswordBorderColor = Colors.Transparent;
-                ConfirmPasswordBorderColor = Colors.Transparent;
-                ((Command)ConfirmCommand).ChangeCanExecute();
-            }
-        }
-
-        private bool CanConfirm()
-        {
-            return !string.IsNullOrWhiteSpace(Password) && Password == ConfirmPassword;
-        }
-
-        private void OnConfirm()
-        {
-            Application.Current.MainPage.DisplayAlert("Успех", "Пароли совпадают!", "OK");
-        }
-
-        public event PropertyChangedEventHandler PropertyChanged;
-
-        protected void OnPropertyChanged([CallerMemberName] string propertyName = null)
-        {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
     }
 }

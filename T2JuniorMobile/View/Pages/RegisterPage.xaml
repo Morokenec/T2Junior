@@ -25,7 +25,6 @@
                     Items="{Binding GenderOptions}" 
                     Title="Выберите пол" 
                         />
-
                 <components:RegisterPicker 
                     Items="{Binding OrganizationOptions}" 
                     Title="Организации" />
