@@ -25,6 +25,7 @@
                 <components:RegisterEntry Placeholder="Email"
                                   Text="{Binding Email}"/>
                 <components:RegisterEntry Placeholder="Пароль"
+                               
                                Text="{Binding Password}"
                                 />
                 <Label Text="Забыли пароль?"
@@ -40,7 +41,6 @@
                 ButtonBackgroundColor="#0057a6"
                 TextColor="White"
                 CornerRadius="10"
-                Height="10"
                 Text="Войти"
                 Command="{Binding LoginCommand}"
                 />
@@ -49,8 +49,8 @@
                 TextColor="#0057a6"  
                 ButtonBackgroundColor="White"
                 CornerRadius="10"
-                Height="10"
                 Text="Регистрация"
+                BorderColor="#91b4d7"
                 Command="{Binding NavigateRegisterCommand}"
                 />
 

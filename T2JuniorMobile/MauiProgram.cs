@@ -22,11 +22,12 @@ namespace T2JuniorMobile
                 });
 
             builder.Services.AddSingleton<HttpClient>();
-            builder.Services.AddSingleton<AuthService>();
+            builder.Services.AddSingleton<AccountService>();
 
             // Регистрация ViewModel
             builder.Services.AddTransient<AuthViewModel>();
             builder.Services.AddTransient<RegisterViewModel>();
+            builder.Services.AddTransient<ConfirmViewModel>();
 
             // Регистрация страницы
             builder.Services.AddTransient<ConfimPage>();

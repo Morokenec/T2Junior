@@ -3,7 +3,8 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="T2JuniorMobile.View.Pages.ConfimPage"
              xmlns:components="clr-namespace:T2JuniorMobile.View.Components"
-             Title="Регистрация в приложении">
+             Title="Регистрация в приложении"
+             Shell.TitleColor="#0057a6">
     <ScrollView>
         <VerticalStackLayout
       Padding="15,50"
@@ -11,10 +12,12 @@
             <VerticalStackLayout
              Spacing="15">
                 <components:RegisterEntry Placeholder="Придумайте пароль"
-                               Text="{Binding Email}"/>
+                          Text="{Binding Password}"
+                          BorderColor="{Binding PasswordBorderColor}"/>
                 <components:RegisterEntry Placeholder="Введите пароль повторно"
-                            Text="{Binding Password}"
-                             />
+                          Text="{Binding ConfirmPassword}"
+                          BorderColor="{Binding ConfirmPasswordBorderColor}"/>
+               
             </VerticalStackLayout>
 
             <VerticalStackLayout

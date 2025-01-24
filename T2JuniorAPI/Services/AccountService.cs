@@ -31,6 +31,7 @@ public class AccountService : IAccountService
             throw new ApplicationException(string.Join("; ", result.Errors));
         }
 
-        return "User registered successfully";
+        return "Пользователь зарегистрирован";
     }
+
 }
