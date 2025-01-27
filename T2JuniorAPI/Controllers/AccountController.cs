@@ -54,4 +54,17 @@ public class AccountController : ControllerBase
             return BadRequest(new { Error = ex.Message });
         }
     }
+
+    [HttpGet("profile/{id}")]
+    public IActionResult GetUserProfile(string id)
+    {
+        var userProfile = _accountService.GetUserProfileAsync(id);
+
+        if (userProfile == null)
+        {
+            return NotFound(new { Message = "Профиль пользователя не найден" });
+        }
+
+        return Ok(userProfile);
+    }
 }

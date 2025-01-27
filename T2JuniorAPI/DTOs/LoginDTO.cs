@@ -1,10 +1,6 @@
-﻿using System.ComponentModel.DataAnnotations;
-
-public class LoginDto
+﻿public class LoginDto
 {
-    [Required]
-    public string Email { get; set; }
-
-    [Required]
-    public string Password { get; set; }
+    public string Email { get; set; } = null!;
+    public string Password { get; set; } = null!;
+    public bool RememberMe { get; set; } = false;
 }
