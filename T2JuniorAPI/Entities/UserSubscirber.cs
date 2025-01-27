@@ -10,7 +10,7 @@ namespace T2JuniorAPI.Models
         [Required]
         public int IdSubscriber { get; set; }
 
-        public virtual ICollection<User> Users { get; set; } = new List<User>();
-        public virtual ICollection<User> Subscriber { get; set; } = new List<User>();
+        public virtual ICollection<ApplicationUser> Users { get; set; } = new List<ApplicationUser>();
+        public virtual ICollection<ApplicationUser> Subscriber { get; set; } = new List<ApplicationUser>();
     }
 }

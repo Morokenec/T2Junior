@@ -18,5 +18,5 @@ public class ClubUser
 
     public virtual ClubRole IdRoleNavigation { get; set; } = null!;
 
-    public virtual User IdUserNavigation { get; set; } = null!;
+    public virtual ApplicationUser IdUserNavigation { get; set; } = null!;
 }

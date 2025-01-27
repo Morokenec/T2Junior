@@ -14,7 +14,7 @@ public class Wall
     [Required]
     public int IdOwner { get; set; }
 
-    public virtual User IdOwner1 { get; set; } = null!;
+    public virtual ApplicationUser Owner { get; set; } = null!;
 
     public virtual Club IdOwnerNavigation { get; set; } = null!;
 

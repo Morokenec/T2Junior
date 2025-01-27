@@ -27,7 +27,7 @@ public class Comment
 
     public virtual Note IdNoteNavigation { get; set; } = null!;
 
-    public virtual User IdUserNavigation { get; set; } = null!;
+    public virtual ApplicationUser IdUserNavigation { get; set; } = null!;
 
     public virtual ICollection<Comment> InverseParrentComment { get; set; } = new List<Comment>();
 
