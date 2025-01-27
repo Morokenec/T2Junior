@@ -9,7 +9,7 @@ public class Comment
     public int Id { get; set; }
 
     [Required]
-    public int IdNote { get; set; }
+    public string IdNote { get; set; }
 
     [Required]
     public int IdUser { get; set; }

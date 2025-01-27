@@ -33,11 +33,11 @@ public class ApplicationUser : IdentityUser
 
     public Organization Organization { get; set; }
 
-    public virtual ICollection<ClubUser> ClubUsers { get; set; } = new List<ClubUser>();
+    public virtual ICollection<ClubUser> ClubUsers { get; set; }
 
-    public virtual ICollection<Comment> Comments { get; set; } = new List<Comment>();
+    public virtual ICollection<Comment> Comments { get; set; } 
 
-    public virtual ICollection<Wall> Walls { get; set; } = new List<Wall>();
+    public virtual ICollection<Wall> Walls { get; set; }
 
-    public virtual ICollection<ApplicationUser> Subscribers { get; set; } = new List<ApplicationUser>();
+    public ICollection<UserSubscribers> Subscribers { get; set; }
 }

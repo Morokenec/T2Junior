@@ -12,7 +12,7 @@ public class Wall
     public int IdType { get; set; }
 
     [Required]
-    public int IdOwner { get; set; }
+    public string IdOwner { get; set; }
 
     public virtual ApplicationUser Owner { get; set; } = null!;
 

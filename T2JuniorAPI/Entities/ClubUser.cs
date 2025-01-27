@@ -6,10 +6,10 @@ namespace T2JuniorAPI.Models;
 
 public class ClubUser
 {
-    public int IdClub { get; set; }
+    public string IdClub { get; set; }
 
     [Required]
-    public int IdUser { get; set; }
+    public string IdUser { get; set; }
 
     [Required]
     public int IdRole { get; set; }
