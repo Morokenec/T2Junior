@@ -28,15 +28,12 @@ namespace T2JuniorAPI.Migrations
                     b.Property<int>("AccumulatedPoints")
                         .HasColumnType("INTEGER");
 
-                    b.Property<DateTime?>("Birthday")
-                        .IsRequired()
-                        .HasColumnType("TEXT");
-
                     b.Property<string>("ConcurrencyStamp")
                         .IsConcurrencyToken()
                         .HasColumnType("TEXT");
 
-                    b.Property<DateTime>("DateOfBirth")
+                    b.Property<DateTime?>("DateOfBirth")
+                        .IsRequired()
                         .HasColumnType("TEXT");
 
                     b.Property<string>("Email")

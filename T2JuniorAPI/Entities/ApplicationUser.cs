@@ -16,15 +16,12 @@ public class ApplicationUser : IdentityUser
     public  string PhoneNumber { get; set; }
 
     [Required]
-    public DateTime DateOfBirth { get; set; }
+    public DateTime? DateOfBirth { get; set; }
 
     [Required]
     public string Gender { get; set; }
 
     public string? Post { get; set; }
-
-    [Required]
-    public DateTime? Birthday { get; set; }
 
     [Required]
     public int AccumulatedPoints { get; set; }

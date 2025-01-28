@@ -11,8 +11,8 @@ using T2JuniorAPI.Data;
 namespace T2JuniorAPI.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20250127062423_UpdateModelEvents")]
-    partial class UpdateModelEvents
+    [Migration("20250127091514_MakeBirthdayNullable")]
+    partial class MakeBirthdayNullable
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -31,15 +31,12 @@ namespace T2JuniorAPI.Migrations
                     b.Property<int>("AccumulatedPoints")
                         .HasColumnType("INTEGER");
 
-                    b.Property<DateTime?>("Birthday")
-                        .IsRequired()
-                        .HasColumnType("TEXT");
-
                     b.Property<string>("ConcurrencyStamp")
                         .IsConcurrencyToken()
                         .HasColumnType("TEXT");
 
-                    b.Property<DateTime>("DateOfBirth")
+                    b.Property<DateTime?>("DateOfBirth")
+                        .IsRequired()
                         .HasColumnType("TEXT");
 
                     b.Property<string>("Email")
