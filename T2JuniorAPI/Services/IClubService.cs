@@ -1,5 +1,4 @@
-﻿using T2JuniorAPI.Controllers;
-using T2JuniorAPI.DTOs;
+﻿using T2JuniorAPI.DTOs;
 using T2JuniorAPI.Models;
 
 namespace T2JuniorAPI.Services

@@ -7,7 +7,6 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using T2JuniorAPI.Models;
-using T2JuniorAPI.Controllers;
 
 namespace T2JuniorAPI.Services
 {

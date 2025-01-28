@@ -1,4 +1,4 @@
-﻿namespace T2JuniorAPI.Controllers
+﻿namespace T2JuniorAPI.DTOs
 {
     public class AddUserToClubDTO
     {
