@@ -1,11 +1,6 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿using Microsoft.EntityFrameworkCore;
 using T2JuniorAPI.Data;
 using T2JuniorAPI.DTOs;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.EntityFrameworkCore;
 using T2JuniorAPI.Models;
 
 namespace T2JuniorAPI.Services
@@ -21,40 +16,39 @@ namespace T2JuniorAPI.Services
 
         public async Task<ClubPageDTO> GetClubInfoById(string clubId)
         {
-            // Выполняем запрос для получения информации о клубе и его пользователях
-            var clubInfo = await (from c in _context.Clubs
-                                  where c.Id.ToString() == clubId // Преобразуем clubId в строку для сравнения
-                                  join cu in _context.ClubUsers on c.Id equals cu.IdClub into clubGroup
-                                  from cu in clubGroup.DefaultIfEmpty()
-                                  join u in _context.Users on cu.IdUser equals u.Id into userGroup
-                                  select new
-                                  {
-                                      IdClub = c.Id,
-                                      ClubName = c.Name,
-                                      ClubTarget = c.Target,
-                                      Users = userGroup.Select(u => new SubscriberProfileDTO
-                                      {
-                                          Id = u.Id,
-                                          FullName = $"{u.FirstName} {u.LastName}"
-                                      }).ToList()
-                                  }).ToListAsync(); // Изменено на ToListAsync()
-
-            // Получаем первый элемент из списка
-            var club = clubInfo.FirstOrDefault();
+            var club = await _context.Clubs
+                .Where(c => c.Id == clubId)
+                .Select(c => new ClubPageDTO
+                {
+                    Id = c.Id,
+                    Name = c.Name,
+                    Target = c.Target,
+                    Users = new List<SubscriberProfileDTO>() // Инициализируем пустой список пользователей
+                })
+                .FirstOrDefaultAsync();
 
             if (club == null)
             {
                 throw new ApplicationException("Club not found");
             }
 
-            // Преобразуем анонимный тип в DTO
-            return new ClubPageDTO
-            {
-                Id = club.IdClub,
-                Name = club.ClubName,
-                Target = club.ClubTarget,
-                Users = club.Users
-            };
+            // Получаем пользователей клуба
+            var users = await _context.ClubUsers
+                .Where(cu => cu.IdClub == clubId)
+                .Select(cu => new SubscriberProfileDTO
+                {
+                    Id = cu.IdUser,
+                    FullName = _context.Users
+                        .Where(u => u.Id == cu.IdUser)
+                        .Select(u => $"{u.FirstName} {u.LastName}")
+                        .FirstOrDefault()
+                })
+                .ToListAsync();
+
+            // Заполняем список пользователей в клубе
+            club.Users = users;
+
+            return club;
         }
 
         public async Task<string> CreateClub(CreateClubDTO club)
@@ -128,7 +122,26 @@ namespace T2JuniorAPI.Services
             }
 
             return "User successfully added to the club";
+        }
 
+        public async Task<ClubProfileDTO> GetClubProfileById(string clubId)
+        {
+            var club = await _context.Clubs
+                .Where(c => c.Id == clubId)
+                .Select(c => new ClubProfileDTO
+                {
+                    Id = c.Id,
+                    Name = c.Name,
+                    Target = c.Target,
+                    UsersCount = c.ClubUsers.Count()
+                })
+                .FirstOrDefaultAsync();
+            if (club == null)
+            {
+                throw new ApplicationException("Club not found");
+            }
+
+            return club;
         }
     }
 }

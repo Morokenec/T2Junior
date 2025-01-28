@@ -46,6 +46,31 @@ namespace T2JuniorAPI.Controllers
             return club;
         }
 
+        [HttpGet("{clubId}/profile")]
+        public async Task<IActionResult> GetClubProfile(string clubId)
+        {
+            var clubProfile = await _clubService.GetClubProfileById(clubId);
+            return Ok(clubProfile);
+        }
+
+        [HttpGet("{clubId}/info")]
+        public async Task<IActionResult> GetClubInfoById(string clubId)
+        {
+            try
+            {
+                var clubInfo = await _clubService.GetClubInfoById(clubId);
+                return Ok(clubInfo);
+            }
+            catch (ApplicationException ex)
+            {
+                return NotFound(ex.Message); // Возвращаем 404, если клуб не найден
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, "Internal server error: " + ex.Message); // Обработка других ошибок
+            }
+        }
+
         // PUT: api/Clubs/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
