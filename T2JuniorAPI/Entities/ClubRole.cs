@@ -6,6 +6,7 @@ namespace T2JuniorAPI.Models;
 
 public class ClubRole
 {
+    [Key]
     public int Id { get; set; }
 
     [Required]

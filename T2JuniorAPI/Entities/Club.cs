@@ -6,7 +6,8 @@ namespace T2JuniorAPI.Models;
 
 public class Club
 {
-    public string Id { get; set; }
+    [Key]
+    public string Id { get; set; } = Guid.NewGuid().ToString();
 
     [Required]
     public string Name { get; set; } = null!;
