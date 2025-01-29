@@ -1,4 +1,6 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using AutoMapper;
+using AutoMapper.QueryableExtensions;
+using Microsoft.EntityFrameworkCore;
 using T2JuniorAPI.Data;
 using T2JuniorAPI.DTOs;
 using T2JuniorAPI.Models;
@@ -8,23 +10,19 @@ namespace T2JuniorAPI.Services
     public class ClubService : IClubService
     {
         private readonly ApplicationDbContext _context;
+        private readonly IMapper _mapper;
 
-        public ClubService(ApplicationDbContext context)
+        public ClubService(ApplicationDbContext context, IMapper mapper)
         {
             _context = context;
+            _mapper = mapper;
         }
 
         public async Task<ClubPageDTO> GetClubInfoById(string clubId)
         {
             var club = await _context.Clubs
                 .Where(c => c.Id == clubId)
-                .Select(c => new ClubPageDTO
-                {
-                    Id = c.Id,
-                    Name = c.Name,
-                    Target = c.Target,
-                    Users = new List<SubscriberProfileDTO>() // Инициализируем пустой список пользователей
-                })
+                .ProjectTo<ClubPageDTO>(_mapper.ConfigurationProvider)
                 .FirstOrDefaultAsync();
 
             if (club == null)
@@ -35,14 +33,7 @@ namespace T2JuniorAPI.Services
             // Получаем пользователей клуба
             var users = await _context.ClubUsers
                 .Where(cu => cu.IdClub == clubId)
-                .Select(cu => new SubscriberProfileDTO
-                {
-                    Id = cu.IdUser,
-                    FullName = _context.Users
-                        .Where(u => u.Id == cu.IdUser)
-                        .Select(u => $"{u.FirstName} {u.LastName}")
-                        .FirstOrDefault()
-                })
+                .ProjectTo<SubscriberProfileDTO>(_mapper.ConfigurationProvider)
                 .ToListAsync();
 
             // Заполняем список пользователей в клубе
@@ -53,13 +44,7 @@ namespace T2JuniorAPI.Services
 
         public async Task<string> CreateClub(CreateClubDTO club)
         {
-            var newClub = new Club
-            {
-                Name = club.Name,
-                Rules = club.Rules,
-                Target = club.Target,
-                Raiting = 0
-            };
+            var newClub = _mapper.Map<Club>(club);
 
             await _context.Clubs.AddAsync(newClub);
 
@@ -128,13 +113,7 @@ namespace T2JuniorAPI.Services
         {
             var club = await _context.Clubs
                 .Where(c => c.Id == clubId)
-                .Select(c => new ClubProfileDTO
-                {
-                    Id = c.Id,
-                    Name = c.Name,
-                    Target = c.Target,
-                    UsersCount = c.ClubUsers.Count()
-                })
+                .ProjectTo<ClubProfileDTO>(_mapper.ConfigurationProvider)
                 .FirstOrDefaultAsync();
             if (club == null)
             {

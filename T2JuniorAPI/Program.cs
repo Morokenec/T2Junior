@@ -31,7 +31,7 @@ builder.Services.AddIdentity<ApplicationUser, IdentityRole>()
     .AddEntityFrameworkStores<ApplicationDbContext>()
     .AddDefaultTokenProviders();
 
-//builder.Services.AddAutoMapper(typeof(SubscribersProfile), typeof(SubscriptionsProfile));
+builder.Services.AddAutoMapper(cnf => cnf.AddProfile<ClubProfile>(), typeof(Program).Assembly);
 builder.Services.AddSingleton<SubscribersProfile>();
 builder.Services.AddSingleton<SubscriptionsProfile>();
 
