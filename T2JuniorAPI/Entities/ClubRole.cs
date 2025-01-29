@@ -10,7 +10,7 @@ public class ClubRole
     public int Id { get; set; }
 
     [Required]
-    public string Name { get; set; } = null!;
+    public required string Name { get; set; }
 
     public virtual ICollection<ClubUser> ClubUsers { get; set; } = new List<ClubUser>();
 }

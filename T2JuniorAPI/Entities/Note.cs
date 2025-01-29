@@ -9,24 +9,24 @@ public class Note
     public int Id { get; set; }
 
     [Required]
-    public int IdWall { get; set; }
+    public required int IdWall { get; set; }
 
     [Required]
-    public int IdStatus { get; set; }
+    public required int IdStatus { get; set; }
 
     [Required]
-    public string Name { get; set; } = null!;
+    public required string Name { get; set; }
 
     [Required]
-    public string Description { get; set; } = null!;
+    public required string Description { get; set; }
 
     [Required]
-    public DateTime CreationDatetime { get; set; }
+    public required DateTime CreationDatetime { get; set; }
 
     public int? IdRepost { get; set; }
 
     [Required]
-    public int LikeCount { get; set; }
+    public required int LikeCount { get; set; }
 
     public virtual ICollection<Comment> Comments { get; set; } = new List<Comment>();
 

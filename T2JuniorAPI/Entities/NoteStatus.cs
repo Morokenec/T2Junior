@@ -9,7 +9,7 @@ public partial class NoteStatus
     public int Id { get; set; }
 
     [Required]
-    public string Name { get; set; } = null!;
+    public required string Name { get; set; }
 
     public virtual ICollection<Note> Notes { get; set; } = new List<Note>();
 }

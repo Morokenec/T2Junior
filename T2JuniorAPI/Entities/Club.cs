@@ -10,16 +10,16 @@ public class Club
     public string Id { get; set; } = Guid.NewGuid().ToString();
 
     [Required]
-    public string Name { get; set; } = null!;
+    public required string Name { get; set; }
 
     [Required]
-    public string Rules { get; set; } = null!;
+    public required string Rules { get; set; }
 
     [Required]
-    public string Target { get; set; } = null!;
+    public required string Target { get; set; }
 
     [Required]
-    public int Raiting { get; set; }
+    public required int Raiting { get; set; }
 
     public string? Reports { get; set; }
 

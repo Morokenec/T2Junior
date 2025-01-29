@@ -9,21 +9,21 @@ public class Comment
     public int Id { get; set; }
 
     [Required]
-    public string IdNote { get; set; }
+    public required string IdNote { get; set; }
 
     [Required]
-    public int IdUser { get; set; }
+    public required int IdUser { get; set; }
 
     [Required]
-    public DateTime CreationDatetime { get; set; }
+    public required DateTime CreationDatetime { get; set; }
 
     [Required]
-    public string Text { get; set; } = null!;
+    public required string Text { get; set; }
 
     public int? ParrentCommentId { get; set; }
     
     [Required]
-    public int? LikeCount { get; set; }
+    public required int LikeCount { get; set; }
 
     public virtual Note IdNoteNavigation { get; set; } = null!;
 

@@ -9,10 +9,10 @@ public class Wall
     public int Id { get; set; }
 
     [Required]
-    public int IdType { get; set; }
+    public required int IdType { get; set; }
 
     [Required]
-    public string IdOwner { get; set; }
+    public required string IdOwner { get; set; }
 
     public virtual ApplicationUser Owner { get; set; } = null!;
 

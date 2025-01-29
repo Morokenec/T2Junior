@@ -9,25 +9,25 @@ public class Event
     public int Id { get; set; }
 
     [Required]
-    public int IdClub { get; set; }
+    public required int IdClub { get; set; }
 
     [Required]
-    public int IdDirection { get; set; }
+    public required int IdDirection { get; set; }
 
     [Required]
-    public string Name { get; set; } = null!;
+    public required string Name { get; set; }
 
     [Required]
-    public string Place { get; set; } = null!;
+    public required string Place { get; set; }
 
     [Required]
-    public DateTime Datetime { get; set; }
+    public required DateTime Datetime { get; set; }
 
     [Required]
-    public int NumberParticpants { get; set; }
+    public required int NumberParticpants { get; set; }
 
     [Required]
-    public int? FactParticpants { get; set; }
+    public required int? FactParticpants { get; set; }
 
     public int Raiting { get; set; }
 

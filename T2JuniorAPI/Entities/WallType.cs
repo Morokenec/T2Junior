@@ -10,7 +10,7 @@ public class WallType
     public int Id { get; set; }
 
     [Required]
-    public string Name { get; set; } = null!;
+    public required string Name { get; set; }
 
     public virtual ICollection<Wall> Walls { get; set; } = new List<Wall>();
 }
