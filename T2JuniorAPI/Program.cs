@@ -4,6 +4,8 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
 using T2JuniorAPI.Data;
+using T2JuniorAPI.MappingProfiles;
+using T2JuniorAPI.Mappers;
 using T2JuniorAPI.Services;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -29,6 +31,10 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
 builder.Services.AddIdentity<ApplicationUser, IdentityRole>()
     .AddEntityFrameworkStores<ApplicationDbContext>()
     .AddDefaultTokenProviders();
+
+//builder.Services.AddAutoMapper(typeof(SubscribersProfile), typeof(SubscriptionsProfile));
+builder.Services.AddSingleton<SubscribersProfile>();
+builder.Services.AddSingleton<SubscriptionsProfile>();
 
 builder.Services.AddControllers();
 builder.Services.AddScoped<IAccountService, AccountService>();

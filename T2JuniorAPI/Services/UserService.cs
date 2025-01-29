@@ -1,6 +1,8 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using AutoMapper;
+using Microsoft.EntityFrameworkCore;
 using T2JuniorAPI.Data;
 using T2JuniorAPI.DTOs;
+using T2JuniorAPI.MappingProfiles;
 using T2JuniorAPI.Models;
 
 namespace T2JuniorAPI.Services
@@ -8,10 +10,14 @@ namespace T2JuniorAPI.Services
     public class UserService : IUserService
     {
         private readonly ApplicationDbContext _context;
+        private readonly IMapper _subscribersMapper;
+        private readonly IMapper _subscriptionsMapper;
 
-        public UserService(ApplicationDbContext context)
+        public UserService(ApplicationDbContext context, SubscribersProfile subscribersProfile, SubscriptionsProfile subscriptionsProfile)
         {
             _context = context;
+            _subscribersMapper = new MapperConfiguration(cfg => cfg.AddProfile(subscribersProfile)).CreateMapper(); ;
+            _subscriptionsMapper = new MapperConfiguration(cfg => cfg.AddProfile(subscriptionsProfile)).CreateMapper();
         }
 
         public async Task<string> SubscribeUserToUser(SubscribeUserDTO subscribeUser)
@@ -51,28 +57,20 @@ namespace T2JuniorAPI.Services
         {
             var subscribers = await _context.UserSubscribers
                 .Where(us => us.IdUser == userId)
-                .Select(us => new SubscriberProfileDTO
-                {
-                    Id = us.Subscriber.Id,
-                    FullName = $"{us.Subscriber.FirstName} {us.Subscriber.LastName}"
-                })
+                .Include(us => us.Subscriber)
                 .ToListAsync();
 
-            return subscribers;
+            return _subscribersMapper.Map<IEnumerable<SubscriberProfileDTO>>(subscribers);
         }
 
         public async Task<IEnumerable<SubscriberProfileDTO>> GetSubscriptions(string userId)
         {
             var subscriptions = await _context.UserSubscribers
                 .Where(us => us.IdSubscriber == userId)
-                .Select(us => new SubscriberProfileDTO
-                {
-                    Id = us.User.Id,
-                    FullName = us.User.FirstName + " " + us.User.LastName
-                })
+                .Include(us => us.User)
                 .ToListAsync();
 
-            return subscriptions;
+            return _subscriptionsMapper.Map<IEnumerable<SubscriberProfileDTO>>(subscriptions);
         }
     }
 }
