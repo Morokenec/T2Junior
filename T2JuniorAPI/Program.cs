@@ -5,7 +5,6 @@ using Microsoft.IdentityModel.Tokens;
 using System.Text;
 using T2JuniorAPI.Data;
 using T2JuniorAPI.MappingProfiles;
-using T2JuniorAPI.Mappers;
 using T2JuniorAPI.Services;
 
 var builder = WebApplication.CreateBuilder(args);
