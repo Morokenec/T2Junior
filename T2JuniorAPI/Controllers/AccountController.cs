@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Identity;
 using System.Threading.Tasks;
 using T2JuniorAPI.Services;
+using T2JuniorAPI.DTOs;
 
 [ApiController]
 [Route("api/[controller]")]

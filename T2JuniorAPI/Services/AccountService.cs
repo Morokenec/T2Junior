@@ -1,10 +1,12 @@
 ﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using T2JuniorAPI.Data;
 using T2JuniorAPI.DTOs;
+using T2JuniorAPI.Models;
 
 namespace T2JuniorAPI.Services
 {
