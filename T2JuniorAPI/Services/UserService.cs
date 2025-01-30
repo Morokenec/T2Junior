@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using T2JuniorAPI.Data;
 using T2JuniorAPI.DTOs;
 using T2JuniorAPI.MappingProfiles;
-using T2JuniorAPI.Models;
+using T2JuniorAPI.Entities;
 
 namespace T2JuniorAPI.Services
 {
@@ -53,7 +53,7 @@ namespace T2JuniorAPI.Services
             return "User successfully subscribe";
         }
 
-        public async Task<IEnumerable<SubscriberProfileDTO>> GetSubscribers(string userId)
+        public async Task<IEnumerable<SubscriberProfileDTO>> GetSubscribers(Guid userId)
         {
             var subscribers = await _context.UserSubscribers
                 .Where(us => us.IdUser == userId)
@@ -63,7 +63,7 @@ namespace T2JuniorAPI.Services
             return _subscribersMapper.Map<IEnumerable<SubscriberProfileDTO>>(subscribers);
         }
 
-        public async Task<IEnumerable<SubscriberProfileDTO>> GetSubscriptions(string userId)
+        public async Task<IEnumerable<SubscriberProfileDTO>> GetSubscriptions(Guid userId)
         {
             var subscriptions = await _context.UserSubscribers
                 .Where(us => us.IdSubscriber == userId)

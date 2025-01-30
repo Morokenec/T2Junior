@@ -1,13 +1,13 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace T2JuniorAPI.Models
+namespace T2JuniorAPI.Entities
 {
-    public class UserSubscribers
+    public class UserSubscribers : BaseCommonProperties
     {
-        public required string IdUser { get; set; }
+        public required Guid IdUser { get; set; }
         public ApplicationUser User { get; set; }
 
-        public required string IdSubscriber { get; set; }
+        public required Guid IdSubscriber { get; set; }
         public ApplicationUser Subscriber { get; set; }
     }
 }

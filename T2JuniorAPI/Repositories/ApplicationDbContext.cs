@@ -1,10 +1,11 @@
-﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
-using T2JuniorAPI.Models;
+using T2JuniorAPI.Entities;
 
 namespace T2JuniorAPI.Data
 {
-    public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
+    public class ApplicationDbContext : IdentityDbContext<ApplicationUser, IdentityRole<Guid>, Guid>
     {
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
             : base(options)
@@ -87,6 +88,22 @@ namespace T2JuniorAPI.Data
                 .WithMany(c => c.Walls)
                 .HasForeignKey(w => w.IdOwner)
                 .OnDelete(DeleteBehavior.Restrict);
+
+        }
+
+        private static void ConfigureCommonFields(ModelBuilder modelBuilder)
+        {
+            foreach (var entryType in modelBuilder.Model.GetEntityTypes().Where(t => t.ClrType.IsSubclassOf(typeof(BaseCommonProperties))))
+            {
+                modelBuilder.Entity(entryType.Name, x =>
+                {
+                    x.HasKey("Id");
+                    x.Property("Id").HasDefaultValueSql("gen_random_uuid()");
+                    x.Property("CreationDate").HasDefaultValueSql("now()");
+                    x.Property("UpdateDate").HasDefaultValueSql("now()");
+                    x.Property("IsDelete").HasDefaultValue(false);
+                });
+            }
         }
     }
 }

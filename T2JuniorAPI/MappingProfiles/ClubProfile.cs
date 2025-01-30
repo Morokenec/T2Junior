@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
 using T2JuniorAPI.DTOs;
-using T2JuniorAPI.Models;
+using T2JuniorAPI.Entities;
 
 namespace T2JuniorAPI.MappingProfiles
 {

@@ -1,13 +1,13 @@
 ﻿using T2JuniorAPI.DTOs;
-using T2JuniorAPI.Models;
+using T2JuniorAPI.Entities;
 
 namespace T2JuniorAPI.Services
 {
     public interface IClubService
     {
-        Task<ClubPageDTO> GetClubInfoById(string clubId);
+        Task<ClubPageDTO> GetClubInfoById(Guid clubId);
         Task<string> CreateClub(CreateClubDTO club);
-        Task<string> AddUserToClub(string clubId, AddUserToClubDTO user);
-        Task<ClubProfileDTO> GetClubProfileById(string clubId);
+        Task<string> AddUserToClub(Guid clubId, AddUserToClubDTO user);
+        Task<ClubProfileDTO> GetClubProfileById(Guid clubId);
     }
 }

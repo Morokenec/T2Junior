@@ -8,6 +8,6 @@
 
         public string Target { get; set; } = null!;
 
-        public string CreatorUserId { get; set; } = null!;
+        public Guid CreatorUserId { get; set; }
     }
 }

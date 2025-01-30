@@ -1,10 +1,8 @@
 ﻿using System.ComponentModel.DataAnnotations;
-using T2JuniorAPI.Models;
+using T2JuniorAPI.Entities;
 
-public class Organization
+public class Organization : BaseCommonProperties
 {
-    public int Id { get; set; }
-
     [Required]
     public required string Name { get; set; }
 

@@ -3,7 +3,7 @@ using AutoMapper.QueryableExtensions;
 using Microsoft.EntityFrameworkCore;
 using T2JuniorAPI.Data;
 using T2JuniorAPI.DTOs;
-using T2JuniorAPI.Models;
+using T2JuniorAPI.Entities;
 
 namespace T2JuniorAPI.Services
 {
@@ -18,7 +18,7 @@ namespace T2JuniorAPI.Services
             _mapper = mapper;
         }
 
-        public async Task<ClubPageDTO> GetClubInfoById(string clubId)
+        public async Task<ClubPageDTO> GetClubInfoById(Guid clubId)
         {
             var club = await _context.Clubs
                 .Where(c => c.Id == clubId)
@@ -48,11 +48,19 @@ namespace T2JuniorAPI.Services
 
             await _context.Clubs.AddAsync(newClub);
 
+            var role = await _context.ClubRoles.FirstOrDefaultAsync(r => r.Name == "admin");
+            if (role == null)
+            {
+                role = new ClubRole { Name = "admin" };
+                await _context.ClubRoles.AddAsync(role);
+                await _context.SaveChangesAsync();
+            }
+
             var clubUser = new ClubUser
             {
                 IdClub = newClub.Id,
                 IdUser = club.CreatorUserId,
-                IdRole = 1
+                IdRole = role.Id
             };
 
             await _context.ClubUsers.AddAsync(clubUser);
@@ -75,12 +83,12 @@ namespace T2JuniorAPI.Services
             return "Successful create club";
         }
 
-        private bool ClubExists(string id)
+        private bool ClubExists(Guid id)
         {
             return _context.Clubs.Any(e => e.Id == id);
         }
 
-        public async Task<string> AddUserToClub(string clubId, AddUserToClubDTO user)
+        public async Task<string> AddUserToClub(Guid clubId, AddUserToClubDTO user)
         {
             var club = await _context.Clubs.FindAsync(clubId);
             if (club == null)
@@ -109,7 +117,7 @@ namespace T2JuniorAPI.Services
             return "User successfully added to the club";
         }
 
-        public async Task<ClubProfileDTO> GetClubProfileById(string clubId)
+        public async Task<ClubProfileDTO> GetClubProfileById(Guid clubId)
         {
             var club = await _context.Clubs
                 .Where(c => c.Id == clubId)

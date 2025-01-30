@@ -24,7 +24,7 @@ public class TokenService : ITokenService
 
         var claims = new List<Claim>
         {
-            new Claim(ClaimTypes.NameIdentifier, user.Id),
+            new Claim(ClaimTypes.NameIdentifier, user.Id.ToString()),
             new Claim(ClaimTypes.Email, user.Email),
             new Claim(ClaimTypes.Name, $"{user.FirstName} {user.LastName}")
         };
@@ -37,6 +37,19 @@ public class TokenService : ITokenService
             signingCredentials: creds
         );
 
+        //var tokenDescriptor = new SecurityTokenDescriptor
+        //{
+        //    Subject = new ClaimsIdentity(claims),
+        //    Expires = DateTime.Now.AddMinutes(Convert.ToDouble(_configuration["Jwt:ExpireMinutes"])),
+        //    Issuer = _configuration["Jwt:Issuer"],
+        //    Audience = _configuration["Jwt:Audience"],
+        //    SigningCredentials = creds
+        //};
+
+        //var tokenHandler = new JwtSecurityTokenHandler();
+        //var token1 = tokenHandler.CreateToken(tokenDescriptor); 
+
         return Task.FromResult(new JwtSecurityTokenHandler().WriteToken(token));
+        //return Task.FromResult(new JwtSecurityTokenHandler().WriteToken(token1));
     }
 }

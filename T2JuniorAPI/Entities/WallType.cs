@@ -2,13 +2,10 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
-namespace T2JuniorAPI.Models;
+namespace T2JuniorAPI.Entities;
 
-public class WallType
+public class WallType : BaseCommonProperties
 {
-
-    public int Id { get; set; }
-
     [Required]
     public required string Name { get; set; }
 

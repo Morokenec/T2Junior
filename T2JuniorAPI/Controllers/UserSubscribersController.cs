@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using T2JuniorAPI.Data;
 using T2JuniorAPI.DTOs;
-using T2JuniorAPI.Models;
+using T2JuniorAPI.Entities;
 using T2JuniorAPI.Services;
 
 namespace T2JuniorAPI.Controllers
@@ -47,14 +47,14 @@ namespace T2JuniorAPI.Controllers
         }
 
         [HttpGet("subscribers/{userId}")]
-        public async Task<ActionResult<IEnumerable<SubscriberProfileDTO>>> GetSubscribers(string userId)
+        public async Task<ActionResult<IEnumerable<SubscriberProfileDTO>>> GetSubscribers(Guid userId)
         {
             var subscribers = await _userService.GetSubscribers(userId);
             return Ok(subscribers);
         }
 
         [HttpGet("subscriptions/{userId}")]
-        public async Task<ActionResult<IEnumerable<SubscriberProfileDTO>>> GetSubscriptions(string userId)
+        public async Task<ActionResult<IEnumerable<SubscriberProfileDTO>>> GetSubscriptions(Guid userId)
         {
             var subscriptions = await _userService.GetSubscriptions(userId);
             return Ok(subscriptions);
@@ -63,7 +63,7 @@ namespace T2JuniorAPI.Controllers
         // PUT: api/UserSubscribers/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutUserSubscribers(string id, UserSubscribers userSubscribers)
+        public async Task<IActionResult> PutUserSubscribers(Guid id, UserSubscribers userSubscribers)
         {
             if (id != userSubscribers.IdUser)
             {
@@ -143,7 +143,7 @@ namespace T2JuniorAPI.Controllers
             return NoContent();
         }
 
-        private bool UserSubscribersExists(string id)
+        private bool UserSubscribersExists(Guid id)
         {
             return _context.UserSubscribers.Any(e => e.IdUser == id);
         }

@@ -2,17 +2,18 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
-namespace T2JuniorAPI.Models;
+namespace T2JuniorAPI.Entities;
 
-public class ClubUser
+public class ClubUser : BaseCommonProperties
 {
-    public string IdClub { get; set; }
+    [Required]
+    public required Guid IdClub { get; set; }
 
     [Required]
-    public string IdUser { get; set; }
+    public required Guid IdUser { get; set; }
 
     [Required]
-    public int IdRole { get; set; }
+    public required Guid IdRole { get; set; }
 
     public virtual Club IdClubNavigation { get; set; } = null!;
 

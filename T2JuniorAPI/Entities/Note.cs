@@ -2,17 +2,15 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
-namespace T2JuniorAPI.Models;
+namespace T2JuniorAPI.Entities;
 
-public class Note
+public class Note : BaseCommonProperties
 {
-    public int Id { get; set; }
+    [Required]
+    public required Guid IdWall { get; set; }
 
     [Required]
-    public required int IdWall { get; set; }
-
-    [Required]
-    public required int IdStatus { get; set; }
+    public required Guid IdStatus { get; set; }
 
     [Required]
     public required string Name { get; set; }
@@ -23,7 +21,7 @@ public class Note
     [Required]
     public required DateTime CreationDatetime { get; set; }
 
-    public int? IdRepost { get; set; }
+    public Guid? IdRepost { get; set; }
 
     [Required]
     public required int LikeCount { get; set; }

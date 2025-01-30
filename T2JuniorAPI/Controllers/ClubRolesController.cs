@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using T2JuniorAPI.Data;
 using T2JuniorAPI.DTOs;
-using T2JuniorAPI.Models;
+using T2JuniorAPI.Entities;
 
 namespace T2JuniorAPI.Controllers
 {
@@ -46,7 +46,7 @@ namespace T2JuniorAPI.Controllers
         // PUT: api/ClubRoles/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutClubRole(int id, ClubRole clubRole)
+        public async Task<IActionResult> PutClubRole(Guid id, ClubRole clubRole)
         {
             if (id != clubRole.Id)
             {
@@ -103,7 +103,7 @@ namespace T2JuniorAPI.Controllers
             return NoContent();
         }
 
-        private bool ClubRoleExists(int id)
+        private bool ClubRoleExists(Guid id)
         {
             return _context.ClubRoles.Any(e => e.Id == id);
         }

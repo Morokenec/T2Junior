@@ -2,17 +2,15 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
-namespace T2JuniorAPI.Models;
+namespace T2JuniorAPI.Entities;
 
-public class Wall
+public class Wall : BaseCommonProperties
 {
-    public int Id { get; set; }
+    [Required]
+    public required Guid IdType { get; set; }
 
     [Required]
-    public required int IdType { get; set; }
-
-    [Required]
-    public required string IdOwner { get; set; }
+    public required Guid IdOwner { get; set; }
 
     public virtual ApplicationUser Owner { get; set; } = null!;
 

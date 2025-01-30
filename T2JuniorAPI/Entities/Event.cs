@@ -2,17 +2,15 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
-namespace T2JuniorAPI.Models;
+namespace T2JuniorAPI.Entities;
 
-public class Event
+public class Event : BaseCommonProperties
 {
-    public int Id { get; set; }
+    [Required]
+    public required Guid IdClub { get; set; }
 
     [Required]
-    public required int IdClub { get; set; }
-
-    [Required]
-    public required int IdDirection { get; set; }
+    public required Guid IdDirection { get; set; }
 
     [Required]
     public required string Name { get; set; }

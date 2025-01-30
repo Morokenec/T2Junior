@@ -2,13 +2,10 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
-namespace T2JuniorAPI.Models;
+namespace T2JuniorAPI.Entities;
 
-public class Club
+public class Club : BaseCommonProperties
 {
-    [Key]
-    public string Id { get; set; } = Guid.NewGuid().ToString();
-
     [Required]
     public required string Name { get; set; }
 

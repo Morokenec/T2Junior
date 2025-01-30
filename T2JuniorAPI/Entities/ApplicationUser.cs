@@ -1,8 +1,8 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using System.ComponentModel.DataAnnotations;
-using T2JuniorAPI.Models;
+using T2JuniorAPI.Entities;
 
-public class ApplicationUser : IdentityUser
+public class ApplicationUser : IdentityUser<Guid>
 {
     [Required]
     public string FirstName { get; set; }
@@ -26,7 +26,7 @@ public class ApplicationUser : IdentityUser
     [Required]
     public int AccumulatedPoints { get; set; }
 
-    public int OrganizationId { get; set; }
+    public Guid OrganizationId { get; set; }
 
     public Organization Organization { get; set; }
 

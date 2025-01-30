@@ -2,17 +2,15 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
-namespace T2JuniorAPI.Models;
+namespace T2JuniorAPI.Entities;
 
-public class Comment
+public class Comment : BaseCommonProperties
 {
-    public int Id { get; set; }
+    [Required]
+    public required Guid IdNote { get; set; }
 
     [Required]
-    public required string IdNote { get; set; }
-
-    [Required]
-    public required int IdUser { get; set; }
+    public required Guid IdUser { get; set; }
 
     [Required]
     public required DateTime CreationDatetime { get; set; }
@@ -20,7 +18,7 @@ public class Comment
     [Required]
     public required string Text { get; set; }
 
-    public int? ParrentCommentId { get; set; }
+    public Guid? ParrentCommentId { get; set; }
     
     [Required]
     public required int LikeCount { get; set; }

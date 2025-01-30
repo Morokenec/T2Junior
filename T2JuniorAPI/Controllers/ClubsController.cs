@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using T2JuniorAPI.Data;
 using T2JuniorAPI.DTOs;
-using T2JuniorAPI.Models;
+using T2JuniorAPI.Entities;
 using T2JuniorAPI.Services;
 
 namespace T2JuniorAPI.Controllers
@@ -34,7 +34,7 @@ namespace T2JuniorAPI.Controllers
 
         // GET: api/Clubs/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<Club>> GetClub(string id)
+        public async Task<ActionResult<Club>> GetClub(Guid id)
         {
             var club = await _context.Clubs.FindAsync(id);
 
@@ -47,14 +47,14 @@ namespace T2JuniorAPI.Controllers
         }
 
         [HttpGet("{clubId}/profile")]
-        public async Task<IActionResult> GetClubProfile(string clubId)
+        public async Task<IActionResult> GetClubProfile(Guid clubId)
         {
             var clubProfile = await _clubService.GetClubProfileById(clubId);
             return Ok(clubProfile);
         }
 
         [HttpGet("{clubId}/info")]
-        public async Task<IActionResult> GetClubInfoById(string clubId)
+        public async Task<IActionResult> GetClubInfoById(Guid clubId)
         {
             try
             {
@@ -74,7 +74,7 @@ namespace T2JuniorAPI.Controllers
         // PUT: api/Clubs/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutClub(string id, Club club)
+        public async Task<IActionResult> PutClub(Guid id, Club club)
         {
             if (id != club.Id)
             {
@@ -117,7 +117,7 @@ namespace T2JuniorAPI.Controllers
         }
 
         [HttpPost("{clubId}/addUser")]
-        public async Task<IActionResult> AddUserToClub(string clubId, [FromBody] AddUserToClubDTO user)
+        public async Task<IActionResult> AddUserToClub(Guid clubId, [FromBody] AddUserToClubDTO user)
         {
             if (!ModelState.IsValid)
             {
@@ -128,7 +128,7 @@ namespace T2JuniorAPI.Controllers
         }
         // DELETE: api/Clubs/5
         [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteClub(string id)
+        public async Task<IActionResult> DeleteClub(Guid id)
         {
             var club = await _context.Clubs.FindAsync(id);
             if (club == null)
@@ -142,7 +142,7 @@ namespace T2JuniorAPI.Controllers
             return NoContent();
         }
 
-        private bool ClubExists(string id)
+        private bool ClubExists(Guid id)
         {
             return _context.Clubs.Any(e => e.Id == id);
         }

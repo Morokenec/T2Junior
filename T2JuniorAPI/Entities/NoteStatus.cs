@@ -2,12 +2,10 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
-namespace T2JuniorAPI.Models;
+namespace T2JuniorAPI.Entities;
 
-public partial class NoteStatus
+public class NoteStatus : BaseCommonProperties
 {
-    public int Id { get; set; }
-
     [Required]
     public required string Name { get; set; }
 

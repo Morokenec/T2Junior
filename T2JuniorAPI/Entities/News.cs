@@ -1,18 +1,19 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-public class News
+namespace T2JuniorAPI.Entities
 {
-    public int Id { get; set; }
+    public class News : BaseCommonProperties
+    {
+        [Required]
+        public string Title { get; set; }
 
-    [Required]
-    public string Title { get; set; }
+        [Required]
+        public string Content { get; set; }
 
-    [Required]
-    public string Content { get; set; }
+        public DateTime CreatedAt { get; set; }
 
-    public DateTime CreatedAt { get; set; }
+        public Guid UserId { get; set; }
 
-    public string UserId { get; set; }
-
-    public ApplicationUser User { get; set; }
+        public ApplicationUser User { get; set; }
+    }
 }

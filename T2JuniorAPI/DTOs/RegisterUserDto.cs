@@ -27,5 +27,5 @@ public class RegisterUserDto
     public string Gender { get; set; }
 
     [Required]
-    public int OrganizationId { get; set; }
+    public Guid OrganizationId { get; set; }
 }
