@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using T2JuniorAPI.DTOs;
 using T2JuniorAPI.Services;
 
 [ApiController]
@@ -17,5 +18,12 @@ public class OrganizationsController : ControllerBase
     {
         var organizations = await _organizationService.GetAllOrganizationsAsync();
         return Ok(organizations);
+    }
+
+    [HttpPost]
+    public async Task<IActionResult> CreateOrganization([FromBody] OrganizationDto organization)
+    {
+        var result = await _organizationService.CreateOrganization(organization);
+        return Ok(result);
     }
 }
