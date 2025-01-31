@@ -4,12 +4,11 @@ namespace T2JuniorMobile.View.Pages
 {
     public partial class AuthPage : ContentPage
     {
-
         public AuthPage()
         {
             HttpClient _httpClient = new HttpClient();
-            AuthService _authService = new AuthService(_httpClient);
-            BindingContext = new AuthViewModel(_authService);
+            AccountService _accountService = new AccountService(_httpClient);
+            BindingContext = new AuthViewModel(_accountService);
             InitializeComponent();
         }
     }

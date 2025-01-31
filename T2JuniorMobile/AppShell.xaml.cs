@@ -7,6 +7,8 @@ namespace T2JuniorMobile
         public AppShell()
         {
             Routing.RegisterRoute("RegisterPage", typeof(RegisterPage));
+            Routing.RegisterRoute("ConfimPage", typeof(ConfimPage));
+
             InitializeComponent();
         }
     }

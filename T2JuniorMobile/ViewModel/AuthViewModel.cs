@@ -6,17 +6,13 @@ using T2JuniorMobile.View.Pages;
 
 public class AuthViewModel : BaseViewModel
 {
+    public ICommand LoginCommand { get; }
+    public ICommand NavigateRegisterCommand { get; }
+
     private string _email;
     private string _password;
     private string _token;
-    private readonly AuthService _authService;
-
-    public AuthViewModel(AuthService authService)
-    {
-        _authService = authService;
-        LoginCommand = new Command(async () => await LoginAsync());
-        NavigateRegisterCommand = new Command(async () => await NavigateToRegisterPageAsync());
-    }
+    private readonly AccountService _authService;
 
     public string Email
     {
@@ -36,22 +32,32 @@ public class AuthViewModel : BaseViewModel
         set => SetProperty(ref _token, value);
     }
 
-    public ICommand LoginCommand { get; }
-
-    public ICommand NavigateRegisterCommand { get; }
+    public AuthViewModel(AccountService authService)
+    {
+        _authService = authService;
+        LoginCommand = new Command(async () => await LoginAsync());
+        NavigateRegisterCommand = new Command(async () => await NavigateToRegisterPageAsync());
+    }
 
     private async Task LoginAsync()
     {
-        Token = await _authService.LoginAsync(Email, Password);
+        try
+        {
+            Token = await _authService.LoginAsync(Email, Password);
 
-        if (string.IsNullOrEmpty(Token))
-        {
-            await Shell.Current.DisplayAlert("Ошибка", "Неверный email или пароль", "OK");
+            if (string.IsNullOrEmpty(Token))
+            {
+                await Shell.Current.DisplayAlert("Ошибка", "Неверный email или пароль", "OK");
+            }
+            else
+            {
+                await Shell.Current.DisplayAlert("Успех", "Авторизация прошла успешно", "OK");
+                await SecureStorage.SetAsync("jwt_token", Token);
+            }
         }
-        else
+        catch (Exception ex)
         {
-            await Shell.Current.DisplayAlert("Успех", "Авторизация прошла успешно", "OK");
-            await SecureStorage.SetAsync("jwt_token", Token);
+            await Shell.Current.DisplayAlert("Ошибка", "Сервер недоступен", "OK");
         }
     }
 

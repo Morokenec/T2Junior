@@ -1,0 +1,150 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using T2JuniorAPI.Data;
+using T2JuniorAPI.DTOs;
+using T2JuniorAPI.Entities;
+using T2JuniorAPI.Services;
+
+namespace T2JuniorAPI.Controllers
+{
+    [Route("api/[controller]")]
+    [ApiController]
+    public class ClubsController : ControllerBase 
+    { 
+        private readonly IClubService _clubService;
+        private readonly ApplicationDbContext _context;
+
+        public ClubsController(ApplicationDbContext context, IClubService clubService)
+        {
+            _clubService = clubService;
+            _context = context;
+        }
+
+        // GET: api/Clubs
+        [HttpGet]
+        public async Task<ActionResult<IEnumerable<Club>>> GetClubs()
+        {
+            return await _context.Clubs.ToListAsync();
+        }
+
+        // GET: api/Clubs/5
+        [HttpGet("{id}")]
+        public async Task<ActionResult<Club>> GetClub(Guid id)
+        {
+            var club = await _context.Clubs.FindAsync(id);
+
+            if (club == null)
+            {
+                return NotFound();
+            }
+
+            return club;
+        }
+
+        [HttpGet("{clubId}/profile")]
+        public async Task<IActionResult> GetClubProfile(Guid clubId)
+        {
+            var clubProfile = await _clubService.GetClubProfileById(clubId);
+            return Ok(clubProfile);
+        }
+
+        [HttpGet("{clubId}/info")]
+        public async Task<IActionResult> GetClubInfoById(Guid clubId)
+        {
+            try
+            {
+                var clubInfo = await _clubService.GetClubInfoById(clubId);
+                return Ok(clubInfo);
+            }
+            catch (ApplicationException ex)
+            {
+                return NotFound(ex.Message); // Возвращаем 404, если клуб не найден
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, "Internal server error: " + ex.Message); // Обработка других ошибок
+            }
+        }
+
+        // PUT: api/Clubs/5
+        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
+        [HttpPut("{id}")]
+        public async Task<IActionResult> PutClub(Guid id, Club club)
+        {
+            if (id != club.Id)
+            {
+                return BadRequest();
+            }
+
+            _context.Entry(club).State = EntityState.Modified;
+
+            try
+            {
+                await _context.SaveChangesAsync();
+            }
+            catch (DbUpdateConcurrencyException)
+            {
+                if (!ClubExists(id))
+                {
+                    return NotFound();
+                }
+                else
+                {
+                    throw;
+                }
+            }
+
+            return NoContent();
+        }
+
+        // POST: api/Clubs
+        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
+        [HttpPost]
+        public async Task<IActionResult> CreateClub([FromBody] CreateClubDTO club)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            var result = await _clubService.CreateClub(club);
+            return Ok(result);
+        }
+
+        [HttpPost("{clubId}/addUser")]
+        public async Task<IActionResult> AddUserToClub(Guid clubId, [FromBody] AddUserToClubDTO user)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+            var result = await _clubService.AddUserToClub(clubId, user);
+            return Ok(result);
+        }
+        // DELETE: api/Clubs/5
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> DeleteClub(Guid id)
+        {
+            var club = await _context.Clubs.FindAsync(id);
+            if (club == null)
+            {
+                return NotFound();
+            }
+
+            _context.Clubs.Remove(club);
+            await _context.SaveChangesAsync();
+
+            return NoContent();
+        }
+
+        private bool ClubExists(Guid id)
+        {
+            return _context.Clubs.Any(e => e.Id == id);
+        }
+    }
+}
