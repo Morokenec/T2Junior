@@ -52,7 +52,8 @@ public class AuthViewModel : BaseViewModel
             else
             {
                 await Shell.Current.DisplayAlert("Успех", "Авторизация прошла успешно", "OK");
-                await SecureStorage.SetAsync("jwt_token", Token);
+                await SecureStorage.Default.SetAsync("jwt_token", Token);
+                
             }
         }
         catch (Exception ex)
