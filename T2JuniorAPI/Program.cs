@@ -40,6 +40,7 @@ builder.Services.AddScoped<IAccountService, AccountService>();
 builder.Services.AddScoped<ITokenService, TokenService>();
 builder.Services.AddScoped<IOrganizationService, OrganizationService>();
 builder.Services.AddScoped<IClubService, ClubService>();
+builder.Services.AddScoped<IClubRoleService, ClubRoleService>();
 builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
