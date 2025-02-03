@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿using AutoMapper;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -17,16 +18,18 @@ namespace T2JuniorAPI.Services
     {
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly SignInManager<ApplicationUser> _signInManager;
+        private readonly IMapper _mapper;
 
         /// <summary>
         /// Конструктор для инициализации сервисов UserManager и SignInManager.
         /// </summary>
         /// <param name="userManager">Менеджер пользователей для работы с пользователями.</param>
         /// <param name="signInManager">Менеджер входа для работы с аутентификацией.</param>
-        public AccountService(UserManager<ApplicationUser> userManager, SignInManager<ApplicationUser> signInManager)
+        public AccountService(UserManager<ApplicationUser> userManager, SignInManager<ApplicationUser> signInManager, IMapper mapper)
         {
             _userManager = userManager;
             _signInManager = signInManager;
+            _mapper = mapper;
         }
 
         /// <summary>
@@ -37,18 +40,7 @@ namespace T2JuniorAPI.Services
         /// <exception cref="ApplicationException">Выбрасывается, если регистрация не удалась.</exception>
         public async Task<string> RegisterUserAsync(RegisterUserDto registerUserDto)
         {
-            var user = new ApplicationUser
-            {
-                UserName = registerUserDto.Email,
-                Email = registerUserDto.Email,
-                FirstName = registerUserDto.FirstName,
-                LastName = registerUserDto.LastName,
-                MiddleName = registerUserDto.MiddleName,
-                PhoneNumber = registerUserDto.PhoneNumber,
-                DateOfBirth = registerUserDto.DateOfBirth,
-                Gender = registerUserDto.Gender,
-                OrganizationId = registerUserDto.OrganizationId
-            };
+            var user = _mapper.Map<ApplicationUser>(registerUserDto);
 
             var result = await _userManager.CreateAsync(user, registerUserDto.Password);
             if (!result.Succeeded)
@@ -65,24 +57,22 @@ namespace T2JuniorAPI.Services
         /// <param name="userId">Идентификатор пользователя.</param>
         /// <returns>Объект профиля пользователя.</returns>
         /// <exception cref="ApplicationException">Выбрасывается, если пользователь не найден.</exception>
-        public async Task<UserProfileDTO> GetUserProfileAsync(string userId)
+        public async Task<UserProfileDTO> GetUserProfileAsync(Guid userId)
         {
-            var user = await _userManager.FindByIdAsync(userId);
+            var user = await _userManager.Users
+                .Include(u => u.Organization)
+                .Include(u => u.Subscribers)
+                .Include(u => u.ClubUsers)
+                .FirstOrDefaultAsync(u => u.Id == userId);
             if (user == null)
             {
                 throw new ApplicationException("User not found");
             }
 
-            return new UserProfileDTO
-            {
-                Id = user.Id,
-                FullName = $"{user.FirstName} {user.LastName}",
-                RoleName = (await _userManager.GetRolesAsync(user)).FirstOrDefault() ?? "No Role",
-                SubscibersCount = user.Subscribers?.Count ?? 0,
-                SubscriptionsCount = user.Subscribers?.Count ?? 0,
-                ClubsCount = user.ClubUsers?.Count ?? 0,
-                PostAndOrganization = user.Organization?.Name ?? "N/A"
-            };
+            var userProfile = _mapper.Map<UserProfileDTO>(user);
+            userProfile.RoleName = (await _userManager.GetRolesAsync(user)).FirstOrDefault() ?? "No Role";
+
+            return userProfile;
         }
 
         /// <summary>
@@ -92,21 +82,11 @@ namespace T2JuniorAPI.Services
         /// <param name="updateUserDto">Объект с новыми данными для обновления.</param>
         /// <returns>Строка с результатом обновления.</returns>
         /// <exception cref="ApplicationException">Выбрасывается, если пользователь не найден или обновление не удалось.</exception>
-        public async Task<string> UpdateUserProfileAsync(string userId, UpdateUserDto updateUserDto)
+        public async Task<string> UpdateUserProfileAsync(Guid userId, UpdateUserDto updateUserDto)
         {
-            var user = await _userManager.FindByIdAsync(userId);
-            if (user == null)
-            {
-                throw new ApplicationException("User not found");
-            }
+            var user = await _userManager.FindByIdAsync(userId.ToString()) ?? throw new ApplicationException("User not found");
 
-            user.FirstName = updateUserDto.FirstName;
-            user.LastName = updateUserDto.LastName;
-            user.MiddleName = updateUserDto.MiddleName;
-            user.PhoneNumber = updateUserDto.PhoneNumber;
-            user.DateOfBirth = updateUserDto.DateOfBirth;
-            user.Gender = updateUserDto.Gender;
-            user.OrganizationId = updateUserDto.OrganizationId;
+            _mapper.Map(updateUserDto, user);
 
             var result = await _userManager.UpdateAsync(user);
             if (!result.Succeeded)
@@ -123,9 +103,9 @@ namespace T2JuniorAPI.Services
         /// <param name="userId">Идентификатор пользователя, которого нужно удалить.</param>
         /// <returns>Строка с результатом удаления пользователя.</returns>
         /// <exception cref="ApplicationException">Выбрасывается, если пользователь не найден или удаление не удалось.</exception>
-        public async Task<string> DeleteUserAsync(string userId)
+        public async Task<string> DeleteUserAsync(Guid userId)
         {
-            var user = await _userManager.FindByIdAsync(userId);
+            var user = await _userManager.FindByIdAsync(userId.ToString());
             if (user == null)
             {
                 throw new ApplicationException("User not found");
