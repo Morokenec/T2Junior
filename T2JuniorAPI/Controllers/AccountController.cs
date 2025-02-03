@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Identity;
 using System.Threading.Tasks;
 using T2JuniorAPI.Services;
 using T2JuniorAPI.DTOs;
+using Microsoft.DotNet.Scaffolding.Shared.Messaging;
 
 [ApiController]
 [Route("api/[controller]")]
@@ -57,7 +58,7 @@ public class AccountController : ControllerBase
     }
 
     [HttpGet("profile/{id}")]
-    public IActionResult GetUserProfile(string id)
+    public IActionResult GetUserProfile(Guid id)
     {
         var userProfile = _accountService.GetUserProfileAsync(id);
 
@@ -67,5 +68,33 @@ public class AccountController : ControllerBase
         }
 
         return Ok(userProfile);
+    }
+
+    [HttpPut("change/{id}")]
+    public async Task<IActionResult> UpdateUserProfileById(Guid id, [FromBody] UpdateUserDto updateUserDto)
+    {
+        try
+        {
+            var update_user = await _accountService.UpdateUserProfileAsync(id, updateUserDto);
+            return Ok(update_user);
+        }
+        catch (ApplicationException ex)
+        {
+            return BadRequest(new { Error = ex.Message });
+        }
+    }
+
+    [HttpDelete("delete/{id}")]
+    public async Task<IActionResult> DeleteUser(Guid id)
+    {
+        try
+        {
+            await _accountService.DeleteUserAsync(id);
+            return Ok(new { Message = "User successfully deleted" });
+        }
+        catch (ApplicationException ex)
+        {
+            return BadRequest(new { Message = ex.Message });
+        }
     }
 }
