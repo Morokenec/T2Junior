@@ -33,6 +33,7 @@ namespace T2JuniorMobile
             builder.Services.AddTransient<ConfimPage>();
             builder.Services.AddTransient<AuthPage>();
             builder.Services.AddTransient<RegisterPage>();
+            builder.Services.AddTransient<ClubsPage>();
 #if DEBUG
             builder.Logging.AddDebug();
 #endif

@@ -24,10 +24,11 @@
     </TabBar>
 
     <ShellContent
-        ContentTemplate="{DataTemplate local:ProfilePage}"
+        ContentTemplate="{DataTemplate local:ClubsPage}"
         Route="MainPage"
      />
     
     <ShellContent Title="Register" ContentTemplate="{DataTemplate local:RegisterPage}" />
     <ShellContent Title="Confim" ContentTemplate="{DataTemplate local:ConfimPage}" />
+    <ShellContent Title="Clubs" ContentTemplate="{DataTemplate local:ClubsPage}" />
 </Shell>
