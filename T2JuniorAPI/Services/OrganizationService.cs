@@ -17,7 +17,9 @@ public class OrganizationService : IOrganizationService
 
     public async Task<List<OrganizationDto>> GetAllOrganizationsAsync()
     {
-        var organizations = await _context.Organizations.ToListAsync();
+        var organizations = await _context.Organizations
+            .Where(o => o.IsDelete == false)
+            .ToListAsync();
         return _mapper.Map<List<OrganizationDto>>(organizations);
     }
 

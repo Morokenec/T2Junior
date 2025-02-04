@@ -12,12 +12,14 @@ namespace T2JuniorAPI.Services
         private readonly ApplicationDbContext _context;
         private readonly IMapper _subscribersMapper;
         private readonly IMapper _subscriptionsMapper;
+        private readonly IMapper _mapper;
 
-        public UserService(ApplicationDbContext context, SubscribersProfile subscribersProfile, SubscriptionsProfile subscriptionsProfile)
+        public UserService(ApplicationDbContext context, SubscribersProfile subscribersProfile, SubscriptionsProfile subscriptionsProfile, IMapper mapper)
         {
             _context = context;
             _subscribersMapper = new MapperConfiguration(cfg => cfg.AddProfile(subscribersProfile)).CreateMapper(); ;
             _subscriptionsMapper = new MapperConfiguration(cfg => cfg.AddProfile(subscriptionsProfile)).CreateMapper();
+            _mapper = mapper;
         }
 
         public async Task<string> SubscribeUserToUser(SubscribeUserDTO subscribeUser)
@@ -33,11 +35,7 @@ namespace T2JuniorAPI.Services
                 return "Subscriber not found";
             }
 
-            var userSubscriber = new UserSubscribers
-            {
-                IdUser = subscribeUser.UserId,
-                IdSubscriber = subscribeUser.SubscriberId,
-            };
+            var userSubscriber = _mapper.Map<UserSubscribers>(subscribeUser);
 
             await _context.UserSubscribers.AddAsync(userSubscriber);
 
@@ -51,6 +49,29 @@ namespace T2JuniorAPI.Services
             }
 
             return "User successfully subscribe";
+        }
+        
+        public async Task<string> UnsubscribeUserFromUser(UnsubscribeUserDTO unsubscribeUser)
+        {
+            var userSubscriber = await _context.UserSubscribers
+                .FirstOrDefaultAsync(us => us.IdUser == unsubscribeUser.SubscriptionId && us.IdSubscriber == unsubscribeUser.UserId && !us.IsDelete);
+            
+            if (userSubscriber == null)
+                return "Subscription not found";
+            
+            userSubscriber.IsDelete = true;
+            userSubscriber.UpdateDate = DateTime.Now;
+
+            try
+            {
+                await _context.SaveChangesAsync();
+            }
+            catch (DbUpdateException ex)
+            {
+                return $"An error occurred while unsubscribing the user: {ex.Message}";
+            }
+
+            return "User successfully unsubscribed";
         }
 
         public async Task<IEnumerable<SubscriberProfileDTO>> GetSubscribers(Guid userId)

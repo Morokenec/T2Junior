@@ -136,6 +136,7 @@ namespace T2JuniorAPI.Services
                 .Where(c => c.Id == clubId)
                 .ProjectTo<ClubProfileDTO>(_mapper.ConfigurationProvider)
                 .FirstOrDefaultAsync();
+
             if (club == null)
             {
                 throw new ApplicationException("Club not found");
