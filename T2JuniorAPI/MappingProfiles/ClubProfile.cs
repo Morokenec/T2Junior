@@ -26,6 +26,11 @@ namespace T2JuniorAPI.MappingProfiles
                 .ForMember(dest => dest.IsSubscribe, opt => opt.Ignore());
 
             CreateMap<UpdateClubDTO, Club>();
+
+            CreateMap<AddUserToClubDTO, ClubUser>()
+                .ForMember(dest => dest.IdClub, opt => opt.Ignore())
+                .ForMember(dest => dest.IdUser, opt => opt.MapFrom(src => src.UserId))
+                .ForMember(dest => dest.IdRole, opt => opt.MapFrom(src => src.RoleId));
         }
     }
 }

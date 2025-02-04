@@ -61,6 +61,8 @@ namespace T2JuniorAPI.Services
             var clubRole = await _context.ClubRoles.FindAsync(id) ?? throw new ApplicationException("Club role not found");
 
             _mapper.Map(clubRoleDto, clubRole);
+            clubRole.UpdateDate = DateTime.Now;
+
             await _context.SaveChangesAsync();
 
             return _mapper.Map<ClubRolesDTO>(clubRole);
@@ -75,6 +77,7 @@ namespace T2JuniorAPI.Services
             }
 
             clubRole.IsDelete = true;
+            clubRole.UpdateDate = DateTime.Now;
 
             await _context.SaveChangesAsync();
 

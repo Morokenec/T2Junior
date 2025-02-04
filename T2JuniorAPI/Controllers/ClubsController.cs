@@ -111,6 +111,15 @@ namespace T2JuniorAPI.Controllers
             var result = await _clubService.AddUserToClub(clubId, user);
             return Ok(result);
         }
+
+        // DELETE: api/Clubs/{clubId}/deleteUser/{userId}
+        [HttpDelete("{clubId}/deleteUser/{userId}")]
+        public async Task<IActionResult> DeleteUserFromClub(Guid clubId, Guid userId)
+        {
+            var result = await _clubService.DeleteUserFromClub(clubId, userId);
+            return Ok(result);
+        }
+
         // DELETE: api/Clubs/5
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteClub(Guid id)

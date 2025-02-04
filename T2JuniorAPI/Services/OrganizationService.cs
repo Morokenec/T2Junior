@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using AutoMapper;
+using Microsoft.EntityFrameworkCore;
 using T2JuniorAPI.Data;
 using T2JuniorAPI.DTOs;
 using T2JuniorAPI.Services;
@@ -6,21 +7,18 @@ using T2JuniorAPI.Services;
 public class OrganizationService : IOrganizationService
 {
     private readonly ApplicationDbContext _context;
+    private readonly IMapper _mapper;
 
-    public OrganizationService(ApplicationDbContext context)
+    public OrganizationService(ApplicationDbContext context, IMapper mapper)
     {
         _context = context;
+        _mapper = mapper;
     }
 
     public async Task<List<OrganizationDto>> GetAllOrganizationsAsync()
     {
-        return await _context.Organizations
-            .Select(o => new OrganizationDto
-            {
-                Id = o.Id,
-                Name = o.Name
-            })
-            .ToListAsync();
+        var organizations = await _context.Organizations.ToListAsync();
+        return _mapper.Map<List<OrganizationDto>>(organizations);
     }
 
     public async Task<string> CreateOrganization(OrganizationDto organization)
@@ -30,14 +28,7 @@ public class OrganizationService : IOrganizationService
             return "Organization alredy exist";
         }
 
-        var newOrganzation = new Organization
-        {
-            Id = Guid.NewGuid(),
-            Name = organization.Name,
-            CreationDate = DateTime.Now,
-            UpdateDate = DateTime.Now,
-            IsDelete = false,
-        };
+        var newOrganzation = _mapper.Map<Organization>(organization);
 
         await _context.Organizations.AddAsync(newOrganzation);
 
@@ -51,6 +42,49 @@ public class OrganizationService : IOrganizationService
         }
 
         return "success";
+    }
 
+    public async Task<string> UpdateOrganization(Guid id, OrganizationDto organizationDto)
+    {
+        var organization = await _context.Organizations.FindAsync(id);
+        if (organization == null)
+            return "Organization not found";
+
+        _mapper.Map(organizationDto, organization);
+        organization.UpdateDate = DateTime.Now;
+
+        try
+        {
+            await _context.SaveChangesAsync();
+        }
+        catch (DbUpdateException ex)
+        { 
+            return $"An error occurred while updating the organization: {ex.Message}";
+        }
+
+        return "success";
+    }
+
+    public async Task<string> DeleteOrganization(Guid id)
+    {
+        var organization = await _context.Organizations.FindAsync(id);
+        if (organization == null)
+        {
+            return "Organization not found";
+        }
+
+        organization.IsDelete = true;
+        organization.UpdateDate = DateTime.Now;
+
+        try
+        {
+            await _context.SaveChangesAsync();
+        }
+        catch (DbUpdateException ex)
+        {
+            return $"An error occurred while deleting the organization: {ex.Message}";
+        }
+
+        return "Success";
     }
 }

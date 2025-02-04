@@ -92,6 +92,7 @@ namespace T2JuniorAPI.Services
             }
 
             var clubUser = _mapper.Map<ClubUser>(new { IdClub = clubId, IdUser = user.UserId, IdRole = user.RoleId });
+            clubUser.UpdateDate = DateTime.Now;
 
             await _context.ClubUsers.AddAsync(clubUser);
 
@@ -107,6 +108,28 @@ namespace T2JuniorAPI.Services
             return "User successfully added to the club";
         }
 
+        public async Task<string> DeleteUserFromClub(Guid clubId, Guid userId)
+        {
+            var clubUser = await _context.ClubUsers
+                .FirstOrDefaultAsync(cu => cu.IdClub == clubId && cu.IdUser == userId);
+
+            if (clubUser == null)
+                return "User not found in the club";
+
+            clubUser.IsDelete = true;
+            clubUser.UpdateDate = DateTime.Now;
+
+            try
+            {
+                await _context.SaveChangesAsync();
+            }
+            catch (DbUpdateException ex)
+            {
+                return $"An error occurred while deleting the user from the club: {ex.Message}";
+            }
+
+            return "User successfully deleted from the club";
+        }
         public async Task<ClubProfileDTO> GetClubProfileById(Guid clubId)
         {
             var club = await _context.Clubs
@@ -146,6 +169,7 @@ namespace T2JuniorAPI.Services
             var club = await _context.Clubs.FindAsync(clubId) ?? throw new ApplicationException("Club not found");
             
             _mapper.Map(updateClubDTO, club);
+            club.UpdateDate = DateTime.Now;
             await _context.SaveChangesAsync();
 
             return "Club updated successfully";
@@ -156,6 +180,7 @@ namespace T2JuniorAPI.Services
             var club = await _context.Clubs.FindAsync(id) ?? throw new ApplicationException("Club not found");
 
             club.IsDelete = true;
+            club.UpdateDate = DateTime.Now;
             await _context.SaveChangesAsync();
 
             return "Club Deleted successfully";
