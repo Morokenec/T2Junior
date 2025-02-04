@@ -21,6 +21,7 @@ namespace T2JuniorAPI.Services
         public async Task<List<ClubRolesDTO>> GetAllClubRolesAsync()
         {
             return await _context.ClubRoles
+                .Where(cr => cr.IsDelete ==  false)
                 .ProjectTo<ClubRolesDTO>(_mapper.ConfigurationProvider)
                 .ToListAsync();
         }
@@ -73,7 +74,8 @@ namespace T2JuniorAPI.Services
                 throw new ApplicationException("Club role not found");
             }
 
-            _context.ClubRoles.Remove(clubRole);
+            clubRole.IsDelete = true;
+
             await _context.SaveChangesAsync();
 
             return true;

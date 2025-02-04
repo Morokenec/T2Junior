@@ -56,12 +56,7 @@ namespace T2JuniorAPI.Services
                 await _context.SaveChangesAsync();
             }
 
-            var clubUser = new ClubUser
-            {
-                IdClub = newClub.Id,
-                IdUser = club.CreatorUserId,
-                IdRole = role.Id
-            };
+            var clubUser = _mapper.Map<ClubUser>(new { IdClub = newClub.Id, IdUser = club.CreatorUserId, IdRole = role.Id });
 
             await _context.ClubUsers.AddAsync(clubUser);
             try
@@ -96,12 +91,7 @@ namespace T2JuniorAPI.Services
                 return "Club not found";
             }
 
-            var clubUser = new ClubUser
-            {
-                IdClub = clubId,
-                IdUser = user.UserId,
-                IdRole = user.RoleId
-            };
+            var clubUser = _mapper.Map<ClubUser>(new { IdClub = clubId, IdUser = user.UserId, IdRole = user.RoleId });
 
             await _context.ClubUsers.AddAsync(clubUser);
 
@@ -129,6 +119,46 @@ namespace T2JuniorAPI.Services
             }
 
             return club;
+        }
+
+        public async Task<List<AllClubsDTO>> GetAllClubsByUserId(Guid userId)
+        {
+            var clubs = await _context.Clubs
+                .Where(c => c.IsDelete == false)
+                .ProjectTo<AllClubsDTO>(_mapper.ConfigurationProvider)
+                .ToListAsync();
+
+            var userClubsIds = await _context.ClubUsers
+                .Where(cu => cu.IdUser == userId)
+                .Select(cu => cu.IdClub)
+                .ToListAsync();
+
+            foreach (var club in clubs)
+            {
+                club.IsSubscribe = userClubsIds.Contains(club.Id);
+            }
+
+            return clubs;
+        }
+
+        public async Task<string> UpdateClub(Guid clubId, UpdateClubDTO updateClubDTO)
+        {
+            var club = await _context.Clubs.FindAsync(clubId) ?? throw new ApplicationException("Club not found");
+            
+            _mapper.Map(updateClubDTO, club);
+            await _context.SaveChangesAsync();
+
+            return "Club updated successfully";
+        }
+
+        public async Task<string> DeleteClub(Guid id)
+        {
+            var club = await _context.Clubs.FindAsync(id) ?? throw new ApplicationException("Club not found");
+
+            club.IsDelete = true;
+            await _context.SaveChangesAsync();
+
+            return "Club Deleted successfully";
         }
     }
 }

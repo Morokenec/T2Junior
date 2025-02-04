@@ -105,11 +105,7 @@ namespace T2JuniorAPI.Services
         /// <exception cref="ApplicationException">Выбрасывается, если пользователь не найден или удаление не удалось.</exception>
         public async Task<string> DeleteUserAsync(Guid userId)
         {
-            var user = await _userManager.FindByIdAsync(userId.ToString());
-            if (user == null)
-            {
-                throw new ApplicationException("User not found");
-            }
+            var user = await _userManager.FindByIdAsync(userId.ToString()) ?? throw new ApplicationException("User not found");
 
             var result = await _userManager.DeleteAsync(user);
             if (!result.Succeeded)

@@ -26,10 +26,10 @@ namespace T2JuniorAPI.Controllers
         }
 
         // GET: api/Clubs
-        [HttpGet]
-        public async Task<ActionResult<IEnumerable<Club>>> GetClubs()
+        [HttpGet("by_user/{userId}")]
+        public async Task<ActionResult<List<AllClubsDTO>>> GetAllClubsByUserId(Guid userId)
         {
-            return await _context.Clubs.ToListAsync();
+            return await _clubService.GetAllClubsByUserId(userId);
         }
 
         // GET: api/Clubs/5
@@ -74,32 +74,17 @@ namespace T2JuniorAPI.Controllers
         // PUT: api/Clubs/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutClub(Guid id, Club club)
+        public async Task<IActionResult> PutClub(Guid id, [FromBody] UpdateClubDTO updateClubDTO)
         {
-            if (id != club.Id)
-            {
-                return BadRequest();
-            }
-
-            _context.Entry(club).State = EntityState.Modified;
-
             try
             {
-                await _context.SaveChangesAsync();
+                var result = await _clubService.UpdateClub(id, updateClubDTO);
+                return Ok(result);
             }
-            catch (DbUpdateConcurrencyException)
+            catch (ApplicationException ex)
             {
-                if (!ClubExists(id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
+                return NotFound(ex.Message);
             }
-
-            return NoContent();
         }
 
         // POST: api/Clubs
@@ -130,21 +115,15 @@ namespace T2JuniorAPI.Controllers
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteClub(Guid id)
         {
-            var club = await _context.Clubs.FindAsync(id);
-            if (club == null)
+            try
             {
-                return NotFound();
+                var result = await _clubService.DeleteClub(id);
+                return Ok(result);
             }
-
-            _context.Clubs.Remove(club);
-            await _context.SaveChangesAsync();
-
-            return NoContent();
-        }
-
-        private bool ClubExists(Guid id)
-        {
-            return _context.Clubs.Any(e => e.Id == id);
+            catch (ApplicationException ex)
+            {
+                return NotFound(ex.Message);
+            }
         }
     }
 }
