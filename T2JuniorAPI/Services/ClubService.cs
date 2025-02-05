@@ -26,9 +26,7 @@ namespace T2JuniorAPI.Services
                 .FirstOrDefaultAsync();
 
             if (club == null)
-            {
-                throw new ApplicationException("Club not found");
-            }
+                return null;
 
             // Получаем пользователей клуба
             var users = await _context.ClubUsers
@@ -87,9 +85,7 @@ namespace T2JuniorAPI.Services
         {
             var club = await _context.Clubs.FindAsync(clubId);
             if (club == null)
-            {
-                return "Club not found";
-            }
+                return null;
 
             var clubUser = _mapper.Map<ClubUser>(new { IdClub = clubId, IdUser = user.UserId, IdRole = user.RoleId });
             clubUser.UpdateDate = DateTime.Now;
@@ -138,9 +134,7 @@ namespace T2JuniorAPI.Services
                 .FirstOrDefaultAsync();
 
             if (club == null)
-            {
-                return null;
-            }
+                return null;    
 
             return club;
         }
@@ -167,7 +161,9 @@ namespace T2JuniorAPI.Services
 
         public async Task<string> UpdateClub(Guid clubId, UpdateClubDTO updateClubDTO)
         {
-            var club = await _context.Clubs.FindAsync(clubId) ?? throw new ApplicationException("Club not found");
+            var club = await _context.Clubs.FindAsync(clubId);
+            if (club == null)
+                return null;
             
             _mapper.Map(updateClubDTO, club);
             club.UpdateDate = DateTime.Now;
@@ -178,7 +174,9 @@ namespace T2JuniorAPI.Services
 
         public async Task<string> DeleteClub(Guid id)
         {
-            var club = await _context.Clubs.FindAsync(id) ?? throw new ApplicationException("Club not found");
+            var club = await _context.Clubs.FindAsync(id);
+            if (club == null)
+                return null;
 
             club.IsDelete = true;
             club.UpdateDate = DateTime.Now;

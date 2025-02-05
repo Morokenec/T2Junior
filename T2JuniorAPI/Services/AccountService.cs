@@ -66,7 +66,7 @@ namespace T2JuniorAPI.Services
                 .FirstOrDefaultAsync(u => u.Id == userId);
             if (user == null)
             {
-                throw new ApplicationException("User not found");
+                return null;
             }
 
             var userProfile = _mapper.Map<UserProfileDTO>(user);

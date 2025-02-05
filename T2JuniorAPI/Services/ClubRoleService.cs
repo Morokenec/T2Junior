@@ -35,7 +35,7 @@ namespace T2JuniorAPI.Services
 
             if (clubRole == null)
             {
-                throw new ApplicationException("Club role not found");
+                return null;
             }
 
             return clubRole;
@@ -56,9 +56,11 @@ namespace T2JuniorAPI.Services
         public async Task<ClubRolesDTO> UpdateClubRoleAsync(Guid id, ClubRolesDTO clubRoleDto)
         {
             if (string.IsNullOrWhiteSpace(clubRoleDto.Name))
-                throw new ApplicationException("Name is required");
+                return null;
 
-            var clubRole = await _context.ClubRoles.FindAsync(id) ?? throw new ApplicationException("Club role not found");
+            var clubRole = await _context.ClubRoles.FindAsync(id);
+            if (clubRole == null)
+                return null;
 
             _mapper.Map(clubRoleDto, clubRole);
             clubRole.UpdateDate = DateTime.Now;
@@ -72,9 +74,7 @@ namespace T2JuniorAPI.Services
         {
             var clubRole = await _context.ClubRoles.FindAsync(id);
             if (clubRole == null)
-            {
-                throw new ApplicationException("Club role not found");
-            }
+                return false;
 
             clubRole.IsDelete = true;
             clubRole.UpdateDate = DateTime.Now;

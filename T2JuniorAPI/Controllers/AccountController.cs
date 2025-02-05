@@ -108,7 +108,7 @@ public class AccountController : ControllerBase
         }
         catch (ApplicationException ex)
         {
-            return BadRequest(new { Message = ex.Message });
+            return BadRequest(new { Error = ex.Message });
         }
     }
 }

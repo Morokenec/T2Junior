@@ -66,9 +66,9 @@ namespace T2JuniorAPI.Services
             {
                 await _context.SaveChangesAsync();
             }
-            catch (DbUpdateException ex)
+            catch (DbUpdateException)
             {
-                return $"An error occurred while unsubscribing the user: {ex.Message}";
+                return null;
             }
 
             return "User successfully unsubscribed";

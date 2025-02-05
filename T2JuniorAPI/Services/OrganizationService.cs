@@ -38,9 +38,9 @@ public class OrganizationService : IOrganizationService
         {
             await _context.SaveChangesAsync();
         }
-        catch (DbUpdateException ex)
+        catch (DbUpdateException)
         {
-            return $"an error while saving organization: {ex.Message}";
+            return null;
         }
 
         return "success";
@@ -59,9 +59,9 @@ public class OrganizationService : IOrganizationService
         {
             await _context.SaveChangesAsync();
         }
-        catch (DbUpdateException ex)
-        { 
-            return $"An error occurred while updating the organization: {ex.Message}";
+        catch (DbUpdateException)
+        {
+            return null;
         }
 
         return "success";
@@ -82,9 +82,9 @@ public class OrganizationService : IOrganizationService
         {
             await _context.SaveChangesAsync();
         }
-        catch (DbUpdateException ex)
+        catch (DbUpdateException)
         {
-            return $"An error occurred while deleting the organization: {ex.Message}";
+            return null;
         }
 
         return "Success";
