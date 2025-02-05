@@ -83,6 +83,20 @@ public class AccountController : ControllerBase
             return BadRequest(new { Error = ex.Message });
         }
     }
+    
+    [HttpPut("password_recovery")]
+    public async Task<IActionResult> RecoveryUserPassword([FromBody] RecoveryPasswordDTO recoveryPassword)
+    {
+        try
+        {
+            var recovery = await _accountService.UserPasswordRecovery(recoveryPassword);
+            return Ok(recovery);
+        }
+        catch (ApplicationException ex)
+        {
+            return BadRequest(new { Error = ex.Message });
+        }
+    }
 
     [HttpDelete("delete/{id}")]
     public async Task<IActionResult> DeleteUser(Guid id)

@@ -139,7 +139,7 @@ namespace T2JuniorAPI.Services
 
             if (club == null)
             {
-                throw new ApplicationException("Club not found");
+                return null;
             }
 
             return club;

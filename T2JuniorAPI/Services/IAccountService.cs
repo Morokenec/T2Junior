@@ -7,4 +7,5 @@ public interface IAccountService
     Task<string> RegisterUserAsync(RegisterUserDto registerUserDto);
     Task<string> UpdateUserProfileAsync(Guid userId, UpdateUserDto updateUserDto);
     Task<string> DeleteUserAsync(Guid userId);
+    Task<string> UserPasswordRecovery(RecoveryPasswordDTO recoveryPassword);
 }

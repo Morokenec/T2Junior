@@ -97,6 +97,20 @@ namespace T2JuniorAPI.Services
             return "User profile updated successfully";
         }
 
+        public async Task<string> UserPasswordRecovery(RecoveryPasswordDTO recoveryPassword)
+        {
+            var user = await _userManager.FindByEmailAsync(recoveryPassword.Email);
+            if (user == null)
+                return "User not found";
+
+            var token = await _userManager.GeneratePasswordResetTokenAsync(user);
+            var result = await _userManager.ResetPasswordAsync(user, token, recoveryPassword.Password);
+            if (!result.Succeeded)
+                return "Password recovery failed";
+
+            return "user password successfully recovered";
+        }
+
         /// <summary>
         /// Удаляет пользователя из системы.
         /// </summary>
