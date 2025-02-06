@@ -1,9 +1,9 @@
 ﻿using AutoMapper;
 using Microsoft.EntityFrameworkCore;
 using T2JuniorAPI.Data;
-using T2JuniorAPI.DTOs;
 using T2JuniorAPI.MappingProfiles;
 using T2JuniorAPI.Entities;
+using T2JuniorAPI.DTOs.Users;
 
 namespace T2JuniorAPI.Services
 {

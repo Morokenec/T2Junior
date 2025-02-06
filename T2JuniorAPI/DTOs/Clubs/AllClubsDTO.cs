@@ -1,4 +1,4 @@
-﻿namespace T2JuniorAPI.DTOs
+﻿namespace T2JuniorAPI.DTOs.Clubs
 {
     public class AllClubsDTO
     {

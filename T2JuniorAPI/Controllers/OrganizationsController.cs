@@ -1,5 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using T2JuniorAPI.DTOs;
+using T2JuniorAPI.DTOs.Organizations;
 using T2JuniorAPI.Services;
 
 [ApiController]

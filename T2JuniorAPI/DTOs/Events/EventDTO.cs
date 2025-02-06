@@ -1,7 +1,8 @@
-﻿namespace T2JuniorAPI.DTOs
+﻿namespace T2JuniorAPI.DTOs.Events
 {
-    public class CreateEventDTO
+    public class EventDTO
     {
+        public Guid IdEvent { get; set; }
         public required Guid IdClub { get; set; }
         public required Guid IdDirection { get; set; }
         public required string Name { get; set; }

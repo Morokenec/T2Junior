@@ -1,4 +1,4 @@
-﻿using T2JuniorAPI.DTOs;
+﻿using T2JuniorAPI.DTOs.Events;
 
 namespace T2JuniorAPI.Services
 {

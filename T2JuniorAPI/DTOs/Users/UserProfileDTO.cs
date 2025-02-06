@@ -1,4 +1,4 @@
-﻿namespace T2JuniorAPI.DTOs
+﻿namespace T2JuniorAPI.DTOs.Users
 {
     public class UserProfileDTO
     {
@@ -13,7 +13,7 @@
         public int SubscibersCount { get; set; }
 
         public int SubscriptionsCount { get; set; }
-        
+
         public int ClubsCount { get; set; }
     }
 }

@@ -1,5 +1,5 @@
 ﻿using System.Threading.Tasks;
-using T2JuniorAPI.DTOs;
+using T2JuniorAPI.DTOs.Users;
 
 public interface IAccountService
 {

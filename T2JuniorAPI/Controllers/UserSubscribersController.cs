@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using T2JuniorAPI.Data;
-using T2JuniorAPI.DTOs;
+using T2JuniorAPI.DTOs.Users;
 using T2JuniorAPI.Entities;
 using T2JuniorAPI.Services;
 

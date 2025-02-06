@@ -2,8 +2,8 @@
 using Microsoft.AspNetCore.Identity;
 using System.Threading.Tasks;
 using T2JuniorAPI.Services;
-using T2JuniorAPI.DTOs;
 using Microsoft.DotNet.Scaffolding.Shared.Messaging;
+using T2JuniorAPI.DTOs.Users;
 
 [ApiController]
 [Route("api/[controller]")]

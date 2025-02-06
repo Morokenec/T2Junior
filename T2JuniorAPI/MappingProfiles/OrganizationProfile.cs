@@ -1,5 +1,5 @@
 ﻿using AutoMapper;
-using T2JuniorAPI.DTOs;
+using T2JuniorAPI.DTOs.Organizations;
 
 namespace T2JuniorAPI.MappingProfiles
 {

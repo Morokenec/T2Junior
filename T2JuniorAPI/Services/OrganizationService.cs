@@ -1,7 +1,7 @@
 ﻿using AutoMapper;
 using Microsoft.EntityFrameworkCore;
 using T2JuniorAPI.Data;
-using T2JuniorAPI.DTOs;
+using T2JuniorAPI.DTOs.Organizations;
 using T2JuniorAPI.Services;
 
 public class OrganizationService : IOrganizationService

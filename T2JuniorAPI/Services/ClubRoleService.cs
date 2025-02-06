@@ -2,7 +2,7 @@
 using AutoMapper.QueryableExtensions;
 using Microsoft.EntityFrameworkCore;
 using T2JuniorAPI.Data;
-using T2JuniorAPI.DTOs;
+using T2JuniorAPI.DTOs.ClubRoles;
 using T2JuniorAPI.Entities;
 
 namespace T2JuniorAPI.Services

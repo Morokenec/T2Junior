@@ -1,4 +1,4 @@
-﻿using T2JuniorAPI.DTOs;
+﻿using T2JuniorAPI.DTOs.Users;
 
 namespace T2JuniorAPI.Services
 {
