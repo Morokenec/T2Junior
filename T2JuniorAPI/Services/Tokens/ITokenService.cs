@@ -1,4 +1,4 @@
-﻿namespace T2JuniorAPI.Services
+﻿namespace T2JuniorAPI.Services.Tokens
 {
     public interface ITokenService
     {

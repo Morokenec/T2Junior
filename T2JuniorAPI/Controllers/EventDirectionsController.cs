@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using T2JuniorAPI.Data;
 using T2JuniorAPI.DTOs.Events;
 using T2JuniorAPI.Entities;
-using T2JuniorAPI.Services;
+using T2JuniorAPI.Services.Events;
 
 namespace T2JuniorAPI.Controllers
 {

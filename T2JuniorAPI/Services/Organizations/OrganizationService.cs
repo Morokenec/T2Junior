@@ -2,7 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using T2JuniorAPI.Data;
 using T2JuniorAPI.DTOs.Organizations;
-using T2JuniorAPI.Services;
+using T2JuniorAPI.Services.Organizations;
 
 public class OrganizationService : IOrganizationService
 {

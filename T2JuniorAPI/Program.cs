@@ -5,7 +5,13 @@ using Microsoft.IdentityModel.Tokens;
 using System.Text;
 using T2JuniorAPI.Data;
 using T2JuniorAPI.MappingProfiles;
-using T2JuniorAPI.Services;
+using T2JuniorAPI.Services.Accounts;
+using T2JuniorAPI.Services.Clubs;
+using T2JuniorAPI.Services.ClubRoles;
+using T2JuniorAPI.Services.Events;
+using T2JuniorAPI.Services.Organizations;
+using T2JuniorAPI.Services.Tokens;
+using T2JuniorAPI.Services.Users;
 
 var builder = WebApplication.CreateBuilder(args);
 

@@ -6,7 +6,7 @@ using T2JuniorAPI.DTOs.Clubs;
 using T2JuniorAPI.DTOs.Users;
 using T2JuniorAPI.Entities;
 
-namespace T2JuniorAPI.Services
+namespace T2JuniorAPI.Services.Clubs
 {
     public class ClubService : IClubService
     {
@@ -136,7 +136,7 @@ namespace T2JuniorAPI.Services
                 .FirstOrDefaultAsync();
 
             if (club == null)
-                return null;    
+                return null;
 
             return club;
         }
@@ -166,7 +166,7 @@ namespace T2JuniorAPI.Services
             var club = await _context.Clubs.FindAsync(clubId);
             if (club == null)
                 return null;
-            
+
             _mapper.Map(updateClubDTO, club);
             club.UpdateDate = DateTime.Now;
             await _context.SaveChangesAsync();

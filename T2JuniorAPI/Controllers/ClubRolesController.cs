@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using T2JuniorAPI.DTOs.ClubRoles;
-using T2JuniorAPI.Services;
+using T2JuniorAPI.Services.ClubRoles;
 
 namespace T2JuniorAPI.Controllers
 {

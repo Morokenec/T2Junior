@@ -6,7 +6,7 @@ using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
-using T2JuniorAPI.Services;
+using T2JuniorAPI.Services.Tokens;
 
 public class TokenService : ITokenService
 {

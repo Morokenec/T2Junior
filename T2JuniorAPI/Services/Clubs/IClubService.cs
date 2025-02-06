@@ -2,7 +2,7 @@
 using T2JuniorAPI.DTOs.Users;
 using T2JuniorAPI.Entities;
 
-namespace T2JuniorAPI.Services
+namespace T2JuniorAPI.Services.Clubs
 {
     public interface IClubService
     {

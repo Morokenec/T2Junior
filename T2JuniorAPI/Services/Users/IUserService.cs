@@ -1,6 +1,6 @@
 ﻿using T2JuniorAPI.DTOs.Users;
 
-namespace T2JuniorAPI.Services
+namespace T2JuniorAPI.Services.Users
 {
     public interface IUserService
     {

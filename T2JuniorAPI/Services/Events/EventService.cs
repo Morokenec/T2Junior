@@ -5,7 +5,7 @@ using T2JuniorAPI.Data;
 using T2JuniorAPI.DTOs.Events;
 using T2JuniorAPI.Entities;
 
-namespace T2JuniorAPI.Services
+namespace T2JuniorAPI.Services.Events
 {
     public class EventService : IEventService
     {

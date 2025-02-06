@@ -5,7 +5,7 @@ using T2JuniorAPI.Data;
 using T2JuniorAPI.DTOs.ClubRoles;
 using T2JuniorAPI.Entities;
 
-namespace T2JuniorAPI.Services
+namespace T2JuniorAPI.Services.ClubRoles
 {
     public class ClubRoleService : IClubRoleService
     {
@@ -21,7 +21,7 @@ namespace T2JuniorAPI.Services
         public async Task<List<ClubRolesDTO>> GetAllClubRolesAsync()
         {
             return await _context.ClubRoles
-                .Where(cr => cr.IsDelete ==  false)
+                .Where(cr => cr.IsDelete == false)
                 .ProjectTo<ClubRolesDTO>(_mapper.ConfigurationProvider)
                 .ToListAsync();
         }

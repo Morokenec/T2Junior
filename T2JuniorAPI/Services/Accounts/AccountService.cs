@@ -9,7 +9,7 @@ using T2JuniorAPI.Data;
 using T2JuniorAPI.DTOs.Users;
 using T2JuniorAPI.Entities;
 
-namespace T2JuniorAPI.Services
+namespace T2JuniorAPI.Services.Accounts
 {
     /// <summary>
     /// Сервис для работы с аккаунтами пользователей, включая регистрацию, вход в систему, обновление и удаление профилей.

@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using T2JuniorAPI.DTOs.Organizations;
-using T2JuniorAPI.Services;
+using T2JuniorAPI.Services.Organizations;
 
 [ApiController]
 [Route("api/[controller]")]

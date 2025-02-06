@@ -5,7 +5,7 @@ using T2JuniorAPI.MappingProfiles;
 using T2JuniorAPI.Entities;
 using T2JuniorAPI.DTOs.Users;
 
-namespace T2JuniorAPI.Services
+namespace T2JuniorAPI.Services.Users
 {
     public class UserService : IUserService
     {
@@ -50,15 +50,15 @@ namespace T2JuniorAPI.Services
 
             return "User successfully subscribe";
         }
-        
+
         public async Task<string> UnsubscribeUserFromUser(UnsubscribeUserDTO unsubscribeUser)
         {
             var userSubscriber = await _context.UserSubscribers
                 .FirstOrDefaultAsync(us => us.IdUser == unsubscribeUser.SubscriptionId && us.IdSubscriber == unsubscribeUser.UserId && !us.IsDelete);
-            
+
             if (userSubscriber == null)
                 return "Subscription not found";
-            
+
             userSubscriber.IsDelete = true;
             userSubscriber.UpdateDate = DateTime.Now;
 

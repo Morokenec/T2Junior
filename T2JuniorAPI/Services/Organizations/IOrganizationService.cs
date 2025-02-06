@@ -1,6 +1,6 @@
 ﻿using T2JuniorAPI.DTOs.Organizations;
 
-namespace T2JuniorAPI.Services
+namespace T2JuniorAPI.Services.Organizations
 {
     public interface IOrganizationService
     {

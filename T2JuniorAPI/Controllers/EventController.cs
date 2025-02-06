@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using T2JuniorAPI.DTOs.Events;
-using T2JuniorAPI.Services;
+using T2JuniorAPI.Services.Events;
 
 namespace T2JuniorAPI.Controllers
 {
