@@ -87,7 +87,8 @@ namespace T2JuniorAPI.Services
             if (club == null)
                 return null;
 
-            var clubUser = _mapper.Map<ClubUser>(new { IdClub = clubId, IdUser = user.UserId, IdRole = user.RoleId });
+            var clubUser = _mapper.Map<ClubUser>(user);
+            clubUser.IdClub = clubId;
             clubUser.UpdateDate = DateTime.Now;
 
             await _context.ClubUsers.AddAsync(clubUser);

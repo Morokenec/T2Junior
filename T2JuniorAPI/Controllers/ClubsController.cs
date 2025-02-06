@@ -1,21 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Mvc;
 using T2JuniorAPI.Data;
 using T2JuniorAPI.DTOs;
-using T2JuniorAPI.Entities;
 using T2JuniorAPI.Services;
 
 namespace T2JuniorAPI.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class ClubsController : ControllerBase 
-    { 
+    public class ClubsController : ControllerBase
+    {
         private readonly IClubService _clubService;
         private readonly ApplicationDbContext _context;
 
@@ -32,19 +25,19 @@ namespace T2JuniorAPI.Controllers
             return await _clubService.GetAllClubsByUserId(userId);
         }
 
-        // GET: api/Clubs/5
-        [HttpGet("{id}")]
-        public async Task<ActionResult<Club>> GetClub(Guid id)
-        {
-            var club = await _context.Clubs.FindAsync(id);
+        //// GET: api/Clubs/5
+        //[HttpGet("{id}")]
+        //public async Task<ActionResult<Club>> GetClub(Guid id)
+        //{
+        //    var club = await _context.Clubs.FindAsync(id);
 
-            if (club == null)
-            {
-                return NotFound();
-            }
+        //    if (club == null)
+        //    {
+        //        return NotFound();
+        //    }
 
-            return club;
-        }
+        //    return club;
+        //}
 
         [HttpGet("{clubId}/profile")]
         public async Task<IActionResult> GetClubProfile(Guid clubId)
@@ -93,9 +86,7 @@ namespace T2JuniorAPI.Controllers
         public async Task<IActionResult> CreateClub([FromBody] CreateClubDTO club)
         {
             if (!ModelState.IsValid)
-            {
                 return BadRequest(ModelState);
-            }
 
             var result = await _clubService.CreateClub(club);
             return Ok(result);
@@ -105,9 +96,8 @@ namespace T2JuniorAPI.Controllers
         public async Task<IActionResult> AddUserToClub(Guid clubId, [FromBody] AddUserToClubDTO user)
         {
             if (!ModelState.IsValid)
-            {
                 return BadRequest(ModelState);
-            }
+
             var result = await _clubService.AddUserToClub(clubId, user);
             return Ok(result);
         }

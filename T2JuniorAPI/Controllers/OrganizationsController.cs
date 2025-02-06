@@ -34,9 +34,7 @@ public class OrganizationsController : ControllerBase
     public async Task<IActionResult> UpdateOrganization(Guid id, [FromBody] OrganizationDto organizationDto)
     {
         if (!ModelState.IsValid)
-        {
             return BadRequest(ModelState);
-        }
 
         var result = await _organizationService.UpdateOrganization(id, organizationDto);
         return Ok(result);

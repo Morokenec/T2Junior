@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using T2JuniorAPI.Data;
 
@@ -10,9 +11,11 @@ using T2JuniorAPI.Data;
 namespace T2JuniorAPI.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250206054716_EventMigration")]
+    partial class EventMigration
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder.HasAnnotation("ProductVersion", "8.0.12");
@@ -457,9 +460,6 @@ namespace T2JuniorAPI.Migrations
                         .HasColumnName("Id")
                         .HasColumnOrder(0);
 
-                    b.Property<Guid?>("ClubId")
-                        .HasColumnType("TEXT");
-
                     b.Property<DateTime>("CreationDate")
                         .HasColumnType("TEXT")
                         .HasColumnName("CreationDate")
@@ -475,7 +475,13 @@ namespace T2JuniorAPI.Migrations
                     b.Property<Guid>("IdClub")
                         .HasColumnType("TEXT");
 
+                    b.Property<Guid>("IdClubNavigationId")
+                        .HasColumnType("TEXT");
+
                     b.Property<Guid>("IdDirection")
+                        .HasColumnType("TEXT");
+
+                    b.Property<Guid>("IdDirectionNavigationId")
                         .HasColumnType("TEXT");
 
                     b.Property<bool>("IsDelete")
@@ -507,11 +513,9 @@ namespace T2JuniorAPI.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("ClubId");
+                    b.HasIndex("IdClubNavigationId");
 
-                    b.HasIndex("IdClub");
-
-                    b.HasIndex("IdDirection");
+                    b.HasIndex("IdDirectionNavigationId");
 
                     b.ToTable("Events");
                 });
@@ -912,20 +916,16 @@ namespace T2JuniorAPI.Migrations
 
             modelBuilder.Entity("T2JuniorAPI.Entities.Event", b =>
                 {
-                    b.HasOne("T2JuniorAPI.Entities.Club", null)
-                        .WithMany("Events")
-                        .HasForeignKey("ClubId");
-
                     b.HasOne("T2JuniorAPI.Entities.Club", "IdClubNavigation")
-                        .WithMany()
-                        .HasForeignKey("IdClub")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .WithMany("Events")
+                        .HasForeignKey("IdClubNavigationId")
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("T2JuniorAPI.Entities.EventDirection", "IdDirectionNavigation")
                         .WithMany("Events")
-                        .HasForeignKey("IdDirection")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .HasForeignKey("IdDirectionNavigationId")
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("IdClubNavigation");

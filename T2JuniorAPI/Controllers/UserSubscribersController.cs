@@ -25,15 +25,15 @@ namespace T2JuniorAPI.Controllers
             _context = context;
         }
 
-        [HttpGet("subscribers/{userId}")]
-        public async Task<ActionResult<IEnumerable<SubscriberProfileDTO>>> GetSubscribers(Guid userId)
+        [HttpGet("subscribers")]
+        public async Task<ActionResult<IEnumerable<SubscriberProfileDTO>>> GetSubscribers([FromQuery] Guid userId)
         {
             var subscribers = await _userService.GetSubscribers(userId);
             return Ok(subscribers);
         }
 
-        [HttpGet("subscriptions/{userId}")]
-        public async Task<ActionResult<IEnumerable<SubscriberProfileDTO>>> GetSubscriptions(Guid userId)
+        [HttpGet("subscriptions")]
+        public async Task<ActionResult<IEnumerable<SubscriberProfileDTO>>> GetSubscriptions([FromQuery] Guid userId)
         {
             var subscriptions = await _userService.GetSubscriptions(userId);
             return Ok(subscriptions);

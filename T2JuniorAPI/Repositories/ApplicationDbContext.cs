@@ -36,17 +36,20 @@ namespace T2JuniorAPI.Data
             modelBuilder.Entity<ClubUser>()
                 .HasOne(cu => cu.IdClubNavigation)
                 .WithMany(c => c.ClubUsers)
-                .HasForeignKey(cu => cu.IdClub);
+                .HasForeignKey(cu => cu.IdClub)
+                .OnDelete(DeleteBehavior.Restrict);
 
             modelBuilder.Entity<ClubUser>()
                 .HasOne(cu => cu.IdRoleNavigation)
                 .WithMany(cr => cr.ClubUsers)
-                .HasForeignKey(cu => cu.IdRole);
+                .HasForeignKey(cu => cu.IdRole)
+                .OnDelete(DeleteBehavior.Restrict);
 
             modelBuilder.Entity<ClubUser>()
                 .HasOne(cu => cu.IdUserNavigation)
                 .WithMany(u => u.ClubUsers)
-                .HasForeignKey(cu => cu.IdUser);
+                .HasForeignKey(cu => cu.IdUser)
+                .OnDelete(DeleteBehavior.Restrict);
 
             // UserSubscribers
             modelBuilder.Entity<UserSubscribers>()
@@ -87,6 +90,18 @@ namespace T2JuniorAPI.Data
                 .HasOne(w => w.IdOwnerNavigation)
                 .WithMany(c => c.Walls)
                 .HasForeignKey(w => w.IdOwner)
+                .OnDelete(DeleteBehavior.Restrict);
+
+            modelBuilder.Entity<Event>()
+                .HasOne(e => e.IdClubNavigation)
+                .WithMany()
+                .HasForeignKey(e => e.IdClub)
+                .OnDelete(DeleteBehavior.Restrict);
+
+            modelBuilder.Entity<Event>()
+                .HasOne(e => e.IdDirectionNavigation)
+                .WithMany(d => d.Events)
+                .HasForeignKey(e => e.IdDirection)
                 .OnDelete(DeleteBehavior.Restrict);
 
         }
