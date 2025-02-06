@@ -64,7 +64,7 @@ namespace T2JuniorAPI.Controllers
             try
             {
                 var createdClubRole = await _clubRoleService.CreateClubRoleAsync(roleDTO);
-                return CreatedAtAction(nameof(GetClubRole), new { id = createdClubRole.Id }, createdClubRole);
+                return Ok(createdClubRole);
             }
             catch (ApplicationException ex)
             {

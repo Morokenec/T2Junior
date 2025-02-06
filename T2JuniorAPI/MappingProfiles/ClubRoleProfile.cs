@@ -9,7 +9,8 @@ namespace T2JuniorAPI.MappingProfiles
         public ClubRoleProfile()
         {
             CreateMap<ClubRole, ClubRolesDTO>();
-            CreateMap<ClubRolesDTO, ClubRole>();
+            CreateMap<ClubRolesDTO, ClubRole>()
+                .ForMember(dest => dest.Id, opt => opt.Ignore());
         }
     }
 }

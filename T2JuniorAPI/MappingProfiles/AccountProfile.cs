@@ -9,8 +9,8 @@ namespace T2JuniorAPI.MappingProfiles
         {
             CreateMap<ApplicationUser, UserProfileDTO>()
                 .ForMember(dest => dest.FullName, opt => opt.MapFrom(src => $"{src.FirstName} {src.LastName}"))
-                .ForMember(dest => dest.SubscibersCount, opt => opt.MapFrom(src => src.Subscribers.Count))
-                .ForMember(dest => dest.SubscriptionsCount, opt => opt.MapFrom(src => src.Subscribers.Count(s => s.IdUser == src.Id)))
+                .ForMember(dest => dest.SubscibersCount, opt => opt.MapFrom(src => src.Subscribers.Count(s => s.IdUser == src.Id)))
+                .ForMember(dest => dest.SubscriptionsCount, opt => opt.MapFrom(src => src.Subscribers.Count(s => s.IdSubscriber == src.Id)))
                 .ForMember(dest => dest.ClubsCount, opt => opt.MapFrom(src => src.ClubUsers.Count))
                 .ForMember(dest => dest.PostAndOrganization, opt => opt.MapFrom(src => $"{src.Post} {src.Organization.Name}"));
 

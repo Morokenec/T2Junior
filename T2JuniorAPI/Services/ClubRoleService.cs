@@ -46,6 +46,10 @@ namespace T2JuniorAPI.Services
             if (string.IsNullOrWhiteSpace(clubRoleDto.Name))
                 throw new ApplicationException("Name is reqired");
 
+            if (await _context.ClubRoles.AnyAsync(cr => cr.Name == clubRoleDto.Name))
+                throw new ApplicationException("This role alredy exists");
+
+
             var clubRole = _mapper.Map<ClubRole>(clubRoleDto);
             _context.ClubRoles.Add(clubRole);
             await _context.SaveChangesAsync();
