@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="MauiApp1.ClubsPage"
+             Title="Клубы">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <HorizontalStackLayout x:Name="ClubLayout" 
+                               Grid.Row="0"
+                               Margin="20,16" 
+                               Padding="0,8"
+                               WidthRequest="343"
+                               HeightRequest="40">
+            <Frame x:Name="BackFrame"
+                   BorderColor="Transparent"
+                   Margin="0,0,0,8">
+                <Frame.GestureRecognizers>
+                    <TapGestureRecognizer Tapped="OnBackButtonTapped"/>
+                </Frame.GestureRecognizers>
+                <Image Source="back_icon.png"
+                       Aspect="AspectFill"
+                       VerticalOptions="Center"
+                       HorizontalOptions="Center"
+                       WidthRequest="24"
+                       HeightRequest="24"
+                       />
+            </Frame>
+            <Frame x:Name="ClubTextFrame"
+                   BorderColor="Transparent"
+                   HeightRequest="24"
+                   Margin="0,0,0,8" 
+                   WidthRequest="295">
+                <Label
+                           Text="Клубы"
+                           FontSize="20"
+                           HorizontalOptions="Center"
+                           HeightRequest="24"/>
+            </Frame>
+        </HorizontalStackLayout>
+
+        <Frame Grid.Row="1" HeightRequest="44" CornerRadius="12" Margin="16,0">
+            <HorizontalStackLayout VerticalOptions="Center">
+                <Frame HasShadow="True" WidthRequest="295" HeightRequest="44" BorderColor="Transparent">
+                    <Entry x:Name="searchEntry"
+                           Text="{Binding SearchText}"
+                           Placeholder="Поиск"
+                           PlaceholderColor="#A2A4AF"
+                           FontFamily="Manrope"
+                           HorizontalOptions="FillAndExpand"
+                           FontSize="13"
+                           Margin="12,0"/>
+                </Frame>
+
+                <Frame Margin="0,0,88,0" BorderColor="Transparent">
+                    <ImageButton Padding="0"
+                             Source="search_icon.png" 
+                             BackgroundColor="Transparent" 
+                             Clicked="OnSearch"
+                             VerticalOptions="Center" 
+                             HorizontalOptions="End"
+                             WidthRequest="24"
+                             HeightRequest="24"
+                             />
+                </Frame>
+            </HorizontalStackLayout>
+        </Frame>
+        
+        <CollectionView ItemsSource="{Binding FilteredClubs}"
+                            x:Name="ClubsCollection"
+                            Grid.Row="2"
+                            Margin="8,4,8,0"
+                            HeightRequest="525">
+                <CollectionView.ItemsLayout>
+                    <GridItemsLayout Span="2" Orientation="Vertical"/>
+                </CollectionView.ItemsLayout>
+                <CollectionView.ItemTemplate>
+                    <DataTemplate>
+                    <Frame CornerRadius="10" 
+                               WidthRequest="156.5" 
+                               HeightRequest="156.5" 
+                               HasShadow="True"
+                               Margin="0,12,0,0"
+                               BackgroundColor="White">
+                        <StackLayout>
+                            <StackLayout.GestureRecognizers>
+                                <TapGestureRecognizer Tapped="OnClubTapped" />
+                            </StackLayout.GestureRecognizers>
+                            <Frame WidthRequest="131" HeightRequest="99" BorderColor="Transparent">
+                                <HorizontalStackLayout Spacing="30">
+                                    <HorizontalStackLayout.GestureRecognizers>
+                                        <TapGestureRecognizer Tapped="OnClubTapped" />
+                                    </HorizontalStackLayout.GestureRecognizers>
+                                    <Image Source="{Binding Avatar}" 
+                                               VerticalOptions="Start" 
+                                               HorizontalOptions="Start"
+                                               WidthRequest="74"
+                                               HeightRequest="74"
+                                               Margin="0,16,0,25"/>
+                                        <Image x:Name="SubStatus" 
+                                               Source="{Binding SubImageSource}" 
+                                               WidthRequest="24" 
+                                               HeightRequest="24"
+                                               VerticalOptions="Start"
+                                               Margin="0,16,0,0"/>
+                                    </HorizontalStackLayout>
+                                </Frame>
+
+                            <Frame WidthRequest="131" 
+                                       HeightRequest="36" 
+                                       BorderColor="Transparent"
+                                       Margin="0,12,0,0">
+                                <StackLayout>
+                                    <StackLayout.GestureRecognizers>
+                                        <TapGestureRecognizer Tapped="OnClubTapped" />
+                                    </StackLayout.GestureRecognizers>
+                                    <Label Text="{Binding Name}" 
+                                               HorizontalOptions="Start" 
+                                               FontSize="13"
+                                               TextColor="#303345"/>
+                                        <Label Text="{Binding Target}" 
+                                               HorizontalOptions="Start" 
+                                               FontSize="11"
+                                               TextColor="#6B6D80"
+                                               FontFamily="ManropeExtraLight"/>
+                                    </StackLayout>
+                                </Frame>
+                            </StackLayout>
+                        </Frame>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            <CollectionView.EmptyView>
+                <Label Text="Результаты не найдены." 
+                       HorizontalOptions="Center" 
+                       VerticalOptions="Center" 
+                       Margin="0,262,0,0"
+                       FontSize="24"/>
+            </CollectionView.EmptyView>
+        </CollectionView>
+    </Grid>
+</ContentPage>

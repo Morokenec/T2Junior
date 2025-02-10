@@ -1,0 +1,401 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="MauiApp1.ProfilePage"
+             BackgroundColor="#F2F2F7"
+             Title="Профиль">
+    <ScrollView>
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+
+            <Frame Grid.Row="0"
+               BackgroundColor="White"
+               HasShadow="False"
+               Padding="0,0,0,0">
+
+                <StackLayout>
+                    <HorizontalStackLayout x:Name="TopLayout" 
+                                           HorizontalOptions="Center" 
+                                           VerticalOptions="Start"
+                                           Spacing="171">
+
+                        <Frame x:Name="CoinFrame"
+                               BackgroundColor="#F4FAFF"
+                               CornerRadius="10"
+                               HasShadow="True"
+                               Padding="12, 2.25"
+                               Margin="16,20,0,0">
+                            <Frame.GestureRecognizers>
+                                <TapGestureRecognizer Tapped="OnCoinButtonTapped" />
+                            </Frame.GestureRecognizers>
+                            <StackLayout x:Name="VerticalCoinLayout"
+                                         HorizontalOptions="Center"
+                                         VerticalOptions="Center"
+                                         Spacing="-5">
+                                <HorizontalStackLayout x:Name="HorizontalCoinLayout"
+                                                       Spacing="4">
+                                    <Image x:Name="CoinHolder"
+                                           Source="coin_holder.png"
+                                           Aspect="AspectFill"
+                                           WidthRequest="14"
+                                           HeightRequest="14"/>
+                                    <Label x:Name="CoinText"
+                                           Text="Коины" 
+                                           TextColor="#498CC4"
+                                           FontSize="12"/>
+                                </HorizontalStackLayout>
+                                <HorizontalStackLayout x:Name="CoinCounterLayout"
+                                                       HorizontalOptions="Center">
+                                    <Label x:Name="CoinCountLabel"
+                                           FontSize="20"
+                                           Text="0"
+                                           HorizontalOptions="Center"
+                                           FontFamily="MyriadProBold"
+                                           HeightRequest="22"/>
+                                </HorizontalStackLayout>
+                            </StackLayout>
+                        </Frame>
+
+                        <Frame x:Name="RatingFrame"
+                               BackgroundColor="#F4FAFF"
+                               HorizontalOptions="End"
+                               VerticalOptions="Start"
+                               CornerRadius="10"
+                               HasShadow="True"
+                               Padding="8, 4.75"
+                               Margin="0, 20, 16, 0">
+                            <Frame.GestureRecognizers>
+                                <TapGestureRecognizer Tapped="OnRatingButtonTapped" />
+                            </Frame.GestureRecognizers>
+                            <StackLayout x:Name="VerticalRatingLayout"
+                                         HorizontalOptions="Center"
+                                         VerticalOptions="Center"
+                                         Spacing="5">
+                                <HorizontalStackLayout x:Name="HorizontalRatingLayout"
+                                                       Spacing="4">
+                                    <Image x:Name="RatingHolder"
+                                           Source="rating_holder.png"
+                                           Aspect="AspectFill"
+                                           WidthRequest="14"
+                                           HeightRequest="14"/>
+                                    <Label x:Name="RatingText"
+                                           Text="Рейтинг" 
+                                           TextColor="#498CC4"
+                                           FontSize="12"/>
+                                </HorizontalStackLayout>
+                                <HorizontalStackLayout x:Name="RatingCounterLayout"
+                                                       HorizontalOptions="Center"
+                                                       WidthRequest="36"
+                                                       HeightRequest="13"
+                                                       Spacing="1">
+
+                                    <Label x:Name="UserRatingLabel"
+                                           FontSize="20"
+                                           HeightRequest="22"
+                                           Text="0"
+                                           VerticalOptions="End"
+                                           FontFamily="MyriadProBold"/>
+
+                                    <Label FontSize="9"
+                                           Text="из"
+                                           VerticalOptions="End"
+                                           TextColor="#9C9B9A"/>
+
+                                    <Label x:Name="RatingCountLabel"
+                                           FontSize="9"
+                                           Text="0"
+                                           VerticalOptions="End"
+                                           TextColor="#9C9B9A"/>
+
+                                </HorizontalStackLayout>
+                            </StackLayout>
+                        </Frame>
+                    </HorizontalStackLayout>
+
+                    <Grid x:Name="UserInfoGrid"
+                      Grid.Row="1">
+                        <Frame BorderColor="Transparent"
+                               WidthRequest="100"
+                               HeightRequest="100"
+                               HorizontalOptions="Center"
+                               CornerRadius="50"
+                               Margin="0,8, 0, 0">
+                            <Frame.GestureRecognizers>
+                                <TapGestureRecognizer Tapped="OnProfilePhotoTapped" />
+                            </Frame.GestureRecognizers>
+
+                            <Image x:Name="AvatarImage"
+                                   Source="profile_placeholder.png"
+                                   Aspect="AspectFill"
+                                   VerticalOptions="Start"
+                                   WidthRequest="100"
+                                   HeightRequest="100"/>
+
+                        </Frame>
+                        <Frame x:Name="CircleOverlay" 
+                               BackgroundColor="#3DC47C" 
+                               CornerRadius="25"
+                               WidthRequest="20"
+                               HeightRequest="20"
+                               Margin="96, 81, 31, 0">
+                        </Frame>
+                    </Grid>
+                    <VerticalStackLayout x:Name="FullInfoLayout"
+                                         Grid.Row="2"
+                                         Spacing="6">
+                        <Label x:Name="FullNameLabel"
+                               Text="ФИО" 
+                               HorizontalOptions="Center"
+                               FontSize="20"/>
+
+                        <Label x:Name="RoleLabel"
+                               Text="Роль участника" 
+                               HorizontalOptions="Center"
+                               VerticalOptions="Center"
+                               FontSize="15"/>
+
+                        <Label x:Name="JobLabel"
+                               TextColor="#838281"
+                               Text="Организация" 
+                               HorizontalOptions="Center"
+                               VerticalOptions="Center"
+                               FontSize="12"/>
+
+                        <Button x:Name="SubscribeButton"
+                                BackgroundColor="#0057A6"
+                                BorderWidth="1"
+                                Text="Подписаться"
+                                TextColor="White"
+                                FontSize="15"
+                                HorizontalOptions="Center"
+                                VerticalOptions="Center"
+                                Clicked="OnSubUnsubButtonTapped"
+                                WidthRequest="343"
+                                Margin="0,10"/>
+                    </VerticalStackLayout>
+                </StackLayout>
+            </Frame>
+
+            <HorizontalStackLayout x:Name="HorizontalContentLayout" 
+                                   Grid.Row="3"
+                                   Spacing="10"
+                                   Margin="8, 16">
+                <Frame x:Name="SubscribersFrame"
+                       CornerRadius="16"
+                       HasShadow="True"
+                       WidthRequest="107.76"
+                       HeightRequest="76"
+                       Padding="12">
+                    <Frame.GestureRecognizers>
+                        <TapGestureRecognizer Tapped="OnSubscribersButtonTapped" />
+                    </Frame.GestureRecognizers>
+                    <StackLayout x:Name="SubscribersLayout"
+                                 Spacing="6">
+                        <Label Text="Подписчики" 
+                               FontSize="13" 
+                               FontFamily="ManropeMid" 
+                               TextColor="#9C9B9A"
+                               HorizontalOptions="Start"/>
+
+                        <Label x:Name="SubscribersCount" 
+                               Text="0" 
+                               FontFamily="RedRoseBold" 
+                               FontSize="20" 
+                               TextColor="#838281"/>
+                    </StackLayout>
+                </Frame>
+                <Frame x:Name="FollowingFrame"
+                       CornerRadius="16"
+                       HasShadow="True"
+                       WidthRequest="107.76"
+                       HeightRequest="76"
+                       Padding="12">
+                    <Frame.GestureRecognizers>
+                        <TapGestureRecognizer Tapped="OnFollowingButtonTapped" />
+                    </Frame.GestureRecognizers>
+                    <StackLayout x:Name="FollowingLayout"
+                                 Spacing="6">
+                        <Label Text="Подписки" 
+                               FontSize="13" 
+                               FontFamily="ManropeMid" 
+                               TextColor="#9C9B9A"/>
+
+                        <Label x:Name="FollowingCount" 
+                               Text="0" 
+                               FontFamily="RedRoseBold" 
+                               FontSize="20" 
+                               TextColor="#838281"/>
+                    </StackLayout>
+                </Frame>
+                <Frame x:Name="ClubsFrame"
+                       CornerRadius="16"
+                       HasShadow="True"
+                       WidthRequest="107.76"
+                       HeightRequest="76"
+                       Padding="12">
+                    <Frame.GestureRecognizers>
+                        <TapGestureRecognizer Tapped="OnClubsButtonTapped" />
+                    </Frame.GestureRecognizers>
+                    <StackLayout x:Name="ClubsLayout"
+                                 Spacing="6">
+                        <Label Text="Клубы" 
+                               FontSize="13" 
+                               FontFamily="ManropeMid" 
+                               TextColor="#9C9B9A"/>
+
+                        <Label x:Name="ClubsCount" 
+                               Text="0" 
+                               FontFamily="RedRoseBold" 
+                               FontSize="20" 
+                               TextColor="#838281"/>
+                    </StackLayout>
+                </Frame>
+            </HorizontalStackLayout>
+
+
+            <Frame x:Name="OtherOptionsFrame"
+                   Grid.Row="4"
+                   CornerRadius="20"
+                   Padding="8, 0, 0, 0"
+                   Margin="8, 0">
+                <VerticalStackLayout>
+                    <Frame x:Name="ProjectsFrame"
+                           HasShadow="False" 
+                           BorderColor="Transparent"
+                           WidthRequest="303"
+                           HeightRequest="48"
+                           Padding="0, 8">
+                        <Frame.GestureRecognizers>
+                            <TapGestureRecognizer Tapped="OnProjectsFrameTapped" />
+                        </Frame.GestureRecognizers>
+                        <HorizontalStackLayout Spacing="12">
+                            <Image x:Name="ProjectsImage"
+                                   Source="projects.png"
+                                   Aspect="AspectFill"
+                                   VerticalOptions="Center"
+                                   WidthRequest="24"
+                                   HeightRequest="24"/>
+
+                            <Label x:Name="ProjectsText"
+                                   Text="Проекты" 
+                                   TextColor="#191C30"
+                                   FontSize="15"
+                                   VerticalOptions="Center"
+                                   WidthRequest="231"/>
+                            <Image Source="redirect.png"
+                                   Aspect="AspectFill"/>
+                        </HorizontalStackLayout>
+                    </Frame>
+                    <BoxView x:Name="ProjectsBoxView"
+                             BackgroundColor="#E4E4E4" 
+                             HorizontalOptions="Fill" 
+                             VerticalOptions="End"
+                             HeightRequest="2"
+                             Margin="16, 0"/>
+
+                    <Frame x:Name="CalendarFrame"
+                           HasShadow="False" 
+                           BorderColor="Transparent"
+                           WidthRequest="303"
+                           HeightRequest="48"
+                           Padding="0, 8">
+                        <Frame.GestureRecognizers>
+                            <TapGestureRecognizer Tapped="OnCalendarFrameTapped" />
+                        </Frame.GestureRecognizers>
+                        <HorizontalStackLayout Spacing="12">
+                            <Image x:Name="CalendarImage"
+                                   Source="calendar.png"
+                                   Aspect="AspectFill"
+                                   WidthRequest="24"
+                                   HeightRequest="24"/>
+
+                            <Label x:Name="CalendarText"
+                                   Text="Календарь" 
+                                   TextColor="#191C30"
+                                   FontSize="15"
+                                   VerticalOptions="Center"
+                                   WidthRequest="231"/>
+                            <Image Source="redirect.png"
+                                   Aspect="AspectFill"/>
+                        </HorizontalStackLayout>
+                    </Frame>
+                    <BoxView x:Name="CalendarBoxView"
+                             BackgroundColor="#E4E4E4" 
+                             HorizontalOptions="Fill" 
+                             VerticalOptions="End"
+                             HeightRequest="2"
+                             Margin="16, 0"/>
+
+                    <Frame x:Name="ActivitiesFrame" 
+                           HasShadow="False" 
+                           BorderColor="Transparent"
+                           WidthRequest="303"
+                           HeightRequest="48"
+                           Padding="0, 8">
+                        <Frame.GestureRecognizers>
+                            <TapGestureRecognizer Tapped="OnActivitiesFrameTapped" />
+                        </Frame.GestureRecognizers>
+                        <HorizontalStackLayout Spacing="12">
+                            <Image x:Name="ActivitiesImage"
+                                   Source="activities.png"
+                                   Aspect="AspectFill"
+                                   WidthRequest="24"
+                                   HeightRequest="24"/>
+
+                            <Label x:Name="ActivitiesText"
+                                   Text="Активности" 
+                                   TextColor="#191C30"
+                                   FontSize="15"
+                                   VerticalOptions="Center"
+                                   WidthRequest="231"/>
+                            <Image Source="redirect.png"
+                                   Aspect="AspectFill"/>
+                        </HorizontalStackLayout>
+                    </Frame>
+                    <BoxView x:Name="ActivitiesBoxView"
+                             BackgroundColor="#E4E4E4" 
+                             HorizontalOptions="FillAndExpand" 
+                             VerticalOptions="End"
+                             HeightRequest="2"
+                             Margin="16, 0"/>
+
+                    <Frame x:Name="NewsFrame"
+                           HasShadow="False" 
+                           BorderColor="Transparent"
+                           WidthRequest="303"
+                           HeightRequest="48"
+                           Padding="0, 8">
+                        <Frame.GestureRecognizers>
+                            <TapGestureRecognizer Tapped="OnNewsFrameTapped" />
+                        </Frame.GestureRecognizers>
+                        <HorizontalStackLayout Spacing="12">
+                            <Image x:Name="NewsImage"
+                                   Source="profile_news.png"
+                                   Aspect="AspectFill" 
+                                   WidthRequest="24"
+                                   HeightRequest="24"/>
+
+                            <Label x:Name="NewsText"
+                                   Text="Новости" 
+                                   TextColor="#191C30"
+                                   FontSize="15"
+                                   HorizontalOptions="FillAndExpand"
+                                   VerticalOptions="Center"
+                                   WidthRequest="231"/>
+                            
+                            <Image Source="redirect.png"
+                                   Aspect="AspectFill"/>
+                        </HorizontalStackLayout>
+                    </Frame>
+                </VerticalStackLayout>
+            </Frame>
+        </Grid>
+    </ScrollView>
+</ContentPage>
