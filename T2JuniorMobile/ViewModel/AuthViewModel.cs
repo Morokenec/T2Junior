@@ -1,8 +1,6 @@
-﻿using System.Threading.Tasks;
+﻿using System.IdentityModel.Tokens.Jwt;
 using System.Windows.Input;
-using Microsoft.Maui.Controls;
 using T2JuniorMobile.Services;
-using T2JuniorMobile.View.Pages;
 
 public class AuthViewModel : BaseViewModel
 {
@@ -48,12 +46,27 @@ public class AuthViewModel : BaseViewModel
             if (string.IsNullOrEmpty(Token))
             {
                 await Shell.Current.DisplayAlert("Ошибка", "Неверный email или пароль", "OK");
+                return;
             }
-            else
+
+            await SecureStorage.Default.SetAsync("jwt_token", Token);
+
+            var tokenHandler = new JwtSecurityTokenHandler();
+            var token = tokenHandler.ReadJwtToken(Token);
+            var uid = token.Claims.FirstOrDefault(c => c.Type == "http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier")?.Value;
+
+            if (!string.IsNullOrEmpty(uid))
             {
-                await Shell.Current.DisplayAlert("Успех", "Авторизация прошла успешно", "OK");
-                await SecureStorage.Default.SetAsync("jwt_token", Token);
-                
+                try
+                {   
+                    await SecureStorage.Default.SetAsync("user_uid", uid);
+                    await Shell.Current.GoToAsync("/ProfilePage");
+                }
+                catch (Exception ex)
+                {
+                    await Shell.Current.DisplayAlert("Ошибка", $"Не удалось сохранить UID {ex.Data}", "OK");
+                    throw;
+                }
             }
         }
         catch (Exception ex)
