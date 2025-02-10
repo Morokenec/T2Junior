@@ -12,11 +12,14 @@ using T2JuniorAPI.Services.Events;
 using T2JuniorAPI.Services.Organizations;
 using T2JuniorAPI.Services.Tokens;
 using T2JuniorAPI.Services.Users;
+using T2JuniorAPI.Services.MediaTypes;
+using T2JuniorAPI.Services.Medias;
 
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Logging.ClearProviders();
 builder.Logging.AddConsole();
+builder.Logging.AddDebug();
 
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseSqlite(builder.Configuration.GetConnectionString("DefaultConnection")));
@@ -40,10 +43,21 @@ builder.Services.AddIdentity<ApplicationUser, IdentityRole<Guid>>()
     .AddEntityFrameworkStores<ApplicationDbContext>()
     .AddDefaultTokenProviders();
 
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AllowAll", builder =>
+    {
+        builder.AllowAnyOrigin()
+        .AllowAnyMethod()
+        .AllowAnyHeader();
+    });
+});
+
 builder.Services.AddAutoMapper(cnf => cnf.AddProfile<ClubProfile>(), typeof(Program).Assembly);
 builder.Services.AddSingleton<SubscribersProfile>();
 builder.Services.AddSingleton<SubscriptionsProfile>();
 builder.Services.AddAutoMapper(typeof(EventProfile));
+builder.Services.AddAutoMapper(typeof(MediaProfile));
 
 builder.Services.AddControllers();
 builder.Services.AddScoped<IAccountService, AccountService>();
@@ -53,8 +67,13 @@ builder.Services.AddScoped<IClubService, ClubService>();
 builder.Services.AddScoped<IClubRoleService, ClubRoleService>();
 builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddScoped<IEventService, EventService>();
+builder.Services.AddScoped<IMediaTypeService, MediaTypeService>();
+builder.Services.AddScoped<IMediafileService, MediafileService>();
 builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
+builder.Services.AddSwaggerGen(c =>
+{
+    c.SwaggerDoc("v1", new() { Title = "T2JuniorAPI", Version = "v1" });
+});
 
 var app = builder.Build();
 
@@ -62,10 +81,14 @@ var app = builder.Build();
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
-    app.UseSwaggerUI();
+    app.UseSwaggerUI(c =>
+    {
+        c.SwaggerEndpoint("/swagger/v1/swagger.json", "T2JuniorAPI v1");
+    });
 }
 
 app.UseAuthorization();
+app.UseCors("AllowAll");
 
 app.MapControllers();
 

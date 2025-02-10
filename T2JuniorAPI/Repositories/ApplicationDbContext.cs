@@ -202,8 +202,6 @@ namespace T2JuniorAPI.Data
                 .WithMany(n => n.MediaNotes)
                 .HasForeignKey(mn => mn.IdNote)
                 .OnDelete(DeleteBehavior.Restrict);
-
-
         }
 
         private static void ConfigureCommonFields(ModelBuilder modelBuilder)
