@@ -9,7 +9,7 @@ namespace T2JuniorMobile
             Routing.RegisterRoute("RegisterPage", typeof(RegisterPage));
             Routing.RegisterRoute("ConfimPage", typeof(ConfimPage));
             Routing.RegisterRoute("ClubsPage", typeof(ClubsPage));
-
+            Routing.RegisterRoute("ProfilePage", typeof(ProfilePage));
             InitializeComponent();
         }
     }

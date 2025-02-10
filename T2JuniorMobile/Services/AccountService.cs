@@ -18,7 +18,7 @@ namespace T2JuniorMobile.Services
             _httpClient = httpClient;
         }
 
-        public async Task<string> LoginAsync(string email, string password)
+        public async Task<string?> LoginAsync(string email, string password)
         {
             var authRequest = new AuthRequest { Email = email, Password = password };
 
@@ -34,12 +34,12 @@ namespace T2JuniorMobile.Services
                 else
                 {
                     var error = await response.Content.ReadAsStringAsync();
-                    Console.WriteLine($"Login failed: {response.StatusCode}, {error}");
+                    Console.WriteLine($"Ошибка авторизации: {response.StatusCode}, {error}");
                 }
             }
             catch (Exception ex)
             {
-                Console.WriteLine($"An error occurred: {ex.Message}");
+                Console.WriteLine($"Не коректное значение: {ex.Message}");
             }
 
             return null;
