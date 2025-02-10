@@ -37,4 +37,7 @@ public class ApplicationUser : IdentityUser<Guid>
     public virtual ICollection<Wall> Walls { get; set; }
 
     public ICollection<UserSubscribers> Subscribers { get; set; }
+
+    public virtual ICollection<Mediafile> Mediafiles { get; set; }
+    public virtual ICollection<UserAchievement> UserAchievements { get; set; }
 }

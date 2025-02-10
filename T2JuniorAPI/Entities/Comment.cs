@@ -13,9 +13,6 @@ public class Comment : BaseCommonProperties
     public required Guid IdUser { get; set; }
 
     [Required]
-    public required DateTime CreationDatetime { get; set; }
-
-    [Required]
     public required string Text { get; set; }
 
     public Guid? ParrentCommentId { get; set; }

@@ -31,7 +31,7 @@ namespace T2JuniorAPI.Services.Clubs
 
             // Получаем пользователей клуба
             var users = await _context.ClubUsers
-                .Where(cu => cu.IdClub == clubId)
+                .Where(cu => cu.IdClub == clubId && !cu.IsDelete)
                 .ProjectTo<SubscriberProfileDTO>(_mapper.ConfigurationProvider)
                 .ToListAsync();
 
