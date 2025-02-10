@@ -27,12 +27,13 @@ public class Event : BaseCommonProperties
     [Required]
     public required int NumberParticpants { get; set; }
 
-    [Required]
-    public required int? FactParticpants { get; set; }
+    public int? FactParticpants { get; set; }
 
     public int Raiting { get; set; }
 
     public virtual Club IdClubNavigation { get; set; }
 
     public virtual EventDirection IdDirectionNavigation { get; set; }
+
+    public virtual ICollection<MediaEvent> MediaEvents { get; set; }
 }

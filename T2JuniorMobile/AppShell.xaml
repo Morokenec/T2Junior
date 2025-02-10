@@ -19,16 +19,18 @@
             <ShellContent ContentTemplate="{DataTemplate local:AuthPage}" />
         </Tab>
         <Tab Title="Настройки" Icon="settings.svg">
-            <ShellContent ContentTemplate="{DataTemplate local:AuthPage}" />
+            <ShellContent ContentTemplate="{DataTemplate local:ProfilePage}" />
         </Tab>
     </TabBar>
 
     <ShellContent
-        ContentTemplate="{DataTemplate local:ClubsPage}"
+        Shell.TabBarIsVisible="True"
+        ContentTemplate="{DataTemplate local:AuthPage}"
         Route="MainPage"
      />
     
     <ShellContent Title="Register" ContentTemplate="{DataTemplate local:RegisterPage}" />
     <ShellContent Title="Confim" ContentTemplate="{DataTemplate local:ConfimPage}" />
     <ShellContent Title="Clubs" ContentTemplate="{DataTemplate local:ClubsPage}" />
+    <ShellContent Title="Profile" ContentTemplate="{DataTemplate local:ProfilePage}" />
 </Shell>

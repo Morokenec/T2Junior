@@ -82,7 +82,7 @@ namespace T2JuniorAPI.Controllers
             return NoContent();
         }
 
-        [HttpGet("event/{eventId}")]
+        [HttpGet("{eventId}")]
         public async Task<ActionResult<EventDTO>> GetEventById(Guid eventId)
         {
             var eventDetail = await _eventService.GetEventById(eventId);
