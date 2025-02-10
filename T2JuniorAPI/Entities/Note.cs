@@ -35,4 +35,5 @@ public class Note : BaseCommonProperties
     public virtual Wall IdWallNavigation { get; set; } = null!;
 
     public virtual ICollection<Note> InverseIdRepostNavigation { get; set; } = new List<Note>();
+    public virtual ICollection<MediaNote> MediaNotes { get; set; } = new List<MediaNote>();
 }

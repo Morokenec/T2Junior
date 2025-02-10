@@ -19,17 +19,21 @@ public class Event : BaseCommonProperties
     public required string Place { get; set; }
 
     [Required]
-    public required DateTime Datetime { get; set; }
+    public required DateTime StartDatetime { get; set; }
+    
+    [Required]
+    public required DateTime EndDatetime { get; set; }
 
     [Required]
     public required int NumberParticpants { get; set; }
 
-    [Required]
-    public required int? FactParticpants { get; set; }
+    public int? FactParticpants { get; set; }
 
     public int Raiting { get; set; }
 
-    public virtual Club IdClubNavigation { get; set; } = null!;
+    public virtual Club IdClubNavigation { get; set; }
 
-    public virtual EventDirection IdDirectionNavigation { get; set; } = null!;
+    public virtual EventDirection IdDirectionNavigation { get; set; }
+
+    public virtual ICollection<MediaEvent> MediaEvents { get; set; }
 }

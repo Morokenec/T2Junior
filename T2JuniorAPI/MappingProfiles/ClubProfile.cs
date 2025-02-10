@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
-using T2JuniorAPI.DTOs;
+using T2JuniorAPI.DTOs.Clubs;
+using T2JuniorAPI.DTOs.Users;
 using T2JuniorAPI.Entities;
 
 namespace T2JuniorAPI.MappingProfiles
@@ -21,6 +22,16 @@ namespace T2JuniorAPI.MappingProfiles
             CreateMap<ClubUser, SubscriberProfileDTO>()
                 .ForMember(dest => dest.Id, opt => opt.MapFrom(src => src.IdUser))
                 .ForMember(dest => dest.FullName, opt => opt.MapFrom(src => $"{src.IdUserNavigation.FirstName} {src.IdUserNavigation.LastName}"));
+
+            CreateMap<Club, AllClubsDTO>()
+                .ForMember(dest => dest.IsSubscribe, opt => opt.Ignore());
+
+            CreateMap<UpdateClubDTO, Club>();
+
+            CreateMap<AddUserToClubDTO, ClubUser>()
+                .ForMember(dest => dest.IdClub, opt => opt.Ignore())
+                .ForMember(dest => dest.IdUser, opt => opt.MapFrom(src => src.UserId))
+                .ForMember(dest => dest.IdRole, opt => opt.MapFrom(src => src.RoleId));
         }
     }
 }
