@@ -1,13 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using T2JuniorAPI.Data;
-using T2JuniorAPI.DTOs;
-using T2JuniorAPI.Entities;
+﻿using Microsoft.AspNetCore.Mvc;
+using T2JuniorAPI.DTOs.ClubRoles;
+using T2JuniorAPI.Services.ClubRoles;
 
 namespace T2JuniorAPI.Controllers
 {
@@ -15,97 +8,90 @@ namespace T2JuniorAPI.Controllers
     [ApiController]
     public class ClubRolesController : ControllerBase
     {
-        private readonly ApplicationDbContext _context;
+        private readonly IClubRoleService _clubRoleService;
 
-        public ClubRolesController(ApplicationDbContext context)
+        public ClubRolesController(IClubRoleService clubRoleService)
         {
-            _context = context;
+            _clubRoleService = clubRoleService;
         }
 
         // GET: api/ClubRoles
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<ClubRole>>> GetClubRoles()
+        public async Task<ActionResult<List<ClubRolesDTO>>> GetClubRoles()
         {
-            return await _context.ClubRoles.ToListAsync();
+            return await _clubRoleService.GetAllClubRolesAsync();
         }
 
         // GET: api/ClubRoles/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<ClubRole>> GetClubRole(int id)
+        public async Task<ActionResult<ClubRolesDTO>> GetClubRole(Guid id)
         {
-            var clubRole = await _context.ClubRoles.FindAsync(id);
-
-            if (clubRole == null)
+            try
             {
-                return NotFound();
+                var clubRole = await _clubRoleService.GetClubRoleByIdAsync(id);
+                return clubRole;
             }
-
-            return clubRole;
+            catch (ApplicationException ex)
+            {
+                return NotFound(ex.Message);
+            }
         }
 
         // PUT: api/ClubRoles/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutClubRole(Guid id, ClubRole clubRole)
+        public async Task<ActionResult> PutClubRole(Guid id, [FromBody] ClubRolesDTO clubRoleDto)
         {
-            if (id != clubRole.Id)
+            if (id != clubRoleDto.Id)
             {
-                return BadRequest();
+                return BadRequest("Id mismatch");
             }
-
-            _context.Entry(clubRole).State = EntityState.Modified;
 
             try
             {
-                await _context.SaveChangesAsync();
+                await _clubRoleService.UpdateClubRoleAsync(id, clubRoleDto);
+                return NoContent();
             }
-            catch (DbUpdateConcurrencyException)
+            catch (ApplicationException ex)
             {
-                if (!ClubRoleExists(id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
+                return NotFound(ex.Message);
             }
-
-            return NoContent();
         }
 
         [HttpPost]
-        public async Task<IActionResult> PostClubRole([FromBody] ClubRolesDTO rolesDTO)
+        public async Task<ActionResult<ClubRolesDTO>> PostClubRole([FromBody] ClubRolesDTO roleDTO)
         {
-            var role = new ClubRole
+            try
             {
-                Name = rolesDTO.Name,
-            };
-            _context.ClubRoles.Add(role);
-            await _context.SaveChangesAsync();
-
-            return CreatedAtAction("GetClubRole", new { id = role.Id }, role);
+                var createdClubRole = await _clubRoleService.CreateClubRoleAsync(roleDTO);
+                return Ok(createdClubRole);
+            }
+            catch (ApplicationException ex)
+            {
+                return BadRequest(ex.Message);
+            }
         }
 
         // DELETE: api/ClubRoles/5
         [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteClubRole(int id)
+        public async Task<IActionResult> DeleteClubRole(Guid id)
         {
-            var clubRole = await _context.ClubRoles.FindAsync(id);
-            if (clubRole == null)
+            try
             {
-                return NotFound();
+                var result = await _clubRoleService.DeleteClubRoleAsync(id);
+                if (result)
+                {
+                    return NoContent();
+                }
+                else
+                {
+                    return NotFound("Club role not found");
+                }
             }
-
-            _context.ClubRoles.Remove(clubRole);
-            await _context.SaveChangesAsync();
-
-            return NoContent();
-        }
-
-        private bool ClubRoleExists(Guid id)
-        {
-            return _context.ClubRoles.Any(e => e.Id == id);
+            catch (ApplicationException ex)
+            {
+                return NotFound(ex.Message);
+            }
         }
     }
 }

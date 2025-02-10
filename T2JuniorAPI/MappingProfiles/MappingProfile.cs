@@ -1,5 +1,5 @@
 ﻿using AutoMapper;
-using T2JuniorAPI.DTOs;
+using T2JuniorAPI.DTOs.Users;
 using T2JuniorAPI.Entities;
 
 namespace T2JuniorAPI.MappingProfiles
@@ -8,17 +8,12 @@ namespace T2JuniorAPI.MappingProfiles
     {
         public MappingProfile()
         {
-            //CreateMap<UserSubscribers, SubscriberProfileDTO>()
-            //    .ForMember(dest => dest.Id, opt => opt.MapFrom(src => src.IdUser))
-            //    .ForMember(dest => dest.FullName, opt => opt.MapFrom(src => $"{src.User.FirstName} {src.User.LastName}"));
-            ////mapping for subscribers
-            //CreateMap<UserSubscribers, SubscriberProfileDTO>()
-            //    .ForMember(dest => dest.Id, opt => opt.MapFrom(src => src.IdSubscriber))
-            //    .ForMember(dest => dest.FullName, opt => opt.MapFrom(src => $"{src.Subscriber.FirstName} {src.Subscriber.LastName}"));
-
-            ////CreateMap<UserSubscribers, SubscriberProfileDTO>()
-            ////    .ForMember(dest => dest.Id, opt => opt.MapFrom(src => src.IdUser))
-            ////    .ForMember(dest => dest.FullName, opt => opt.MapFrom(src => $"{src.User.FirstName} {src.User.LastName}"));
+            CreateMap<SubscribeUserDTO, UserSubscribers>()
+                .ForMember(dest => dest.IdUser, opt => opt.MapFrom(src => src.UserId))
+                .ForMember(dest => dest.IdSubscriber, opt => opt.MapFrom(src => src.SubscriberId));
+            CreateMap<UnsubscribeUserDTO, UserSubscribers>()
+                .ForMember(dest => dest.IdUser, opt => opt.MapFrom(src => src.SubscriptionId))
+                .ForMember(dest => dest.IdSubscriber, opt => opt.MapFrom(src => src.UserId));
         }
     }
 }

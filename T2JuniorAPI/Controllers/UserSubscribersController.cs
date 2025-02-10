@@ -6,9 +6,9 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using T2JuniorAPI.Data;
-using T2JuniorAPI.DTOs;
+using T2JuniorAPI.DTOs.Users;
 using T2JuniorAPI.Entities;
-using T2JuniorAPI.Services;
+using T2JuniorAPI.Services.Users;
 
 namespace T2JuniorAPI.Controllers
 {
@@ -25,122 +25,40 @@ namespace T2JuniorAPI.Controllers
             _context = context;
         }
 
-        // GET: api/UserSubscribers
-        [HttpGet]
-        public async Task<ActionResult<IEnumerable<UserSubscribers>>> GetUserSubscribers()
-        {
-            return await _context.UserSubscribers.ToListAsync();
-        }
-
-        // GET: api/UserSubscribers/5
-        [HttpGet("{id}")]
-        public async Task<ActionResult<UserSubscribers>> GetUserSubscribers(string id)
-        {
-            var userSubscribers = await _context.UserSubscribers.FindAsync(id);
-
-            if (userSubscribers == null)
-            {
-                return NotFound();
-            }
-
-            return userSubscribers;
-        }
-
-        [HttpGet("subscribers/{userId}")]
-        public async Task<ActionResult<IEnumerable<SubscriberProfileDTO>>> GetSubscribers(Guid userId)
+        [HttpGet("subscribers")]
+        public async Task<ActionResult<IEnumerable<SubscriberProfileDTO>>> GetSubscribers([FromQuery] Guid userId)
         {
             var subscribers = await _userService.GetSubscribers(userId);
             return Ok(subscribers);
         }
 
-        [HttpGet("subscriptions/{userId}")]
-        public async Task<ActionResult<IEnumerable<SubscriberProfileDTO>>> GetSubscriptions(Guid userId)
+        [HttpGet("subscriptions")]
+        public async Task<ActionResult<IEnumerable<SubscriberProfileDTO>>> GetSubscriptions([FromQuery] Guid userId)
         {
             var subscriptions = await _userService.GetSubscriptions(userId);
             return Ok(subscriptions);
-        }
-
-        // PUT: api/UserSubscribers/5
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
-        [HttpPut("{id}")]
-        public async Task<IActionResult> PutUserSubscribers(Guid id, UserSubscribers userSubscribers)
-        {
-            if (id != userSubscribers.IdUser)
-            {
-                return BadRequest();
-            }
-
-            _context.Entry(userSubscribers).State = EntityState.Modified;
-
-            try
-            {
-                await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!UserSubscribersExists(id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
-            }
-
-            return NoContent();
-        }
-
-        // POST: api/UserSubscribers
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
-        [HttpPost]
-        public async Task<ActionResult<UserSubscribers>> PostUserSubscribers(UserSubscribers userSubscribers)
-        {
-            _context.UserSubscribers.Add(userSubscribers);
-            try
-            {
-                await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateException)
-            {
-                if (UserSubscribersExists(userSubscribers.IdUser))
-                {
-                    return Conflict();
-                }
-                else
-                {
-                    throw;
-                }
-            }
-
-            return CreatedAtAction("GetUserSubscribers", new { id = userSubscribers.IdUser }, userSubscribers);
         }
 
         [HttpPost("subscribe")]
         public async Task<IActionResult> SubscribeUserToUser([FromBody] SubscribeUserDTO subscribeUser)
         {
             if (!ModelState.IsValid)
-            {
                 return BadRequest(ModelState);
-            }
+
             var result = await _userService.SubscribeUserToUser(subscribeUser);
             return Ok(result);
         }
 
         // DELETE: api/UserSubscribers/5
-        [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteUserSubscribers(string id)
+        [HttpDelete("unsubscribe")]
+        public async Task<IActionResult> UnsubscribeUser([FromBody] UnsubscribeUserDTO unsubscribeUser)
         {
-            var userSubscribers = await _context.UserSubscribers.FindAsync(id);
-            if (userSubscribers == null)
-            {
-                return NotFound();
-            }
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
 
-            _context.UserSubscribers.Remove(userSubscribers);
-            await _context.SaveChangesAsync();
+            var result = await _userService.UnsubscribeUserFromUser(unsubscribeUser);
 
-            return NoContent();
+            return Ok(result);
         }
 
         private bool UserSubscribersExists(Guid id)

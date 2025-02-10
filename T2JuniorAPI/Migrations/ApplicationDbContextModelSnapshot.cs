@@ -457,12 +457,15 @@ namespace T2JuniorAPI.Migrations
                         .HasColumnName("Id")
                         .HasColumnOrder(0);
 
+                    b.Property<Guid?>("ClubId")
+                        .HasColumnType("TEXT");
+
                     b.Property<DateTime>("CreationDate")
                         .HasColumnType("TEXT")
                         .HasColumnName("CreationDate")
                         .HasColumnOrder(1);
 
-                    b.Property<DateTime>("Datetime")
+                    b.Property<DateTime>("EndDatetime")
                         .HasColumnType("TEXT");
 
                     b.Property<int?>("FactParticpants")
@@ -472,13 +475,7 @@ namespace T2JuniorAPI.Migrations
                     b.Property<Guid>("IdClub")
                         .HasColumnType("TEXT");
 
-                    b.Property<Guid>("IdClubNavigationId")
-                        .HasColumnType("TEXT");
-
                     b.Property<Guid>("IdDirection")
-                        .HasColumnType("TEXT");
-
-                    b.Property<Guid>("IdDirectionNavigationId")
                         .HasColumnType("TEXT");
 
                     b.Property<bool>("IsDelete")
@@ -500,6 +497,9 @@ namespace T2JuniorAPI.Migrations
                     b.Property<int>("Raiting")
                         .HasColumnType("INTEGER");
 
+                    b.Property<DateTime>("StartDatetime")
+                        .HasColumnType("TEXT");
+
                     b.Property<DateTime>("UpdateDate")
                         .HasColumnType("TEXT")
                         .HasColumnName("UpdateDate")
@@ -507,9 +507,11 @@ namespace T2JuniorAPI.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("IdClubNavigationId");
+                    b.HasIndex("ClubId");
 
-                    b.HasIndex("IdDirectionNavigationId");
+                    b.HasIndex("IdClub");
+
+                    b.HasIndex("IdDirection");
 
                     b.ToTable("Events");
                 });
@@ -910,16 +912,20 @@ namespace T2JuniorAPI.Migrations
 
             modelBuilder.Entity("T2JuniorAPI.Entities.Event", b =>
                 {
-                    b.HasOne("T2JuniorAPI.Entities.Club", "IdClubNavigation")
+                    b.HasOne("T2JuniorAPI.Entities.Club", null)
                         .WithMany("Events")
-                        .HasForeignKey("IdClubNavigationId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .HasForeignKey("ClubId");
+
+                    b.HasOne("T2JuniorAPI.Entities.Club", "IdClubNavigation")
+                        .WithMany()
+                        .HasForeignKey("IdClub")
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.HasOne("T2JuniorAPI.Entities.EventDirection", "IdDirectionNavigation")
                         .WithMany("Events")
-                        .HasForeignKey("IdDirectionNavigationId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .HasForeignKey("IdDirection")
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.Navigation("IdClubNavigation");

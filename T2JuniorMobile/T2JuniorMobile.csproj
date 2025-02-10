@@ -97,6 +97,9 @@
 	  <MauiXaml Update="View\Components\RegisterPicker.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
+	  <MauiXaml Update="View\Pages\ClubsPage.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
 	  <MauiXaml Update="View\Pages\ConfimPage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
