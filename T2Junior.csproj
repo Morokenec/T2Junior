@@ -91,6 +91,7 @@
 	  <None Remove="Resources\Fonts\MyriadPro-Regular.otf" />
 	  <None Remove="Resources\Fonts\RedRose-Bold.ttf" />
 	  <None Remove="Resources\Images\activities.png" />
+	  <None Remove="Resources\Images\activities.svg" />
 	  <None Remove="Resources\Images\add_a_new.svg" />
 	  <None Remove="Resources\Images\already_subbed.svg" />
 	  <None Remove="Resources\Images\back_icon.png" />
@@ -106,21 +107,21 @@
 	  <None Remove="Resources\Images\eye_closed.png" />
 	  <None Remove="Resources\Images\eye_open.png" />
 	  <None Remove="Resources\Images\initium.svg" />
-	  <None Remove="Resources\Images\logo.png" />
+	  <None Remove="Resources\Images\logo.svg" />
 	  <None Remove="Resources\Images\monochrome_calendar.svg" />
 	  <None Remove="Resources\Images\news.svg" />
-	  <None Remove="Resources\Images\news_media_holder.png" />
+	  <None Remove="Resources\Images\news_media_holder.svg" />
 	  <None Remove="Resources\Images\profile.svg" />
-	  <None Remove="Resources\Images\profile_news.png" />
+	  <None Remove="Resources\Images\profile_news.svg" />
 	  <None Remove="Resources\Images\profile_placeholder.png" />
 	  <None Remove="Resources\Images\profile_placeholder.svg" />
 	  <None Remove="Resources\Images\projects.png" />
 	  <None Remove="Resources\Images\projects.svg" />
 	  <None Remove="Resources\Images\rating_holder.png" />
 	  <None Remove="Resources\Images\rating_holder.svg" />
-	  <None Remove="Resources\Images\redirect.png" />
+	  <None Remove="Resources\Images\redirect.svg" />
 	  <None Remove="Resources\Images\rules.svg" />
-	  <None Remove="Resources\Images\search_icon.png" />
+	  <None Remove="Resources\Images\search_icon.svg" />
 	</ItemGroup>
 
 	<ItemGroup>
