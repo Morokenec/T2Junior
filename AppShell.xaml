@@ -10,16 +10,16 @@
     TabBarTitleColor="#0057A6">
 
     <TabBar>
-        <Tab Title="Новости" Icon="news.png">
+        <Tab Title="Новости" Icon="news.svg">
             <ShellContent ContentTemplate="{DataTemplate local:NotesPage}" />
         </Tab>
-        <Tab Title="Сообщения" Icon="chat.png">
+        <Tab Title="Сообщения" Icon="chat.svg">
             <ShellContent ContentTemplate="{DataTemplate local:MessagesPage}" />
         </Tab>
-        <Tab Title="Клубы" Icon="clubs.png">
+        <Tab Title="Клубы" Icon="clubs.svg">
             <ShellContent ContentTemplate="{DataTemplate local:ClubsPage}" />
         </Tab>
-        <Tab Title="Профиль" Icon="profile.png">
+        <Tab Title="Профиль" Icon="profile.svg">
             <ShellContent ContentTemplate="{DataTemplate local:ProfilePage}" />
         </Tab>
     </TabBar>

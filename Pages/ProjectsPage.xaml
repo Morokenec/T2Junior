@@ -10,7 +10,7 @@
             <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
 
-        <HorizontalStackLayout x:Name="ClubProfileLayout"
+        <HorizontalStackLayout x:Name="ProjectsLayout"
                                Grid.Row="0"
                                Margin="20,16"
                                Padding="0,8"
@@ -22,14 +22,14 @@
                 <Frame.GestureRecognizers>
                     <TapGestureRecognizer Tapped="OnBackButtonTapped" />
                 </Frame.GestureRecognizers>
-                <Image Source="back_icon.png"
+                <Image Source="back_icon.svg"
                        Aspect="AspectFill"
                        VerticalOptions="Center"
                        HorizontalOptions="Center"
                        WidthRequest="24"
                        HeightRequest="24" />
             </Frame>
-            <Frame x:Name="ClubProfileTextFrame"
+            <Frame x:Name="ProjectsTextFrame"
                    BorderColor="Transparent"
                    HeightRequest="24"
                    Margin="0,0,0,8"

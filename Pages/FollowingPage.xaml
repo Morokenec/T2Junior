@@ -13,7 +13,7 @@
                     <Frame.GestureRecognizers>
                         <TapGestureRecognizer Tapped="OnBackButtonTapped" />
                     </Frame.GestureRecognizers>
-                    <Image Source="back_icon.png"
+                    <Image Source="back_icon.svg"
                        Aspect="AspectFill"
                        />
                 </Frame>
@@ -35,11 +35,11 @@
                     <Frame HasShadow="False" 
                    BorderColor="Transparent">
                         <HorizontalStackLayout>
-                            <Image Source="profile_placeholder.png"
+                            <Image Source="profile_placeholder.svg"
                            Aspect="AspectFill"/>
                             <Label Text="Дмитрий Ушаков" 
                            TextColor="#191C30"/>
-                            <Image Source="redirect.png"
+                            <Image Source="redirect.svg"
                            Aspect="AspectFill"/>
                         </HorizontalStackLayout>
                     </Frame>
@@ -50,11 +50,11 @@
                     <Frame HasShadow="False" 
                    BorderColor="Transparent">
                         <HorizontalStackLayout>
-                            <Image Source="profile_placeholder.png"
+                            <Image Source="profile_placeholder.svg"
                            Aspect="AspectFill"/>
                             <Label Text="Виталий Таран" 
                            TextColor="#191C30"/>
-                            <Image Source="redirect.png"
+                            <Image Source="redirect.svg"
                            Aspect="AspectFill"/>
                         </HorizontalStackLayout>
                     </Frame>
@@ -67,12 +67,12 @@
                     <Frame HasShadow="False" 
                    BorderColor="Transparent">
                         <HorizontalStackLayout>
-                            <Image Source="profile_placeholder.png"
+                            <Image Source="profile_placeholder.svg"
                            Aspect="AspectFill"/>
                             <Label Text="Матвей Абрамов" 
                            TextColor="#191C30"
                            FontSize="15"/>
-                            <Image Source="redirect.png"
+                            <Image Source="redirect.svg"
                            Aspect="AspectFill"/>
                         </HorizontalStackLayout>
                     </Frame>
@@ -85,11 +85,11 @@
                     <Frame HasShadow="False" 
                    BorderColor="Transparent">
                         <HorizontalStackLayout>
-                            <Image Source="profile_placeholder.png"
+                            <Image Source="profile_placeholder.svg"
                            Aspect="AspectFill"/>
                             <Label Text="Тимофей Багин" 
                            TextColor="#191C30"/>
-                            <Image Source="redirect.png"
+                            <Image Source="redirect.svg"
                            Aspect="AspectFill"/>
                         </HorizontalStackLayout>
                     </Frame>
@@ -102,11 +102,11 @@
                     <Frame HasShadow="False" 
                    BorderColor="Transparent">
                         <HorizontalStackLayout>
-                            <Image Source="profile_placeholder.png"
+                            <Image Source="profile_placeholder.svg"
                            Aspect="AspectFill"/>
                             <Label Text="Дмитрий Ушаков" 
                            TextColor="#191C30"/>
-                            <Image Source="redirect.png"
+                            <Image Source="redirect.svg"
                            Aspect="AspectFill"/>
                         </HorizontalStackLayout>
                     </Frame>

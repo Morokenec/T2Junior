@@ -40,7 +40,7 @@ namespace MauiApp1.ViewModel
             }
         }
 
-        public string SubImageSource => IsSubscribed ? "already_subbed.png" : "add_a_new.png";
+        public string SubImageSource => IsSubscribed ? "already_subbed.svg" : "add_a_new.svg";
 
         public ClubViewModel()
         {

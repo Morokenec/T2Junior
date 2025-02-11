@@ -14,6 +14,11 @@
                 <RowDefinition Height="Auto"/>
                 <RowDefinition Height="Auto"/>
             </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="Auto" />
+            </Grid.ColumnDefinitions>
 
             <Frame Grid.Row="0"
                BackgroundColor="White"
@@ -23,11 +28,11 @@
                 <StackLayout>
                     <HorizontalStackLayout x:Name="TopLayout" 
                                            HorizontalOptions="Center" 
-                                           VerticalOptions="Start"
-                                           Spacing="171">
+                                           VerticalOptions="Start">
 
                         <Frame x:Name="CoinFrame"
-                               BackgroundColor="#F4FAFF"
+                               Grid.Column="0"
+                               BackgroundColor="#FFFFFF"
                                CornerRadius="10"
                                HasShadow="True"
                                Padding="12, 2.25"
@@ -42,7 +47,7 @@
                                 <HorizontalStackLayout x:Name="HorizontalCoinLayout"
                                                        Spacing="4">
                                     <Image x:Name="CoinHolder"
-                                           Source="coin_holder.png"
+                                           Source="coin_holder.svg"
                                            Aspect="AspectFill"
                                            WidthRequest="14"
                                            HeightRequest="14"/>
@@ -64,7 +69,8 @@
                         </Frame>
 
                         <Frame x:Name="RatingFrame"
-                               BackgroundColor="#F4FAFF"
+                               Grid.Column="2"
+                               BackgroundColor="#FFFFFF"
                                HorizontalOptions="End"
                                VerticalOptions="Start"
                                CornerRadius="10"
@@ -81,7 +87,7 @@
                                 <HorizontalStackLayout x:Name="HorizontalRatingLayout"
                                                        Spacing="4">
                                     <Image x:Name="RatingHolder"
-                                           Source="rating_holder.png"
+                                           Source="rating_holder.svg"
                                            Aspect="AspectFill"
                                            WidthRequest="14"
                                            HeightRequest="14"/>
@@ -132,7 +138,7 @@
                             </Frame.GestureRecognizers>
 
                             <Image x:Name="AvatarImage"
-                                   Source="profile_placeholder.png"
+                                   Source="profile_placeholder.svg"
                                    Aspect="AspectFill"
                                    VerticalOptions="Start"
                                    WidthRequest="100"
@@ -171,6 +177,7 @@
                         <Button x:Name="SubscribeButton"
                                 BackgroundColor="#0057A6"
                                 BorderWidth="1"
+                                CornerRadius="12"
                                 Text="Подписаться"
                                 TextColor="White"
                                 FontSize="15"
@@ -277,7 +284,8 @@
                         </Frame.GestureRecognizers>
                         <HorizontalStackLayout Spacing="12">
                             <Image x:Name="ProjectsImage"
-                                   Source="projects.png"
+                                   Source="projects.
+                                   "
                                    Aspect="AspectFill"
                                    VerticalOptions="Center"
                                    WidthRequest="24"
@@ -311,7 +319,7 @@
                         </Frame.GestureRecognizers>
                         <HorizontalStackLayout Spacing="12">
                             <Image x:Name="CalendarImage"
-                                   Source="calendar.png"
+                                   Source="calendar.svg"
                                    Aspect="AspectFill"
                                    WidthRequest="24"
                                    HeightRequest="24"/>
@@ -344,7 +352,7 @@
                         </Frame.GestureRecognizers>
                         <HorizontalStackLayout Spacing="12">
                             <Image x:Name="ActivitiesImage"
-                                   Source="activities.png"
+                                   Source="activities.svg"
                                    Aspect="AspectFill"
                                    WidthRequest="24"
                                    HeightRequest="24"/>
@@ -355,7 +363,7 @@
                                    FontSize="15"
                                    VerticalOptions="Center"
                                    WidthRequest="231"/>
-                            <Image Source="redirect.png"
+                            <Image Source="redirect.svg"
                                    Aspect="AspectFill"/>
                         </HorizontalStackLayout>
                     </Frame>
@@ -377,7 +385,7 @@
                         </Frame.GestureRecognizers>
                         <HorizontalStackLayout Spacing="12">
                             <Image x:Name="NewsImage"
-                                   Source="profile_news.png"
+                                   Source="profile_news.svg"
                                    Aspect="AspectFill" 
                                    WidthRequest="24"
                                    HeightRequest="24"/>
@@ -390,7 +398,7 @@
                                    VerticalOptions="Center"
                                    WidthRequest="231"/>
                             
-                            <Image Source="redirect.png"
+                            <Image Source="redirect.svg"
                                    Aspect="AspectFill"/>
                         </HorizontalStackLayout>
                     </Frame>

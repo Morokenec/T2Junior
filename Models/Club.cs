@@ -16,9 +16,9 @@ namespace MauiApp1.DataModel
 
         public string Target { get; set; } = "Клуб кофеманов";
 
-        public string Avatar { get; set; } = "club_placeholder.png";
+        public string Avatar { get; set; } = "club_placeholder.svg";
 
-        public string SubImageSource => IsSubscribed ? "already_subbed.png" : "add_a_new.png";
+        public string SubImageSource => IsSubscribed ? "already_subbed.svg" : "add_a_new.svg";
 
         public int SubCount { get; set; } = 13;
 

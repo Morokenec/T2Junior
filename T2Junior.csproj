@@ -47,7 +47,6 @@
 
 		<!-- Images -->
 		<MauiImage Include="Resources\Images\*" />
-		<MauiImage Update="Resources\Images\dotnet_bot.png" Resize="True" BaseSize="300,185" />
 
 		<!-- Custom Fonts -->
 		<MauiFont Include="Resources\Fonts\*" />
@@ -60,6 +59,7 @@
 	<ItemGroup>
 	  <Compile Remove="Pages\GeneralNotesPage.xaml.cs" />
 	  <Compile Remove="PixelToDPI.cs" />
+	  <Compile Remove="ViewModels\MessageViewModel.cs" />
 	  <Compile Remove="ViewModels\NoteViewModel.cs" />
 	</ItemGroup>
 
@@ -68,10 +68,21 @@
 	</ItemGroup>
 
 	<ItemGroup>
+	  <MauiImage Remove="Resources\Images\activities.png" />
+	  <MauiImage Remove="Resources\Images\calendar.png" />
+	  <MauiImage Remove="Resources\Images\coin_holder.png" />
+	  <MauiImage Remove="Resources\Images\dotnet_bot.png" />
+	  <MauiImage Remove="Resources\Images\profile_placeholder.png" />
+	  <MauiImage Remove="Resources\Images\projects.png" />
+	  <MauiImage Remove="Resources\Images\rating_holder.png" />
+	</ItemGroup>
+
+	<ItemGroup>
 	  <MauiXaml Remove="Pages\GeneralNotesPage.xaml" />
 	</ItemGroup>
 
 	<ItemGroup>
+	  <None Remove="Resources\AppIcon\app_logo.png" />
 	  <None Remove="Resources\Fonts\Manrope-ExtraBold.ttf" />
 	  <None Remove="Resources\Fonts\Manrope-ExtraLight.ttf" />
 	  <None Remove="Resources\Fonts\Manrope-Medium.ttf" />
@@ -80,31 +91,40 @@
 	  <None Remove="Resources\Fonts\MyriadPro-Regular.otf" />
 	  <None Remove="Resources\Fonts\RedRose-Bold.ttf" />
 	  <None Remove="Resources\Images\activities.png" />
-	  <None Remove="Resources\Images\add_a_new.png" />
-	  <None Remove="Resources\Images\already_subbed.png" />
+	  <None Remove="Resources\Images\add_a_new.svg" />
+	  <None Remove="Resources\Images\already_subbed.svg" />
 	  <None Remove="Resources\Images\back_icon.png" />
+	  <None Remove="Resources\Images\back_icon.svg" />
 	  <None Remove="Resources\Images\calendar.png" />
-	  <None Remove="Resources\Images\chat.png" />
-	  <None Remove="Resources\Images\clubs.png" />
-	  <None Remove="Resources\Images\club_placeholder.png" />
+	  <None Remove="Resources\Images\calendar.svg" />
+	  <None Remove="Resources\Images\chat.svg" />
+	  <None Remove="Resources\Images\clubs.svg" />
+	  <None Remove="Resources\Images\club_placeholder.svg" />
 	  <None Remove="Resources\Images\coin_holder.png" />
+	  <None Remove="Resources\Images\coin_holder.svg" />
+	  <None Remove="Resources\Images\dotnet_bot.png" />
 	  <None Remove="Resources\Images\eye_closed.png" />
 	  <None Remove="Resources\Images\eye_open.png" />
-	  <None Remove="Resources\Images\initium.png" />
+	  <None Remove="Resources\Images\initium.svg" />
 	  <None Remove="Resources\Images\logo.png" />
-	  <None Remove="Resources\Images\monochrome_calendar.png" />
-	  <None Remove="Resources\Images\news.png" />
+	  <None Remove="Resources\Images\monochrome_calendar.svg" />
+	  <None Remove="Resources\Images\news.svg" />
 	  <None Remove="Resources\Images\news_media_holder.png" />
-	  <None Remove="Resources\Images\profile.png" />
+	  <None Remove="Resources\Images\profile.svg" />
 	  <None Remove="Resources\Images\profile_news.png" />
 	  <None Remove="Resources\Images\profile_placeholder.png" />
+	  <None Remove="Resources\Images\profile_placeholder.svg" />
 	  <None Remove="Resources\Images\projects.png" />
+	  <None Remove="Resources\Images\projects.svg" />
+	  <None Remove="Resources\Images\rating_holder.png" />
+	  <None Remove="Resources\Images\rating_holder.svg" />
 	  <None Remove="Resources\Images\redirect.png" />
-	  <None Remove="Resources\Images\rules.png" />
+	  <None Remove="Resources\Images\rules.svg" />
 	  <None Remove="Resources\Images\search_icon.png" />
 	</ItemGroup>
 
 	<ItemGroup>
+		<PackageReference Include="CommunityToolkit.Maui" Version="8.0.1" />
 		<PackageReference Include="Microsoft.Maui.Controls" Version="$(MauiVersion)" />
 		<PackageReference Include="Microsoft.Maui.Controls.Compatibility" Version="$(MauiVersion)" />
 		<PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="8.0.0" />

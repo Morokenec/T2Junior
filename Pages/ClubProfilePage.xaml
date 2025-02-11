@@ -28,7 +28,7 @@
                 <Frame.GestureRecognizers>
                     <TapGestureRecognizer Tapped="OnBackButtonTapped"/>
                 </Frame.GestureRecognizers>
-                <Image Source="back_icon.png"
+                <Image Source="back_icon.svg"
                        Aspect="AspectFill"
                        VerticalOptions="Center"
                        HorizontalOptions="Center"
@@ -74,7 +74,7 @@
                 <HorizontalStackLayout x:Name="HorizontalRatingLayout"
                                        Spacing="4">
                     <Image x:Name="RatingHolder"
-                           Source="rating_holder.png"
+                           Source="rating_holder.svg"
                            Aspect="AspectFill"
                            WidthRequest="14"
                            HeightRequest="14"/>
@@ -172,18 +172,18 @@
                                Grid.Row="4"
                                Spacing="10"
                                Margin="8, 20">
-            <Frame x:Name="CalendarFrame"
-                   CornerRadius="16"
-                   HasShadow="True"
-                   WidthRequest="107.76"
-                   HeightRequest="76"
-                   Padding="12">
-                <Frame.GestureRecognizers>
+                <Frame x:Name="CalendarFrame"
+                       CornerRadius="16"
+                       HasShadow="True"
+                       WidthRequest="107.76"
+                       HeightRequest="76"
+                       Padding="12">
+                    <Frame.GestureRecognizers>
                     <TapGestureRecognizer Tapped="OnCalendarButtonTapped" />
                 </Frame.GestureRecognizers>
                 <StackLayout x:Name="CalendarLayout"
                              Spacing="8">
-                    <Image Source="monochrome_calendar.png"
+                    <Image Source="monochrome_calendar.svg"
                            Aspect="AspectFill"
                            VerticalOptions="Start"
                            HorizontalOptions="Start"
@@ -209,7 +209,7 @@
                 </Frame.GestureRecognizers>
                 <StackLayout x:Name="RulesLayout"
                              Spacing="8">
-                    <Image Source="rules.png"
+                    <Image Source="rules.svg"
                            Aspect="AspectFill"
                            VerticalOptions="Start"
                            HorizontalOptions="Start"
@@ -234,7 +234,7 @@
                 </Frame.GestureRecognizers>
                 <StackLayout x:Name="InitiumLayout"
                              Spacing="6">
-                    <Image Source="initium.png"
+                    <Image Source="initium.svg"
                            Aspect="AspectFill"
                            VerticalOptions="Start"
                            HorizontalOptions="Start"
@@ -260,7 +260,7 @@
                        TextColor="#303345"/>
 
                 <ImageButton Padding="0"
-                             Source="search_icon.png" 
+                             Source="search_icon.svg" 
                              BackgroundColor="Transparent" 
                              Clicked="OnSearch"
                              VerticalOptions="Center" 

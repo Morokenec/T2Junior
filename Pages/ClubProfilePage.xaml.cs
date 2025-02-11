@@ -1,3 +1,4 @@
+using MauiApp1.Services;
 using MauiApp1.ViewModel;
 
 namespace MauiApp1;
@@ -5,7 +6,7 @@ namespace MauiApp1;
 public partial class ClubProfilePage : ContentPage
 {
     int clickCount = 0;
-    public string NoteMediaSource { get; set; } = "news_media_holder.png"; //добавить условия
+    public string NoteMediaSource { get; set; } = "news_media_holder.svg"; //добавить условия
     public bool HolderIsVisible { get; set; } = true; //добавить условия
     public static int SelectedClubId { get; set; }
     public ClubProfilePage()

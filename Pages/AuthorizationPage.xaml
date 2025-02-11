@@ -7,7 +7,7 @@
 
     <StackLayout Padding="20" Spacing="10">
         <Frame CornerRadius="20" BorderColor="Transparent" HasShadow="True" Padding="0" BackgroundColor="Transparent" HorizontalOptions="Center">
-            <Image Source="logo.png" WidthRequest="130" HeightRequest="130" Aspect="AspectFit" />
+            <Image Source="logo.svg" WidthRequest="130" HeightRequest="130" Aspect="AspectFit" />
         </Frame>
 
         <Label Text="Вход в приложение" 
@@ -34,7 +34,7 @@
             </Frame>
 
              <ImageButton x:Name="TogglePasswordVisibilityButton"
-             Source="eye_closed.png"
+             Source="eye_closed.svg"
              WidthRequest="40"
              HeightRequest="40"
              Clicked="OnPasswordVisibilityClicked"/>

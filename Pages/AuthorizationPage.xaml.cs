@@ -21,7 +21,7 @@ namespace MauiApp1
             _isVisible = !_isVisible;
             PswdEntry.IsPassword = !_isVisible;
 
-            TogglePasswordVisibilityButton.Source = _isVisible ? "eye_open.png" : "eye_closed.png";
+            TogglePasswordVisibilityButton.Source = _isVisible ? "eye_open.svg" : "eye_closed.svg";
         }
 
         private void OnEnterClicked(object sender, EventArgs e)

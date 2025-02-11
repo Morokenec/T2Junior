@@ -1,3 +1,5 @@
+using MauiApp1.Services;
+
 namespace MauiApp1;
 
 public partial class SubscribersPage : ContentPage
@@ -125,12 +127,12 @@ public partial class SubscribersPage : ContentPage
                                     {
                                         if (image.Source is FileImageSource fileImageSource)
                                         {
-                                            if (fileImageSource.File == "redirect.png")
+                                            if (fileImageSource.File == "redirect.svg")
                                             {
                                                 image.WidthRequest = 24;
                                                 image.HeightRequest = 24;
                                             }
-                                            else if (fileImageSource.File == "profile_placeholder.png")
+                                            else if (fileImageSource.File == "profile_placeholder.svg")
                                             {
                                                 image.WidthRequest = 36;
                                                 image.HeightRequest = 36;
