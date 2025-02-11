@@ -43,8 +43,9 @@ namespace T2JuniorAPI.Services.Medias
             try
             {
                 var mediafile = _mapper.Map<Mediafile>(uploadDTO);
-                mediafile.Path = (await SaveFileAsync(uploadDTO.File)).Replace("wwwroot\\uploads\\", "uploads/").Replace("\\", "/");
                 mediafile.IdType = await GetMediaTypeId(uploadDTO.File.FileName);
+                mediafile.Path = (await SaveFileAsync(uploadDTO.File)).Replace("wwwroot\\uploads\\", "uploads/").Replace("\\", "/");
+                
 
                 if (isAvatar && mediafile.IdType != (await _mediaTypeService.GetGuidOrCreateMediaType(new MediaTypeDTO { Name = "Image" })).Id)
                     throw new InvalidOperationException("Avatar must be an image file");
