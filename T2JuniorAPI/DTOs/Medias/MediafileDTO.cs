@@ -6,6 +6,6 @@
         public Guid IdUser { get; set; }
         public Guid IdType { get; set; }
         public string Path { get; set; }
-        public string MediaTypeName { get; set; }
+        public string TypeName { get; set; }
     }
 }

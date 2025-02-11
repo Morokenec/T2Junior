@@ -63,6 +63,8 @@ namespace T2JuniorAPI.Services.Accounts
                 .Include(u => u.Organization)
                 .Include(u => u.Subscribers)
                 .Include(u => u.ClubUsers)
+                .Include(u => u.UserAvatars)
+                .ThenInclude(ua => ua.Media)
                 .FirstOrDefaultAsync(u => u.Id == userId);
             if (user == null)
             {

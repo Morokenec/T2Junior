@@ -10,6 +10,9 @@ namespace T2JuniorAPI.Entities
         [Required]
         public required Guid IdMedia { get; set; }
 
+        [Required]
+        public bool IsAvatar { get; set; }
+
         public virtual Club IdClubNavigation { get; set; } = null!;
 
         public virtual Mediafile MediaFilesNavigation { get; set; } = null!;

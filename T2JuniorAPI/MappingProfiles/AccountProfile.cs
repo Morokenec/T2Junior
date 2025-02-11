@@ -12,7 +12,11 @@ namespace T2JuniorAPI.MappingProfiles
                 .ForMember(dest => dest.SubscibersCount, opt => opt.MapFrom(src => src.Subscribers.Count(s => s.IdUser == src.Id)))
                 .ForMember(dest => dest.SubscriptionsCount, opt => opt.MapFrom(src => src.Subscribers.Count(s => s.IdSubscriber == src.Id)))
                 .ForMember(dest => dest.ClubsCount, opt => opt.MapFrom(src => src.ClubUsers.Count))
-                .ForMember(dest => dest.PostAndOrganization, opt => opt.MapFrom(src => $"{src.Post} {src.Organization.Name}"));
+                .ForMember(dest => dest.PostAndOrganization, opt => opt.MapFrom(src => $"{src.Post} {src.Organization.Name}"))
+                .ForMember(dest => dest.AvatarPath, opt => opt.MapFrom(src => src.UserAvatars
+                .Where(ua => !ua.IsDelete)
+                .OrderByDescending(ua => ua.CreationDate)
+                .FirstOrDefault().Media.Path));
 
             CreateMap<RegisterUserDto, ApplicationUser>()
                 .ForMember(dest => dest.UserName, opt => opt.MapFrom(src => src.Email))

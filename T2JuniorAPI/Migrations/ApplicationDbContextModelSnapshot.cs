@@ -52,6 +52,9 @@ namespace T2JuniorAPI.Migrations
                         .IsRequired()
                         .HasColumnType("TEXT");
 
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("INTEGER");
+
                     b.Property<string>("LastName")
                         .IsRequired()
                         .HasColumnType("TEXT");
@@ -606,6 +609,9 @@ namespace T2JuniorAPI.Migrations
                         .HasColumnName("Id")
                         .HasColumnOrder(0);
 
+                    b.Property<bool>("IsAvatar")
+                        .HasColumnType("INTEGER");
+
                     b.Property<bool>("IsDelete")
                         .HasColumnType("INTEGER")
                         .HasColumnName("IsDelete")
@@ -918,6 +924,44 @@ namespace T2JuniorAPI.Migrations
                     b.HasIndex("IdAchievement");
 
                     b.ToTable("UserAchievements");
+                });
+
+            modelBuilder.Entity("T2JuniorAPI.Entities.UserAvatar", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("TEXT")
+                        .HasColumnName("Id")
+                        .HasColumnOrder(0);
+
+                    b.Property<DateTime>("CreationDate")
+                        .HasColumnType("TEXT")
+                        .HasColumnName("CreationDate")
+                        .HasColumnOrder(1);
+
+                    b.Property<Guid>("IdMedia")
+                        .HasColumnType("TEXT");
+
+                    b.Property<Guid>("IdUser")
+                        .HasColumnType("TEXT");
+
+                    b.Property<bool>("IsDelete")
+                        .HasColumnType("INTEGER")
+                        .HasColumnName("IsDelete")
+                        .HasColumnOrder(3);
+
+                    b.Property<DateTime>("UpdateDate")
+                        .HasColumnType("TEXT")
+                        .HasColumnName("UpdateDate")
+                        .HasColumnOrder(2);
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("IdMedia");
+
+                    b.HasIndex("IdUser");
+
+                    b.ToTable("UserAvatars");
                 });
 
             modelBuilder.Entity("T2JuniorAPI.Entities.UserSubscribers", b =>
@@ -1317,6 +1361,25 @@ namespace T2JuniorAPI.Migrations
                     b.Navigation("UserNavigation");
                 });
 
+            modelBuilder.Entity("T2JuniorAPI.Entities.UserAvatar", b =>
+                {
+                    b.HasOne("T2JuniorAPI.Entities.Mediafile", "Media")
+                        .WithMany("UserAvatars")
+                        .HasForeignKey("IdMedia")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("ApplicationUser", "User")
+                        .WithMany("UserAvatars")
+                        .HasForeignKey("IdUser")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("Media");
+
+                    b.Navigation("User");
+                });
+
             modelBuilder.Entity("T2JuniorAPI.Entities.UserSubscribers", b =>
                 {
                     b.HasOne("ApplicationUser", "Subscriber")
@@ -1374,6 +1437,8 @@ namespace T2JuniorAPI.Migrations
                     b.Navigation("Subscribers");
 
                     b.Navigation("UserAchievements");
+
+                    b.Navigation("UserAvatars");
 
                     b.Navigation("Walls");
                 });
@@ -1437,6 +1502,8 @@ namespace T2JuniorAPI.Migrations
 
                     b.Navigation("MediaNote")
                         .IsRequired();
+
+                    b.Navigation("UserAvatars");
                 });
 
             modelBuilder.Entity("T2JuniorAPI.Entities.Note", b =>

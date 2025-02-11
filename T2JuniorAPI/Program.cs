@@ -59,7 +59,6 @@ builder.Services.AddSingleton<SubscriptionsProfile>();
 builder.Services.AddAutoMapper(typeof(EventProfile));
 builder.Services.AddAutoMapper(typeof(MediaProfile));
 
-builder.Services.AddControllers();
 builder.Services.AddScoped<IAccountService, AccountService>();
 builder.Services.AddScoped<ITokenService, TokenService>();
 builder.Services.AddScoped<IOrganizationService, OrganizationService>();
@@ -69,6 +68,8 @@ builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddScoped<IEventService, EventService>();
 builder.Services.AddScoped<IMediaTypeService, MediaTypeService>();
 builder.Services.AddScoped<IMediafileService, MediafileService>();
+
+builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen(c =>
 {
@@ -80,6 +81,7 @@ var app = builder.Build();
 
 if (app.Environment.IsDevelopment())
 {
+    app.UseDeveloperExceptionPage();
     app.UseSwagger();
     app.UseSwaggerUI(c =>
     {
@@ -87,6 +89,8 @@ if (app.Environment.IsDevelopment())
     });
 }
 
+app.UseStaticFiles(); // Ёто позвол€ет обслуживать статические файлы
+app.UseRouting();
 app.UseAuthorization();
 app.UseCors("AllowAll");
 

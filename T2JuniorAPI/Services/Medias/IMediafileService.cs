@@ -5,6 +5,10 @@ namespace T2JuniorAPI.Services.Medias
 {
     public interface IMediafileService
     {
-        Task<Mediafile> UploadMediafileAsync(MediafileUploadDTO uploadDTO);
+        Task<string> DeleteMediaByUserId(MediafileDeleteDTO mediafileDeleteDTO);
+        Task<Mediafile> AddMediaByUserId(MediafileUploadDTO uploadDTO);
+        Task<IEnumerable<MediafileDTO>> GetAllMediaByUserId(Guid userId);
+        Task<string> SetAvatarByUserId(MediafileUploadDTO uploadDTO);
+        Task<string> DeleteAvatarByUser(MediafileDeleteDTO deleteDTO);
     }
 }

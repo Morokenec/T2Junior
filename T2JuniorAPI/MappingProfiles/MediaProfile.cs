@@ -19,7 +19,15 @@ namespace T2JuniorAPI.MappingProfiles
                 .ForMember(dest => dest.MediaClubs, opt => opt.Ignore());
 
             CreateMap<Mediafile, MediafileDTO>()
-                .ForMember(dest => dest.MediaTypeName, opt => opt.MapFrom(src => src.IdMediaTypesNavigation.Name));
+                .ForMember(dest => dest.TypeName, opt => opt.MapFrom(src => src.IdMediaTypesNavigation.Name));
+
+            CreateMap<UserAvatar, UserAvatarDTO>()
+                .ForMember(dest => dest.IdUser, opt => opt.MapFrom(src => src.IdUser))
+                .ForMember(dest => dest.IdMedia, opt => opt.MapFrom(src => src.IdMedia));
+
+            CreateMap<UserAvatarDTO, UserAvatar>()
+                .ForMember(dest => dest.IdUser, opt => opt.MapFrom(src => src.IdUser))
+                .ForMember(dest => dest.IdMedia, opt => opt.MapFrom(src => src.IdMedia));
         }
     }
 }

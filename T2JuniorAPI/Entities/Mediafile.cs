@@ -27,5 +27,8 @@ namespace T2JuniorAPI.Entities
         public virtual ICollection<MediaEvent> MediaEvents { get; set; } = new List<MediaEvent>();
         [JsonIgnore] 
         public virtual ICollection<MediaClub> MediaClubs { get; set;} = new List<MediaClub>();
+        [JsonIgnore]
+        public virtual ICollection<UserAvatar> UserAvatars { get; set; }
+
     }
 }
