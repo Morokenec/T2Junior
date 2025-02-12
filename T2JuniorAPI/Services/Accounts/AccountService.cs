@@ -123,11 +123,8 @@ namespace T2JuniorAPI.Services.Accounts
         {
             var user = await _userManager.FindByIdAsync(userId.ToString()) ?? throw new ApplicationException("User not found");
 
-            var result = await _userManager.DeleteAsync(user);
-            if (!result.Succeeded)
-            {
-                throw new ApplicationException($"Delete failed: {string.Join("; ", result.Errors.Select(e => e.Description))}");
-            }
+            user.IsDeleted = true;
+            await _userManager.UpdateAsync(user);
 
             return "User deleted successfully";
         }
