@@ -29,7 +29,7 @@
                        HorizontalOptions="Center"
                        WidthRequest="24"
                        HeightRequest="24"
-                       IsVisible="{Binding Source={x:Reference Notes}, Path=DirectAccessed}"/>
+                       IsVisible="{Binding Source={x:Reference Notes}, Path=Redirected}"/>
             </Frame>
             <Frame x:Name="NotesTextFrame"
                    BorderColor="Transparent"

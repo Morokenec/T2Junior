@@ -13,8 +13,7 @@
                     <Frame.GestureRecognizers>
                         <TapGestureRecognizer Tapped="OnBackButtonTapped" />
                     </Frame.GestureRecognizers>
-                    <Image Source="back_icon.
-                           "
+                    <Image Source="back_icon.svg"
                            Aspect="AspectFill"
                            />
                 </Frame>

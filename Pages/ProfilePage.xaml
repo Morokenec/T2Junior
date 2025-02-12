@@ -7,18 +7,13 @@
     <ScrollView>
         <Grid>
             <Grid.RowDefinitions>
-                <RowDefinition Height="Auto"/>
-                <RowDefinition Height="Auto"/>
-                <RowDefinition Height="Auto"/>
-                <RowDefinition Height="Auto"/>
-                <RowDefinition Height="Auto"/>
-                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
             </Grid.RowDefinitions>
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="Auto" />
-                <ColumnDefinition Width="*" />
-                <ColumnDefinition Width="Auto" />
-            </Grid.ColumnDefinitions>
 
             <Frame Grid.Row="0"
                BackgroundColor="White"
@@ -26,12 +21,9 @@
                Padding="0,0,0,0">
 
                 <StackLayout>
-                    <HorizontalStackLayout x:Name="TopLayout" 
-                                           HorizontalOptions="Center" 
-                                           VerticalOptions="Start">
-
+                    <Grid ColumnDefinitions="*, Auto">
                         <Frame x:Name="CoinFrame"
-                               Grid.Column="0"
+                               HorizontalOptions="Start"
                                BackgroundColor="#FFFFFF"
                                CornerRadius="10"
                                HasShadow="True"
@@ -69,7 +61,6 @@
                         </Frame>
 
                         <Frame x:Name="RatingFrame"
-                               Grid.Column="2"
                                BackgroundColor="#FFFFFF"
                                HorizontalOptions="End"
                                VerticalOptions="Start"
@@ -123,7 +114,7 @@
                                 </HorizontalStackLayout>
                             </StackLayout>
                         </Frame>
-                    </HorizontalStackLayout>
+                    </Grid>
 
                     <Grid x:Name="UserInfoGrid"
                       Grid.Row="1">
@@ -132,7 +123,7 @@
                                HeightRequest="100"
                                HorizontalOptions="Center"
                                CornerRadius="50"
-                               Margin="0,8, 0, 0">
+                               Margin="0,8,0,8">
                             <Frame.GestureRecognizers>
                                 <TapGestureRecognizer Tapped="OnProfilePhotoTapped" />
                             </Frame.GestureRecognizers>
@@ -140,9 +131,7 @@
                             <Image x:Name="AvatarImage"
                                    Source="profile_placeholder.svg"
                                    Aspect="AspectFill"
-                                   VerticalOptions="Start"
-                                   WidthRequest="100"
-                                   HeightRequest="100"/>
+                                   VerticalOptions="Start"/>
 
                         </Frame>
                         <Frame x:Name="CircleOverlay" 
@@ -181,11 +170,10 @@
                                 Text="Подписаться"
                                 TextColor="White"
                                 FontSize="15"
-                                HorizontalOptions="Center"
+                                HorizontalOptions="Fill"
                                 VerticalOptions="Center"
                                 Clicked="OnSubUnsubButtonTapped"
-                                WidthRequest="343"
-                                Margin="0,10"/>
+                                Margin="16,10"/>
                     </VerticalStackLayout>
                 </StackLayout>
             </Frame>
@@ -194,76 +182,85 @@
                                    Grid.Row="3"
                                    Spacing="10"
                                    Margin="8, 16">
-                <Frame x:Name="SubscribersFrame"
-                       CornerRadius="16"
-                       HasShadow="True"
-                       WidthRequest="107.76"
-                       HeightRequest="76"
-                       Padding="12">
-                    <Frame.GestureRecognizers>
-                        <TapGestureRecognizer Tapped="OnSubscribersButtonTapped" />
-                    </Frame.GestureRecognizers>
-                    <StackLayout x:Name="SubscribersLayout"
-                                 Spacing="6">
-                        <Label Text="Подписчики" 
-                               FontSize="13" 
-                               FontFamily="ManropeMid" 
-                               TextColor="#9C9B9A"
-                               HorizontalOptions="Start"/>
+                <Grid WidthRequest="107.76"
+                      HeightRequest="76">
+                    <Frame x:Name="SubscribersFrame"
+                           CornerRadius="16"
+                           HasShadow="True"
+                           HorizontalOptions="FillAndExpand"
+                           VerticalOptions="Fill"
+                           Padding="12">
+                        <Frame.GestureRecognizers>
+                            <TapGestureRecognizer Tapped="OnSubscribersButtonTapped" />
+                        </Frame.GestureRecognizers>
+                        <StackLayout x:Name="SubscribersLayout"
+                                     Spacing="6">
+                            <Label Text="Подписчики"
+                                   FontSize="13"
+                                   FontFamily="ManropeMid"
+                                   TextColor="#9C9B9A"
+                                   HorizontalOptions="Start" />
 
-                        <Label x:Name="SubscribersCount" 
-                               Text="0" 
-                               FontFamily="RedRoseBold" 
-                               FontSize="20" 
-                               TextColor="#838281"/>
-                    </StackLayout>
-                </Frame>
-                <Frame x:Name="FollowingFrame"
-                       CornerRadius="16"
-                       HasShadow="True"
-                       WidthRequest="107.76"
-                       HeightRequest="76"
-                       Padding="12">
-                    <Frame.GestureRecognizers>
-                        <TapGestureRecognizer Tapped="OnFollowingButtonTapped" />
-                    </Frame.GestureRecognizers>
-                    <StackLayout x:Name="FollowingLayout"
-                                 Spacing="6">
-                        <Label Text="Подписки" 
-                               FontSize="13" 
-                               FontFamily="ManropeMid" 
-                               TextColor="#9C9B9A"/>
+                            <Label x:Name="SubscribersCount"
+                                   Text="0"
+                                   FontFamily="RedRoseBold"
+                                   FontSize="20"
+                                   TextColor="#838281" />
+                        </StackLayout>
+                    </Frame>
+                </Grid>
+                <Grid WidthRequest="107.76"
+                          HeightRequest="76">
+                        <Frame x:Name="FollowingFrame"
+                               CornerRadius="16"
+                               HasShadow="True"
+                               HorizontalOptions="FillAndExpand"
+                               VerticalOptions="Fill"
+                               Padding="12">
+                            <Frame.GestureRecognizers>
+                                <TapGestureRecognizer Tapped="OnFollowingButtonTapped" />
+                            </Frame.GestureRecognizers>
+                            <StackLayout x:Name="FollowingLayout"
+                                         Spacing="6">
+                                <Label Text="Подписки"
+                                       FontSize="13"
+                                       FontFamily="ManropeMid"
+                                       TextColor="#9C9B9A" />
 
-                        <Label x:Name="FollowingCount" 
-                               Text="0" 
-                               FontFamily="RedRoseBold" 
-                               FontSize="20" 
-                               TextColor="#838281"/>
-                    </StackLayout>
-                </Frame>
-                <Frame x:Name="ClubsFrame"
-                       CornerRadius="16"
-                       HasShadow="True"
-                       WidthRequest="107.76"
-                       HeightRequest="76"
-                       Padding="12">
-                    <Frame.GestureRecognizers>
-                        <TapGestureRecognizer Tapped="OnClubsButtonTapped" />
-                    </Frame.GestureRecognizers>
-                    <StackLayout x:Name="ClubsLayout"
-                                 Spacing="6">
-                        <Label Text="Клубы" 
-                               FontSize="13" 
-                               FontFamily="ManropeMid" 
-                               TextColor="#9C9B9A"/>
+                                <Label x:Name="FollowingCount"
+                                       Text="0"
+                                       FontFamily="RedRoseBold"
+                                       FontSize="20"
+                                       TextColor="#838281" />
+                            </StackLayout>
+                        </Frame>
+                    </Grid>
+                    <Grid WidthRequest="107.76"
+                          HeightRequest="76">
+                        <Frame x:Name="ClubsFrame"
+                               CornerRadius="16"
+                               HasShadow="True"
+                               HorizontalOptions="FillAndExpand"
+                               VerticalOptions="Fill"
+                               Padding="12">
+                            <Frame.GestureRecognizers>
+                                <TapGestureRecognizer Tapped="OnClubsButtonTapped" />
+                            </Frame.GestureRecognizers>
+                            <StackLayout x:Name="ClubsLayout"
+                                         Spacing="6">
+                                <Label Text="Клубы"
+                                       FontSize="13"
+                                       FontFamily="ManropeMid"
+                                       TextColor="#9C9B9A" />
 
-                        <Label x:Name="ClubsCount" 
-                               Text="0" 
-                               FontFamily="RedRoseBold" 
-                               FontSize="20" 
-                               TextColor="#838281"/>
-                    </StackLayout>
-                </Frame>
+                                <Label x:Name="ClubsCount"
+                                       Text="0"
+                                       FontFamily="RedRoseBold"
+                                       FontSize="20"
+                                       TextColor="#838281" />
+                            </StackLayout>
+                        </Frame>
+                    </Grid>
             </HorizontalStackLayout>
 
 

@@ -7,12 +7,18 @@ namespace MauiApp1
         public AppShell()
         {
             InitializeComponent();
-            this.Navigating += OnShellNavigating;
+            //this.Navigating += OnShellNavigating;
         }
 
-        private void OnShellNavigating(object sender, ShellNavigatingEventArgs e)
-        {
-            BackNavigationState.IsDirectAccess = true;
-        }
+        //private void OnShellNavigating(object sender, ShellNavigatingEventArgs e)
+        //{
+        //    if (e.Target.Location.OriginalString.Contains("NotesPage") ||
+        //    e.Target.Location.OriginalString.Contains("MessagesPage") ||
+        //    e.Target.Location.OriginalString.Contains("ClubsPage") ||
+        //    e.Target.Location.OriginalString.Contains("ProfilePage"))
+        //    {
+        //        BackNavigationState.IsDirectAccess = true;
+        //    }
+        //}
     }
 }

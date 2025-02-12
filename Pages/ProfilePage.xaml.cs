@@ -1,3 +1,4 @@
+using MauiApp1.Services;
 using System.Security.Principal;
 
 namespace MauiApp1;
@@ -11,6 +12,7 @@ public partial class ProfilePage : ContentPage
     int clickCount = 0;
     public string FullName { get; set; } = "ƒмитрий ”шаков";
 
+    public bool DirectAccessed { get; set; } = BackNavigationState.IsDirectAccess;
     public ProfilePage()
     {
         InitializeComponent();

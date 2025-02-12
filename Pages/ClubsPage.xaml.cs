@@ -7,6 +7,7 @@ namespace MauiApp1;
 
 public partial class ClubsPage : ContentPage
 {
+    public bool Redirected { get; set; } = BackNavigationState.IsDirectAccess;
     public ClubsPage()
     {
         InitializeComponent();

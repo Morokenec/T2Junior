@@ -2,6 +2,7 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="MauiApp1.ClubsPage"
+             x:Name="Clubs"
              Title="Клубы">
     <Grid>
         <Grid.RowDefinitions>
@@ -28,7 +29,7 @@
                        HorizontalOptions="Center"
                        WidthRequest="24"
                        HeightRequest="24"
-                       />
+                       IsVisible="{Binding Source={x:Reference Clubs}, Path=Redirected}"/>
             </Frame>
             <Frame x:Name="ClubTextFrame"
                    BorderColor="Transparent"
@@ -61,10 +62,8 @@
                              Source="search_icon.svg" 
                              BackgroundColor="Transparent" 
                              Clicked="OnSearch"
-                             VerticalOptions="Center" 
-                             HorizontalOptions="End"
-                             WidthRequest="24"
-                             HeightRequest="24"
+                             VerticalOptions="Start" 
+                             HorizontalOptions="Center"
                              />
                 </Frame>
             </HorizontalStackLayout>
@@ -135,8 +134,7 @@
             <CollectionView.EmptyView>
                 <Label Text="Результаты не найдены." 
                        HorizontalOptions="Center" 
-                       VerticalOptions="Center" 
-                       Margin="0,262,0,0"
+                       VerticalOptions="Center"
                        FontSize="24"/>
             </CollectionView.EmptyView>
         </CollectionView>
