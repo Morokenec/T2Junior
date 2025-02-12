@@ -46,6 +46,10 @@ namespace T2JuniorAPI.Data
                 .Property(a => a.IsDeleted)
                 .HasDefaultValue(false);
 
+            modelBuilder.Entity<MediaClub>()
+                .Property(mc => mc.IsAvatar)
+                .HasDefaultValue(false);
+
             modelBuilder.Entity<ClubUser>()
                 .HasOne(cu => cu.IdClubNavigation)
                 .WithMany(c => c.ClubUsers)

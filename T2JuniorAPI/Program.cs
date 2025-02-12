@@ -14,6 +14,7 @@ using T2JuniorAPI.Services.Tokens;
 using T2JuniorAPI.Services.Users;
 using T2JuniorAPI.Services.MediaTypes;
 using T2JuniorAPI.Services.Medias;
+using T2JuniorAPI.Services.MediaClubs;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -58,6 +59,7 @@ builder.Services.AddSingleton<SubscribersProfile>();
 builder.Services.AddSingleton<SubscriptionsProfile>();
 builder.Services.AddAutoMapper(typeof(EventProfile));
 builder.Services.AddAutoMapper(typeof(MediaProfile));
+builder.Services.AddAutoMapper(typeof(MediaClubProfile));
 
 builder.Services.AddScoped<IAccountService, AccountService>();
 builder.Services.AddScoped<ITokenService, TokenService>();
@@ -68,6 +70,7 @@ builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddScoped<IEventService, EventService>();
 builder.Services.AddScoped<IMediaTypeService, MediaTypeService>();
 builder.Services.AddScoped<IMediafileService, MediafileService>();
+builder.Services.AddScoped<IMediaClubService, MediaClubService>();
 
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
