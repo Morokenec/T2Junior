@@ -8,6 +8,8 @@
 
         public string Target { get; set; } = null!;
 
+        public string? AvatarPath { get; set; }
+
         public int UsersCount { get; set; }
     }
 }
