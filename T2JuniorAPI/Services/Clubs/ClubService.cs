@@ -22,6 +22,12 @@ namespace T2JuniorAPI.Services.Clubs
         public async Task<ClubPageDTO> GetClubInfoById(Guid clubId)
         {
             var club = await _context.Clubs
+                .Include(c => c.MediaClubs)
+                    .ThenInclude(mc => mc.MediaFilesNavigation)
+                .Include(c => c.ClubUsers)
+                    .ThenInclude(cu => cu.IdUserNavigation)
+                        .ThenInclude(u => u.UserAvatars)
+                            .ThenInclude(ua => ua.Media)
                 .Where(c => c.Id == clubId)
                 .ProjectTo<ClubPageDTO>(_mapper.ConfigurationProvider)
                 .FirstOrDefaultAsync();
@@ -29,14 +35,14 @@ namespace T2JuniorAPI.Services.Clubs
             if (club == null)
                 return null;
 
-            // Получаем пользователей клуба
-            var users = await _context.ClubUsers
-                .Where(cu => cu.IdClub == clubId && !cu.IsDelete)
-                .ProjectTo<SubscriberProfileDTO>(_mapper.ConfigurationProvider)
-                .ToListAsync();
+            //// Получаем пользователей клуба
+            //var users = await _context.ClubUsers
+            //    .Where(cu => cu.IdClub == clubId && !cu.IsDelete)
+            //    .ProjectTo<SubscriberProfileDTO>(_mapper.ConfigurationProvider)
+            //    .ToListAsync();
 
-            // Заполняем список пользователей в клубе
-            club.Users = users;
+            //// Заполняем список пользователей в клубе
+            //club.Users = users;
 
             return club;
         }
@@ -131,6 +137,8 @@ namespace T2JuniorAPI.Services.Clubs
         public async Task<ClubProfileDTO> GetClubProfileById(Guid clubId)
         {
             var club = await _context.Clubs
+                .Include(c => c.MediaClubs)
+                    .ThenInclude(mc => mc.MediaFilesNavigation)
                 .Where(c => c.Id == clubId)
                 .ProjectTo<ClubProfileDTO>(_mapper.ConfigurationProvider)
                 .FirstOrDefaultAsync();
@@ -144,6 +152,8 @@ namespace T2JuniorAPI.Services.Clubs
         public async Task<List<AllClubsDTO>> GetAllClubsByUserId(Guid userId)
         {
             var clubs = await _context.Clubs
+                .Include(c => c.MediaClubs)
+                    .ThenInclude(mc => mc.MediaFilesNavigation)
                 .Where(c => c.IsDelete == false)
                 .ProjectTo<AllClubsDTO>(_mapper.ConfigurationProvider)
                 .ToListAsync();

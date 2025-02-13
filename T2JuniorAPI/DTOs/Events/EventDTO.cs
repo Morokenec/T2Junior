@@ -12,5 +12,6 @@
         public required int NumberParticpants { get; set; }
         public int? FactParticpants { get; set; }
         public int Raiting { get; set; }
+        public string? ImagePath { get; set; }
     }
 }

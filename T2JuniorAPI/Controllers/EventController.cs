@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using T2JuniorAPI.DTOs.Events;
+using T2JuniorAPI.DTOs.Medias;
 using T2JuniorAPI.Services.Events;
 
 namespace T2JuniorAPI.Controllers
@@ -51,11 +52,11 @@ namespace T2JuniorAPI.Controllers
         }
 
         [HttpPost("create-event")]
-        public async Task<ActionResult<Guid>> CreateEvent([FromBody] CreateEventDTO createEventDTO)
+        public async Task<ActionResult<Guid>> CreateEvent([FromForm] CreateEventDTO createEventDTO, [FromForm] MediafileUploadDTO mediafile)
         {
             try
             {
-                var eventId = await _eventService.CreateEvent(createEventDTO);
+                var eventId = await _eventService.CreateEvent(createEventDTO, mediafile);
                 return Ok(eventId);
             }
             catch (InvalidOperationException ex)

@@ -32,6 +32,7 @@ namespace T2JuniorAPI.Data
         public DbSet<MediaEvent> MediaEvents { get; set; }
         public DbSet<Achievement> Achievements { get; set; }
         public DbSet<UserAchievement> UserAchievements { get; set; }
+        public DbSet<UserAvatar> UserAvatars { get; set; }
 
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -40,6 +41,14 @@ namespace T2JuniorAPI.Data
 
             modelBuilder.Entity<ClubUser>()
                 .HasKey(cu => new { cu.IdClub, cu.IdUser, cu.IdRole });
+
+            modelBuilder.Entity<ApplicationUser>()
+                .Property(a => a.IsDeleted)
+                .HasDefaultValue(false);
+
+            modelBuilder.Entity<MediaClub>()
+                .Property(mc => mc.IsAvatar)
+                .HasDefaultValue(false);
 
             modelBuilder.Entity<ClubUser>()
                 .HasOne(cu => cu.IdClubNavigation)
@@ -203,6 +212,17 @@ namespace T2JuniorAPI.Data
                 .HasForeignKey(mn => mn.IdNote)
                 .OnDelete(DeleteBehavior.Restrict);
 
+            modelBuilder.Entity<UserAvatar>()
+                .HasOne(ua => ua.User)
+                .WithMany(u => u.UserAvatars)
+                .HasForeignKey(ua => ua.IdUser)
+                .OnDelete(DeleteBehavior.Restrict);
+
+            modelBuilder.Entity<UserAvatar>()
+                .HasOne(ua => ua.Media)
+                .WithMany(m => m.UserAvatars)
+                .HasForeignKey(ua => ua.IdMedia)
+                .OnDelete(DeleteBehavior.Restrict);
 
         }
 

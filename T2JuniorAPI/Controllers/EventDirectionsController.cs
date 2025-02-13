@@ -52,10 +52,5 @@ namespace T2JuniorAPI.Controllers
             await _eventService.PutEventDirection(updateEventDirectionDto);
             return NoContent();
         }
-
-        private bool EventDirectionExists(Guid id)
-        {
-            return _context.EventDirections.Any(e => e.Id == id);
-        }
     }
 }

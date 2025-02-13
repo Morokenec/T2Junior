@@ -84,7 +84,7 @@ public class AccountController : ControllerBase
         }
     }
     
-    [HttpPut("password_recovery")]
+    [HttpPut("password-recovery")]
     public async Task<IActionResult> RecoveryUserPassword([FromBody] RecoveryPasswordDTO recoveryPassword)
     {
         try

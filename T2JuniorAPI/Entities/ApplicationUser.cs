@@ -13,7 +13,7 @@ public class ApplicationUser : IdentityUser<Guid>
     public string MiddleName { get; set; }
 
     [Required]
-    public  string PhoneNumber { get; set; }
+    public string PhoneNumber { get; set; }
 
     [Required]
     public DateTime? DateOfBirth { get; set; }
@@ -28,16 +28,21 @@ public class ApplicationUser : IdentityUser<Guid>
 
     public Guid OrganizationId { get; set; }
 
+    public bool IsDeleted { get; set; } = false;
+
     public Organization Organization { get; set; }
 
     public virtual ICollection<ClubUser> ClubUsers { get; set; }
 
-    public virtual ICollection<Comment> Comments { get; set; } 
+    public virtual ICollection<Comment> Comments { get; set; }
 
     public virtual ICollection<Wall> Walls { get; set; }
 
     public ICollection<UserSubscribers> Subscribers { get; set; }
 
     public virtual ICollection<Mediafile> Mediafiles { get; set; }
+
     public virtual ICollection<UserAchievement> UserAchievements { get; set; }
+
+    public virtual ICollection<UserAvatar> UserAvatars { get; set; }
 }

@@ -15,5 +15,7 @@
         public int SubscriptionsCount { get; set; }
 
         public int ClubsCount { get; set; }
+
+        public string? AvatarPath { get; set; }
     }
 }
