@@ -77,6 +77,24 @@ namespace T2JuniorAPI.Services.Accounts
             return userProfile;
         }
 
+        public async Task<List<UserProfileDTO>> GetAllUserProfilesAsync()
+        {
+            var users = await _userManager.Users
+                .Include(u => u.Organization)
+                .Include(u => u.Subscribers)
+                .Include(u => u.ClubUsers)
+                .Include(u => u.UserAvatars)
+                .ThenInclude(ua => ua.Media)
+                .ToListAsync();
+            if (users == null || !users.Any())
+            {
+                return new List<UserProfileDTO>();
+            }
+
+            var usersProdiles = _mapper.Map<List<UserProfileDTO>>(users);
+            return usersProdiles;
+        }
+
         /// <summary>
         /// Обновляет профиль пользователя.
         /// </summary>
