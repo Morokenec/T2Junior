@@ -21,25 +21,16 @@ namespace T2JuniorAPI.Controllers
             _context = context;
         }
 
-        // GET: api/Achievements
-        [HttpGet]
-        public async Task<ActionResult<IEnumerable<Achievement>>> GetAchievements()
+        [HttpGet("all-by-user-id/{id}")]
+        public async Task<ActionResult<IEnumerable<Achievement>>> GetAchievementsAllByUserId(Guid id)
         {
-            return await _context.Achievements.ToListAsync();
+            return ReturnOK();
         }
-
-        // GET: api/Achievements/5
-        [HttpGet("{id}")]
-        public async Task<ActionResult<Achievement>> GetAchievement(Guid id)
+        
+        [HttpGet("by-user-id/{id}")]
+        public async Task<ActionResult<IEnumerable<Achievement>>> GetAchievementsByUserId(Guid id)
         {
-            var achievement = await _context.Achievements.FindAsync(id);
-
-            if (achievement == null)
-            {
-                return NotFound();
-            }
-
-            return achievement;
+            return ReturnOK();
         }
 
         // PUT: api/Achievements/5
@@ -47,30 +38,7 @@ namespace T2JuniorAPI.Controllers
         [HttpPut("{id}")]
         public async Task<IActionResult> PutAchievement(Guid id, Achievement achievement)
         {
-            if (id != achievement.Id)
-            {
-                return BadRequest();
-            }
-
-            _context.Entry(achievement).State = EntityState.Modified;
-
-            try
-            {
-                await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!AchievementExists(id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
-            }
-
-            return NoContent();
+            return ReturnOK();
         }
 
         // POST: api/Achievements
@@ -78,31 +46,30 @@ namespace T2JuniorAPI.Controllers
         [HttpPost]
         public async Task<ActionResult<Achievement>> PostAchievement(Achievement achievement)
         {
-            _context.Achievements.Add(achievement);
-            await _context.SaveChangesAsync();
-
-            return CreatedAtAction("GetAchievement", new { id = achievement.Id }, achievement);
+            return ReturnOK();
+        }
+        
+        [HttpPost("to-user")]
+        public async Task<ActionResult<Achievement>> PostAchievementToUser(Achievement achievement)
+        {
+            return ReturnOK();
         }
 
         // DELETE: api/Achievements/5
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteAchievement(Guid id)
         {
-            var achievement = await _context.Achievements.FindAsync(id);
-            if (achievement == null)
-            {
-                return NotFound();
-            }
-
-            _context.Achievements.Remove(achievement);
-            await _context.SaveChangesAsync();
-
-            return NoContent();
+            return ReturnOK();
         }
 
         private bool AchievementExists(Guid id)
         {
             return _context.Achievements.Any(e => e.Id == id);
+        }
+
+        private OkObjectResult ReturnOK()
+        {
+            return Ok("API решил уйти в отпуск, подожди немного или принеси ему кофе =)");
         }
     }
 }
