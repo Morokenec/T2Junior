@@ -1,4 +1,5 @@
 ﻿using T2JuniorAPI.DTOs.Events;
+using T2JuniorAPI.DTOs.Medias;
 
 namespace T2JuniorAPI.Services.Events
 {
@@ -6,7 +7,7 @@ namespace T2JuniorAPI.Services.Events
     {
         Task<List<EventCalendarDTO>> GetUserCalendar(Guid userId, int month, int year);
         Task<List<EventCalendarDTO>> GetClubCalendar(Guid clubId, int month, int year);
-        Task<Guid> CreateEvent(CreateEventDTO createEventDto);
+        Task<Guid> CreateEvent(CreateEventDTO createEventDto, MediafileUploadDTO uploadDTO = null);
         Task DeleteEvent(Guid eventId);
         Task PutEvent(UpdateEventDTO updateEventDto);
         Task<EventDTO> GetEventById(Guid eventId);

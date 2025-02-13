@@ -27,7 +27,7 @@ namespace T2JuniorAPI.Controllers
             _context = applicationDbContext;
         }
 
-        [HttpPost("AddByUserId")]
+        [HttpPost("add-by-user-id")]
         public async Task<IActionResult> UploadMediaFile([FromForm] MediafileUploadDTO uploadDTO)
         {
             try
@@ -60,7 +60,7 @@ namespace T2JuniorAPI.Controllers
             return File(fileBytes, "application/octet-stream", Path.GetFileName(filepath));
         }
 
-        [HttpDelete("DeleteByUserId")]
+        [HttpDelete("delete-by-user-id")]
         public async Task<IActionResult> DeleteMediaByUserId([FromBody] MediafileDeleteDTO mediafileDeleteDTO)
         {
             try
@@ -75,7 +75,7 @@ namespace T2JuniorAPI.Controllers
             }
         }
 
-        [HttpGet("GetAllByUserId")]
+        [HttpGet("get-all-by-user-id")]
         public async Task<IActionResult> GetAllMediaByUserId([FromQuery] Guid userId)
         {
             try
@@ -97,7 +97,7 @@ namespace T2JuniorAPI.Controllers
             }
         }
 
-        [HttpPost("SetAvatarForUser")]
+        [HttpPost("set-avatar-for-user")]
         public async Task<IActionResult> SetAvaterByUserId([FromForm] MediafileUploadDTO uploadDTO)
         {
             try
@@ -112,7 +112,7 @@ namespace T2JuniorAPI.Controllers
             }
         }
 
-        [HttpDelete("DeleteAvatarByUserId")]
+        [HttpDelete("delete-avatar-by-user-id")]
         public async Task<IActionResult> DeleteAvatarByUserId([FromBody] MediafileDeleteDTO deleteDTO)
         {
             try

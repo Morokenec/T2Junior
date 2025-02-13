@@ -3,7 +3,10 @@ using AutoMapper.QueryableExtensions;
 using Microsoft.EntityFrameworkCore;
 using T2JuniorAPI.Data;
 using T2JuniorAPI.DTOs.Events;
+using T2JuniorAPI.DTOs.Medias;
 using T2JuniorAPI.Entities;
+using T2JuniorAPI.Services.MediaClubs;
+using T2JuniorAPI.Services.Medias;
 
 namespace T2JuniorAPI.Services.Events
 {
@@ -11,11 +14,15 @@ namespace T2JuniorAPI.Services.Events
     {
         private readonly ApplicationDbContext _context;
         private readonly IMapper _mapper;
+        private readonly IMediaClubService _mediaClubService;
+        private readonly IMediafileService _mediafileService;
 
-        public EventService(ApplicationDbContext context, IMapper mapper)
+        public EventService(ApplicationDbContext context, IMapper mapper, IMediaClubService mediaClubService, IMediafileService mediafileService)
         {
             _context = context;
             _mapper = mapper;
+            _mediaClubService = mediaClubService;
+            _mediafileService = mediafileService;
         }
 
         public async Task<List<EventCalendarDTO>> GetUserCalendar(Guid userId, int month, int year)
@@ -54,27 +61,34 @@ namespace T2JuniorAPI.Services.Events
             return events;
         }
 
-        public async Task<Guid> CreateEvent(CreateEventDTO createEventDto)
+        public async Task<Guid> CreateEvent(CreateEventDTO createEventDto, MediafileUploadDTO uploadDTO = null)
         {
             try
             {
                 // Проверка существования Club
                 var clubExists = await _context.Clubs.AnyAsync(c => c.Id == createEventDto.IdClub);
                 if (!clubExists)
-                {
                     throw new InvalidOperationException("Club with the specified IdClub does not exist.");
-                }
 
                 // Проверка существования EventDirection
                 var directionExists = await _context.EventDirections.AnyAsync(d => d.Id == createEventDto.IdDirection);
                 if (!directionExists)
-                {
                     throw new InvalidOperationException("EventDirection with the specified IdDirection does not exist.");
-                }
 
+                // проверка что пользователь является админом клуба
+                if (uploadDTO != null)
+                    if (!await _mediaClubService.IsUserAdminInClub(uploadDTO.IdUser, createEventDto.IdClub))
+                        throw new UnauthorizedAccessException("User is not an admin in the club");
+
+                var mediafile = await _mediafileService.CreateMediafileAsync(uploadDTO, true);
                 var newEvent = _mapper.Map<Event>(createEventDto);
 
                 _context.Events.Add(newEvent);
+                await _context.SaveChangesAsync();
+
+                var mediaEvent = _mapper.Map<MediaEvent>(new MediaEventDTO { IdEvent = newEvent.Id, IdMedia = mediafile.Id });
+                _context.MediaEvents.Add(mediaEvent);
+
                 await _context.SaveChangesAsync();
 
                 return newEvent.Id;
@@ -95,9 +109,21 @@ namespace T2JuniorAPI.Services.Events
 
         public async Task DeleteEvent(Guid eventId)
         {
-            var eventToDelete = await _context.Events.FindAsync(eventId);
+            var eventToDelete = await _context.Events.Where(e => e.Id == eventId && !e.IsDelete).FirstOrDefaultAsync();
             if (eventToDelete != null)
             {
+                var mediaEvent = await _context.MediaEvents.Where(me => me.IdEvent == eventId).FirstOrDefaultAsync();
+                if (mediaEvent != null)
+                {
+                    var media = await _context.Mediafiles.Where(m => m.Id == mediaEvent.IdMedia).FirstOrDefaultAsync();
+                    if (media != null)
+                    {
+                        media.IsDelete = true;
+                        media.UpdateDate = DateTime.Now;
+                        mediaEvent.IsDelete = true;
+                        mediaEvent.UpdateDate = DateTime.Now;
+                    }
+                }
                 eventToDelete.IsDelete = true;
                 eventToDelete.UpdateDate = DateTime.Now;
                 await _context.SaveChangesAsync();

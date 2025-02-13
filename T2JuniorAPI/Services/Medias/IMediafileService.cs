@@ -10,6 +10,6 @@ namespace T2JuniorAPI.Services.Medias
         Task<IEnumerable<MediafileDTO>> GetAllMediaByUserId(Guid userId);
         Task<string> SetAvatarByUserId(MediafileUploadDTO uploadDTO);
         Task<string> DeleteAvatarByUser(MediafileDeleteDTO deleteDTO);
-        Task<Mediafile> CreateMediafileAsync(MediafileUploadDTO uploadDTO, bool isAvatar = false);
+        Task<Mediafile> CreateMediafileAsync(MediafileUploadDTO uploadDTO, bool isImage = false);
     }
 }

@@ -61,9 +61,5 @@ namespace T2JuniorAPI.Controllers
             return Ok(result);
         }
 
-        private bool UserSubscribersExists(Guid id)
-        {
-            return _context.UserSubscribers.Any(e => e.IdUser == id);
-        }
     }
 }

@@ -9,5 +9,6 @@ namespace T2JuniorAPI.Services.MediaClubs
         Task<IEnumerable<MediaClubDTO>> GetAllMediaByClubId(Guid clubId);
         Task<string> SetAvatarForClub(MediafileUploadDTO uploadDTO, Guid clubId);
         Task<string> DeleteAvatarFromClub(Guid clubId, Guid mediaId, Guid userId);
+        Task<bool> IsUserAdminInClub(Guid userId, Guid clubId);
     }
 }

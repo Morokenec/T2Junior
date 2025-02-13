@@ -107,7 +107,7 @@ namespace T2JuniorAPI.Services.MediaClubs
             return _mapper.Map<IEnumerable<MediaClubDTO>>(mediaClubs);
         }
 
-        private async Task<bool> IsUserAdminInClub(Guid userId, Guid clubId)
+        public async Task<bool> IsUserAdminInClub(Guid userId, Guid clubId)
         {
             var clubUser = await _context.ClubUsers
                 .Include(cu => cu.IdRoleNavigation)

@@ -20,7 +20,7 @@ namespace T2JuniorAPI.Controllers
         }
 
         // GET: api/Clubs
-        [HttpGet("by_user/{userId}")]
+        [HttpGet("by-user/{userId}")]
         public async Task<ActionResult<List<AllClubsDTO>>> GetAllClubsByUserId(Guid userId)
         {
             return await _clubService.GetAllClubsByUserId(userId);
@@ -93,7 +93,7 @@ namespace T2JuniorAPI.Controllers
             return Ok(result);
         }
 
-        [HttpPost("{clubId}/addUser")]
+        [HttpPost("{clubId}/add-user")]
         public async Task<IActionResult> AddUserToClub(Guid clubId, [FromBody] AddUserToClubDTO user)
         {
             if (!ModelState.IsValid)
@@ -104,7 +104,7 @@ namespace T2JuniorAPI.Controllers
         }
 
         // DELETE: api/Clubs/{clubId}/deleteUser/{userId}
-        [HttpDelete("{clubId}/deleteUser/{userId}")]
+        [HttpDelete("{clubId}/delete-user/{userId}")]
         public async Task<IActionResult> DeleteUserFromClub(Guid clubId, Guid userId)
         {
             var result = await _clubService.DeleteUserFromClub(clubId, userId);

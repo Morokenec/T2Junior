@@ -38,7 +38,7 @@ namespace T2JuniorAPI.Services.Medias
             return "Avatar set successfuiiy";
         }
 
-        public async Task<Mediafile> CreateMediafileAsync(MediafileUploadDTO uploadDTO, bool isAvatar = false)
+        public async Task<Mediafile> CreateMediafileAsync(MediafileUploadDTO uploadDTO, bool isImage = false)
         {
             try
             {
@@ -47,8 +47,8 @@ namespace T2JuniorAPI.Services.Medias
                 mediafile.Path = (await SaveFileAsync(uploadDTO.File)).Replace("wwwroot\\uploads\\", "uploads/").Replace("\\", "/");
                 
 
-                if (isAvatar && mediafile.IdType != (await _mediaTypeService.GetGuidOrCreateMediaType(new MediaTypeDTO { Name = "Image" })).Id)
-                    throw new InvalidOperationException("Avatar must be an image file");
+                if (isImage && mediafile.IdType != (await _mediaTypeService.GetGuidOrCreateMediaType(new MediaTypeDTO { Name = "Image" })).Id)
+                    throw new InvalidOperationException("mediafile must be an image file");
 
                 _context.Mediafiles.Add(mediafile);
                 await _context.SaveChangesAsync();

@@ -13,7 +13,11 @@ namespace T2JuniorAPI.MappingProfiles
             CreateMap<Event, EventDTO>()
                 .ForMember(dest => dest.IdEvent, opt => opt.MapFrom(src => src.Id))
                 .ForMember(dest => dest.IdDirection, opt => opt.MapFrom(src => src.IdDirection))
-                .ForMember(dest => dest.IdClub, opt => opt.MapFrom(src => src.IdClub));
+                .ForMember(dest => dest.IdClub, opt => opt.MapFrom(src => src.IdClub))
+                .ForMember(dest => dest.ImagePath, opt => opt.MapFrom(src => src.MediaEvents
+                .Where(me => !me.IsDelete)
+                .OrderByDescending(me => me.CreationDate)
+                .FirstOrDefault().MediaFilesNavigation.Path));
             CreateMap<EventDirection, EventDirectionDTO>()
                 .ForMember(dest => dest.IdDirection, opt => opt.MapFrom(src => src.Id));
             CreateMap<CreateEventDTO, Event>()
