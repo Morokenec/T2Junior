@@ -69,6 +69,19 @@ public class AccountController : ControllerBase
 
         return Ok(userProfile);
     }
+    
+    [HttpGet("all")]
+    public IActionResult GetAllUsers()
+    {
+        var userProfile = _accountService.GetAllUserProfilesAsync();
+
+        if (userProfile == null)
+        {
+            return NotFound(new { Message = "Профиль пользователя не найден" });
+        }
+
+        return Ok(userProfile);
+    }
 
     [HttpPut("change/{id}")]
     public async Task<IActionResult> UpdateUserProfileById(Guid id, [FromBody] UpdateUserDto updateUserDto)
