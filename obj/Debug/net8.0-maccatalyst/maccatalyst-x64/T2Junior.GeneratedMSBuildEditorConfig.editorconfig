@@ -46,6 +46,12 @@ build_metadata.AdditionalFiles.ManifestResourceName = MauiApp1.Pages.CalendarPag
 build_metadata.AdditionalFiles.TargetPath = Pages\CalendarPage.xaml
 build_metadata.AdditionalFiles.RelativePath = Pages\CalendarPage.xaml
 
+[C:/Users/VT/Desktop/First Release/MauiApp1/Pages/ChatPage.xaml]
+build_metadata.AdditionalFiles.GenKind = Xaml
+build_metadata.AdditionalFiles.ManifestResourceName = MauiApp1.Pages.ChatPage.xaml
+build_metadata.AdditionalFiles.TargetPath = Pages\ChatPage.xaml
+build_metadata.AdditionalFiles.RelativePath = Pages\ChatPage.xaml
+
 [C:/Users/VT/Desktop/First Release/MauiApp1/Pages/ClubProfilePage.xaml]
 build_metadata.AdditionalFiles.GenKind = Xaml
 build_metadata.AdditionalFiles.ManifestResourceName = MauiApp1.Pages.ClubProfilePage.xaml

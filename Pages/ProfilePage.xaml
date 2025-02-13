@@ -52,7 +52,7 @@
                                                        HorizontalOptions="Center">
                                     <Label x:Name="CoinCountLabel"
                                            FontSize="20"
-                                           Text="0"
+                                           Text="-"
                                            HorizontalOptions="Center"
                                            FontFamily="MyriadProBold"
                                            HeightRequest="22"/>
@@ -281,8 +281,7 @@
                         </Frame.GestureRecognizers>
                         <HorizontalStackLayout Spacing="12">
                             <Image x:Name="ProjectsImage"
-                                   Source="projects.
-                                   "
+                                   Source="projects.svg"
                                    Aspect="AspectFill"
                                    VerticalOptions="Center"
                                    WidthRequest="24"
@@ -294,7 +293,7 @@
                                    FontSize="15"
                                    VerticalOptions="Center"
                                    WidthRequest="231"/>
-                            <Image Source="redirect.png"
+                            <Image Source="redirect.svg"
                                    Aspect="AspectFill"/>
                         </HorizontalStackLayout>
                     </Frame>
@@ -327,7 +326,7 @@
                                    FontSize="15"
                                    VerticalOptions="Center"
                                    WidthRequest="231"/>
-                            <Image Source="redirect.png"
+                            <Image Source="redirect.svg"
                                    Aspect="AspectFill"/>
                         </HorizontalStackLayout>
                     </Frame>

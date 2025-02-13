@@ -1184,3 +1184,7 @@ C:\Users\VT\Desktop\First Release\MauiApp1\obj\Debug\net8.0-android\stamp\_Conve
 C:\Users\VT\Desktop\First Release\MauiApp1\obj\Debug\net8.0-android\stamp\_GenerateJavaStubs.stamp
 C:\Users\VT\Desktop\First Release\MauiApp1\obj\Debug\net8.0-android\stamp\_GeneratePackageManagerJava.stamp
 C:\Users\VT\Desktop\First Release\MauiApp1\obj\Debug\net8.0-android\stamp\_ResolveLibraryProjectImports.stamp
+C:\Users\VT\Desktop\First Release\MauiApp1\obj\Debug\net8.0-android\android\assets\arm64-v8a\System.Private.CoreLib.dll
+C:\Users\VT\Desktop\First Release\MauiApp1\obj\Debug\net8.0-android\android\assets\armeabi-v7a\System.Private.CoreLib.dll
+C:\Users\VT\Desktop\First Release\MauiApp1\obj\Debug\net8.0-android\android\assets\x86\System.Private.CoreLib.dll
+C:\Users\VT\Desktop\First Release\MauiApp1\obj\Debug\net8.0-android\android\assets\x86_64\System.Private.CoreLib.dll

@@ -66,18 +66,18 @@ namespace MauiApp1.ViewModel
             if (string.IsNullOrWhiteSpace(SearchText))
             {
                 FilteredClubs.Clear();
-                foreach (var monkey in Clubs)
+                foreach (var club in Clubs)
                 {
-                    FilteredClubs.Add(monkey);
+                    FilteredClubs.Add(club);
                 }
             }
             else
             {
                 var filtered = Clubs.Where(m => m.Name.Contains(SearchText, StringComparison.OrdinalIgnoreCase)).ToList();
                 FilteredClubs.Clear();
-                foreach (var monkey in filtered)
+                foreach (var club in filtered)
                 {
-                    FilteredClubs.Add(monkey);
+                    FilteredClubs.Add(club);
                 }
             }
         }

@@ -1,4 +1,6 @@
+using MauiApp1.Models;
 using MauiApp1.Services;
+using MauiApp1.ViewModels;
 using System.Security.Principal;
 
 namespace MauiApp1;
@@ -6,18 +8,21 @@ namespace MauiApp1;
 public partial class ProfilePage : ContentPage
 {
     int netStatus = 1;
-    int coinCount = 5;
     int userRating = 5;
     int ratingCount = 105;
     int clickCount = 0;
-    public string FullName { get; set; } = "ƒмитрий ”шаков";
 
+    static UserProfileDTO testUser = new UserProfileDTO();
+    public string FullName { get; set; } = $"-";
+    public static int SelectedProfileId { get; set; }
     public bool DirectAccessed { get; set; } = BackNavigationState.IsDirectAccess;
     public ProfilePage()
     {
         InitializeComponent();
         ThingsByDefault();
         NetStatus();
+        //LoadProfileDetails();
+        BindingContext = new UserProfileViewModel();
     }
 
     protected override void OnAppearing()
@@ -28,7 +33,6 @@ public partial class ProfilePage : ContentPage
 
     private void ThingsByDefault()
     {
-        CoinCountLabel.Text = coinCount.ToString();
         UserRatingLabel.Text = userRating.ToString();
         RatingCountLabel.Text = ratingCount.ToString();
     }
@@ -132,5 +136,12 @@ public partial class ProfilePage : ContentPage
                 clickCount = 0;
             }
         }
+    }
+
+    private void LoadProfileDetails()
+    {
+        var userViewModel = new UserViewModel();
+        var selectedProfile = userViewModel.GetProfileById(SelectedProfileId);
+        ((UserProfileViewModel)BindingContext).SelectedProfile = selectedProfile;
     }
 }
