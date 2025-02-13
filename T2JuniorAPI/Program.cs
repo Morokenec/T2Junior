@@ -16,7 +16,10 @@ using T2JuniorAPI.Services.MediaTypes;
 using T2JuniorAPI.Services.Medias;
 using T2JuniorAPI.Services.MediaClubs;
 
+
+
 var builder = WebApplication.CreateBuilder(args);
+
 
 builder.Logging.ClearProviders();
 builder.Logging.AddConsole();
@@ -79,8 +82,15 @@ builder.Services.AddSwaggerGen(c =>
     c.SwaggerDoc("v1", new() { Title = "T2JuniorAPI", Version = "v1" });
 });
 
+
+
 var app = builder.Build();
 
+using (var scope = app.Services.CreateScope())
+{
+    var db = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
+    db.Database.Migrate();
+}
 
 if (app.Environment.IsDevelopment())
 {
