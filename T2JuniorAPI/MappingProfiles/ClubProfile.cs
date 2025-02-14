@@ -51,6 +51,8 @@ namespace T2JuniorAPI.MappingProfiles
                 .ForMember(dest => dest.IdClub, opt => opt.Ignore())
                 .ForMember(dest => dest.IdUser, opt => opt.MapFrom(src => src.UserId))
                 .ForMember(dest => dest.IdRole, opt => opt.MapFrom(src => src.RoleId));
+
+            CreateMap<ClubUserDTO, ClubUser>();
         }
     }
 }
