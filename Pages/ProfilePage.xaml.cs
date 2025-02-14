@@ -1,20 +1,19 @@
-using MauiApp1.Services;
-using System.Security.Principal;
+using MauiApp1.Services.AppHelper;
+using MauiApp1.ViewModels.Profile;
 
 namespace MauiApp1;
 
 public partial class ProfilePage : ContentPage
 {
     int netStatus = 1;
-    int coinCount = 5;
-    int userRating = 5;
-    int ratingCount = 105;
     int clickCount = 0;
-    public string FullName { get; set; } = "ƒмитрий ”шаков";
+    private readonly UserProfileViewModel _viewModel;
 
     public bool DirectAccessed { get; set; } = BackNavigationState.IsDirectAccess;
-    public ProfilePage()
+    public ProfilePage(UserProfileViewModel userProfileViewModel)
     {
+        _viewModel = userProfileViewModel;
+        BindingContext = _viewModel;
         InitializeComponent();
         ThingsByDefault();
         NetStatus();
@@ -23,14 +22,14 @@ public partial class ProfilePage : ContentPage
     protected override void OnAppearing()
     {
         base.OnAppearing();
-        FullNameLabel.Text = FullName;
+        FullNameLabel.Text = _viewModel.UserInfo?.FullName;
     }
 
     private void ThingsByDefault()
     {
-        CoinCountLabel.Text = coinCount.ToString();
-        UserRatingLabel.Text = userRating.ToString();
-        RatingCountLabel.Text = ratingCount.ToString();
+        CoinCountLabel.Text = _viewModel.UserInfo?.SubscribersCount.ToString();
+        UserRatingLabel.Text = _viewModel.UserInfo?.SubscriptionsCount.ToString();
+        RatingCountLabel.Text = _viewModel.UserInfo?.ClubsCount.ToString();
     }
 
     private void NetStatus()

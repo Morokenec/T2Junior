@@ -1,4 +1,4 @@
-using MauiApp1.Services;
+using MauiApp1.Services.AppHelper;
 
 namespace MauiApp1;
 

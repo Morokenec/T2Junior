@@ -1,10 +1,13 @@
-using MauiApp1.Services;
+using MauiApp1.Services.AppHelper;
+using MauiApp1.ViewModels.Profile;
 
 namespace MauiApp1;
 
 public partial class FollowingPage : ContentPage
 {
     string portProfileName;
+    private UserProfileViewModel _userViewModel;
+
     public FollowingPage()
     {
         InitializeComponent();
@@ -43,8 +46,7 @@ public partial class FollowingPage : ContentPage
 
         var fullNameLabel = (Label)hsl.Children[1];
 
-        var profilePage = new ProfilePage();
-        profilePage.FullName = fullNameLabel.Text;
+        var profilePage = new ProfilePage(_userViewModel);
 
         await Navigation.PushAsync(profilePage);
     }

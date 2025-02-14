@@ -1,10 +1,14 @@
-﻿using System.Text.RegularExpressions;
+﻿using MauiApp1.Services.UseCase;
+using MauiApp1.ViewModels.Profile;
+using System.Text.RegularExpressions;
 
 namespace MauiApp1
 {
     public partial class AuthorizationPage : ContentPage
     {
         private bool _isVisible = false;
+
+        private readonly UserProfileViewModel _userViewModel;
 
         public AuthorizationPage()
         {
@@ -13,7 +17,7 @@ namespace MauiApp1
 
         private async void OnForgotPasswordTapped(object sender, EventArgs e)
         {
-            await Navigation.PushAsync(new ProfilePage());
+            await Navigation.PushAsync(new ProfilePage(_userViewModel));
         }
 
         private void OnPasswordVisibilityClicked(object sender, EventArgs e)

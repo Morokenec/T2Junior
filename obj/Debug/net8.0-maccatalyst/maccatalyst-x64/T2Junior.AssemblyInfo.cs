@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("T2Junior")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0+a4211c68b7e179e614d7e79ba9d9f4dd30d61ed0")]
 [assembly: System.Reflection.AssemblyProductAttribute("T2Junior")]
 [assembly: System.Reflection.AssemblyTitleAttribute("T2Junior")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
