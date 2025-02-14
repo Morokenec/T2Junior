@@ -1,14 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using T2JuniorAPI.Data;
+﻿using Microsoft.AspNetCore.Mvc;
 using T2JuniorAPI.DTOs.Achievements;
 using T2JuniorAPI.DTOs.Medias;
-using T2JuniorAPI.Entities;
 using T2JuniorAPI.Services.Achievements;
 
 namespace T2JuniorAPI.Controllers
@@ -27,57 +19,121 @@ namespace T2JuniorAPI.Controllers
         [HttpGet("all-by-user-id/{id}")]
         public async Task<ActionResult<IEnumerable<AchievementDTO>>> GetAchievementsAllByUserId(Guid id)
         {
-            var achievements = await _achievementService.GetAchievementsAllByUserIdAsync(id);
-            return Ok(achievements);
+            try
+            {
+                var achievements = await _achievementService.GetAchievementsAllByUserIdAsync(id);
+                return Ok(achievements);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, ex.Message);
+            }
+
         }
 
         [HttpGet("by-user-id/{id}")]
         public async Task<ActionResult<IEnumerable<AchievementDTO>>> GetAchievementsByUserId(Guid id)
         {
-            var achievements = await _achievementService.GetAchievementsByUserIdAsync(id);
-            return Ok(achievements);
+            try
+            {
+                var achievements = await _achievementService.GetAchievementsByUserIdAsync(id);
+                return Ok(achievements);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, ex.Message);
+            }
+
         }
 
         [HttpPost]
         public async Task<ActionResult<AchievementDTO>> PostAchievement([FromForm] CreateAchievementDTO achievementDto, [FromForm] MediafileUploadDTO uploadDTO = null)
         {
-            var achievement = await _achievementService.CreateAchievementAsync(achievementDto, uploadDTO);
-            return Ok(achievement);
+            try
+            {
+                var achievement = await _achievementService.CreateAchievementAsync(achievementDto, uploadDTO);
+                return Ok(achievement);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, ex.Message);
+            }
+
         }
 
         [HttpPut]
         public async Task<IActionResult> PutAchievement([FromForm] UpdateAchievementDTO achievementDto, [FromForm] MediafileUploadDTO uploadDTO = null)
         {
-            var achievement = await _achievementService.UpdateAchievementAsync(achievementDto, uploadDTO);
-            return Ok(achievement);
+            try
+            {
+                var achievement = await _achievementService.UpdateAchievementAsync(achievementDto, uploadDTO);
+                return Ok(achievement);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, ex.Message);
+            }
+
         }
 
         [HttpPost("to-user")]
         public async Task<ActionResult> PostAchievementToUser(Guid userId, Guid achievementId)
         {
-            await _achievementService.AssignAchievementToUserAsync(userId, achievementId);
-            return Ok();
+            try
+            {
+                await _achievementService.AssignAchievementToUserAsync(userId, achievementId);
+                return Ok();
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, ex.Message);
+            }
+
         }
 
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteAchievement(Guid id)
         {
-            await _achievementService.DeleteAchievementAsync(id);
-            return Ok();
+            try
+            {
+                await _achievementService.DeleteAchievementAsync(id);
+                return Ok();
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, ex.Message);
+            }
+
         }
 
         [HttpPatch("activate/{id}")]
         public async Task<IActionResult> ActivateAchievement(Guid id)
         {
-            await _achievementService.ActivateAchievementAsync(id);
-            return Ok();
+            try
+            {
+                await _achievementService.ActivateAchievementAsync(id);
+                return Ok();
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, ex.Message);
+            }
+
         }
 
         [HttpPatch("deactivate/{id}")]
         public async Task<IActionResult> DeactivateAchievement(Guid id)
         {
-            await _achievementService.DeactivateAchievementAsync(id);
-            return Ok();
+            try
+            {
+                await _achievementService.DeactivateAchievementAsync(id);
+                return Ok();
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, ex.Message);
+            }
+
         }
     }
 }

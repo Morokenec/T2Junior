@@ -23,6 +23,9 @@ namespace T2JuniorAPI.Services.Achievements
 
         public async Task<List<AchievementDTO>> GetAchievementsAllByUserIdAsync(Guid userId)
         {
+            if (userId == Guid.Empty)
+                throw new ArgumentException("Invalid User ID");
+
             var achivements = await _context.Achievements
                 .Where(a => !a.IsDelete)
                 .Include(a => a.MediaFilesNavigation)
@@ -44,6 +47,9 @@ namespace T2JuniorAPI.Services.Achievements
 
         public async Task<List<AchievementDTO>> GetAchievementsByUserIdAsync(Guid userId)
         {
+            if (userId == Guid.Empty)
+                throw new ArgumentException("Invalid user ID.");
+
             var achivements = await _context.UserAchievements
                 .Where(ua => ua.IdUser == userId && !ua.AchievementsNavigation.IsDelete && !ua.IsDelete)
                 .Include(ua => ua.AchievementsNavigation)
@@ -61,8 +67,11 @@ namespace T2JuniorAPI.Services.Achievements
         }
         public async Task<AchievementDTO> CreateAchievementAsync(CreateAchievementDTO achievementDTO, MediafileUploadDTO uploadDTO)
         {
-            if (achievementDTO == null || string.IsNullOrWhiteSpace(achievementDTO.Name)) 
-                throw new ArgumentException("Inavlid achivement data");
+            if (achievementDTO == null)
+                throw new ArgumentNullException(nameof(achievementDTO), "Achievement data cannot be null.");
+
+            if (string.IsNullOrWhiteSpace(achievementDTO.Name))
+                throw new ArgumentException("Achievement name cannot be empty.", nameof(achievementDTO.Name));
 
             var mediafile = await _mediafileservice.CreateMediafileAsync(uploadDTO, true);
             var achivement = _mapper.Map<Achievement>(achievementDTO);
@@ -75,23 +84,32 @@ namespace T2JuniorAPI.Services.Achievements
         }
         public async Task<AchievementDTO> UpdateAchievementAsync(UpdateAchievementDTO achievementDTO, MediafileUploadDTO uploadDTO = null)
         {
-            var existingAchivement = await _context.Achievements.Include(a => a.MediaFilesNavigation).SingleOrDefaultAsync(a => a.Id == achievementDTO.Id);
-            if (existingAchivement == null)
-                throw new ArgumentException("Achievement not found."); 
+            if (achievementDTO == null)
+                throw new ArgumentNullException(nameof(achievementDTO), "Achievement data cannot be null.");
+
+            if (achievementDTO.Id == Guid.Empty)
+                throw new ArgumentException("Invalid achievement ID.", nameof(achievementDTO.Id));
+
+            var existingAchievement = await _context.Achievements.Include(a => a.MediaFilesNavigation).SingleOrDefaultAsync(a => a.Id == achievementDTO.Id);
+            if (existingAchievement == null)
+                throw new ArgumentException("Achievement not found.");
 
             if (uploadDTO != null)
             {
                 var mediafile = await _mediafileservice.CreateMediafileAsync(uploadDTO, true);
-                existingAchivement.IdMedia = mediafile.Id;
+                existingAchievement.IdMedia = mediafile.Id;
             }
-            _mapper.Map(achievementDTO, existingAchivement);
+            _mapper.Map(achievementDTO, existingAchievement);
             await _context.SaveChangesAsync();
 
-            return _mapper.Map<AchievementDTO>(existingAchivement);
+            return _mapper.Map<AchievementDTO>(existingAchievement);
         }
 
         public async Task DeleteAchievementAsync(Guid achievementId)
         {
+            if (achievementId == Guid.Empty)
+                throw new ArgumentException("Invalid achievement ID.");
+
             var achivement = await _context.Achievements.FindAsync(achievementId);
             if (achivement != null && !achivement.IsDelete)
             {
@@ -103,6 +121,9 @@ namespace T2JuniorAPI.Services.Achievements
 
         public async Task ActivateAchievementAsync(Guid achievementId)
         {
+            if (achievementId == Guid.Empty)
+                throw new ArgumentException("Invalid achievement ID.");
+
             var achivement = await _context.Achievements.FindAsync(achievementId);
             if (achivement != null && !achivement.IsActive && !achivement.IsDelete)
             {
@@ -114,6 +135,9 @@ namespace T2JuniorAPI.Services.Achievements
 
         public async Task DeactivateAchievementAsync(Guid achievementId)
         {
+            if (achievementId == Guid.Empty)
+                throw new ArgumentException("Invalid achievement ID.");
+
             var achivement = await _context.Achievements.FindAsync(achievementId);
             if (achivement != null && achivement.IsActive && !achivement.IsDelete)
             {
@@ -125,6 +149,20 @@ namespace T2JuniorAPI.Services.Achievements
 
         public async Task AssignAchievementToUserAsync(Guid userId, Guid achievementId)
         {
+            if (userId == Guid.Empty)
+                throw new ArgumentException("Invalid user ID.");
+
+            if (achievementId == Guid.Empty)
+                throw new ArgumentException("Invalid achievement ID.");
+
+            var userExists = await _context.Users.AnyAsync(u => u.Id == userId);
+            if (!userExists)
+                throw new ApplicationException("User not found.");
+
+            var achievementExists = await _context.Achievements.AnyAsync(a => a.Id == achievementId && !a.IsDelete);
+            if (!achievementExists)
+                throw new ApplicationException("Achievement not found.");
+
             var userAchivement = _mapper.Map<UserAchievement>(new UserAchievementDTO { UserId = userId, AchivementId = achievementId });
             _context.UserAchievements.Add(userAchivement);
             await _context.SaveChangesAsync();
