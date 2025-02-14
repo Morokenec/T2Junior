@@ -10,7 +10,6 @@ public partial class SubscribersPage : ContentPage
     public SubscribersPage()
     {
         InitializeComponent();
-        ResizeFunction();
         BindingContext = new UserViewModel();
     }
 
@@ -23,20 +22,10 @@ public partial class SubscribersPage : ContentPage
     {
         var choosedFrame = sender as Frame;
 
-        var grid = (Grid)choosedFrame.Content;
+        var profileId = choosedFrame.BindingContext as UserProfileDTO;
 
-        var hsl = (HorizontalStackLayout)grid.Children[0];
+        ProfilePage.SelectedProfileId = profileId.IdUser;
 
-        var fullNameLabel = (Label)hsl.Children[1];
-
-        var profilePage = new ProfilePage();
-        profilePage.FullName = fullNameLabel.Text;
-
-        await Navigation.PushAsync(profilePage);
-    }
-
-    private void ResizeFunction()
-    {
-        
+        await Navigation.PushAsync(new ProfilePage());
     }
 }

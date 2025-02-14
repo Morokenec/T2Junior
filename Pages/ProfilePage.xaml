@@ -2,6 +2,7 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="MauiApp1.ProfilePage"
+             x:Name="UserProfile"
              BackgroundColor="#F2F2F7"
              Title="Профиль">
     <ScrollView>
@@ -51,8 +52,8 @@
                                 <HorizontalStackLayout x:Name="CoinCounterLayout"
                                                        HorizontalOptions="Center">
                                     <Label x:Name="CoinCountLabel"
+                                           Text="0"
                                            FontSize="20"
-                                           Text="-"
                                            HorizontalOptions="Center"
                                            FontFamily="MyriadProBold"
                                            HeightRequest="22"/>
@@ -124,14 +125,13 @@
                                HorizontalOptions="Center"
                                CornerRadius="50"
                                Margin="0,8,0,8">
-                            <Frame.GestureRecognizers>
-                                <TapGestureRecognizer Tapped="OnProfilePhotoTapped" />
-                            </Frame.GestureRecognizers>
 
+                            <StackLayout>
                             <Image x:Name="AvatarImage"
                                    Source="profile_placeholder.svg"
                                    Aspect="AspectFill"
                                    VerticalOptions="Start"/>
+                        </StackLayout>
 
                         </Frame>
                         <Frame x:Name="CircleOverlay" 
@@ -146,7 +146,7 @@
                                          Grid.Row="2"
                                          Spacing="6">
                         <Label x:Name="FullNameLabel"
-                               Text="ФИО" 
+                               Text="-"
                                HorizontalOptions="Center"
                                FontSize="20"/>
 

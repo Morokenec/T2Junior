@@ -15,9 +15,9 @@ namespace MauiApp1.ViewModels
         {
             UserProfiles = new ObservableCollection<UserProfileDTO>
         {
-            new UserProfileDTO { IdUser = 1, FirstName = "Дмитрий", LastName = "Ушаков"},
-            new UserProfileDTO { IdUser = 2, FirstName = "Виталий", LastName = "Таран"},
-            new UserProfileDTO { IdUser = 3, FirstName = "Матвей", LastName = "Абрамов"},
+            new UserProfileDTO { IdUser = 1, FirstName = "Дмитрий", LastName = "Ушаков", AccumulatedPoints = 5},
+            new UserProfileDTO { IdUser = 2, FirstName = "Виталий", LastName = "Таран", AccumulatedPoints = 13},
+            new UserProfileDTO { IdUser = 3, FirstName = "Матвей", LastName = "Абрамов", AccumulatedPoints = 25},
             new UserProfileDTO { IdUser = 4, FirstName = "Тимофей", LastName = "Багин" },
             new UserProfileDTO { IdUser = 5, FirstName = "Дмитрий", LastName = "Ушаков" }
         };

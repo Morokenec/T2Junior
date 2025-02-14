@@ -1,7 +1,6 @@
 using MauiApp1.Models;
 using MauiApp1.Services;
 using MauiApp1.ViewModels;
-using System.Security.Principal;
 
 namespace MauiApp1;
 
@@ -11,30 +10,29 @@ public partial class ProfilePage : ContentPage
     int userRating = 5;
     int ratingCount = 105;
     int clickCount = 0;
+    int coins = 0;
+    string fullName = "";
 
-    static UserProfileDTO testUser = new UserProfileDTO();
-    public string FullName { get; set; } = $"-";
-    public static int SelectedProfileId { get; set; }
+    public string FullName { get; set; }
+    public int CoinCount { get; set; }
+    public static int SelectedProfileId { get; set; } = 0;
     public bool DirectAccessed { get; set; } = BackNavigationState.IsDirectAccess;
     public ProfilePage()
     {
         InitializeComponent();
-        ThingsByDefault();
         NetStatus();
-        //LoadProfileDetails();
         BindingContext = new UserProfileViewModel();
+        UserRatingLabel.Text = userRating.ToString();
+        RatingCountLabel.Text = ratingCount.ToString();
+
     }
 
     protected override void OnAppearing()
     {
         base.OnAppearing();
+        LoadProfileDetails(SelectedProfileId);
         FullNameLabel.Text = FullName;
-    }
-
-    private void ThingsByDefault()
-    {
-        UserRatingLabel.Text = userRating.ToString();
-        RatingCountLabel.Text = ratingCount.ToString();
+        CoinCountLabel.Text = CoinCount.ToString();
     }
 
     private void NetStatus()
@@ -49,26 +47,7 @@ public partial class ProfilePage : ContentPage
         }
     }
 
-    private async void OnProfilePhotoTapped(object sender, EventArgs e)
-    {
-        //try
-        //{
-        //    var chosenImage = await FilePicker.PickAsync(new PickOptions
-        //    {
-        //        PickerTitle = "Выберите изображение"
-        //    });
 
-        //    if (chosenImage != null)
-        //    {
-        //        var stream = await chosenImage.OpenReadAsync();
-        //        AvatarImage.Source = ImageSource.FromStream(() => stream);
-        //    }
-        //}
-        //catch (Exception ex)
-        //{
-        //    await DisplayAlert("Фото не было выбрано.", ex.Message, "OK");
-        //}
-    }
 
     private async void OnCoinButtonTapped(object sender, EventArgs e)
     {
@@ -138,10 +117,25 @@ public partial class ProfilePage : ContentPage
         }
     }
 
-    private void LoadProfileDetails()
+    private void LoadProfileDetails(int? selectedProfileId)
     {
         var userViewModel = new UserViewModel();
-        var selectedProfile = userViewModel.GetProfileById(SelectedProfileId);
-        ((UserProfileViewModel)BindingContext).SelectedProfile = selectedProfile;
+        var profileViewModel = (UserProfileViewModel)BindingContext;
+
+        UserProfileDTO selectedProfile;
+
+        if (selectedProfileId.Value > 0)
+        {
+            selectedProfile = userViewModel.GetProfileById(selectedProfileId.Value);
+            SelectedProfileId = 0;
+        }
+        else
+        {
+            selectedProfile = userViewModel.UserProfiles.FirstOrDefault();
+        }
+
+        profileViewModel.SelectedProfile = selectedProfile;
+        FullName = selectedProfile.FullName;
+        CoinCount = selectedProfile.AccumulatedPoints;
     }
 }

@@ -17,10 +17,18 @@ namespace MauiApp1.ViewModels
             }
         }
 
+        public string FullName => SelectedProfile.FullName;
+        public int Coins => SelectedProfile.AccumulatedPoints;
+
+        public UserProfileViewModel()
+        {
+            LoadProfile();
+        }
+
         private void LoadProfile()
         {
             UserViewModel userView = new UserViewModel();
-            SelectedProfile = userView.GetProfileById(ClubProfilePage.SelectedClubId);
+            SelectedProfile = userView.GetProfileById(ProfilePage.SelectedProfileId);
         }
     }
 }
