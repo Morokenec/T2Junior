@@ -15,6 +15,7 @@ using T2JuniorAPI.Services.Users;
 using T2JuniorAPI.Services.MediaTypes;
 using T2JuniorAPI.Services.Medias;
 using T2JuniorAPI.Services.MediaClubs;
+using T2JuniorAPI.Services.Achievements;
 
 
 
@@ -63,6 +64,7 @@ builder.Services.AddSingleton<SubscriptionsProfile>();
 builder.Services.AddAutoMapper(typeof(EventProfile));
 builder.Services.AddAutoMapper(typeof(MediaProfile));
 builder.Services.AddAutoMapper(typeof(MediaClubProfile));
+builder.Services.AddAutoMapper(typeof(AchievementProfile));
 
 builder.Services.AddScoped<IAccountService, AccountService>();
 builder.Services.AddScoped<ITokenService, TokenService>();
@@ -74,6 +76,7 @@ builder.Services.AddScoped<IEventService, EventService>();
 builder.Services.AddScoped<IMediaTypeService, MediaTypeService>();
 builder.Services.AddScoped<IMediafileService, MediafileService>();
 builder.Services.AddScoped<IMediaClubService, MediaClubService>();
+builder.Services.AddScoped<IAchievementService, AchievementService>();
 
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();

@@ -6,7 +6,10 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using T2JuniorAPI.Data;
+using T2JuniorAPI.DTOs.Achievements;
+using T2JuniorAPI.DTOs.Medias;
 using T2JuniorAPI.Entities;
+using T2JuniorAPI.Services.Achievements;
 
 namespace T2JuniorAPI.Controllers
 {
@@ -14,62 +17,67 @@ namespace T2JuniorAPI.Controllers
     [ApiController]
     public class AchievementsController : ControllerBase
     {
-        private readonly ApplicationDbContext _context;
+        private readonly IAchievementService _achievementService;
 
-        public AchievementsController(ApplicationDbContext context)
+        public AchievementsController(IAchievementService achievementService)
         {
-            _context = context;
+            _achievementService = achievementService;
         }
 
         [HttpGet("all-by-user-id/{id}")]
-        public async Task<ActionResult<IEnumerable<Achievement>>> GetAchievementsAllByUserId(Guid id)
+        public async Task<ActionResult<IEnumerable<AchievementDTO>>> GetAchievementsAllByUserId(Guid id)
         {
-            return ReturnOK();
+            var achievements = await _achievementService.GetAchievementsAllByUserIdAsync(id);
+            return Ok(achievements);
         }
-        
+
         [HttpGet("by-user-id/{id}")]
-        public async Task<ActionResult<IEnumerable<Achievement>>> GetAchievementsByUserId(Guid id)
+        public async Task<ActionResult<IEnumerable<AchievementDTO>>> GetAchievementsByUserId(Guid id)
         {
-            return ReturnOK();
+            var achievements = await _achievementService.GetAchievementsByUserIdAsync(id);
+            return Ok(achievements);
         }
 
-        // PUT: api/Achievements/5
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
-        [HttpPut("{id}")]
-        public async Task<IActionResult> PutAchievement(Guid id, Achievement achievement)
-        {
-            return ReturnOK();
-        }
-
-        // POST: api/Achievements
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
-        public async Task<ActionResult<Achievement>> PostAchievement(Achievement achievement)
+        public async Task<ActionResult<AchievementDTO>> PostAchievement([FromForm] CreateAchievementDTO achievementDto, [FromForm] MediafileUploadDTO uploadDTO = null)
         {
-            return ReturnOK();
-        }
-        
-        [HttpPost("to-user")]
-        public async Task<ActionResult<Achievement>> PostAchievementToUser(Achievement achievement)
-        {
-            return ReturnOK();
+            var achievement = await _achievementService.CreateAchievementAsync(achievementDto, uploadDTO);
+            return Ok(achievement);
         }
 
-        // DELETE: api/Achievements/5
+        [HttpPut]
+        public async Task<IActionResult> PutAchievement([FromForm] UpdateAchievementDTO achievementDto, [FromForm] MediafileUploadDTO uploadDTO = null)
+        {
+            var achievement = await _achievementService.UpdateAchievementAsync(achievementDto, uploadDTO);
+            return Ok(achievement);
+        }
+
+        [HttpPost("to-user")]
+        public async Task<ActionResult> PostAchievementToUser(Guid userId, Guid achievementId)
+        {
+            await _achievementService.AssignAchievementToUserAsync(userId, achievementId);
+            return Ok();
+        }
+
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteAchievement(Guid id)
         {
-            return ReturnOK();
+            await _achievementService.DeleteAchievementAsync(id);
+            return Ok();
         }
 
-        private bool AchievementExists(Guid id)
+        [HttpPatch("activate/{id}")]
+        public async Task<IActionResult> ActivateAchievement(Guid id)
         {
-            return _context.Achievements.Any(e => e.Id == id);
+            await _achievementService.ActivateAchievementAsync(id);
+            return Ok();
         }
 
-        private OkObjectResult ReturnOK()
+        [HttpPatch("deactivate/{id}")]
+        public async Task<IActionResult> DeactivateAchievement(Guid id)
         {
-            return Ok("API решил уйти в отпуск, подожди немного или принеси ему кофе =)");
+            await _achievementService.DeactivateAchievementAsync(id);
+            return Ok();
         }
     }
 }

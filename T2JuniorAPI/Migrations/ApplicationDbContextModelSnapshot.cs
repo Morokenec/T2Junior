@@ -923,6 +923,26 @@ namespace T2JuniorAPI.Migrations
                     b.Property<Guid>("IdAchievement")
                         .HasColumnType("TEXT");
 
+                    b.Property<DateTime>("CreationDate")
+                        .HasColumnType("TEXT")
+                        .HasColumnName("CreationDate")
+                        .HasColumnOrder(1);
+
+                    b.Property<Guid>("Id")
+                        .HasColumnType("TEXT")
+                        .HasColumnName("Id")
+                        .HasColumnOrder(0);
+
+                    b.Property<bool>("IsDelete")
+                        .HasColumnType("INTEGER")
+                        .HasColumnName("IsDelete")
+                        .HasColumnOrder(3);
+
+                    b.Property<DateTime>("UpdateDate")
+                        .HasColumnType("TEXT")
+                        .HasColumnName("UpdateDate")
+                        .HasColumnOrder(2);
+
                     b.HasKey("IdUser", "IdAchievement");
 
                     b.HasIndex("IdAchievement");
