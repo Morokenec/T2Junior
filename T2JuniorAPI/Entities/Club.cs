@@ -24,7 +24,7 @@ public class Club : BaseCommonProperties
 
     public virtual ICollection<Event> Events { get; set; } = new List<Event>();
 
-    public virtual ICollection<Wall> Walls { get; set; } = new List<Wall>();
+    public virtual ICollection<Wall>? Walls { get; set; }
 
     public ICollection<MediaClub> MediaClubs { get; set;} = new List<MediaClub>();
 }

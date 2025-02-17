@@ -31,5 +31,12 @@ namespace T2JuniorAPI.Controllers
                 return NotFound();
             return Ok(wall);
         }
+
+        [HttpPost]
+        public async Task<ActionResult<WallDTO>> CreateWall(Guid idOwner)
+        {
+            var wall = _wallService.CreateWallAsync(idOwner);
+            return Ok(wall);
+        }
     }
 }

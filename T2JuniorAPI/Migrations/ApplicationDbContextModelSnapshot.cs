@@ -1426,13 +1426,15 @@ namespace T2JuniorAPI.Migrations
                         .WithMany("Walls")
                         .HasForeignKey("IdOwner")
                         .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
+                        .IsRequired()
+                        .HasConstraintName("FK_Wall_User");
 
                     b.HasOne("T2JuniorAPI.Entities.Club", "ClubOwner")
                         .WithMany("Walls")
                         .HasForeignKey("IdOwner")
                         .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
+                        .IsRequired()
+                        .HasConstraintName("FK_Wall_Club");
 
                     b.HasOne("T2JuniorAPI.Entities.WallType", "IdTypeNavigation")
                         .WithMany("Walls")

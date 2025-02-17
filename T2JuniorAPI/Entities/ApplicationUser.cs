@@ -36,7 +36,7 @@ public class ApplicationUser : IdentityUser<Guid>
 
     public virtual ICollection<Comment> Comments { get; set; }
 
-    public virtual ICollection<Wall> Walls { get; set; }
+    public virtual ICollection<Wall>? Walls { get; set; }
 
     public ICollection<UserSubscribers> Subscribers { get; set; }
 
