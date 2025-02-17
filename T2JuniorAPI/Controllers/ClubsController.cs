@@ -25,6 +25,12 @@ namespace T2JuniorAPI.Controllers
         {
             return await _clubService.GetAllClubsByUserId(userId);
         }
+        
+        [HttpGet("all")]
+        public async Task<ActionResult<List<AllClubsDTO>>> GetAllClubs()
+        {
+            return await _clubService.GetAllClubs();
+        }
 
         //// GET: api/Clubs/5
         //[HttpGet("{id}")]

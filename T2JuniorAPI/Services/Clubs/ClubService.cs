@@ -19,6 +19,17 @@ namespace T2JuniorAPI.Services.Clubs
             _mapper = mapper;
         }
 
+        public async Task<List<AllClubsDTO>> GetAllClubs()
+        {
+            var clubs = await _context.Clubs
+                .Include(c => c.MediaClubs)
+                    .ThenInclude(mc => mc.MediaFilesNavigation)
+                .Where(c => c.IsDelete == false)
+                .ProjectTo<AllClubsDTO>(_mapper.ConfigurationProvider)
+                .ToListAsync();
+            return clubs;
+        }
+
         public async Task<ClubPageDTO> GetClubInfoById(Guid clubId)
         {
             var club = await _context.Clubs
@@ -52,6 +63,7 @@ namespace T2JuniorAPI.Services.Clubs
             var newClub = _mapper.Map<Club>(club);
 
             await _context.Clubs.AddAsync(newClub);
+            await _context.SaveChangesAsync();
 
             var role = await _context.ClubRoles.FirstOrDefaultAsync(r => r.Name == "admin");
             if (role == null)
@@ -61,7 +73,7 @@ namespace T2JuniorAPI.Services.Clubs
                 await _context.SaveChangesAsync();
             }
 
-            var clubUser = _mapper.Map<ClubUser>(new { IdClub = newClub.Id, IdUser = club.CreatorUserId, IdRole = role.Id });
+            var clubUser = _mapper.Map<ClubUser>(new ClubUserDTO{ IdClub = newClub.Id, IdUser = club.CreatorUserId, IdRole = role.Id });
 
             await _context.ClubUsers.AddAsync(clubUser);
             try

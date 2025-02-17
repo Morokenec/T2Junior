@@ -1,12 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using T2JuniorAPI.Data;
-using T2JuniorAPI.Entities;
+﻿using Microsoft.AspNetCore.Mvc;
+using T2JuniorAPI.DTOs.Achievements;
+using T2JuniorAPI.DTOs.Medias;
+using T2JuniorAPI.Services.Achievements;
 
 namespace T2JuniorAPI.Controllers
 {
@@ -14,95 +9,131 @@ namespace T2JuniorAPI.Controllers
     [ApiController]
     public class AchievementsController : ControllerBase
     {
-        private readonly ApplicationDbContext _context;
+        private readonly IAchievementService _achievementService;
 
-        public AchievementsController(ApplicationDbContext context)
+        public AchievementsController(IAchievementService achievementService)
         {
-            _context = context;
+            _achievementService = achievementService;
         }
 
-        // GET: api/Achievements
-        [HttpGet]
-        public async Task<ActionResult<IEnumerable<Achievement>>> GetAchievements()
+        [HttpGet("all-by-user-id/{id}")]
+        public async Task<ActionResult<IEnumerable<AchievementDTO>>> GetAchievementsAllByUserId(Guid id)
         {
-            return await _context.Achievements.ToListAsync();
-        }
-
-        // GET: api/Achievements/5
-        [HttpGet("{id}")]
-        public async Task<ActionResult<Achievement>> GetAchievement(Guid id)
-        {
-            var achievement = await _context.Achievements.FindAsync(id);
-
-            if (achievement == null)
-            {
-                return NotFound();
-            }
-
-            return achievement;
-        }
-
-        // PUT: api/Achievements/5
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
-        [HttpPut("{id}")]
-        public async Task<IActionResult> PutAchievement(Guid id, Achievement achievement)
-        {
-            if (id != achievement.Id)
-            {
-                return BadRequest();
-            }
-
-            _context.Entry(achievement).State = EntityState.Modified;
-
             try
             {
-                await _context.SaveChangesAsync();
+                var achievements = await _achievementService.GetAchievementsAllByUserIdAsync(id);
+                return Ok(achievements);
             }
-            catch (DbUpdateConcurrencyException)
+            catch (Exception ex)
             {
-                if (!AchievementExists(id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
+                return StatusCode(500, ex.Message);
             }
 
-            return NoContent();
         }
 
-        // POST: api/Achievements
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
-        [HttpPost]
-        public async Task<ActionResult<Achievement>> PostAchievement(Achievement achievement)
+        [HttpGet("by-user-id/{id}")]
+        public async Task<ActionResult<IEnumerable<AchievementDTO>>> GetAchievementsByUserId(Guid id)
         {
-            _context.Achievements.Add(achievement);
-            await _context.SaveChangesAsync();
+            try
+            {
+                var achievements = await _achievementService.GetAchievementsByUserIdAsync(id);
+                return Ok(achievements);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, ex.Message);
+            }
 
-            return CreatedAtAction("GetAchievement", new { id = achievement.Id }, achievement);
         }
 
-        // DELETE: api/Achievements/5
+        [HttpPost]
+        public async Task<ActionResult<AchievementDTO>> PostAchievement([FromForm] CreateAchievementDTO achievementDto, [FromForm] MediafileUploadDTO uploadDTO = null)
+        {
+            try
+            {
+                var achievement = await _achievementService.CreateAchievementAsync(achievementDto, uploadDTO);
+                return Ok(achievement);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, ex.Message);
+            }
+
+        }
+
+        [HttpPut]
+        public async Task<IActionResult> PutAchievement([FromForm] UpdateAchievementDTO achievementDto, [FromForm] MediafileUploadDTO uploadDTO = null)
+        {
+            try
+            {
+                var achievement = await _achievementService.UpdateAchievementAsync(achievementDto, uploadDTO);
+                return Ok(achievement);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, ex.Message);
+            }
+
+        }
+
+        [HttpPost("to-user")]
+        public async Task<ActionResult> PostAchievementToUser(Guid userId, Guid achievementId)
+        {
+            try
+            {
+                await _achievementService.AssignAchievementToUserAsync(userId, achievementId);
+                return Ok();
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, ex.Message);
+            }
+
+        }
+
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteAchievement(Guid id)
         {
-            var achievement = await _context.Achievements.FindAsync(id);
-            if (achievement == null)
+            try
             {
-                return NotFound();
+                await _achievementService.DeleteAchievementAsync(id);
+                return Ok();
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, ex.Message);
             }
 
-            _context.Achievements.Remove(achievement);
-            await _context.SaveChangesAsync();
-
-            return NoContent();
         }
 
-        private bool AchievementExists(Guid id)
+        [HttpPatch("activate/{id}")]
+        public async Task<IActionResult> ActivateAchievement(Guid id)
         {
-            return _context.Achievements.Any(e => e.Id == id);
+            try
+            {
+                await _achievementService.ActivateAchievementAsync(id);
+                return Ok();
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, ex.Message);
+            }
+
+        }
+
+        [HttpPatch("deactivate/{id}")]
+        public async Task<IActionResult> DeactivateAchievement(Guid id)
+        {
+            try
+            {
+                await _achievementService.DeactivateAchievementAsync(id);
+                return Ok();
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, ex.Message);
+            }
+
         }
     }
 }

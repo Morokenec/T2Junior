@@ -923,6 +923,26 @@ namespace T2JuniorAPI.Migrations
                     b.Property<Guid>("IdAchievement")
                         .HasColumnType("TEXT");
 
+                    b.Property<DateTime>("CreationDate")
+                        .HasColumnType("TEXT")
+                        .HasColumnName("CreationDate")
+                        .HasColumnOrder(1);
+
+                    b.Property<Guid>("Id")
+                        .HasColumnType("TEXT")
+                        .HasColumnName("Id")
+                        .HasColumnOrder(0);
+
+                    b.Property<bool>("IsDelete")
+                        .HasColumnType("INTEGER")
+                        .HasColumnName("IsDelete")
+                        .HasColumnOrder(3);
+
+                    b.Property<DateTime>("UpdateDate")
+                        .HasColumnType("TEXT")
+                        .HasColumnName("UpdateDate")
+                        .HasColumnOrder(2);
+
                     b.HasKey("IdUser", "IdAchievement");
 
                     b.HasIndex("IdAchievement");
@@ -1022,9 +1042,6 @@ namespace T2JuniorAPI.Migrations
                     b.Property<Guid>("IdType")
                         .HasColumnType("TEXT");
 
-                    b.Property<Guid>("IdTypeNavigationId")
-                        .HasColumnType("TEXT");
-
                     b.Property<bool>("IsDelete")
                         .HasColumnType("INTEGER")
                         .HasColumnName("IsDelete")
@@ -1039,7 +1056,7 @@ namespace T2JuniorAPI.Migrations
 
                     b.HasIndex("IdOwner");
 
-                    b.HasIndex("IdTypeNavigationId");
+                    b.HasIndex("IdType");
 
                     b.ToTable("Walls");
                 });
@@ -1405,13 +1422,13 @@ namespace T2JuniorAPI.Migrations
 
             modelBuilder.Entity("T2JuniorAPI.Entities.Wall", b =>
                 {
-                    b.HasOne("ApplicationUser", "Owner")
+                    b.HasOne("ApplicationUser", "UserOwner")
                         .WithMany("Walls")
                         .HasForeignKey("IdOwner")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
-                    b.HasOne("T2JuniorAPI.Entities.Club", "IdOwnerNavigation")
+                    b.HasOne("T2JuniorAPI.Entities.Club", "ClubOwner")
                         .WithMany("Walls")
                         .HasForeignKey("IdOwner")
                         .OnDelete(DeleteBehavior.Restrict)
@@ -1419,15 +1436,15 @@ namespace T2JuniorAPI.Migrations
 
                     b.HasOne("T2JuniorAPI.Entities.WallType", "IdTypeNavigation")
                         .WithMany("Walls")
-                        .HasForeignKey("IdTypeNavigationId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .HasForeignKey("IdType")
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
-                    b.Navigation("IdOwnerNavigation");
+                    b.Navigation("ClubOwner");
 
                     b.Navigation("IdTypeNavigation");
 
-                    b.Navigation("Owner");
+                    b.Navigation("UserOwner");
                 });
 
             modelBuilder.Entity("ApplicationUser", b =>
