@@ -16,6 +16,9 @@ using T2JuniorAPI.Services.MediaTypes;
 using T2JuniorAPI.Services.Medias;
 using T2JuniorAPI.Services.MediaClubs;
 using T2JuniorAPI.Services.Achievements;
+using T2JuniorAPI.Services.Walls;
+using T2JuniorAPI.Services.WallTypes;
+using Microsoft.Extensions.Options;
 
 
 
@@ -65,6 +68,8 @@ builder.Services.AddAutoMapper(typeof(EventProfile));
 builder.Services.AddAutoMapper(typeof(MediaProfile));
 builder.Services.AddAutoMapper(typeof(MediaClubProfile));
 builder.Services.AddAutoMapper(typeof(AchievementProfile));
+builder.Services.AddAutoMapper(typeof(WallProfile));
+builder.Services.AddAutoMapper(typeof(WallTypeProfile));
 
 builder.Services.AddScoped<IAccountService, AccountService>();
 builder.Services.AddScoped<ITokenService, TokenService>();
@@ -77,12 +82,18 @@ builder.Services.AddScoped<IMediaTypeService, MediaTypeService>();
 builder.Services.AddScoped<IMediafileService, MediafileService>();
 builder.Services.AddScoped<IMediaClubService, MediaClubService>();
 builder.Services.AddScoped<IAchievementService, AchievementService>();
+builder.Services.AddScoped<IWallService, WallService>();
+builder.Services.AddScoped<IWallTypeService, WallTypeService>();
+
 
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen(c =>
 {
+    var basePath = AppContext.BaseDirectory;
     c.SwaggerDoc("v1", new() { Title = "T2JuniorAPI", Version = "v1" });
+    var xmlPath = Path.Combine(basePath, "documentation.xml");
+    c.IncludeXmlComments(xmlPath);
 });
 
 

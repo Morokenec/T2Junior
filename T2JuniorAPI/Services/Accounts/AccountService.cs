@@ -95,6 +95,11 @@ namespace T2JuniorAPI.Services.Accounts
             return userProfile;
         }
 
+        /// <summary>
+        /// Получение всех профилей пользователей
+        /// </summary>
+        /// <returns>Объект профилей пользователей.</returns>
+        /// <exception cref="ApplicationException">Выбрасывается, если пользователи не найдены или обновление не удалось.</exception>
         public async Task<List<UserProfileDTO>> GetAllUserProfilesAsync()
         {
             var users = await _userManager.Users
@@ -135,6 +140,12 @@ namespace T2JuniorAPI.Services.Accounts
             return "User profile updated successfully";
         }
 
+        /// <summary>
+        /// Восстановление пароля пользователя.
+        /// </summary>
+        /// <param name="recoveryPassword">Сброс пароля</param>
+        /// <returns>Строка с результатом обновления.</returns>
+        /// <exception cref="ApplicationException">Выбрасывается, если пользователь не найден или обновление не удалось.</exception>
         public async Task<string> UserPasswordRecovery(RecoveryPasswordDTO recoveryPassword)
         {
             var user = await _userManager.FindByEmailAsync(recoveryPassword.Email);

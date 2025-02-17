@@ -8,12 +8,21 @@ using T2JuniorAPI.Services.Medias;
 
 namespace T2JuniorAPI.Services.Achievements
 {
+    /// <summary>
+    /// Сервис для работы с достижениями, он позволяет получать списки достижений для определенного пользователя, создавать, обновлять, удалять и активировать/деактивировать достижения.
+    /// </summary>
     public class AchievementService : IAchievementService
     {
         private readonly ApplicationDbContext _context;
         private readonly IMapper _mapper;
         private readonly IMediafileService _mediafileservice;
 
+        /// <summary>
+        /// Функциональность для работы с достижениями
+        /// </summary>
+        /// <param name="mediafileservice">Работа с медиафайлами.</param>
+        /// <param name="mapper"> отображение объектов из одного типа на другой.</param>
+        /// <param name="context">Контекст базы данных.</param>
         public AchievementService(IMediafileService mediafileservice, IMapper mapper, ApplicationDbContext context)
         {
             _mediafileservice = mediafileservice;
@@ -21,6 +30,10 @@ namespace T2JuniorAPI.Services.Achievements
             _context = context;
         }
 
+        /// <summary>
+        /// Список всех достижений для указанного пользователя
+        /// </summary>
+        /// <param name="userId">Для получения списка всех достижений.</param>
         public async Task<List<AchievementDTO>> GetAchievementsAllByUserIdAsync(Guid userId)
         {
             if (userId == Guid.Empty)
@@ -45,6 +58,10 @@ namespace T2JuniorAPI.Services.Achievements
             return achivementsDto;
         }
 
+        /// <summary>
+        /// Список достижений, которые были получены указанным пользователем
+        /// </summary>
+        /// <param name="userId">Для получения списка достижений, которые были получены указанным пользователем.</param>
         public async Task<List<AchievementDTO>> GetAchievementsByUserIdAsync(Guid userId)
         {
             if (userId == Guid.Empty)
@@ -65,6 +82,12 @@ namespace T2JuniorAPI.Services.Achievements
 
             return achievementsDto;
         }
+
+        /// <summary>
+        /// Создание новых достижений на основе данных
+        /// </summary>
+        /// <param name="achievementDTO">данные о новом достижении.</param>
+        /// <param name="uploadDTO">Данные о загружаемом медиафайле.</param>
         public async Task<AchievementDTO> CreateAchievementAsync(CreateAchievementDTO achievementDTO, MediafileUploadDTO uploadDTO)
         {
             if (achievementDTO == null)
@@ -82,6 +105,12 @@ namespace T2JuniorAPI.Services.Achievements
 
             return _mapper.Map<AchievementDTO>(achivement);
         }
+
+        /// <summary>
+        /// Создание новых достижений на основе данных
+        /// </summary>
+        /// <param name="achievementDTO">данные о новом достижении.</param>
+        /// <param name="uploadDTO">Данные о загружаемом медиафайле.</param>
         public async Task<AchievementDTO> UpdateAchievementAsync(UpdateAchievementDTO achievementDTO, MediafileUploadDTO uploadDTO = null)
         {
             if (achievementDTO == null)
@@ -105,6 +134,10 @@ namespace T2JuniorAPI.Services.Achievements
             return _mapper.Map<AchievementDTO>(existingAchievement);
         }
 
+        /// <summary>
+        /// Удаляет достижение из базы данных
+        /// </summary>
+        /// <param name="achievementId">Данные об удаляемом достижении.</param>
         public async Task DeleteAchievementAsync(Guid achievementId)
         {
             if (achievementId == Guid.Empty)
@@ -119,6 +152,10 @@ namespace T2JuniorAPI.Services.Achievements
             }
         }
 
+        /// <summary>
+        /// Активация достижения
+        /// </summary>
+        /// <param name="achievementId">Данные об активированном достижении.</param>
         public async Task ActivateAchievementAsync(Guid achievementId)
         {
             if (achievementId == Guid.Empty)
@@ -133,6 +170,10 @@ namespace T2JuniorAPI.Services.Achievements
             }
         }
 
+        /// <summary>
+        /// Деактивация достижения
+        /// </summary>
+        /// <param name="achievementId">Данные об деактивированном достижении.</param>
         public async Task DeactivateAchievementAsync(Guid achievementId)
         {
             if (achievementId == Guid.Empty)
@@ -147,6 +188,11 @@ namespace T2JuniorAPI.Services.Achievements
             }
         }
 
+        /// <summary>
+        /// Добавление достижения конкретному пользователю
+        /// </summary>
+        /// <param name="userId">Пользователь</param>
+        /// <param name="achievementId">Достижение, присваемое пользователю</param>
         public async Task AssignAchievementToUserAsync(Guid userId, Guid achievementId)
         {
             if (userId == Guid.Empty)

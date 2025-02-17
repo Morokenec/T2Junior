@@ -23,6 +23,13 @@ namespace T2JuniorAPI.Controllers
             _mediaTypeService = mediaType;
         }
 
+
+        /// <summary>
+        /// Получение всех типов медиафайлов
+        /// </summary>
+        /// <returns></returns>
+        /// <response code="200">Успешное выполнение</response>
+        /// <response code="400">Ошибка API</response>
         // GET: api/MediaTypes
         [HttpGet]
         public async Task<ActionResult<List<MediaTypeDTO>>> GetMediaTypes()
@@ -30,6 +37,14 @@ namespace T2JuniorAPI.Controllers
             return await _mediaTypeService.GetAllMediaTypes();
         }
 
+
+        /// <summary>
+        /// Создание нового типа медиафайлов
+        /// </summary>
+        /// <param name="mediaTypeDTO">Пользователь</param>
+        /// <returns></returns>
+        /// <response code="200">Успешное выполнение</response>
+        /// <response code="400">Ошибка API</response>
         // POST: api/MediaTypes
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
@@ -43,6 +58,13 @@ namespace T2JuniorAPI.Controllers
             return Ok(result);
         }
 
+        /// <summary>
+        /// Удаление типа медиафайла
+        /// </summary>
+        /// <param name="id">Пользователь</param>
+        /// <returns></returns>
+        /// <response code="200">Успешное выполнение</response>
+        /// <response code="400">Ошибка API</response>
         // DELETE: api/MediaTypes/5
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteMediaType(Guid id)
