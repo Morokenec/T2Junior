@@ -1,6 +1,8 @@
 ﻿using CommunityToolkit.Maui;
 using MauiApp1.Services.AppHelper;
 using MauiApp1.Services.UseCase;
+using MauiApp1.Services.UseCase.Interface;
+using MauiApp1.ViewModel;
 using MauiApp1.ViewModels.Profile;
 using Microsoft.Extensions.Logging;
 using System.Diagnostics;
@@ -30,12 +32,16 @@ namespace MauiApp1
                         fonts.AddFont("OpenSans-Semibold.ttf", "OpenSansSemibold");
                     });
 
-                builder.Services.AddSingleton<IJsonDeserializerService, JsonDeserializerService>();
-                builder.Services.AddSingleton<ITaiyoService, TaiyoService>();
+                builder.Services.AddTransient<IJsonDeserializerService, JsonDeserializerService>();
+                builder.Services.AddSingleton<IProfileService, ProfileService>();
+                builder.Services.AddSingleton<IClubService, ClubService>();
                 builder.Services.AddSingleton<UserProfileViewModel>();
+                builder.Services.AddSingleton<ClubsViewModel>();
                 builder.Services.AddTransient<ProfilePage>();
+                builder.Services.AddSingleton<HttpClient>();
 
-                builder.Services.AddHttpClient<ITaiyoService, TaiyoService>();
+                builder.Services.AddHttpClient<IProfileService, ProfileService>();
+                builder.Services.AddSingleton<IClubService, ClubService>();
 
 #if DEBUG
                 builder.Logging.AddDebug();

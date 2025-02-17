@@ -4,6 +4,28 @@
         <name>T2Junior</name>
     </assembly>
     <members>
+        <member name="M:MauiApp1.ViewModel.ClubsViewModel.LoadClubsAsync">
+            <summary>
+            Асинхронно загружает данные о клубах и обновляет коллекции.
+            </summary>
+        </member>
+        <member name="M:MauiApp1.ViewModel.ClubsViewModel.FilterClubs">
+            <summary>
+            Фильтрует список клубов по введённому тексту.
+            </summary>
+        </member>
+        <member name="M:MauiApp1.ViewModel.ClubsViewModel.ToggleSubscription">
+            <summary>
+            Переключает состояние подписки.
+            </summary>
+        </member>
+        <member name="M:MauiApp1.ViewModel.ClubsViewModel.GetClubById(System.Guid)">
+            <summary>
+            Возвращает клуб по идентификатору.
+            </summary>
+            <param name="idClub">Идентификатор клуба.</param>
+            <returns>Клуб с заданным идентификатором или null, если не найден.</returns>
+        </member>
         <member name="M:Microsoft.Maui.Controls.ColorAnimationExtensions_Button.TextColorTo(Microsoft.Maui.Controls.Button,Microsoft.Maui.Graphics.Color,System.UInt32,System.UInt32,Microsoft.Maui.Easing,System.Threading.CancellationToken)">
             <summary>
             Animates the TextColor of an <see cref = "T:Microsoft.Maui.ITextStyle"/> to the given color

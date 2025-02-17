@@ -8,7 +8,7 @@ public partial class ClubProfilePage : ContentPage
     int clickCount = 0;
     public string NoteMediaSource { get; set; } = "news_media_holder.svg"; //добавить условия
     public bool HolderIsVisible { get; set; } = true; //добавить условия
-    public static int SelectedClubId { get; set; }
+    public static Guid SelectedClubId { get; set; }
     public ClubProfilePage()
 	{
 		InitializeComponent();
@@ -76,7 +76,7 @@ public partial class ClubProfilePage : ContentPage
 
     private void LoadClubDetails()
     {
-        var clubViewModel = new ClubViewModel();
+        var clubViewModel = new ClubsViewModel();
         var selectedClub = clubViewModel.GetClubById(SelectedClubId);
         ((ClubProfileViewModel)BindingContext).SelectedClub = selectedClub;
     }

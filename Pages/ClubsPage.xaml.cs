@@ -11,7 +11,7 @@ public partial class ClubsPage : ContentPage
     public ClubsPage()
     {
         InitializeComponent();
-        BindingContext = new ClubViewModel();
+        BindingContext = new ClubsViewModel();
     }
 
     private void OnBackButtonTapped(object sender, EventArgs e)
@@ -21,7 +21,7 @@ public partial class ClubsPage : ContentPage
 
     private void OnSearch(object sender, EventArgs e)
     {
-        var clubContext = (ClubViewModel)BindingContext;
+        var clubContext = (ClubsViewModel)BindingContext;
         clubContext.FilterClubs();
     }
 

@@ -26,7 +26,6 @@ namespace MauiApp1.ViewModel
 
         public ClubProfileViewModel()
         {
-            LoadClubDetails();
             Notes = new ObservableCollection<Note>
         {
             new Note { IdNote = 1 },
@@ -35,12 +34,6 @@ namespace MauiApp1.ViewModel
         };
 
             FilteredNotes = new ObservableCollection<Note>(Notes);
-        }
-
-        private void LoadClubDetails()
-        {
-            var clubViewModel = new ClubViewModel();
-            SelectedClub = clubViewModel.GetClubById(ClubProfilePage.SelectedClubId);
         }
     }
 }

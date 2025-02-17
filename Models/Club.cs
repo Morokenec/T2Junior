@@ -9,7 +9,7 @@ namespace MauiApp1.DataModel
 {
     public class Club
     {
-        public int IdClub { get; set; } = 0;
+        public Guid IdClub { get; set; }
         public string Name { get; set; } = "КофеКлуб";
 
         public string Rules { get; set; } = "";

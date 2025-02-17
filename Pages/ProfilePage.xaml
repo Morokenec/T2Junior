@@ -27,15 +27,18 @@
                                BackgroundColor="#FFFFFF"
                                CornerRadius="10"
                                HasShadow="True"
-                               Padding="12, 2.25"
+                               Padding="10, 2.25, 0, 0"
                                Margin="16,20,0,0">
                             <Frame.GestureRecognizers>
                                 <TapGestureRecognizer Tapped="OnCoinButtonTapped" />
                             </Frame.GestureRecognizers>
+      
+
                             <StackLayout x:Name="VerticalCoinLayout"
                                          HorizontalOptions="Center"
                                          VerticalOptions="Center"
                                          Spacing="-5">
+                                
                                 <HorizontalStackLayout x:Name="HorizontalCoinLayout"
                                                        Spacing="4">
                                     <Image x:Name="CoinHolder"
@@ -129,7 +132,7 @@
                             </Frame.GestureRecognizers>
 
                             <Image x:Name="AvatarImage"
-                                   Source="profile_placeholder.svg"
+                                   Source="{Binding PathAvatarUser}"
                                    Aspect="AspectFill"
                                    VerticalOptions="Start"/>
 
@@ -146,7 +149,7 @@
                                          Grid.Row="2"
                                          Spacing="6">
                         <Label x:Name="FullNameLabel"
-                               Text="ФИО" 
+                               Text="{Binding UserInfo.FullName}" 
                                HorizontalOptions="Center"
                                FontSize="20"/>
 
@@ -158,12 +161,12 @@
 
                         <Label x:Name="JobLabel"
                                TextColor="#838281"
-                               Text="Организация" 
+                               Text="{Binding UserInfo.PostAndOrganization}" 
                                HorizontalOptions="Center"
                                VerticalOptions="Center"
                                FontSize="12"/>
 
-                        <Button x:Name="SubscribeButton"
+                        <!--<Button x:Name="SubscribeButton"
                                 BackgroundColor="#0057A6"
                                 BorderWidth="1"
                                 CornerRadius="12"
@@ -173,7 +176,7 @@
                                 HorizontalOptions="Fill"
                                 VerticalOptions="Center"
                                 Clicked="OnSubUnsubButtonTapped"
-                                Margin="16,10"/>
+                                Margin="16,10"/>-->
                     </VerticalStackLayout>
                 </StackLayout>
             </Frame>
@@ -254,7 +257,7 @@
                                        TextColor="#9C9B9A" />
 
                                 <Label x:Name="ClubsCount"
-                                       Text="0"
+                                       Text="{Binding UserInfo.ClubsCount}"
                                        FontFamily="RedRoseBold"
                                        FontSize="20"
                                        TextColor="#838281" />
@@ -276,9 +279,6 @@
                            WidthRequest="303"
                            HeightRequest="48"
                            Padding="0, 8">
-                        <Frame.GestureRecognizers>
-                            <TapGestureRecognizer Tapped="OnProjectsFrameTapped" />
-                        </Frame.GestureRecognizers>
                         <HorizontalStackLayout Spacing="12">
                             <Image x:Name="ProjectsImage"
                                    Source="projects.
@@ -287,7 +287,6 @@
                                    VerticalOptions="Center"
                                    WidthRequest="24"
                                    HeightRequest="24"/>
-
                             <Label x:Name="ProjectsText"
                                    Text="Проекты" 
                                    TextColor="#191C30"

@@ -6,30 +6,27 @@ namespace MauiApp1;
 public partial class ProfilePage : ContentPage
 {
     int netStatus = 1;
-    int clickCount = 0;
+    //int clickCount = 0;
     private readonly UserProfileViewModel _viewModel;
 
     public bool DirectAccessed { get; set; } = BackNavigationState.IsDirectAccess;
     public ProfilePage(UserProfileViewModel userProfileViewModel)
     {
+        InitializeComponent();
         _viewModel = userProfileViewModel;
         BindingContext = _viewModel;
-        InitializeComponent();
-        ThingsByDefault();
         NetStatus();
     }
 
-    protected override void OnAppearing()
+    protected override async void OnAppearing()
     {
         base.OnAppearing();
-        FullNameLabel.Text = _viewModel.UserInfo?.FullName;
-    }
 
-    private void ThingsByDefault()
-    {
-        CoinCountLabel.Text = _viewModel.UserInfo?.SubscribersCount.ToString();
-        UserRatingLabel.Text = _viewModel.UserInfo?.SubscriptionsCount.ToString();
-        RatingCountLabel.Text = _viewModel.UserInfo?.ClubsCount.ToString();
+        // Вызов команды при появлении страницы
+        if (BindingContext is UserProfileViewModel viewModel)
+        {
+            await viewModel.LoadDataAsync();
+        }
     }
 
     private void NetStatus()
@@ -110,26 +107,26 @@ public partial class ProfilePage : ContentPage
         await Navigation.PushAsync(new NotesPage());
     }
 
-    private void OnSubUnsubButtonTapped(object sender, EventArgs e)
-    {
-        {
-            clickCount++;
+    //private void OnSubUnsubButtonTapped(object sender, EventArgs e)
+    //{
+    //    {
+    //        clickCount++;
 
-            if (clickCount == 1)
-            {
-                SubscribeButton.BackgroundColor = Colors.White;
-                SubscribeButton.BorderColor = Color.FromArgb("#0057A6");
-                SubscribeButton.Text = "Вы подписаны";
-                SubscribeButton.TextColor = Color.FromArgb("#0057A6");
-            }
-            else if (clickCount == 2)
-            {
-                SubscribeButton.BackgroundColor = Color.FromArgb("#0057A6");
-                SubscribeButton.BorderColor = Colors.White;
-                SubscribeButton.Text = "Подписаться";
-                SubscribeButton.TextColor = Colors.White;
-                clickCount = 0;
-            }
-        }
-    }
+    //        if (clickCount == 1)
+    //        {
+    //            SubscribeButton.BackgroundColor = Colors.White;
+    //            SubscribeButton.BorderColor = Color.FromArgb("#0057A6");
+    //            SubscribeButton.Text = "Вы подписаны";
+    //            SubscribeButton.TextColor = Color.FromArgb("#0057A6");
+    //        }
+    //        else if (clickCount == 2)
+    //        {
+    //            SubscribeButton.BackgroundColor = Color.FromArgb("#0057A6");
+    //            SubscribeButton.BorderColor = Colors.White;
+    //            SubscribeButton.Text = "Подписаться";
+    //            SubscribeButton.TextColor = Colors.White;
+    //            clickCount = 0;
+    //        }
+    //    }
+    //}
 }

@@ -134,6 +134,9 @@
 	  <Compile Update="Pages\AuthorizationPage.xaml.cs">
 	    <DependentUpon>AuthorizationPage.xaml</DependentUpon>
 	  </Compile>
+	  <Compile Update="Pages\ClubProfilePage.xaml.cs">
+	    <DependentUpon>ClubProfilePage.xaml</DependentUpon>
+	  </Compile>
 	  <Compile Update="Pages\NotesPage.xaml.cs">
 	    <DependentUpon>NotesPage.xaml</DependentUpon>
 	  </Compile>
