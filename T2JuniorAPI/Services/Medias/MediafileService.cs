@@ -42,9 +42,14 @@ namespace T2JuniorAPI.Services.Medias
         {
             try
             {
+                var mediaId = Guid.NewGuid();
+                var fileExtension = uploadDTO.File.FileName.ToLower();
+                var newFileName = $"{mediaId}_{fileExtension}";
+
                 var mediafile = _mapper.Map<Mediafile>(uploadDTO);
+                mediafile.Id = mediaId;
                 mediafile.IdType = await GetMediaTypeId(uploadDTO.File.FileName);
-                mediafile.Path = (await SaveFileAsync(uploadDTO.File)).Replace("wwwroot\\uploads\\", "uploads/").Replace("\\", "/");
+                mediafile.Path = (await SaveFileAsync(uploadDTO.File, newFileName)).Replace("wwwroot\\uploads\\", "uploads/").Replace("\\", "/");
                 
 
                 if (isImage && mediafile.IdType != (await _mediaTypeService.GetGuidOrCreateMediaType(new MediaTypeDTO { Name = "Image" })).Id)
@@ -62,14 +67,14 @@ namespace T2JuniorAPI.Services.Medias
             }
         }
 
-        private async Task<string> SaveFileAsync(IFormFile file)
+        private async Task<string> SaveFileAsync(IFormFile file, string newFileName)
         {
             var uploadsFolder = Path.Combine("wwwroot", "uploads");
             
             if (!Directory.Exists(uploadsFolder))
                 Directory.CreateDirectory(uploadsFolder);
 
-            var path = Path.Combine(uploadsFolder, file.FileName);
+            var path = Path.Combine(uploadsFolder, newFileName);
             using (var stream = new FileStream(path, FileMode.Create))
             {
                 await file.CopyToAsync(stream);
