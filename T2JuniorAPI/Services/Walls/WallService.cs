@@ -29,15 +29,6 @@ namespace T2JuniorAPI.Services.Walls
             string wallTypeName = await DetermineWallTypeAsync(idOwner);
             var wallTypeDTO = await _typeService.GetOrCreateWallTypeAsync(new CreateWallTypeDTO { Name = wallTypeName });
 
-            var owner = await _userManager.Users.FirstOrDefaultAsync(u => u.Id == idOwner);
-            var wallType = await _context.WallTypes.FindAsync(wallTypeDTO.Id);
-            if (owner == null)
-                throw new ApplicationException("User is Empty");
-
-            if (wallType == null)
-                throw new ApplicationException("Type is Empty");
-
-
             var wall = _mapper.Map<Wall>(new CreateWallDTO { IdOwner = idOwner, IdType = wallTypeDTO.Id });
 
             await _context.Walls.AddAsync(wall);
