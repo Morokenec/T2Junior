@@ -28,5 +28,19 @@ namespace T2JuniorAPI.Controllers
             return Ok();
         }
 
+        [HttpPut]
+        public async Task<ActionResult<Note>> UpdateNote()
+        {
+            await _context.SaveChangesAsync();
+            return Ok();
+        }
+        
+        [HttpDelete]
+        public async Task<ActionResult<Note>> DeleteNote()
+        {
+            await _context.SaveChangesAsync();
+            return Ok();
+        }
+
     }
 }
