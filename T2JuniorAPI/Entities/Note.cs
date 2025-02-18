@@ -18,13 +18,11 @@ public class Note : BaseCommonProperties
     [Required]
     public required string Description { get; set; }
 
-    [Required]
-    public required DateTime CreationDatetime { get; set; }
-
     public Guid? IdRepost { get; set; }
 
     [Required]
-    public required int LikeCount { get; set; }
+    public int LikeCount { get; set; } = 0;
+
 
     public virtual ICollection<Comment> Comments { get; set; } = new List<Comment>();
 
@@ -35,5 +33,6 @@ public class Note : BaseCommonProperties
     public virtual Wall IdWallNavigation { get; set; } = null!;
 
     public virtual ICollection<Note> InverseIdRepostNavigation { get; set; } = new List<Note>();
+
     public virtual ICollection<MediaNote> MediaNotes { get; set; } = new List<MediaNote>();
 }
