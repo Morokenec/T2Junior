@@ -10,8 +10,6 @@ public partial class ProfilePage : ContentPage
     int userRating = 5;
     int ratingCount = 105;
     int clickCount = 0;
-    int coins = 0;
-    string fullName = "";
 
     public string FullName { get; set; }
     public int CoinCount { get; set; }
@@ -46,8 +44,6 @@ public partial class ProfilePage : ContentPage
             CircleOverlay.BackgroundColor = Color.FromArgb("#3DC47C");
         }
     }
-
-
 
     private async void OnCoinButtonTapped(object sender, EventArgs e)
     {

@@ -9,7 +9,6 @@
             <RowDefinition Height="Auto" />
             <RowDefinition Height="Auto" />
             <RowDefinition Height="Auto" />
-            <RowDefinition Height="Auto" />
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
 
@@ -77,70 +76,111 @@
         </Frame>
 
         <CollectionView ItemsSource="{Binding ChatTypes}"
-                        x:Name="ClubsCollection"
+                        x:Name="TypesCollection"
                         Grid.Row="2"
                         Margin="16,6,16,0">
             <CollectionView.ItemsLayout>
-                <GridItemsLayout Span="2"
-                                 Orientation="Horizontal" />
+                <GridItemsLayout Orientation="Horizontal" />
             </CollectionView.ItemsLayout>
             <CollectionView.ItemTemplate>
                 <DataTemplate>
-                    <Frame CornerRadius="10"
+                    <Frame x:Name="TypeFrame"
+                           BorderColor="#E0E0E0"
+                           CornerRadius="10"
                            HorizontalOptions="FillAndExpand"
                            VerticalOptions="Fill"
                            HasShadow="True"
-                           Margin="0,12,0,0"
+                           Margin="0,0,5,0"
                            BackgroundColor="White">
-                        <StackLayout>
-                            <StackLayout.GestureRecognizers>
-                                <TapGestureRecognizer Tapped="OnChatTapped" />
-                            </StackLayout.GestureRecognizers>
-                            <Frame WidthRequest="131"
-                                   HeightRequest="99"
-                                   BorderColor="Transparent">
-                                <HorizontalStackLayout Spacing="30">
-                                    <HorizontalStackLayout.GestureRecognizers>
-                                        <TapGestureRecognizer Tapped="OnChatTapped" />
-                                    </HorizontalStackLayout.GestureRecognizers>
-                                    <Image Source="{Binding Avatar}"
-                                           VerticalOptions="Start"
-                                           HorizontalOptions="Start"
-                                           WidthRequest="74"
-                                           HeightRequest="74"
-                                           Margin="0,16,0,25" />
-                                    <Image x:Name="SubStatus"
-                                           Source="{Binding SubImageSource}"
-                                           WidthRequest="24"
-                                           HeightRequest="24"
-                                           VerticalOptions="Start"
-                                           Margin="0,16,0,0" />
-                                </HorizontalStackLayout>
-                            </Frame>
+                        <Frame.GestureRecognizers>
+                            <TapGestureRecognizer Tapped="OnTypeTapped" />
+                        </Frame.GestureRecognizers>
 
-                            <Frame WidthRequest="131"
-                                   HeightRequest="36"
-                                   BorderColor="Transparent"
-                                   Margin="0,12,0,0">
+                        <StackLayout>
+                            <Frame BorderColor="Transparent"
+                                   HorizontalOptions="Fill"
+                                   VerticalOptions="Fill"
+                                   Margin="24, 8">
                                 <StackLayout>
                                     <StackLayout.GestureRecognizers>
-                                        <TapGestureRecognizer Tapped="OnChatTapped" />
+                                        <TapGestureRecognizer Tapped="OnTypeTapped" />
                                     </StackLayout.GestureRecognizers>
-                                    <Label Text="{Binding Name}"
-                                           HorizontalOptions="Start"
-                                           FontSize="13"
-                                           TextColor="#303345" />
-                                    <Label Text="{Binding Target}"
-                                           HorizontalOptions="Start"
-                                           FontSize="11"
-                                           TextColor="#6B6D80"
-                                           FontFamily="ManropeExtraLight" />
+                                    <Label Text="{Binding .}"
+                                           HorizontalOptions="Center"
+                                           VerticalOptions="Center"
+                                           FontSize="15"
+                                           TextColor="#838281" />
                                 </StackLayout>
                             </Frame>
                         </StackLayout>
                     </Frame>
                 </DataTemplate>
             </CollectionView.ItemTemplate>
+        </CollectionView>
+
+        <CollectionView ItemsSource="{Binding FilteredChats}"
+                        x:Name="ChatsCollection"
+                        Grid.Row="3"
+                        Margin="0,2,0,0">
+            <CollectionView.ItemsLayout>
+                <GridItemsLayout Span="1"
+                                 Orientation="Vertical" />
+            </CollectionView.ItemsLayout>
+            <CollectionView.ItemTemplate>
+                <DataTemplate>
+                    <Frame CornerRadius="10"
+                           HorizontalOptions="Fill"
+                           HeightRequest="62"
+                           BorderColor="Transparent"
+                           Margin="16,0,16,6"
+                           BackgroundColor="White">
+                        <HorizontalStackLayout>
+                            <HorizontalStackLayout.GestureRecognizers>
+                                <TapGestureRecognizer/>
+                            </HorizontalStackLayout.GestureRecognizers>
+                            <Frame BorderColor="Transparent">
+                                <HorizontalStackLayout>
+                                    <HorizontalStackLayout.GestureRecognizers>
+                                        <TapGestureRecognizer />
+                                    </HorizontalStackLayout.GestureRecognizers>
+                                    <Image Source="{Binding Photo}"
+                                           Aspect="AspectFill"
+                                           VerticalOptions="Fill"
+                                           HorizontalOptions="Start"
+                                           WidthRequest="54"
+                                           HeightRequest="54"/>
+                                </HorizontalStackLayout>
+                            </Frame>
+
+                            <Frame HorizontalOptions="Fill"
+                                   VerticalOptions="Fill"
+                                   HeightRequest="36"
+                                   BorderColor="Transparent"
+                                   Margin="8,4,0,0">
+                                <StackLayout> 
+                                    <StackLayout.GestureRecognizers>
+                                        <TapGestureRecognizer />
+                                    </StackLayout.GestureRecognizers>
+                                    <Label Text="{Binding ChatName}"
+                                           HorizontalOptions="Start"
+                                           FontSize="15"
+                                           TextColor="#0057A6" />
+                                    <Label Text="{Binding Body}"
+                                           HorizontalOptions="Start"
+                                           FontSize="12"
+                                           TextColor="#838281" />
+                                </StackLayout>
+                            </Frame>
+                        </HorizontalStackLayout>
+                    </Frame>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+            <CollectionView.EmptyView>
+                <Label Text="Результаты не найдены."
+                       HorizontalOptions="Center"
+                       VerticalOptions="Center"
+                       FontSize="24" />
+            </CollectionView.EmptyView>
         </CollectionView>
     </Grid>
 </ContentPage>
