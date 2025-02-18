@@ -97,20 +97,20 @@ namespace T2JuniorAPI.Data
                 .OnDelete(DeleteBehavior.Restrict);
 
             // Wall
-            
+
             modelBuilder.Entity<Wall>()
                 .HasOne(w => w.IdTypeNavigation)
                 .WithMany(wt => wt.Walls)
                 .HasForeignKey(w => w.IdType)
                 .OnDelete(DeleteBehavior.Restrict);
-            
+
             modelBuilder.Entity<Wall>()
                 .HasOne(w => w.UserOwner)
                 .WithMany(a => a.Walls)
                 .HasForeignKey(w => w.IdUserOwner)
                 .OnDelete(DeleteBehavior.Restrict)
                 .IsRequired(false);
-            
+
             modelBuilder.Entity<Wall>()
                 .HasOne(w => w.ClubOwner)
                 .WithMany(c => c.Walls)
