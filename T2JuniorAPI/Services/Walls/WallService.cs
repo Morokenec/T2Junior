@@ -26,10 +26,19 @@ namespace T2JuniorAPI.Services.Walls
 
         public async Task<WallDTO> CreateWallAsync(Guid idOwner)
         {
+            // Определение типа владельца
             string wallTypeName = await DetermineWallTypeAsync(idOwner);
             var wallTypeDTO = await _typeService.GetOrCreateWallTypeAsync(new CreateWallTypeDTO { Name = wallTypeName });
 
             var wall = _mapper.Map<Wall>(new CreateWallDTO { IdOwner = idOwner, IdType = wallTypeDTO.Id });
+
+            if (wallTypeName == "UserWall")
+                wall.IdUserOwner = idOwner;
+            else if (wallTypeName == "ClubWall")
+                wall.IdClubOwner = idOwner;
+            else
+                throw new ApplicationException("Owner Not Found");
+
 
             await _context.Walls.AddAsync(wall);
             await _context.SaveChangesAsync();
@@ -52,11 +61,9 @@ namespace T2JuniorAPI.Services.Walls
 
         public async Task DeleteWallAsync(Guid idOwner)
         {
-            var wall = await _context.Walls.FirstOrDefaultAsync(w => w.IdOwner == idOwner && !w.IsDelete);
-            
-            if (wall == null)
-                throw new ApplicationException($"Wall not found");
-
+            var wall = await _context.Walls.FirstOrDefaultAsync(w => 
+                (w.IdUserOwner == idOwner || w.IdClubOwner == idOwner) && !w.IsDelete)
+                ?? throw new ApplicationException($"Wall not found");
             wall.IsDelete = true;
             wall.UpdateDate = DateTime.Now;
             await _context.SaveChangesAsync();
@@ -66,9 +73,9 @@ namespace T2JuniorAPI.Services.Walls
         {
             var wall = await _context.Walls
                 .Include(w => w.IdTypeNavigation)
-                .Include(w => w.UserOwner)
                 .Include(w => w.ClubOwner)
-                .FirstOrDefaultAsync(w => w.IdOwner == idOwner);
+                .Include(w => w.UserOwner)
+                .FirstOrDefaultAsync(w => w.IdUserOwner == idOwner || w.IdClubOwner == idOwner);
 
             if (wall == null)
                 return null;

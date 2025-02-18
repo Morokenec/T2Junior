@@ -1036,10 +1036,13 @@ namespace T2JuniorAPI.Migrations
                         .HasColumnName("CreationDate")
                         .HasColumnOrder(1);
 
-                    b.Property<Guid>("IdOwner")
+                    b.Property<Guid?>("IdClubOwner")
                         .HasColumnType("TEXT");
 
                     b.Property<Guid>("IdType")
+                        .HasColumnType("TEXT");
+
+                    b.Property<Guid?>("IdUserOwner")
                         .HasColumnType("TEXT");
 
                     b.Property<bool>("IsDelete")
@@ -1054,9 +1057,11 @@ namespace T2JuniorAPI.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("IdOwner");
+                    b.HasIndex("IdClubOwner");
 
                     b.HasIndex("IdType");
+
+                    b.HasIndex("IdUserOwner");
 
                     b.ToTable("Walls");
                 });
@@ -1422,25 +1427,21 @@ namespace T2JuniorAPI.Migrations
 
             modelBuilder.Entity("T2JuniorAPI.Entities.Wall", b =>
                 {
-                    b.HasOne("ApplicationUser", "UserOwner")
-                        .WithMany("Walls")
-                        .HasForeignKey("IdOwner")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired()
-                        .HasConstraintName("FK_Wall_User");
-
                     b.HasOne("T2JuniorAPI.Entities.Club", "ClubOwner")
                         .WithMany("Walls")
-                        .HasForeignKey("IdOwner")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired()
-                        .HasConstraintName("FK_Wall_Club");
+                        .HasForeignKey("IdClubOwner")
+                        .OnDelete(DeleteBehavior.Restrict);
 
                     b.HasOne("T2JuniorAPI.Entities.WallType", "IdTypeNavigation")
                         .WithMany("Walls")
                         .HasForeignKey("IdType")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
+
+                    b.HasOne("ApplicationUser", "UserOwner")
+                        .WithMany("Walls")
+                        .HasForeignKey("IdUserOwner")
+                        .OnDelete(DeleteBehavior.Restrict);
 
                     b.Navigation("ClubOwner");
 

@@ -97,26 +97,26 @@ namespace T2JuniorAPI.Data
                 .OnDelete(DeleteBehavior.Restrict);
 
             // Wall
-            modelBuilder.Entity<Wall>()
-                .HasOne(w => w.UserOwner)
-                .WithMany(u => u.Walls)
-                .HasForeignKey(w => w.IdOwner)
-                .OnDelete(DeleteBehavior.Restrict)
-                .HasConstraintName("FK_Wall_User");
-
-            modelBuilder.Entity<Wall>()
-                .HasOne(w => w.ClubOwner)
-                .WithMany(c => c.Walls)
-                .HasForeignKey(w => w.IdOwner)
-                .OnDelete(DeleteBehavior.Restrict)
-                .HasConstraintName("FK_Wall_Club");
-
-
+            
             modelBuilder.Entity<Wall>()
                 .HasOne(w => w.IdTypeNavigation)
                 .WithMany(wt => wt.Walls)
                 .HasForeignKey(w => w.IdType)
                 .OnDelete(DeleteBehavior.Restrict);
+            
+            modelBuilder.Entity<Wall>()
+                .HasOne(w => w.UserOwner)
+                .WithMany(a => a.Walls)
+                .HasForeignKey(w => w.IdUserOwner)
+                .OnDelete(DeleteBehavior.Restrict)
+                .IsRequired(false);
+            
+            modelBuilder.Entity<Wall>()
+                .HasOne(w => w.ClubOwner)
+                .WithMany(c => c.Walls)
+                .HasForeignKey(w => w.IdClubOwner)
+                .OnDelete(DeleteBehavior.Restrict)
+                .IsRequired(false);
 
             modelBuilder.Entity<Event>()
                 .HasOne(e => e.IdClubNavigation)
