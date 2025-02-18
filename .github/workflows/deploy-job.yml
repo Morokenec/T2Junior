@@ -9,7 +9,7 @@ jobs:
         runs-on: self-hosted
         steps:
           - name: Stop and remove containers, networks
-            run: docker compose down -f ./T2JuniorAPI/docker-compose.yaml
+            run: cd T2JuniorAPI && docker compose down
           - name: Remove unused data
             run: docker system prune -a -f
     deploy:
@@ -19,4 +19,4 @@ jobs:
           - name: checkout repo
             uses: actions/checkout@v3
           - name: docker compose 
-            run: docker compose up -d -f ./T2JuniorAPI/docker-compose.yaml
+            run: cd T2JuniorAPI && docker compose up -d
