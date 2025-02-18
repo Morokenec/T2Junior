@@ -367,3 +367,6 @@ app.db*
 .gitignore
 /T2JuniorAPI/app.db
 /T2JuniorAPI/app.db-shm
+/T2JuniorAPI/app.db
+/T2JuniorAPI/app.db-shm
+/T2JuniorAPI/app.db-wal
