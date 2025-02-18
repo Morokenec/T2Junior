@@ -833,9 +833,6 @@ namespace T2JuniorAPI.Migrations
                         .HasColumnName("CreationDate")
                         .HasColumnOrder(1);
 
-                    b.Property<DateTime>("CreationDatetime")
-                        .HasColumnType("TEXT");
-
                     b.Property<string>("Description")
                         .IsRequired()
                         .HasColumnType("TEXT");
