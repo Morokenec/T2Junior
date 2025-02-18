@@ -211,6 +211,8 @@ namespace T2JuniorAPI.Services.Clubs
             club.UpdateDate = DateTime.Now;
             await _context.SaveChangesAsync();
 
+            await _wallService.DeleteWallAsync(id);
+
             return "Club Deleted successfully";
         }
     }

@@ -166,6 +166,8 @@ namespace T2JuniorAPI.Services.Accounts
             user.IsDeleted = true;
             await _userManager.UpdateAsync(user);
 
+            await _wallService.DeleteWallAsync(userId);
+
             return "User deleted successfully";
         }
     }
