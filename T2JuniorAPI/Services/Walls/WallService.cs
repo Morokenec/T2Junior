@@ -26,6 +26,10 @@ namespace T2JuniorAPI.Services.Walls
 
         public async Task<WallDTO> CreateWallAsync(Guid idOwner)
         {
+            var existingWall = await _context.Walls.FirstOrDefaultAsync(w => w.IdUserOwner == idOwner || w.IdClubOwner == idOwner);
+
+            if (existingWall != null)
+                throw new ApplicationException("Wall for this owner alredy exists");
             // Определение типа владельца
             string wallTypeName = await DetermineWallTypeAsync(idOwner);
             var wallTypeDTO = await _typeService.GetOrCreateWallTypeAsync(new CreateWallTypeDTO { Name = wallTypeName });

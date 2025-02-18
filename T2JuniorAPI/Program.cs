@@ -112,7 +112,7 @@ if (app.Environment.IsDevelopment())
     });
 }
 
-app.UseStaticFiles(); // Это позволяет обслуживать статические файлы
+app.UseStaticFiles(); // пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ
 app.UseRouting();
 app.UseAuthorization();
 app.UseCors("AllowAll");
@@ -120,3 +120,5 @@ app.UseCors("AllowAll");
 app.MapControllers();
 
 app.Run();
+
+

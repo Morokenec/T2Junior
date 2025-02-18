@@ -5,6 +5,7 @@ using T2JuniorAPI.Data;
 using T2JuniorAPI.DTOs.Clubs;
 using T2JuniorAPI.DTOs.Users;
 using T2JuniorAPI.Entities;
+using T2JuniorAPI.Services.Walls;
 
 namespace T2JuniorAPI.Services.Clubs
 {
@@ -12,11 +13,13 @@ namespace T2JuniorAPI.Services.Clubs
     {
         private readonly ApplicationDbContext _context;
         private readonly IMapper _mapper;
+        private readonly IWallService _wallService;
 
-        public ClubService(ApplicationDbContext context, IMapper mapper)
+        public ClubService(ApplicationDbContext context, IMapper mapper, IWallService wallService)
         {
             _context = context;
             _mapper = mapper;
+            _wallService = wallService;
         }
 
         public async Task<List<AllClubsDTO>> GetAllClubs()
@@ -91,6 +94,8 @@ namespace T2JuniorAPI.Services.Clubs
                     throw;
                 }
             }
+
+            await _wallService.CreateWallAsync(newClub.Id);
 
             return "Successful create club";
         }

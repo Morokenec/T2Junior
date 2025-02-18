@@ -62,7 +62,7 @@ namespace T2JuniorAPI.Services.Accounts
                 {
                     throw new ApplicationException($"Registration failed: {string.Join("; ", result.Errors.Select(e => e.Description))}");
                 }
-                //await _wallService.CreateWallAsync(user.Id);
+                await _wallService.CreateWallAsync(user.Id);
 
                 return "User registered successfully";
             }
