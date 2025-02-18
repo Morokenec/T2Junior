@@ -11,8 +11,8 @@ using T2JuniorAPI.Data;
 namespace T2JuniorAPI.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20250218055101_new2IDWallMigration")]
-    partial class new2IDWallMigration
+    [Migration("20250218074839_InitialCreate")]
+    partial class InitialCreate
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -835,9 +835,6 @@ namespace T2JuniorAPI.Migrations
                         .HasColumnType("TEXT")
                         .HasColumnName("CreationDate")
                         .HasColumnOrder(1);
-
-                    b.Property<DateTime>("CreationDatetime")
-                        .HasColumnType("TEXT");
 
                     b.Property<string>("Description")
                         .IsRequired()
