@@ -9,6 +9,6 @@ namespace MauiApp1.Services.UseCase.Interface
 {
     public interface IProfileService
     {
-        Task<TaiyoResponse> GetProfileDataAsync();
+        Task<ProfileResponse> GetProfileDataAsync();
     }
 }

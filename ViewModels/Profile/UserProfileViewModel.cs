@@ -10,20 +10,20 @@ namespace MauiApp1.ViewModels.Profile
 {
     public class UserProfileViewModel : INotifyPropertyChanged
     {
-        private readonly IProfileService _taiyoService;
+        private readonly IProfileService _profileService;
         private UserInfo _userInfo;
         private string _pathAvatarUser;
         private bool _isRefreshing;
 
+        public ICommand LoadDataCommand { get; }
+        public ICommand RefreshCommand { get; }
+
         public UserProfileViewModel(IProfileService taiyoService)
         {
-            _taiyoService = taiyoService;
+            _profileService = taiyoService;
             LoadDataCommand = new Command(async () => await LoadDataAsync());
             RefreshCommand = new Command(async () => await RefreshDataAsync());
         }
-
-        public ICommand LoadDataCommand { get; }
-        public ICommand RefreshCommand { get; }
 
         public UserInfo UserInfo
         {
@@ -67,7 +67,7 @@ namespace MauiApp1.ViewModels.Profile
 
         public async Task LoadDataAsync()
         {
-            var response = await _taiyoService.GetProfileDataAsync();
+            var response = await _profileService.GetProfileDataAsync();
             if (response?.Result != null)
             {
                 UserInfo = response.Result;

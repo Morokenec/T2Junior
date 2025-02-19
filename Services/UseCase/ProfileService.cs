@@ -17,7 +17,7 @@ namespace MauiApp1.Services.UseCase
             _jsonDeserializerService = jsonDeserializerService;
         }
 
-        public async Task<TaiyoResponse> GetProfileDataAsync()
+        public async Task<ProfileResponse> GetProfileDataAsync()
         {
             try
             {
@@ -34,7 +34,7 @@ namespace MauiApp1.Services.UseCase
                     return null;
                 }
 
-                return _jsonDeserializerService.Deserialize<TaiyoResponse>(responseContent);
+                return _jsonDeserializerService.Deserialize<ProfileResponse>(responseContent);
             }
             catch (Exception ex)
             {

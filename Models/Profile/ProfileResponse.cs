@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace MauiApp1.Models.Profile
 {
-    public class TaiyoResponse
+    public class ProfileResponse
     {
         [JsonPropertyName("result")]
         public UserInfo Result { get; set; }

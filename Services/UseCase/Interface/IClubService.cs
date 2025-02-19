@@ -1,4 +1,4 @@
-﻿using MauiApp1.Models;
+﻿using MauiApp1.Models.Club;
 using MauiApp1.Models.Profile;
 using System;
 using System.Collections.Generic;

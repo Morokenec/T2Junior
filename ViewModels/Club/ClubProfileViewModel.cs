@@ -1,4 +1,5 @@
 ﻿using MauiApp1.DataModel;
+using MauiApp1.Models.Club;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -6,7 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace MauiApp1.ViewModel
+namespace MauiApp1.ViewModels.Club
 {
     public class ClubProfileViewModel : BindableObject
     {

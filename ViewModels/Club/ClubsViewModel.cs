@@ -5,14 +5,14 @@ using System.Diagnostics;
 using System.Linq;
 using System.Net.Http;
 using System.Windows.Input;
-using Microsoft.Maui.ApplicationModel; 
+using Microsoft.Maui.ApplicationModel;
 using Microsoft.Maui.Controls;
-using MauiApp1.DataModel;
 using MauiApp1.Models;
 using MauiApp1.Services.AppHelper;
 using MauiApp1.Services.UseCase;
+using MauiApp1.Models.Club;
 
-namespace MauiApp1.ViewModel
+namespace MauiApp1.ViewModels.Club
 {
     public class ClubsViewModel : BindableObject, INotifyPropertyChanged
     {

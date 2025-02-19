@@ -1,4 +1,4 @@
-﻿using MauiApp1.Models;
+﻿using MauiApp1.Models.Club;
 using MauiApp1.Services.AppHelper;
 using MauiApp1.Services.UseCase.Interface;
 using System.Diagnostics;

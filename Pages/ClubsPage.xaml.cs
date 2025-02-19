@@ -1,6 +1,6 @@
-using MauiApp1.DataModel;
+using MauiApp1.Models.Club;
 using MauiApp1.Services.AppHelper;
-using MauiApp1.ViewModel;
+using MauiApp1.ViewModels.Club;
 using System.Windows.Input;
 
 namespace MauiApp1;

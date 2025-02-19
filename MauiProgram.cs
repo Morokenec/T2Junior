@@ -2,7 +2,7 @@
 using MauiApp1.Services.AppHelper;
 using MauiApp1.Services.UseCase;
 using MauiApp1.Services.UseCase.Interface;
-using MauiApp1.ViewModel;
+using MauiApp1.ViewModels.Club;
 using MauiApp1.ViewModels.Profile;
 using Microsoft.Extensions.Logging;
 using System.Diagnostics;
