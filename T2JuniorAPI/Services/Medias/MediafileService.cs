@@ -43,7 +43,7 @@ namespace T2JuniorAPI.Services.Medias
             try
             {
                 var mediaId = Guid.NewGuid();
-                var fileExtension = uploadDTO.File.FileName.ToLower();
+                var fileExtension = uploadDTO.File.FileName.ToLower().Replace(" ", "");
                 var newFileName = $"{mediaId}_{fileExtension}";
 
                 var mediafile = _mapper.Map<Mediafile>(uploadDTO);

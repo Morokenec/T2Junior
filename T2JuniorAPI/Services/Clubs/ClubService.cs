@@ -42,21 +42,21 @@ namespace T2JuniorAPI.Services.Clubs
                     .ThenInclude(cu => cu.IdUserNavigation)
                         .ThenInclude(u => u.UserAvatars)
                             .ThenInclude(ua => ua.Media)
-                .Where(c => c.Id == clubId)
+                .Where(c => c.Id == clubId && !c.IsDelete)
                 .ProjectTo<ClubPageDTO>(_mapper.ConfigurationProvider)
                 .FirstOrDefaultAsync();
 
             if (club == null)
                 return null;
 
-            //// Получаем пользователей клуба
-            //var users = await _context.ClubUsers
-            //    .Where(cu => cu.IdClub == clubId && !cu.IsDelete)
-            //    .ProjectTo<SubscriberProfileDTO>(_mapper.ConfigurationProvider)
-            //    .ToListAsync();
+            // Получаем пользователей клуба
+            var users = await _context.ClubUsers
+                .Where(cu => cu.IdClub == clubId && !cu.IsDelete)
+                .ProjectTo<SubscriberProfileDTO>(_mapper.ConfigurationProvider)
+                .ToListAsync();
 
             //// Заполняем список пользователей в клубе
-            //club.Users = users;
+            club.Users = users;
 
             return club;
         }
@@ -156,12 +156,14 @@ namespace T2JuniorAPI.Services.Clubs
             var club = await _context.Clubs
                 .Include(c => c.MediaClubs)
                     .ThenInclude(mc => mc.MediaFilesNavigation)
-                .Where(c => c.Id == clubId)
+                .Where(c => c.Id == clubId && !c.IsDelete)
                 .ProjectTo<ClubProfileDTO>(_mapper.ConfigurationProvider)
                 .FirstOrDefaultAsync();
 
             if (club == null)
                 return null;
+
+            club.UsersCount = await _context.ClubUsers.CountAsync(cu => cu.IdClub == clubId && !cu.IsDelete);
 
             return club;
         }
