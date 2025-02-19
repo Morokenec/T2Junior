@@ -150,7 +150,7 @@ namespace T2JuniorAPI.Services.Notes
             else
             {
                 // add new Like
-                note.Likes.Add(new Like { UserId = userId });
+                note.Likes.Add(new NoteLike { UserId = userId });
                 note.LikeCount++;
             }
 

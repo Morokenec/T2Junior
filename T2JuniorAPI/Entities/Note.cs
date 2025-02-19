@@ -36,5 +36,5 @@ public class Note : BaseCommonProperties
 
     public virtual ICollection<MediaNote> MediaNotes { get; set; } = new List<MediaNote>();
 
-    public virtual ICollection<Like> Likes { get; set; } = new List<Like>();
+    public virtual ICollection<NoteLike> Likes { get; set; } = new List<NoteLike>();
 }

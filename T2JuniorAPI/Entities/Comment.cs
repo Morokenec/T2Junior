@@ -27,4 +27,6 @@ public class Comment : BaseCommonProperties
     public virtual ICollection<Comment> InverseParrentComment { get; set; } = new List<Comment>();
 
     public virtual Comment? ParrentComment { get; set; }
+    public virtual ICollection<CommentLike> CommentLikes { get; set; } = new List<CommentLike>();
+
 }

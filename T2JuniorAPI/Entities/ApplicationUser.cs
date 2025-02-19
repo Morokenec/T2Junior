@@ -46,6 +46,7 @@ public class ApplicationUser : IdentityUser<Guid>
 
     public virtual ICollection<UserAvatar> UserAvatars { get; set; }
 
-    public virtual ICollection<Like> Likes { get; set; } = new List<Like>();
+    public virtual ICollection<NoteLike> Likes { get; set; } = new List<NoteLike>();
+    public virtual ICollection<CommentLike> CommentLikes { get; set; } = new List<CommentLike>();
 
 }
