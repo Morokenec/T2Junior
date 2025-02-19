@@ -94,6 +94,19 @@ namespace T2JuniorAPI.Data
                 .HasOne(n => n.IdRepostNavigation)
                 .WithMany(n => n.InverseIdRepostNavigation)
                 .HasForeignKey(n => n.IdRepost)
+                .OnDelete(DeleteBehavior.Restrict)
+                .IsRequired(false);
+
+            modelBuilder.Entity<Note>()
+                .HasOne(n => n.IdWallNavigation)
+                .WithMany(w => w.Notes)
+                .HasForeignKey(n => n.IdWall)
+                .OnDelete(DeleteBehavior.Restrict);
+
+            modelBuilder.Entity<Note>()
+                .HasOne(n => n.IdStatusNavigation)
+                .WithMany(ns => ns.Notes)
+                .HasForeignKey(n => n.IdStatus)
                 .OnDelete(DeleteBehavior.Restrict);
 
             // Wall

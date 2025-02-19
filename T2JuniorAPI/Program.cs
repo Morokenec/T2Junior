@@ -18,6 +18,9 @@ using T2JuniorAPI.Services.MediaClubs;
 using T2JuniorAPI.Services.Achievements;
 using T2JuniorAPI.Services.Walls;
 using T2JuniorAPI.Services.WallTypes;
+using T2JuniorAPI.Services.Notes;
+using T2JuniorAPI.Services.NoteStatuses;
+using T2JuniorAPI.Services.MediaNotes;
 
 
 
@@ -69,6 +72,9 @@ builder.Services.AddAutoMapper(typeof(MediaClubProfile));
 builder.Services.AddAutoMapper(typeof(AchievementProfile));
 builder.Services.AddAutoMapper(typeof(WallProfile));
 builder.Services.AddAutoMapper(typeof(WallTypeProfile));
+builder.Services.AddAutoMapper(typeof(NoteProfile));
+builder.Services.AddAutoMapper(typeof(MediaNoteProfile));
+builder.Services.AddAutoMapper(typeof(NoteStatusProfile));
 
 builder.Services.AddScoped<IAccountService, AccountService>();
 builder.Services.AddScoped<ITokenService, TokenService>();
@@ -83,6 +89,9 @@ builder.Services.AddScoped<IMediaClubService, MediaClubService>();
 builder.Services.AddScoped<IAchievementService, AchievementService>();
 builder.Services.AddScoped<IWallService, WallService>();
 builder.Services.AddScoped<IWallTypeService, WallTypeService>();
+builder.Services.AddScoped<INoteService, NoteService>();
+builder.Services.AddScoped<INoteStatusService, NoteStatusService>();
+builder.Services.AddScoped<IMediaNoteService, MediaNoteService>();
 
 
 builder.Services.AddControllers();
@@ -113,7 +122,7 @@ if (app.Environment.IsDevelopment())
     });
 }
 
-app.UseStaticFiles(); // ��� ��������� ����������� ����������� �����
+app.UseStaticFiles();
 app.UseRouting();
 app.UseAuthorization();
 app.UseCors("AllowAll");

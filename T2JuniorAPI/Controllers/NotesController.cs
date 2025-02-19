@@ -1,12 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Mvc;
 using T2JuniorAPI.Data;
+using T2JuniorAPI.DTOs.Notes;
 using T2JuniorAPI.Entities;
+using T2JuniorAPI.Services.Notes;
 
 namespace T2JuniorAPI.Controllers
 {
@@ -14,33 +10,53 @@ namespace T2JuniorAPI.Controllers
     [ApiController]
     public class NotesController : ControllerBase
     {
-        private readonly ApplicationDbContext _context;
+        private readonly INoteService _noteService;
 
-        public NotesController(ApplicationDbContext context)
+        public NotesController(INoteService noteService)
         {
-            _context = context;
+            _noteService = noteService;
         }
 
-        [HttpPost]
-        public async Task<ActionResult<Note>> CreateNote()
+        [HttpPost("create/{idOwner}")]
+        public async Task<ActionResult<NoteDTO>> CreateNote(Guid idOwner, [FromBody] CreateNoteDTO noteDTO)
         {
-            await _context.SaveChangesAsync();
-            return Ok();
+            var note = await _noteService.CreateNoteAsync(idOwner, noteDTO);
+            return Ok(note);
         }
 
-        [HttpPut]
-        public async Task<ActionResult<Note>> UpdateNote()
+        [HttpPut("update/{idNote}")]
+        public async Task<ActionResult<NoteDTO>> UpdateNote(Guid idNote, [FromBody] UpdateNoteDTO noteDTO)
         {
-            await _context.SaveChangesAsync();
-            return Ok();
-        }
-        
-        [HttpDelete]
-        public async Task<ActionResult<Note>> DeleteNote()
-        {
-            await _context.SaveChangesAsync();
-            return Ok();
+            var note = await _noteService.UpdateNoteAsync(idNote, noteDTO);
+            return Ok(note);
         }
 
+        [HttpDelete("{idNote}")]
+        public async Task<ActionResult<bool>> DeleteNote(Guid idNote)
+        {
+            var result = await _noteService.DeleteNoteAsync(idNote);
+            return Ok(result);
+        }
+
+        [HttpPost("repost/{idNote}")]
+        public async Task<ActionResult<NoteDTO>> RepostNote(Guid idNote)
+        {
+            var note = await _noteService.RepostNoteAsync(idNote);
+            return Ok(note);
+        }
+
+        [HttpGet("get-by-id-owner/{idOwner}")]
+        public async Task<ActionResult<IEnumerable<NoteDTO>>> GetNotesByIdOwner(Guid idOwner)
+        {
+            var notes = await _noteService.GetNotesByIdOwnerAsync(idOwner);
+            return Ok(notes);
+        }
+
+        [HttpPatch("update-status/{idNote}/{idStatus}")]
+        public async Task<ActionResult<bool>> UpdateNoteStatus(Guid idNote, Guid idStatus)
+        {
+            var result = await _noteService.UpdateNoteStatusAsync(idNote, idStatus);
+            return Ok(result);
+        }
     }
 }
