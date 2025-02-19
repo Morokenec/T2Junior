@@ -20,6 +20,8 @@ namespace MauiApp1.DataModel
 
         public string Description { get; set; } = "";
 
+        public string NoteMediaSource { get; set; } = "news_media_holder.svg"; //добавить условия
+
         public string Text { get; set; } = "Клуб любителей кофе";
 
         public int IdRepost { get; set; } = 0;

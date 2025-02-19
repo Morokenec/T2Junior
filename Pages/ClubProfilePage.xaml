@@ -309,7 +309,7 @@
                                                FontFamily="ManropeExtraLight"/>
                                         <Image x:Name="NewsHolder"
                                                IsVisible="{Binding Source={x:Reference ClubProfile}, Path=HolderIsVisible}"
-                                               Source="{Binding Source={x:Reference ClubProfile}, Path=NoteMediaSource}"
+                                               Source="{Binding NoteMediaSource}"
                                                HorizontalOptions="Fill"
                                                VerticalOptions="Fill"
                                                Margin="0,12,0,0"/>

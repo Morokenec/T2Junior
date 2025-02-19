@@ -44,9 +44,15 @@
             </Frame>
         </HorizontalStackLayout>
 
-        <Frame Grid.Row="1" HeightRequest="44" CornerRadius="12" Margin="16,0">
+        <Frame Grid.Row="1" 
+               HeightRequest="44" 
+               CornerRadius="12" 
+               Margin="16,0">
             <HorizontalStackLayout VerticalOptions="Center">
-                <Frame HasShadow="True" WidthRequest="295" HeightRequest="44" BorderColor="Transparent">
+                <Frame HasShadow="True" 
+                       WidthRequest="295" 
+                       HeightRequest="44" 
+                       BorderColor="Transparent">
                     <Entry x:Name="searchEntry"
                            Text="{Binding SearchText}"
                            Placeholder="Поиск"

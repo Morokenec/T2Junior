@@ -59,7 +59,6 @@
 	<ItemGroup>
 	  <Compile Remove="Pages\GeneralNotesPage.xaml.cs" />
 	  <Compile Remove="PixelToDPI.cs" />
-	  <Compile Remove="ViewModels\NoteViewModel.cs" />
 	</ItemGroup>
 
 	<ItemGroup>
@@ -157,6 +156,9 @@
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	  <MauiXaml Update="Pages\CoinsPage.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="Pages\DetailedNotePage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	  <MauiXaml Update="Pages\FollowingPage.xaml">

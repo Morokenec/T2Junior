@@ -62,16 +62,6 @@
                            FontSize="13"
                            Margin="12,0" />
                 </Frame>
-
-                <Frame Margin="0,0,88,0"
-                       BorderColor="Transparent">
-                    <ImageButton Padding="0"
-                                 Source="search_icon.svg"
-                                 BackgroundColor="Transparent"
-                                 Clicked="OnSearch"
-                                 VerticalOptions="Start"
-                                 HorizontalOptions="Center" />
-                </Frame>
             </HorizontalStackLayout>
         </Frame>
 
