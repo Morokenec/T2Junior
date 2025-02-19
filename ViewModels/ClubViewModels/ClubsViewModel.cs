@@ -10,9 +10,9 @@ using Microsoft.Maui.Controls;
 using MauiApp1.Models;
 using MauiApp1.Services.AppHelper;
 using MauiApp1.Services.UseCase;
-using MauiApp1.Models.Club;
+using MauiApp1.Models.ClubModels.Club;
 
-namespace MauiApp1.ViewModels.Club
+namespace MauiApp1.ViewModels.ClubViewModel
 {
     public class ClubsViewModel : BindableObject, INotifyPropertyChanged
     {
@@ -77,7 +77,6 @@ namespace MauiApp1.ViewModels.Club
                 {
                     _isSubscribed = value;
                     OnPropertyChanged();
-                    // Обновляем изображение после смены статуса подписки
                     OnPropertyChanged(nameof(SubImageSource));
                 }
             }
@@ -129,11 +128,11 @@ namespace MauiApp1.ViewModels.Club
                     {
                         var club = new Club
                         {
-                            IdClub = clubItem.Id,
-                            Name = clubItem.Name,
+                            id = clubItem.Id,
+                            name = clubItem.Name,
                             IsSubscribed = clubItem.IsSubscribe,
                         };
-                        Debug.WriteLine($"[DATA]{club.IdClub} - {club.Name} - {club.IsSubscribed} ");
+                        Debug.WriteLine($"[DATA]{club.id} - {club.name} - {club.IsSubscribed} ");
                         Clubs.Add(club);
                     }
 
@@ -169,7 +168,7 @@ namespace MauiApp1.ViewModels.Club
                 }
                 else
                 {
-                    var filtered = Clubs.Where(c => c.Name.Contains(SearchText, StringComparison.OrdinalIgnoreCase)).ToList();
+                    var filtered = Clubs.Where(c => c.name.Contains(SearchText, StringComparison.OrdinalIgnoreCase)).ToList();
                     FilteredClubs.Clear();
                     foreach (var club in filtered)
                     {
@@ -201,7 +200,7 @@ namespace MauiApp1.ViewModels.Club
         /// <returns>Клуб с заданным идентификатором или null, если не найден.</returns>
         public Club GetClubById(Guid idClub)
         {
-            return Clubs.FirstOrDefault(c => c.IdClub == idClub);
+            return Clubs.FirstOrDefault(c => c.id == idClub);
         }
     }
 }

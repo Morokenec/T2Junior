@@ -2,7 +2,6 @@
 using MauiApp1.Services.AppHelper;
 using MauiApp1.Services.UseCase.Interface;
 using System.Diagnostics;
-using System.Text.Json;
 
 namespace MauiApp1.Services.UseCase
 {
@@ -21,12 +20,12 @@ namespace MauiApp1.Services.UseCase
         {
             try
             {
-                string url = "https://t2.hahatun.fun/api/Account/profile/0bcba842-366f-4508-b18f-1e78beae03e6";                // Замените на реальный URL
+                string url = $"{AppSetings.base_url}/api/Account/profile/{AppSetings.test_user_guid}";
 
                 HttpResponseMessage response = await _httpClient.GetAsync(url);
 
                 string responseContent = await response.Content.ReadAsStringAsync();
-                Debug.WriteLine($"[DEBUG] Response: {responseContent}"); // Лог в консоль
+                Debug.WriteLine($"[DEBUG] Response: {responseContent}");
 
                 if (!response.IsSuccessStatusCode)
                 {

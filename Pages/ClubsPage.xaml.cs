@@ -1,6 +1,6 @@
-using MauiApp1.Models.Club;
+using MauiApp1.Models.ClubModels.Club;
 using MauiApp1.Services.AppHelper;
-using MauiApp1.ViewModels.Club;
+using MauiApp1.ViewModels.ClubViewModel;
 using System.Windows.Input;
 
 namespace MauiApp1;
@@ -30,7 +30,7 @@ public partial class ClubsPage : ContentPage
         var tappedClub = (sender as StackLayout)?.BindingContext as Club;
         if (tappedClub != null)
         {
-            ClubProfilePage.SelectedClubId = tappedClub.IdClub;
+            ClubProfilePage.SelectedClubId = tappedClub.id;
             await Application.Current.MainPage.Navigation.PushAsync(new ClubProfilePage());
         }
     }

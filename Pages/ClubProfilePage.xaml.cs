@@ -1,6 +1,6 @@
 using MauiApp1.Services.AppHelper;
-using MauiApp1.ViewModel;
-using MauiApp1.ViewModels.Club;
+using MauiApp1.ViewModels.ClubProfileViewModel;
+using MauiApp1.ViewModels.ClubViewModel;
 
 namespace MauiApp1;
 

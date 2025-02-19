@@ -1,4 +1,5 @@
-﻿using MauiApp1.Models.Club;
+﻿using MauiApp1.Models.ClubModels.Club;
+using MauiApp1.Models.ClubModels.ClubList;
 using MauiApp1.Services.AppHelper;
 using MauiApp1.Services.UseCase.Interface;
 using System.Diagnostics;
@@ -20,8 +21,7 @@ namespace MauiApp1.Services.UseCase
         {
             try
             {
-                // Замените URL на реальный адрес вашего API
-                string url = "https://t2.hahatun.fun/api/Clubs/by-user/0bcba842-366f-4508-b18f-1e78beae03e6";
+                string url = $"{AppSetings.base_url}/api/Clubs/by-user/{AppSetings.test_user_guid}";
 
                 HttpResponseMessage response = await _httpClient.GetAsync(url);
                 string responseContent = await response.Content.ReadAsStringAsync();
@@ -35,6 +35,32 @@ namespace MauiApp1.Services.UseCase
 
                 // Десериализуем ответ в список клубов
                 return _jsonDeserializerService.Deserialize<List<ClubList>>(responseContent);
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine($"[ERROR] Exception: {ex.Message}");
+                return null;
+            }
+        }
+
+        public async Task<List<Club>> GetClubById()
+        {
+            try
+            {
+                string url = $"{AppSetings.base_url}/api/Clubs/{AppSetings.test_club_guid}/profile";
+                HttpResponseMessage response = await _httpClient.GetAsync(url);
+                string responseContent = await response.Content.ReadAsStringAsync();
+                Debug.WriteLine($"[DEBUG] Response: {responseContent}");
+
+                if (!response.IsSuccessStatusCode)
+                {
+                    Debug.WriteLine($"[ERROR] HTTP {response.StatusCode}: {responseContent}");
+                    return null;
+                }
+
+                return _jsonDeserializerService.Deserialize<List<Club
+                    >>(responseContent);
+
             }
             catch (Exception ex)
             {

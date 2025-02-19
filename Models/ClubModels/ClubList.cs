@@ -5,7 +5,7 @@ using System.Text;
 using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 
-namespace MauiApp1.Models.Club
+namespace MauiApp1.Models.ClubModels.ClubList
 {
     public class ClubList
     {
