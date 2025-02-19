@@ -67,18 +67,31 @@ namespace T2JuniorAPI.Services.Notes
             return true;
         }
 
-        public async Task<NoteDTO> RepostNoteAsync(Guid idNote)
+        public async Task<NoteDTO> RepostNoteAsync(Guid idNote, Guid idOwner)
         {
-            var originalNote = await _context.Notes.FindAsync(idNote);
+            var originalNote = await _context.Notes
+                .Include(n => n.IdWallNavigation)
+                .FirstOrDefaultAsync(n => n.Id == idNote && !n.IsDelete);
+
+            Console.WriteLine($"\n\n\n Original note value = {originalNote.Id}\n\n\n");
+            Console.WriteLine($"\n\n\n Entered note value = {idNote}\n\n\n");
 
             if (originalNote == null)
                 throw new ApplicationException("Original note not found");
 
-            var repostNote = _mapper.Map<Note>(originalNote);
-            repostNote.Id = Guid.NewGuid();
-            repostNote.IdRepost = originalNote.Id;
+            var createNewNoteDTO = new CreateNoteDTO
+            {
+                Name = originalNote.Name,
+                Description = originalNote.Description,
+            };
 
-            await _context.Notes.AddAsync(repostNote);
+            var newNote = await CreateNoteAsync(idOwner, createNewNoteDTO);
+
+            var repostNote = await _context.Notes.FindAsync(newNote.Id);
+            repostNote.IdRepost = idNote;
+
+            Console.WriteLine($"\n\n\n Repost id value = {repostNote.Id}\n\n\n Repost IdRepost value = {repostNote.IdRepost}\n\n\n");
+
             await _context.SaveChangesAsync();
 
             return _mapper.Map<NoteDTO>(repostNote);

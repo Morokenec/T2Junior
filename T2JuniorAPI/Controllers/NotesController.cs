@@ -38,10 +38,10 @@ namespace T2JuniorAPI.Controllers
             return Ok(result);
         }
 
-        [HttpPost("repost/{idNote}")]
-        public async Task<ActionResult<NoteDTO>> RepostNote(Guid idNote)
+        [HttpPost("repost/{idNote}/{idOwner}")]
+        public async Task<ActionResult<NoteDTO>> RepostNote(Guid idNote, Guid idOwner)
         {
-            var note = await _noteService.RepostNoteAsync(idNote);
+            var note = await _noteService.RepostNoteAsync(idNote, idOwner);
             return Ok(note);
         }
 
