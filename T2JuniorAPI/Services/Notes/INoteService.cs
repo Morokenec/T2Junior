@@ -10,5 +10,6 @@ namespace T2JuniorAPI.Services.Notes
         Task<NoteDTO> RepostNoteAsync(Guid idNote, Guid idOwner);
         Task<IEnumerable<NoteDTO>> GetNotesByIdOwnerAsync(Guid idOwner);
         Task<bool> UpdateNoteStatusAsync(Guid idNote, Guid idStatus);
+        Task<NoteDTO> ToggleLikeNoteAsync(Guid idNote, Guid userId);
     }
 }

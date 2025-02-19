@@ -11,8 +11,8 @@ using T2JuniorAPI.Data;
 namespace T2JuniorAPI.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20250219075726_NoteMigration")]
-    partial class NoteMigration
+    [Migration("20250219113719_LikeMigration")]
+    partial class LikeMigration
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -594,6 +594,44 @@ namespace T2JuniorAPI.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("EventDirections");
+                });
+
+            modelBuilder.Entity("T2JuniorAPI.Entities.Like", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("TEXT")
+                        .HasColumnName("Id")
+                        .HasColumnOrder(0);
+
+                    b.Property<DateTime>("CreationDate")
+                        .HasColumnType("TEXT")
+                        .HasColumnName("CreationDate")
+                        .HasColumnOrder(1);
+
+                    b.Property<bool>("IsDelete")
+                        .HasColumnType("INTEGER")
+                        .HasColumnName("IsDelete")
+                        .HasColumnOrder(3);
+
+                    b.Property<Guid>("NoteId")
+                        .HasColumnType("TEXT");
+
+                    b.Property<DateTime>("UpdateDate")
+                        .HasColumnType("TEXT")
+                        .HasColumnName("UpdateDate")
+                        .HasColumnOrder(2);
+
+                    b.Property<Guid>("UserId")
+                        .HasColumnType("TEXT");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("NoteId");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("Likes");
                 });
 
             modelBuilder.Entity("T2JuniorAPI.Entities.MediaClub", b =>
@@ -1241,6 +1279,25 @@ namespace T2JuniorAPI.Migrations
                     b.Navigation("IdDirectionNavigation");
                 });
 
+            modelBuilder.Entity("T2JuniorAPI.Entities.Like", b =>
+                {
+                    b.HasOne("T2JuniorAPI.Entities.Note", "Note")
+                        .WithMany("Likes")
+                        .HasForeignKey("NoteId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("ApplicationUser", "User")
+                        .WithMany("Likes")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("Note");
+
+                    b.Navigation("User");
+                });
+
             modelBuilder.Entity("T2JuniorAPI.Entities.MediaClub", b =>
                 {
                     b.HasOne("T2JuniorAPI.Entities.Club", "IdClubNavigation")
@@ -1450,6 +1507,8 @@ namespace T2JuniorAPI.Migrations
 
                     b.Navigation("Comments");
 
+                    b.Navigation("Likes");
+
                     b.Navigation("Mediafiles");
 
                     b.Navigation("Subscribers");
@@ -1529,6 +1588,8 @@ namespace T2JuniorAPI.Migrations
                     b.Navigation("Comments");
 
                     b.Navigation("InverseIdRepostNavigation");
+
+                    b.Navigation("Likes");
 
                     b.Navigation("MediaNotes");
                 });

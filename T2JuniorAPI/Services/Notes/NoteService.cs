@@ -73,9 +73,6 @@ namespace T2JuniorAPI.Services.Notes
                 .Include(n => n.IdWallNavigation)
                 .FirstOrDefaultAsync(n => n.Id == idNote && !n.IsDelete);
 
-            Console.WriteLine($"\n\n\n Original note value = {originalNote.Id}\n\n\n");
-            Console.WriteLine($"\n\n\n Entered note value = {idNote}\n\n\n");
-
             if (originalNote == null)
                 throw new ApplicationException("Original note not found");
 
@@ -90,8 +87,6 @@ namespace T2JuniorAPI.Services.Notes
             var repostNote = await _context.Notes.FindAsync(newNote.Id);
             repostNote.IdRepost = idNote;
 
-            Console.WriteLine($"\n\n\n Repost id value = {repostNote.Id}\n\n\n Repost IdRepost value = {repostNote.IdRepost}\n\n\n");
-
             await _context.SaveChangesAsync();
 
             return _mapper.Map<NoteDTO>(repostNote);
@@ -101,6 +96,8 @@ namespace T2JuniorAPI.Services.Notes
         {
             var wall = await _context.Walls
                 .Include(w => w.Notes)
+                    .ThenInclude(n => n.MediaNotes)
+                        .ThenInclude(mn => mn.IdMediaNavigation)
                 .FirstOrDefaultAsync(w => (w.IdUserOwner == idOwner || w.IdClubOwner == idOwner) & !w.IsDelete);
 
             if (wall == null) throw new ApplicationException("Wall not found for the owner");
@@ -120,6 +117,46 @@ namespace T2JuniorAPI.Services.Notes
             note.IdStatus = idStatus;
             await _context.SaveChangesAsync();
             return true;
+        }
+
+        public async Task<NoteDTO> ToggleLikeNoteAsync(Guid idNote, Guid userId)
+        {
+            var note = await _context.Notes
+                .Include(n => n.Likes)
+                .FirstOrDefaultAsync(n => n.Id == idNote && !n.IsDelete);
+
+            if (note == null)
+                throw new ApplicationException("Note Not Found");
+
+            var existingLike = note.Likes.FirstOrDefault(l => l.UserId == userId);
+
+            if (existingLike != null)
+            {
+                // Delete Like
+                if (!existingLike.IsDelete)
+                {
+                    existingLike.IsDelete = true;
+                    existingLike.UpdateDate = DateTime.Now;
+                    note.LikeCount--;
+                }
+                else
+                {
+                    // Like recovery
+                    existingLike.IsDelete= false;
+                    existingLike.UpdateDate= DateTime.Now;
+                    note.LikeCount++;
+                }
+            }
+            else
+            {
+                // add new Like
+                note.Likes.Add(new Like { UserId = userId });
+                note.LikeCount++;
+            }
+
+            await _context.SaveChangesAsync();
+
+            return _mapper.Map<NoteDTO>(note);
         }
     }
 }

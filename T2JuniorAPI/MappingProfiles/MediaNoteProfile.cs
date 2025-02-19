@@ -8,7 +8,8 @@ namespace T2JuniorAPI.MappingProfiles
     {
         public MediaNoteProfile()
         {
-            CreateMap<MediaNote, MediaNoteDTO>();
+            CreateMap<MediaNote, MediaNoteDTO>()
+                .ForMember(dest => dest.MediaUrl, opt => opt.MapFrom(src => src.IdMediaNavigation.Path));
             CreateMap<MediaNoteDTO, MediaNote>();
         }
     }

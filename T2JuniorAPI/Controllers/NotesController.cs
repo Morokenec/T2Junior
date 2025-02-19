@@ -58,5 +58,12 @@ namespace T2JuniorAPI.Controllers
             var result = await _noteService.UpdateNoteStatusAsync(idNote, idStatus);
             return Ok(result);
         }
+
+        [HttpPost("toggle-like/{idNote}")]
+        public async Task<ActionResult<NoteDTO>> ToggleLikeNole(Guid idNote, Guid idUser)
+        {
+            var note = await _noteService.ToggleLikeNoteAsync(idNote, idUser);
+            return Ok(note);
+        }
     }
 }

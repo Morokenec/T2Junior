@@ -33,6 +33,7 @@ namespace T2JuniorAPI.Data
         public DbSet<Achievement> Achievements { get; set; }
         public DbSet<UserAchievement> UserAchievements { get; set; }
         public DbSet<UserAvatar> UserAvatars { get; set; }
+        public DbSet<Like> Likes { get; set; }
 
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -244,6 +245,18 @@ namespace T2JuniorAPI.Data
                 .HasOne(ua => ua.Media)
                 .WithMany(m => m.UserAvatars)
                 .HasForeignKey(ua => ua.IdMedia)
+                .OnDelete(DeleteBehavior.Restrict);
+
+            modelBuilder.Entity<Like>()
+                .HasOne(l => l.Note)
+                .WithMany(n => n.Likes)
+                .HasForeignKey(l => l.NoteId)
+                .OnDelete(DeleteBehavior.Restrict);
+
+            modelBuilder.Entity<Like>()
+                .HasOne(l => l.User)
+                .WithMany(u => u.Likes)
+                .HasForeignKey(l => l.UserId)
                 .OnDelete(DeleteBehavior.Restrict);
 
         }

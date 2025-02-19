@@ -45,4 +45,7 @@ public class ApplicationUser : IdentityUser<Guid>
     public virtual ICollection<UserAchievement> UserAchievements { get; set; }
 
     public virtual ICollection<UserAvatar> UserAvatars { get; set; }
+
+    public virtual ICollection<Like> Likes { get; set; } = new List<Like>();
+
 }

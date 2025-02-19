@@ -8,7 +8,8 @@ namespace T2JuniorAPI.MappingProfiles
     {
         public NoteProfile()
         {
-            CreateMap<Note, NoteDTO>();
+            CreateMap<Note, NoteDTO>()
+                .ForMember(dest => dest.MediaNotes, opt => opt.MapFrom(src => src.MediaNotes));
             CreateMap<CreateNoteDTO, Note>();
             CreateMap<UpdateNoteDTO, Note>();
         }
