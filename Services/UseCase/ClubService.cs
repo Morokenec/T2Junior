@@ -21,7 +21,7 @@ namespace MauiApp1.Services.UseCase
             try
             {
                 // Замените URL на реальный адрес вашего API
-                string url = "https://t2.hahatun.fun/api/Clubs/by-user/5431ce17-ffa3-4297-a523-0e111f329842";
+                string url = "https://t2.hahatun.fun/api/Clubs/by-user/0bcba842-366f-4508-b18f-1e78beae03e6";
 
                 HttpResponseMessage response = await _httpClient.GetAsync(url);
                 string responseContent = await response.Content.ReadAsStringAsync();

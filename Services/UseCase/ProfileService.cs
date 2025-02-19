@@ -21,7 +21,7 @@ namespace MauiApp1.Services.UseCase
         {
             try
             {
-                string url = "https://t2.hahatun.fun/api/Account/profile/5431ce17-ffa3-4297-a523-0e111f329842";                // Замените на реальный URL
+                string url = "https://t2.hahatun.fun/api/Account/profile/0bcba842-366f-4508-b18f-1e78beae03e6";                // Замените на реальный URL
 
                 HttpResponseMessage response = await _httpClient.GetAsync(url);
 

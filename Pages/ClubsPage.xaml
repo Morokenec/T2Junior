@@ -5,7 +5,9 @@
              x:Class="MauiApp1.ClubsPage"
              x:Name="Clubs"
              Title="Клубы">
-    <Grid>
+    <RefreshView IsRefreshing="{Binding IsRefreshing}"
+             Command="{Binding RefreshCommand}">
+        <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
@@ -136,4 +138,5 @@
             </CollectionView.EmptyView>
         </CollectionView>
     </Grid>
+    </RefreshView>
 </ContentPage>

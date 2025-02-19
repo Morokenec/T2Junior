@@ -5,7 +5,7 @@ using System.Diagnostics;
 using System.Linq;
 using System.Net.Http;
 using System.Windows.Input;
-using Microsoft.Maui.ApplicationModel; // Для MainThread.BeginInvokeOnMainThread
+using Microsoft.Maui.ApplicationModel; 
 using Microsoft.Maui.Controls;
 using MauiApp1.DataModel;
 using MauiApp1.Models;
@@ -19,6 +19,7 @@ namespace MauiApp1.ViewModel
         private readonly ClubService _clubService;
         private readonly HttpClient _httpClient;
         private readonly JsonDeserializerService _jsonDeserializerService;
+        private bool _isRefreshing;
 
         private string _searchText;
         public string SearchText
@@ -30,7 +31,6 @@ namespace MauiApp1.ViewModel
                 {
                     _searchText = value;
                     OnPropertyChanged();
-                    // Вызываем фильтрацию при изменении текста поиска
                     FilterClubs();
                 }
             }
@@ -65,6 +65,7 @@ namespace MauiApp1.ViewModel
         }
 
         public ICommand SubscriptionCheckCommand { get; }
+        public ICommand RefreshCommand { get; }
 
         private bool _isSubscribed;
         public bool IsSubscribed
@@ -78,6 +79,19 @@ namespace MauiApp1.ViewModel
                     OnPropertyChanged();
                     // Обновляем изображение после смены статуса подписки
                     OnPropertyChanged(nameof(SubImageSource));
+                }
+            }
+        }
+
+        public bool IsRefreshing
+        {
+            get => _isRefreshing;
+            set
+            {
+                if (_isRefreshing != value)
+                {
+                    _isRefreshing = value;
+                    OnPropertyChanged();
                 }
             }
         }
@@ -96,7 +110,6 @@ namespace MauiApp1.ViewModel
 
             SubscriptionCheckCommand = new Command(ToggleSubscription);
 
-            // Загружаем реальные данные с сервера
             LoadClubsAsync();
         }
 
@@ -172,6 +185,13 @@ namespace MauiApp1.ViewModel
         private void ToggleSubscription()
         {
             IsSubscribed = !IsSubscribed;
+        }
+
+        public void RefreshDataAsync()
+        {
+            IsRefreshing = true;
+            LoadClubsAsync();
+            IsRefreshing = false;
         }
 
         /// <summary>

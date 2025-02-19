@@ -398,6 +398,5 @@ FodyWeavers.xsd
 
 # JetBrains Rider
 *.sln.iml
-/bin/*
-obj
-/obj/Debug/net8.0-android/lp/136/jl/res.zip
+
+

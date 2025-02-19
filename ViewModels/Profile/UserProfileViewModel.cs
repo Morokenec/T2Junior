@@ -1,12 +1,8 @@
 ﻿using MauiApp1.Models.Profile;
 using MauiApp1.Services.UseCase.Interface;
 using System;
-using System.Collections.Generic;
 using System.ComponentModel;
-using System.Diagnostics;
-using System.Linq;
 using System.Runtime.CompilerServices;
-using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
 
@@ -17,15 +13,17 @@ namespace MauiApp1.ViewModels.Profile
         private readonly IProfileService _taiyoService;
         private UserInfo _userInfo;
         private string _pathAvatarUser;
+        private bool _isRefreshing;
 
         public UserProfileViewModel(IProfileService taiyoService)
         {
             _taiyoService = taiyoService;
-            // Создаем команду с асинхронной обработкой
             LoadDataCommand = new Command(async () => await LoadDataAsync());
+            RefreshCommand = new Command(async () => await RefreshDataAsync());
         }
 
         public ICommand LoadDataCommand { get; }
+        public ICommand RefreshCommand { get; }
 
         public UserInfo UserInfo
         {
@@ -43,12 +41,25 @@ namespace MauiApp1.ViewModels.Profile
         public string PathAvatarUser
         {
             get => _pathAvatarUser;
-
             set
             {
-                if(_pathAvatarUser != value)
+                if (_pathAvatarUser != value)
                 {
-                    _pathAvatarUser = $"t2.hahatun.fun/{value}"; ;
+                    value = value.Replace("wwwroot/", "");
+                    _pathAvatarUser = $"t2.hahatun.fun/{value}";
+                    OnPropertyChanged();
+                }
+            }
+        }
+
+        public bool IsRefreshing
+        {
+            get => _isRefreshing;
+            set
+            {
+                if (_isRefreshing != value)
+                {
+                    _isRefreshing = value;
                     OnPropertyChanged();
                 }
             }
@@ -62,6 +73,13 @@ namespace MauiApp1.ViewModels.Profile
                 UserInfo = response.Result;
                 PathAvatarUser = response.Result.AvatarPath;
             }
+        }
+
+        public async Task RefreshDataAsync()
+        {
+            IsRefreshing = true;
+            await LoadDataAsync();
+            IsRefreshing = false;
         }
 
         public event PropertyChangedEventHandler PropertyChanged;

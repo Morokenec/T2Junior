@@ -4,6 +4,8 @@
              x:Class="MauiApp1.ProfilePage"
              BackgroundColor="#F2F2F7"
              Title="Профиль">
+    <RefreshView IsRefreshing="{Binding IsRefreshing}"
+             Command="{Binding RefreshCommand}">
     <ScrollView>
         <Grid>
             <Grid.RowDefinitions>
@@ -148,23 +150,18 @@
                     <VerticalStackLayout x:Name="FullInfoLayout"
                                          Grid.Row="2"
                                          Spacing="6">
-                        <Label x:Name="FullNameLabel"
+                            <Label x:Name="FullNameLabel"
                                Text="{Binding UserInfo.FullName}" 
                                HorizontalOptions="Center"
                                FontSize="20"/>
 
-                        <Label x:Name="RoleLabel"
-                               Text="Роль участника" 
-                               HorizontalOptions="Center"
-                               VerticalOptions="Center"
-                               FontSize="15"/>
-
-                        <Label x:Name="JobLabel"
+                            <Label x:Name="JobLabel"
                                TextColor="#838281"
                                Text="{Binding UserInfo.PostAndOrganization}" 
                                HorizontalOptions="Center"
                                VerticalOptions="Center"
-                               FontSize="12"/>
+                               FontSize="12"
+                               Margin="16,10"/>
 
                         <!--<Button x:Name="SubscribeButton"
                                 BackgroundColor="#0057A6"
@@ -205,7 +202,7 @@
                                    HorizontalOptions="Start" />
 
                             <Label x:Name="SubscribersCount"
-                                   Text="0"
+                                   Text="{Binding UserInfo.SubscriptionsCount}"
                                    FontFamily="RedRoseBold"
                                    FontSize="20"
                                    TextColor="#838281" />
@@ -231,7 +228,7 @@
                                        TextColor="#9C9B9A" />
 
                                 <Label x:Name="FollowingCount"
-                                       Text="0"
+                                       Text="{Binding UserInfo.SubscribersCount}"
                                        FontFamily="RedRoseBold"
                                        FontSize="20"
                                        TextColor="#838281" />
@@ -402,4 +399,5 @@
             </Frame>
         </Grid>
     </ScrollView>
+    </RefreshView>
 </ContentPage>
