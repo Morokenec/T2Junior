@@ -1,4 +1,5 @@
-﻿using T2JuniorAPI.DTOs.Medias;
+﻿using T2JuniorAPI.DTOs.Comments;
+using T2JuniorAPI.DTOs.Medias;
 
 namespace T2JuniorAPI.DTOs.Notes
 {
@@ -12,5 +13,6 @@ namespace T2JuniorAPI.DTOs.Notes
         public Guid? IdRepost { get; set; }
         public int LikeCount { get; set; }
         public IEnumerable<MediaNoteDTO> MediaNotes { get; set; }
+        public IEnumerable<CommentDTO> Comments { get; set; }
     }
 }
