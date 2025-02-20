@@ -1,0 +1,22 @@
+name: Deploy buy runner
+
+on:
+    push:
+        branches: ["master", "dev", "mat_api5"]
+
+jobs:
+    prepare-environment:
+        runs-on: self-hosted
+        steps:
+          - name: Stop and remove containers, networks
+            run: cd T2JuniorAPI && docker compose down
+          - name: Remove unused data
+            run: docker system prune -a -f
+    deploy:
+        runs-on: self-hosted
+        needs: prepare-environment
+        steps:
+          - name: checkout repo
+            uses: actions/checkout@v3
+          - name: docker compose 
+            run: cd T2JuniorAPI && docker compose up -d

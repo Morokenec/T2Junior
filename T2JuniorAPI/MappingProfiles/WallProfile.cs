@@ -10,11 +10,14 @@ namespace T2JuniorAPI.MappingProfiles
         {
             CreateMap<Wall, WallDTO>()
                 .ForMember(dest => dest.TypeName, opt => opt.MapFrom(src => src.IdTypeNavigation.Name))
-                .ForMember(dest => dest.OwnerName, opt => opt.MapFrom(src => src.UserOwner != null ? $"{src.UserOwner.FirstName} {src.UserOwner.LastName}" : src.ClubOwner.Name));
+                .ForMember(dest => dest.IdOwner, opt => opt.MapFrom(src => src.IdUserOwner.HasValue ? src.IdUserOwner.Value : src.IdClubOwner.Value))
+                .ForMember(dest => dest.OwnerName, opt => opt.MapFrom(src =>
+                    src.UserOwner != null ? src.UserOwner.UserName : src.ClubOwner.Name));
 
             CreateMap<CreateWallDTO, Wall>()
                 .ForMember(dest => dest.IdType, opt => opt.MapFrom(src => src.IdType))
-                .ForMember(dest => dest.IdOwner, opt => opt.MapFrom(src => src.IdOwner));
+                .ForMember(dest => dest.IdUserOwner, opt => opt.Ignore())
+                .ForMember(dest => dest.IdClubOwner, opt => opt.Ignore());
         }
     }
 }

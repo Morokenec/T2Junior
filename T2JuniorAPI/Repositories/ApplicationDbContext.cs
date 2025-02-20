@@ -33,6 +33,7 @@ namespace T2JuniorAPI.Data
         public DbSet<Achievement> Achievements { get; set; }
         public DbSet<UserAchievement> UserAchievements { get; set; }
         public DbSet<UserAvatar> UserAvatars { get; set; }
+        public DbSet<NoteLike> Likes { get; set; }
 
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -94,26 +95,42 @@ namespace T2JuniorAPI.Data
                 .HasOne(n => n.IdRepostNavigation)
                 .WithMany(n => n.InverseIdRepostNavigation)
                 .HasForeignKey(n => n.IdRepost)
+                .OnDelete(DeleteBehavior.Restrict)
+                .IsRequired(false);
+
+            modelBuilder.Entity<Note>()
+                .HasOne(n => n.IdWallNavigation)
+                .WithMany(w => w.Notes)
+                .HasForeignKey(n => n.IdWall)
+                .OnDelete(DeleteBehavior.Restrict);
+
+            modelBuilder.Entity<Note>()
+                .HasOne(n => n.IdStatusNavigation)
+                .WithMany(ns => ns.Notes)
+                .HasForeignKey(n => n.IdStatus)
                 .OnDelete(DeleteBehavior.Restrict);
 
             // Wall
-            modelBuilder.Entity<Wall>()
-                .HasOne(w => w.UserOwner)
-                .WithMany(u => u.Walls)
-                .HasForeignKey(w => w.IdOwner)
-                .OnDelete(DeleteBehavior.Restrict);
 
-            modelBuilder.Entity<Wall>()
-                .HasOne(w => w.ClubOwner)
-                .WithMany(c => c.Walls)
-                .HasForeignKey(w => w.IdOwner)
-                .OnDelete(DeleteBehavior.Restrict);
-            
             modelBuilder.Entity<Wall>()
                 .HasOne(w => w.IdTypeNavigation)
                 .WithMany(wt => wt.Walls)
                 .HasForeignKey(w => w.IdType)
                 .OnDelete(DeleteBehavior.Restrict);
+
+            modelBuilder.Entity<Wall>()
+                .HasOne(w => w.UserOwner)
+                .WithMany(a => a.Walls)
+                .HasForeignKey(w => w.IdUserOwner)
+                .OnDelete(DeleteBehavior.Restrict)
+                .IsRequired(false);
+
+            modelBuilder.Entity<Wall>()
+                .HasOne(w => w.ClubOwner)
+                .WithMany(c => c.Walls)
+                .HasForeignKey(w => w.IdClubOwner)
+                .OnDelete(DeleteBehavior.Restrict)
+                .IsRequired(false);
 
             modelBuilder.Entity<Event>()
                 .HasOne(e => e.IdClubNavigation)
@@ -228,6 +245,18 @@ namespace T2JuniorAPI.Data
                 .HasOne(ua => ua.Media)
                 .WithMany(m => m.UserAvatars)
                 .HasForeignKey(ua => ua.IdMedia)
+                .OnDelete(DeleteBehavior.Restrict);
+
+            modelBuilder.Entity<NoteLike>()
+                .HasOne(l => l.Note)
+                .WithMany(n => n.Likes)
+                .HasForeignKey(l => l.NoteId)
+                .OnDelete(DeleteBehavior.Restrict);
+
+            modelBuilder.Entity<NoteLike>()
+                .HasOne(l => l.User)
+                .WithMany(u => u.Likes)
+                .HasForeignKey(l => l.UserId)
                 .OnDelete(DeleteBehavior.Restrict);
 
         }

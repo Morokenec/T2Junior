@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using T2JuniorAPI.Data;
 
@@ -10,9 +11,16 @@ using T2JuniorAPI.Data;
 namespace T2JuniorAPI.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+<<<<<<<< HEAD:T2JuniorAPI/Migrations/20250219122101_CommentLikeMigration.Designer.cs
+    [Migration("20250219122101_CommentLikeMigration")]
+    partial class CommentLikeMigration
+========
+    [Migration("20250219115705_InitialCreate")]
+    partial class InitialCreate
+>>>>>>>> 073af971a90169abf125c01851523b0b0efd16c0:T2JuniorAPI/Migrations/20250219115705_InitialCreate.Designer.cs
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder.HasAnnotation("ProductVersion", "8.0.12");

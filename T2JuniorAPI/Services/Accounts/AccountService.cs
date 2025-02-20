@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using T2JuniorAPI.Data;
 using T2JuniorAPI.DTOs.Users;
 using T2JuniorAPI.Entities;
+using T2JuniorAPI.Services.Walls;
 
 namespace T2JuniorAPI.Services.Accounts
 {
@@ -21,18 +22,20 @@ namespace T2JuniorAPI.Services.Accounts
         private readonly SignInManager<ApplicationUser> _signInManager;
         private readonly IMapper _mapper;
         private readonly ApplicationDbContext _dbContext;
+        private readonly IWallService _wallService;
 
         /// <summary>
         /// Конструктор для инициализации сервисов UserManager и SignInManager.
         /// </summary>
         /// <param name="userManager">Менеджер пользователей для работы с пользователями.</param>
         /// <param name="signInManager">Менеджер входа для работы с аутентификацией.</param>
-        public AccountService(UserManager<ApplicationUser> userManager, SignInManager<ApplicationUser> signInManager, IMapper mapper, ApplicationDbContext applicationDbContext)
+        public AccountService(UserManager<ApplicationUser> userManager, SignInManager<ApplicationUser> signInManager, IMapper mapper, ApplicationDbContext applicationDbContext, IWallService wallService)
         {
             _userManager = userManager;
             _signInManager = signInManager;
             _mapper = mapper;
             _dbContext = applicationDbContext;
+            _wallService = wallService;
         }
 
         /// <summary>
@@ -59,6 +62,7 @@ namespace T2JuniorAPI.Services.Accounts
                 {
                     throw new ApplicationException($"Registration failed: {string.Join("; ", result.Errors.Select(e => e.Description))}");
                 }
+                await _wallService.CreateWallAsync(user.Id);
 
                 return "User registered successfully";
             }
@@ -172,6 +176,8 @@ namespace T2JuniorAPI.Services.Accounts
 
             user.IsDeleted = true;
             await _userManager.UpdateAsync(user);
+
+            await _wallService.DeleteWallAsync(userId);
 
             return "User deleted successfully";
         }

@@ -5,6 +5,7 @@ using T2JuniorAPI.Data;
 using T2JuniorAPI.DTOs.Clubs;
 using T2JuniorAPI.DTOs.Users;
 using T2JuniorAPI.Entities;
+using T2JuniorAPI.Services.Walls;
 
 namespace T2JuniorAPI.Services.Clubs
 {
@@ -12,16 +13,13 @@ namespace T2JuniorAPI.Services.Clubs
     {
         private readonly ApplicationDbContext _context;
         private readonly IMapper _mapper;
+        private readonly IWallService _wallService;
 
-        /// <summary>
-        /// Конструктор для инициализации сервисов ApplicationDbContext и IMapper
-        /// </summary>
-        /// <param name="context">Доступ к базе данных</param>  
-        /// <param name="mapper">Сопоставление данных между объектами</param>
-        public ClubService(ApplicationDbContext context, IMapper mapper)
+        public ClubService(ApplicationDbContext context, IMapper mapper, IWallService wallService)
         {
             _context = context;
             _mapper = mapper;
+            _wallService = wallService;
         }
 
         /// <summary>
@@ -53,21 +51,21 @@ namespace T2JuniorAPI.Services.Clubs
                     .ThenInclude(cu => cu.IdUserNavigation)
                         .ThenInclude(u => u.UserAvatars)
                             .ThenInclude(ua => ua.Media)
-                .Where(c => c.Id == clubId)
+                .Where(c => c.Id == clubId && !c.IsDelete)
                 .ProjectTo<ClubPageDTO>(_mapper.ConfigurationProvider)
                 .FirstOrDefaultAsync();
 
             if (club == null)
                 return null;
 
-            //// Получаем пользователей клуба
-            //var users = await _context.ClubUsers
-            //    .Where(cu => cu.IdClub == clubId && !cu.IsDelete)
-            //    .ProjectTo<SubscriberProfileDTO>(_mapper.ConfigurationProvider)
-            //    .ToListAsync();
+            // Получаем пользователей клуба
+            var users = await _context.ClubUsers
+                .Where(cu => cu.IdClub == clubId && !cu.IsDelete)
+                .ProjectTo<SubscriberProfileDTO>(_mapper.ConfigurationProvider)
+                .ToListAsync();
 
             //// Заполняем список пользователей в клубе
-            //club.Users = users;
+            club.Users = users;
 
             return club;
         }
@@ -111,6 +109,8 @@ namespace T2JuniorAPI.Services.Clubs
                     throw;
                 }
             }
+
+            await _wallService.CreateWallAsync(newClub.Id);
 
             return "Successful create club";
         }
@@ -194,12 +194,14 @@ namespace T2JuniorAPI.Services.Clubs
             var club = await _context.Clubs
                 .Include(c => c.MediaClubs)
                     .ThenInclude(mc => mc.MediaFilesNavigation)
-                .Where(c => c.Id == clubId)
+                .Where(c => c.Id == clubId && !c.IsDelete)
                 .ProjectTo<ClubProfileDTO>(_mapper.ConfigurationProvider)
                 .FirstOrDefaultAsync();
 
             if (club == null)
                 return null;
+
+            club.UsersCount = await _context.ClubUsers.CountAsync(cu => cu.IdClub == clubId && !cu.IsDelete);
 
             return club;
         }
@@ -264,6 +266,8 @@ namespace T2JuniorAPI.Services.Clubs
             club.IsDelete = true;
             club.UpdateDate = DateTime.Now;
             await _context.SaveChangesAsync();
+
+            await _wallService.DeleteWallAsync(id);
 
             return "Club Deleted successfully";
         }

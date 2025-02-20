@@ -18,7 +18,9 @@ using T2JuniorAPI.Services.MediaClubs;
 using T2JuniorAPI.Services.Achievements;
 using T2JuniorAPI.Services.Walls;
 using T2JuniorAPI.Services.WallTypes;
-using Microsoft.Extensions.Options;
+using T2JuniorAPI.Services.Notes;
+using T2JuniorAPI.Services.NoteStatuses;
+using T2JuniorAPI.Services.MediaNotes;
 
 
 
@@ -70,6 +72,9 @@ builder.Services.AddAutoMapper(typeof(MediaClubProfile));
 builder.Services.AddAutoMapper(typeof(AchievementProfile));
 builder.Services.AddAutoMapper(typeof(WallProfile));
 builder.Services.AddAutoMapper(typeof(WallTypeProfile));
+builder.Services.AddAutoMapper(typeof(NoteProfile));
+builder.Services.AddAutoMapper(typeof(MediaNoteProfile));
+builder.Services.AddAutoMapper(typeof(NoteStatusProfile));
 
 builder.Services.AddScoped<IAccountService, AccountService>();
 builder.Services.AddScoped<ITokenService, TokenService>();
@@ -84,16 +89,16 @@ builder.Services.AddScoped<IMediaClubService, MediaClubService>();
 builder.Services.AddScoped<IAchievementService, AchievementService>();
 builder.Services.AddScoped<IWallService, WallService>();
 builder.Services.AddScoped<IWallTypeService, WallTypeService>();
+builder.Services.AddScoped<INoteService, NoteService>();
+builder.Services.AddScoped<INoteStatusService, NoteStatusService>();
+builder.Services.AddScoped<IMediaNoteService, MediaNoteService>();
 
 
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen(c =>
 {
-    var basePath = AppContext.BaseDirectory;
     c.SwaggerDoc("v1", new() { Title = "T2JuniorAPI", Version = "v1" });
-    var xmlPath = Path.Combine(basePath, "documentation.xml");
-    c.IncludeXmlComments(xmlPath);
 });
 
 
@@ -103,6 +108,7 @@ var app = builder.Build();
 using (var scope = app.Services.CreateScope())
 {
     var db = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
+    
     db.Database.Migrate();
 }
 
@@ -116,7 +122,7 @@ if (app.Environment.IsDevelopment())
     });
 }
 
-app.UseStaticFiles(); // Ёто позвол€ет обслуживать статические файлы
+app.UseStaticFiles();
 app.UseRouting();
 app.UseAuthorization();
 app.UseCors("AllowAll");
@@ -124,3 +130,5 @@ app.UseCors("AllowAll");
 app.MapControllers();
 
 app.Run();
+
+
