@@ -11,8 +11,13 @@ using T2JuniorAPI.Data;
 namespace T2JuniorAPI.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
+<<<<<<<< HEAD:T2JuniorAPI/Migrations/20250219122101_CommentLikeMigration.Designer.cs
     [Migration("20250219122101_CommentLikeMigration")]
     partial class CommentLikeMigration
+========
+    [Migration("20250219115705_InitialCreate")]
+    partial class InitialCreate
+>>>>>>>> 073af971a90169abf125c01851523b0b0efd16c0:T2JuniorAPI/Migrations/20250219115705_InitialCreate.Designer.cs
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
