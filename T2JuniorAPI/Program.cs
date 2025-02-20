@@ -98,7 +98,10 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen(c =>
 {
+    var basePath = AppContext.BaseDirectory;
     c.SwaggerDoc("v1", new() { Title = "T2JuniorAPI", Version = "v1" });
+    var xmlPath = Path.Combine(basePath, "documentation.xml");
+    c.IncludeXmlComments(xmlPath);
 });
 
 

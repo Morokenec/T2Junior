@@ -16,6 +16,13 @@ namespace T2JuniorAPI.Controllers
             _achievementService = achievementService;
         }
 
+        /// <summary>
+        /// Получение всех достижений, с выделением пользовательских по его ID
+        /// </summary>
+        /// <param name="id">Достижения</param>
+        /// <returns></returns>
+        /// <response code="200">Успешное выполнение</response>
+        /// <response code="400">Ошибка API</response>
         [HttpGet("all-by-user-id/{id}")]
         public async Task<ActionResult<IEnumerable<AchievementDTO>>> GetAchievementsAllByUserId(Guid id)
         {
@@ -31,6 +38,13 @@ namespace T2JuniorAPI.Controllers
 
         }
 
+        /// <summary>
+        /// Получение достижения пользователя по ID
+        /// </summary>
+        /// <param name="id">Достижения</param>
+        /// <returns></returns>
+        /// <response code="200">Успешное выполнение</response>
+        /// <response code="400">Ошибка API</response>
         [HttpGet("by-user-id/{id}")]
         public async Task<ActionResult<IEnumerable<AchievementDTO>>> GetAchievementsByUserId(Guid id)
         {
@@ -46,6 +60,14 @@ namespace T2JuniorAPI.Controllers
 
         }
 
+        /// <summary>
+        /// Создание нового достижения
+        /// </summary>
+        /// <param name="achievementDto">Достижение</param>
+        /// <param name="uploadDTO">Медиафайл</param>
+        /// <returns></returns>
+        /// <response code="200">Успешное выполнение</response>
+        /// <response code="400">Ошибка API</response>
         [HttpPost]
         public async Task<ActionResult<AchievementDTO>> PostAchievement([FromForm] CreateAchievementDTO achievementDto, [FromForm] MediafileUploadDTO uploadDTO = null)
         {
@@ -61,6 +83,14 @@ namespace T2JuniorAPI.Controllers
 
         }
 
+        /// <summary>
+        /// Обновление существующего достижение
+        /// </summary>
+        /// <param name="achievementDto">Достижения</param>
+        /// <param name="uploadDTO">Медиафайл</param>
+        /// <returns></returns>
+        /// <response code="200">Успешное выполнение</response>
+        /// <response code="400">Ошибка API</response>
         [HttpPut]
         public async Task<IActionResult> PutAchievement([FromForm] UpdateAchievementDTO achievementDto, [FromForm] MediafileUploadDTO uploadDTO = null)
         {
@@ -76,6 +106,15 @@ namespace T2JuniorAPI.Controllers
 
         }
 
+
+        /// <summary>
+        /// Выдача достижения пользователю
+        /// </summary>
+        /// <param name="userId)">Пользователь</param>
+        /// <param name="achievementId)">Достижения</param>
+        /// <returns></returns>
+        /// <response code="200">Успешное выполнение</response>
+        /// <response code="400">Ошибка API</response>
         [HttpPost("to-user")]
         public async Task<ActionResult> PostAchievementToUser(Guid userId, Guid achievementId)
         {
@@ -91,6 +130,14 @@ namespace T2JuniorAPI.Controllers
 
         }
 
+
+        /// <summary>
+        /// Удаление достижения
+        /// </summary>
+        /// <param name="id">Достижения</param>
+        /// <returns></returns>
+        /// <response code="200">Успешное выполнение</response>
+        /// <response code="400">Ошибка API</response>
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteAchievement(Guid id)
         {
@@ -106,6 +153,13 @@ namespace T2JuniorAPI.Controllers
 
         }
 
+        /// <summary>
+        /// Активация достижения
+        /// </summary>
+        /// <param name="id)">Достижения</param>
+        /// <returns></returns>
+        /// <response code="200">Успешное выполнение</response>
+        /// <response code="400">Ошибка API</response>
         [HttpPatch("activate/{id}")]
         public async Task<IActionResult> ActivateAchievement(Guid id)
         {
@@ -121,6 +175,13 @@ namespace T2JuniorAPI.Controllers
 
         }
 
+        /// <summary>
+        /// Деактивация достижения
+        /// </summary>
+        /// <param name="id)">Достижения</param>
+        /// <returns></returns>
+        /// <response code="200">Успешное выполнение</response>
+        /// <response code="400">Ошибка API</response>
         [HttpPatch("deactivate/{id}")]
         public async Task<IActionResult> DeactivateAchievement(Guid id)
         {

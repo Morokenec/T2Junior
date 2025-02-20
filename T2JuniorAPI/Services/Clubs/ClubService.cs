@@ -22,6 +22,10 @@ namespace T2JuniorAPI.Services.Clubs
             _wallService = wallService;
         }
 
+        /// <summary>
+        /// Возвращает список всех неудалённых клубов с их медиафайлами.
+        /// </summary>
+        /// <returns>Список DTO-объектов клубов.</returns>
         public async Task<List<AllClubsDTO>> GetAllClubs()
         {
             var clubs = await _context.Clubs
@@ -33,6 +37,11 @@ namespace T2JuniorAPI.Services.Clubs
             return clubs;
         }
 
+        /// <summary>
+        /// Возвращает информацию о клубе по уникальному идентификатору.
+        /// </summary>
+        /// <param name="clubId">Уникальный идентификатор клуба.</param>
+        /// <returns>DTO-объект клуба или null, если клуб не найден.</returns>
         public async Task<ClubPageDTO> GetClubInfoById(Guid clubId)
         {
             var club = await _context.Clubs
@@ -61,6 +70,12 @@ namespace T2JuniorAPI.Services.Clubs
             return club;
         }
 
+        /// <summary>
+        /// Создаёт новый клуб.
+        /// </summary>
+        /// <param name="club">DTO-объект с новыми данными для нового клуба.</param>
+        /// <returns>Строка с результатом создания клуба.</returns>
+        /// <exception cref="ApplicationException">Выбрасывается, если клуб с таким именем уже существует.</exception>
         public async Task<string> CreateClub(CreateClubDTO club)
         {
             var newClub = _mapper.Map<Club>(club);
@@ -100,11 +115,22 @@ namespace T2JuniorAPI.Services.Clubs
             return "Successful create club";
         }
 
+        /// <summary>
+        /// Проверяет, существует ли клуб с указанным идентификатором.
+        /// </summary>
+        /// <param name="id">Уникальный идентификатор клуба.</param>
+        /// <returns>`true`, если клуб существует, иначе `false`.</returns>
         private bool ClubExists(Guid id)
         {
             return _context.Clubs.Any(e => e.Id == id);
         }
 
+        /// <summary>
+        /// Добавляет пользователя в клуб.
+        /// </summary>
+        /// <param name="clubId">Уникальный идентификатор клуба.</param>
+        /// <param name="user">DTO-объект с данными о пользователе.</param>
+        /// <returns>Строка с результатом добавления пользователя в клуб.</returns>
         public async Task<string> AddUserToClub(Guid clubId, AddUserToClubDTO user)
         {
             var club = await _context.Clubs.FindAsync(clubId);
@@ -129,6 +155,12 @@ namespace T2JuniorAPI.Services.Clubs
             return "User successfully added to the club";
         }
 
+        /// <summary>
+        /// Удаляет пользователя из клуба.
+        /// </summary>
+        /// <param name="clubId">Уникальный идентификатор клуба.</param>
+        /// <param name="userId">Уникальный идентификатор пользователя.</param>
+        /// <returns>Строка с результатом удаления пользователя из клуба.</returns>
         public async Task<string> DeleteUserFromClub(Guid clubId, Guid userId)
         {
             var clubUser = await _context.ClubUsers
@@ -151,6 +183,12 @@ namespace T2JuniorAPI.Services.Clubs
 
             return "User successfully deleted from the club";
         }
+
+        /// <summary>
+        /// Возвращает профиль клуба по уникальному идентификатору.
+        /// </summary>
+        /// <param name="clubId">Уникальный идентификатор клуба.</param>
+        /// <returns>DTO-объект профиля клуба или `null`, если клуб не найден.</returns>
         public async Task<ClubProfileDTO> GetClubProfileById(Guid clubId)
         {
             var club = await _context.Clubs
@@ -168,6 +206,11 @@ namespace T2JuniorAPI.Services.Clubs
             return club;
         }
 
+        /// <summary>
+        /// Возвращает список клубов, в которые подписан пользователь.
+        /// </summary>
+        /// <param name="userId">Уникальный идентификатор пользователя.</param>
+        /// <returns>Список DTO-объектов клубов.</returns>
         public async Task<List<AllClubsDTO>> GetAllClubsByUserId(Guid userId)
         {
             var clubs = await _context.Clubs
@@ -190,6 +233,12 @@ namespace T2JuniorAPI.Services.Clubs
             return clubs;
         }
 
+        /// <summary>
+        /// Обновляет информацию о клубе.
+        /// </summary>
+        /// <param name="clubId">Уникальный идентификатор клуба.</param>
+        /// <param name="updateClubDTO">DTO-объект с новыми данными для обновления.</param>
+        /// <returns>Строка с результатом обновления.</returns>
         public async Task<string> UpdateClub(Guid clubId, UpdateClubDTO updateClubDTO)
         {
             var club = await _context.Clubs.FindAsync(clubId);
@@ -203,6 +252,11 @@ namespace T2JuniorAPI.Services.Clubs
             return "Club updated successfully";
         }
 
+        /// <summary>
+        /// Удаляет клуб.
+        /// </summary>
+        /// <param name="id">Уникальный идентификатор клуба.</param>
+        /// <returns>Строка с результатом удаления.</returns>
         public async Task<string> DeleteClub(Guid id)
         {
             var club = await _context.Clubs.FindAsync(id);

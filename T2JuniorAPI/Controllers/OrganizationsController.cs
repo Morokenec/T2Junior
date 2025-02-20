@@ -13,12 +13,25 @@ public class OrganizationsController : ControllerBase
         _organizationService = organizationService;
     }
 
+    /// <summary>
+    /// Получения списков всех организаций
+    /// </summary>
+    /// <returns></returns>
+    /// <response code="200">Успешное выполнение</response>
+    /// <response code="400">Ошибка API</response>
     [HttpGet]
     public async Task<ActionResult<List<OrganizationDto>>> GetAllOrganizations()
     {
         return await _organizationService.GetAllOrganizationsAsync();
     }
 
+    /// <summary>
+    /// Создание организации
+    /// </summary>
+    /// <param name="organization">Организация</param>
+    /// <returns></returns>
+    /// <response code="200">Успешное выполнение</response>
+    /// <response code="400">Ошибка API</response>
     [HttpPost]
     public async Task<IActionResult> CreateOrganization([FromBody] OrganizationDto organization)
     {
@@ -29,6 +42,13 @@ public class OrganizationsController : ControllerBase
         return Ok(result);
     }
 
+    /// <summary>
+    /// Обновление данных организации
+    /// </summary>
+    /// <param name="organizationDto">Организация</param>
+    /// <returns></returns>
+    /// <response code="200">Успешное выполнение</response>
+    /// <response code="400">Ошибка API</response>
     // PUT: api/Organizations/{id}
     [HttpPut("{id}")]
     public async Task<IActionResult> UpdateOrganization(Guid id, [FromBody] OrganizationDto organizationDto)
@@ -40,6 +60,13 @@ public class OrganizationsController : ControllerBase
         return Ok(result);
     }
 
+    /// <summary>
+    /// Удаление организации по ID
+    /// </summary>
+    /// <param name="id">Организация</param>
+    /// <returns></returns>
+    /// <response code="200">Успешное выполнение</response>
+    /// <response code="400">Ошибка API</response>
     // DELETE: api/Organizations/{id}
     [HttpDelete("{id}")]
     public async Task<IActionResult> DeleteOrganization(Guid id)

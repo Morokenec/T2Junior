@@ -15,6 +15,12 @@ namespace T2JuniorAPI.Controllers
             _clubRoleService = clubRoleService;
         }
 
+        /// <summary>
+        /// Получение списка всех ролей клубов
+        /// </summary>
+        /// <returns></returns>
+        /// <response code="200">Успешное выполнение</response>
+        /// <response code="400">Ошибка API</response>
         // GET: api/ClubRoles
         [HttpGet]
         public async Task<ActionResult<List<ClubRolesDTO>>> GetClubRoles()
@@ -22,6 +28,13 @@ namespace T2JuniorAPI.Controllers
             return await _clubRoleService.GetAllClubRolesAsync();
         }
 
+        /// <summary>
+        /// Получение роли в клубе по ID
+        /// </summary>
+        /// <param name="id">Роли в клубе</param>
+        /// <returns></returns>
+        /// <response code="200">Успешное выполнение</response>
+        /// <response code="400">Ошибка API</response>
         // GET: api/ClubRoles/5
         [HttpGet("{id}")]
         public async Task<ActionResult<ClubRolesDTO>> GetClubRole(Guid id)
@@ -37,6 +50,13 @@ namespace T2JuniorAPI.Controllers
             }
         }
 
+        /// <summary>
+        /// Обновление роли в клубе по ID
+        /// </summary>
+        /// <param name="clubRoleDto">Роли в клубе</param>
+        /// <returns></returns>
+        /// <response code="200">Успешное выполнение</response>
+        /// <response code="400">Ошибка API</response>
         // PUT: api/ClubRoles/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
@@ -58,6 +78,13 @@ namespace T2JuniorAPI.Controllers
             }
         }
 
+        /// <summary>
+        /// Создание новой роли в клубе
+        /// </summary>
+        /// <param name="roleDTO">Роли в клубе</param>
+        /// <returns></returns>
+        /// <response code="200">Успешное выполнение</response>
+        /// <response code="400">Ошибка API</response>
         [HttpPost]
         public async Task<ActionResult<ClubRolesDTO>> PostClubRole([FromBody] ClubRolesDTO roleDTO)
         {
@@ -72,6 +99,13 @@ namespace T2JuniorAPI.Controllers
             }
         }
 
+        /// <summary>
+        /// Удаление роли в клубе по ID
+        /// </summary>
+        /// <param name="id">Роли в клубе</param>
+        /// <returns></returns>
+        /// <response code="200">Успешное выполнение</response>
+        /// <response code="400">Ошибка API</response>
         // DELETE: api/ClubRoles/5
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteClubRole(Guid id)

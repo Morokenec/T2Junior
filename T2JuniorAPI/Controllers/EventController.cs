@@ -17,6 +17,15 @@ namespace T2JuniorAPI.Controllers
             _eventService = eventService;
         }
 
+        /// <summary>
+        /// Получение календаря событий пользователя за указанный месяц и год
+        /// </summary>
+        /// <param name="userId">Пользователь</param>
+        /// <param name="year">Год</param>
+        /// <param name="month">Месяц</param>
+        /// <returns></returns>
+        /// <response code="200">Успешное выполнение</response>
+        /// <response code="400">Ошибка API</response>
         [HttpGet("user-calendar")]
         public async Task<ActionResult<List<EventCalendarDTO>>> GetUserCalendar([FromQuery] Guid userId, [FromQuery] int year, [FromQuery] int month)
         {
@@ -34,6 +43,15 @@ namespace T2JuniorAPI.Controllers
             return Ok(events);
         }
 
+        /// <summary>
+        /// Получение календаря событий клуба за указанный месяц и год
+        /// </summary>
+        /// <param name="clubId">Пользователь</param>
+        /// <param name="year">Год</param>
+        /// <param name="month">Месяц</param>
+        /// <returns></returns>
+        /// <response code="200">Успешное выполнение</response>
+        /// <response code="400">Ошибка API</response>
         [HttpGet("club-calendar")]
         public async Task<ActionResult<List<EventCalendarDTO>>> GetClubCalendar([FromQuery] Guid clubId, [FromQuery] int year, [FromQuery] int month)
         {
@@ -51,6 +69,15 @@ namespace T2JuniorAPI.Controllers
             return Ok(events);
         }
 
+
+        /// <summary>
+        /// Создание новых событий
+        /// </summary>
+        /// <param name="createEventDTO">Событие</param>
+        /// <param name="mediafile">Медиафайлы</param>
+        /// <returns></returns>
+        /// <response code="200">Успешное выполнение</response>
+        /// <response code="400">Ошибка API</response>
         [HttpPost("create-event")]
         public async Task<ActionResult<Guid>> CreateEvent([FromForm] CreateEventDTO createEventDTO, [FromForm] MediafileUploadDTO mediafile)
         {
@@ -69,6 +96,13 @@ namespace T2JuniorAPI.Controllers
             }
         }
 
+        /// <summary>
+        /// Удаление события по его ID
+        /// </summary>
+        /// <param name="eventId">Событие</param>
+        /// <returns></returns>
+        /// <response code="200">Успешное выполнение</response>
+        /// <response code="400">Ошибка API</response>
         [HttpDelete("{eventId}")]
         public async Task<IActionResult> DeleteEvent(Guid eventId)
         {
@@ -76,6 +110,13 @@ namespace T2JuniorAPI.Controllers
             return NoContent();
         }
 
+        /// <summary>
+        /// Обновление существующего события
+        /// </summary>
+        /// <param name="updateEventDTO">Событие</param>
+        /// <returns></returns>
+        /// <response code="200">Успешное выполнение</response>
+        /// <response code="400">Ошибка API</response>
         [HttpPut("update-event")]
         public async Task<IActionResult> PutEvent([FromBody] UpdateEventDTO updateEventDTO)
         {
@@ -83,6 +124,13 @@ namespace T2JuniorAPI.Controllers
             return NoContent();
         }
 
+        /// <summary>
+        /// Получение информации о событии по его ID
+        /// </summary>
+        /// <param name="eventId">Событие</param>
+        /// <returns></returns>
+        /// <response code="200">Успешное выполнение</response>
+        /// <response code="400">Ошибка API</response>
         [HttpGet("{eventId}")]
         public async Task<ActionResult<EventDTO>> GetEventById(Guid eventId)
         {

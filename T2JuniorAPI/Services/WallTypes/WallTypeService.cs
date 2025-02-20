@@ -7,17 +7,32 @@ using T2JuniorAPI.Entities;
 
 namespace T2JuniorAPI.Services.WallTypes
 {
+    /// <summary>
+    /// Сервис для работы с типами стен
+    /// </summary>
     public class WallTypeService : IWallTypeService
     {
         private readonly ApplicationDbContext _context;
         private readonly IMapper _mapper;
 
+
+        /// <summary>
+        /// Конструктор для внедрения зависимостей
+        /// </summary>
+        /// <param name="context">Контекст базы данных</param>
+        /// <param name="mapper">Маппер для преобразования объектов</param>
         public WallTypeService(ApplicationDbContext context, IMapper mapper)
         {
             _context = context;
             _mapper = mapper;
         }
 
+
+        /// <summary>
+        /// Возвращает тип стены по названию, или создает новый тип, если он не найден
+        /// </summary>
+        /// <param name="createWallTypeDTO">Данные для создания или обновления типа стены</param>
+        /// <returns>Данные о типе стены</returns>
         public async Task<WallTypeDTO> GetOrCreateWallTypeAsync(CreateWallTypeDTO createWallTypeDTO)
         {
             if (string.IsNullOrEmpty(createWallTypeDTO.Name))
@@ -39,6 +54,10 @@ namespace T2JuniorAPI.Services.WallTypes
             return _mapper.Map<WallTypeDTO>(newWallType);
         }
 
+        /// <summary>
+        /// Возвращает список всех неудаленных типов стен
+        /// </summary>
+        /// <returns>Коллекция типов стен</returns>
         public async Task<List<WallTypeDTO>> GetAllWallTypesAsync()
         {
             return await _context.WallTypes
@@ -47,6 +66,11 @@ namespace T2JuniorAPI.Services.WallTypes
                 .ToListAsync();
         }
 
+        /// <summary>
+        /// Помечает тип стены как удаленную
+        /// </summary>
+        /// <param name="id">Id удаляемого типа стены</param>
+        /// <returns>True, если операция прошла успешно, иначе false</returns>
         public async Task<bool> DeleteWallTypeAsync(Guid id)
         {
             var wallType = await _context.WallTypes.FindAsync(id);
