@@ -1,27 +1,32 @@
-﻿using MauiApp1.Models.ClubModels.Club;
-using MauiApp1.Models.ClubModels.ClubList;
+﻿using MauiApp1.DataModel;
 using MauiApp1.Services.AppHelper;
 using MauiApp1.Services.UseCase.Interface;
+using System;
+using System.Collections.Generic;
 using System.Diagnostics;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
 namespace MauiApp1.Services.UseCase
 {
-    public class ClubService : IClubService
+    public class NoteService : INoteService
     {
         private readonly HttpClient _httpClient;
         private readonly IJsonDeserializerService _jsonDeserializerService;
 
-        public ClubService(HttpClient httpClient, IJsonDeserializerService jsonDeserializerService)
+        public NoteService(HttpClient httpClient, IJsonDeserializerService jsonDeserializerService)
         {
             _httpClient = httpClient;
             _jsonDeserializerService = jsonDeserializerService;
         }
 
-        public async Task<List<ClubList>> GetClubsAsync()
+        public async Task<List<Note>> GetNotesAsync()
         {
             try
             {
-                string url = $"{AppSetings.base_url}/api/Clubs/by-user/{AppSetings.test_user_guid}";
+                // Пример URL для получения списка заметок
+                string url = $"{AppSetings.base_url}/api/Notes/get-by-id-owner/{AppSetings.test_user_guid}";
 
                 HttpResponseMessage response = await _httpClient.GetAsync(url);
                 string responseContent = await response.Content.ReadAsStringAsync();
@@ -33,8 +38,8 @@ namespace MauiApp1.Services.UseCase
                     return null;
                 }
 
-                // Десериализуем ответ в список клубов
-                return _jsonDeserializerService.Deserialize<List<ClubList>>(responseContent);
+                // Десериализация ответа в список заметок
+                return _jsonDeserializerService.Deserialize<List<Note>>(responseContent);
             }
             catch (Exception ex)
             {
@@ -43,11 +48,13 @@ namespace MauiApp1.Services.UseCase
             }
         }
 
-        public async Task<Club> GetClubById(string clubId)
+        public async Task<Note> GetNoteByIdAsync(string noteId)
         {
             try
             {
-                string url = $"{AppSetings.base_url}/api/Clubs/{clubId}/profile";
+                // Пример URL для получения конкретной заметки по её ID
+                string url = $"{AppSetings.base_url}/api/Notes/{noteId}";
+
                 HttpResponseMessage response = await _httpClient.GetAsync(url);
                 string responseContent = await response.Content.ReadAsStringAsync();
                 Debug.WriteLine($"[DEBUG] Response: {responseContent}");
@@ -58,8 +65,8 @@ namespace MauiApp1.Services.UseCase
                     return null;
                 }
 
-                // Десериализация в объект Club
-                return _jsonDeserializerService.Deserialize<Club>(responseContent);
+                // Десериализация ответа в объект Note
+                return _jsonDeserializerService.Deserialize<Note>(responseContent);
             }
             catch (Exception ex)
             {

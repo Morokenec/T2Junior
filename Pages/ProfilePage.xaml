@@ -15,7 +15,8 @@
                 <RowDefinition Height="Auto" />
                 <RowDefinition Height="Auto" />
                 <RowDefinition Height="Auto" />
-            </Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                </Grid.RowDefinitions>
 
             <Frame Grid.Row="0"
                BackgroundColor="White"
@@ -134,7 +135,7 @@
                             </Frame.GestureRecognizers>
 
                             <Image x:Name="AvatarImage"
-                                   Source="{Binding PathAvatarUser}"
+                                   Source="profile_placeholder."
                                    Aspect="AspectFill"
                                    VerticalOptions="Start"/>
 
@@ -243,9 +244,9 @@
                                HorizontalOptions="FillAndExpand"
                                VerticalOptions="Fill"
                                Padding="12">
-                            <Frame.GestureRecognizers>
+                            <!--<Frame.GestureRecognizers>
                                 <TapGestureRecognizer Tapped="OnClubsButtonTapped" />
-                            </Frame.GestureRecognizers>
+                            </Frame.GestureRecognizers>-->
                             <StackLayout x:Name="ClubsLayout"
                                          Spacing="6">
                                 <Label Text="Клубы"
@@ -277,14 +278,13 @@
                            HeightRequest="48"
                            Padding="0, 8">
                         <HorizontalStackLayout Spacing="12">
-                            <Image x:Name="ProjectsImage"
-                                   Source="projects.
-                                   "
-                                   Aspect="AspectFill"
-                                   VerticalOptions="Center"
-                                   WidthRequest="24"
-                                   HeightRequest="24"/>
-                            <Label x:Name="ProjectsText"
+                                <Image x:Name="ProjectsImage"
+                                       Source="projects.svg"
+                                       Aspect="AspectFill"
+                                       VerticalOptions="Center"
+                                       WidthRequest="24"
+                       HeightRequest="24"/>
+                                <Label x:Name="ProjectsText"
                                    Text="Проекты" 
                                    TextColor="#191C30"
                                    FontSize="15"
@@ -397,7 +397,57 @@
                     </Frame>
                 </VerticalStackLayout>
             </Frame>
-        </Grid>
-    </ScrollView>
+
+        <CollectionView ItemsSource="{Binding FilteredNotes}"
+                        x:Name="NewsCollection"
+                        Grid.Row="5"
+                        Margin="0,4,0,0"
+                        BackgroundColor="#EBEBEB">
+            <CollectionView.ItemsLayout>
+                <GridItemsLayout Span="1" Orientation="Vertical"/>
+            </CollectionView.ItemsLayout>
+                    <CollectionView.ItemTemplate>
+                        <DataTemplate>
+                            <Frame CornerRadius="10" 
+                            HorizontalOptions="Fill"
+                            HeightRequest="183" 
+                            HasShadow="True"
+                            Padding="20,20,20,16"
+                            Margin="0,12,0,0"
+                            BackgroundColor="White">
+                                <CollectionView ItemsSource="{Binding Notes}">
+                                    <CollectionView.ItemTemplate>
+                                        <DataTemplate>
+                                            <StackLayout>
+                                            <Label Text="{Binding Name}" 
+                                               HorizontalOptions="Start"
+                                               HeightRequest="24"
+                                               FontSize="13"
+                                               TextColor="#303345"
+                                               FontFamily="ManropeExtraBold"/>
+
+                                            <Label Text="{Binding Description}" 
+                                               HorizontalOptions="Start"
+                                               HeightRequest="24"
+                                               FontSize="11"
+                                               TextColor="#6B6D80"
+                                               FontFamily="ManropeExtraLight"/>
+
+                                            <!--<Image x:Name="NewsHolder"
+                                               IsVisible="{Binding HolderIsVisible}"
+                                               Source="{Binding NoteMediaSource}"
+                                               HorizontalOptions="Fill"
+                                               VerticalOptions="Fill"
+                                               Margin="0,12,0,0"/>-->
+                                            </StackLayout>
+                                        </DataTemplate>
+                                    </CollectionView.ItemTemplate>
+                                </CollectionView>
+                            </Frame>
+                        </DataTemplate>
+                    </CollectionView.ItemTemplate>
+                </CollectionView>
+            </Grid>
+        </ScrollView>
     </RefreshView>
 </ContentPage>

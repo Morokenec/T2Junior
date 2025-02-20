@@ -1,4 +1,5 @@
-﻿using MauiApp1.Models.ClubModels.ClubList;
+﻿using MauiApp1.Models.ClubModels.Club;
+using MauiApp1.Models.ClubModels.ClubList;
 using MauiApp1.Models.Profile;
 using System;
 using System.Collections.Generic;
@@ -10,6 +11,7 @@ namespace MauiApp1.Services.UseCase.Interface
 {
     public interface IClubService
     {
+        Task<Club> GetClubById(string idClub);
         Task<List<ClubList>> GetClubsAsync();
     }
 }

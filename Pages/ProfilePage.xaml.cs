@@ -1,5 +1,9 @@
+using MauiApp1.DataModel;
 using MauiApp1.Services.AppHelper;
+using MauiApp1.Services.UseCase;
+using MauiApp1.Services.UseCase.Interface;
 using MauiApp1.ViewModels.Profile;
+using System.Collections.ObjectModel;
 
 namespace MauiApp1;
 
@@ -26,6 +30,7 @@ public partial class ProfilePage : ContentPage
         if (BindingContext is UserProfileViewModel viewModel)
         {
             await viewModel.LoadDataAsync();
+         
         }
     }
 
@@ -53,7 +58,7 @@ public partial class ProfilePage : ContentPage
             if (chosenImage != null)
             {
                 var stream = await chosenImage.OpenReadAsync();
-                AvatarImage.Source = ImageSource.FromStream(() => stream);
+                //AvatarImage.Source = ImageSource.FromStream(() => stream);
             }
         }
         catch (Exception ex)
@@ -84,7 +89,8 @@ public partial class ProfilePage : ContentPage
 
     private async void OnClubsButtonTapped(object sender, EventArgs e)
     {
-        await Navigation.PushAsync(new ClubsPage());
+        IClubService _clubService = new ClubService(new HttpClient(), new JsonDeserializerService());
+        await Navigation.PushAsync(new ClubsPage(_clubService));
     }
 
     private async void OnProjectsFrameTapped(object sender, EventArgs e)

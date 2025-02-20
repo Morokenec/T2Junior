@@ -1,29 +1,32 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.ComponentModel.DataAnnotations.Schema;
+using System.Text.Json.Serialization;
 
 namespace MauiApp1.DataModel
 {
     public class Note
     {
-        public int IdNote { get; set; }
+        [JsonPropertyName("id")]
+        public string Id { get; set; }
 
-        public int IdWall { get; set; } = 0;
+        [JsonPropertyName("idWall")]
+        public string IdWall { get; set; }
 
-        public int IdStatus { get; set; } = 0;
+        [JsonPropertyName("idStatus")]
+        public string IdStatus { get; set; }
 
-        public string Name { get; set; } = "ТитанКофе";
+        [JsonPropertyName("name")]
+        public string Name { get; set; }
 
-        public string CreationDateTime { get; set; } = "01/01/1974";
+        [JsonPropertyName("description")]
+        public string Description { get; set; }
 
-        public string Description { get; set; } = "";
+        [JsonPropertyName("idRepost")]
+        public int? IdRepost { get; set; }
 
-        public string Text { get; set; } = "Клуб любителей кофе";
+        [JsonPropertyName("likeCount")]
+        public int LikeCount { get; set; }
 
-        public int IdRepost { get; set; } = 0;
-
-        public int LikeCount { get; set; } = 0;
+        [JsonPropertyName("mediaNotes")]
+        public List<object> MediaNotes { get; set; } = new List<object>();
     }
 }

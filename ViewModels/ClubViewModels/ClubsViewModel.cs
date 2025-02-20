@@ -1,13 +1,7 @@
-﻿using System;
-using System.Collections.ObjectModel;
+﻿using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Diagnostics;
-using System.Linq;
-using System.Net.Http;
 using System.Windows.Input;
-using Microsoft.Maui.ApplicationModel;
-using Microsoft.Maui.Controls;
-using MauiApp1.Models;
 using MauiApp1.Services.AppHelper;
 using MauiApp1.Services.UseCase;
 using MauiApp1.Models.ClubModels.Club;
@@ -115,7 +109,7 @@ namespace MauiApp1.ViewModels.ClubViewModel
         /// <summary>
         /// Асинхронно загружает данные о клубах и обновляет коллекции.
         /// </summary>
-        private async void LoadClubsAsync()
+        public async void LoadClubsAsync()
         {
             var clubLists = await _clubService.GetClubsAsync();
             if (clubLists != null)

@@ -2,6 +2,7 @@
 using MauiApp1.Services.AppHelper;
 using MauiApp1.Services.UseCase;
 using MauiApp1.Services.UseCase.Interface;
+using MauiApp1.ViewModels.ClubProfileViewModel;
 using MauiApp1.ViewModels.ClubViewModel;
 using MauiApp1.ViewModels.Profile;
 using Microsoft.Extensions.Logging;
@@ -35,13 +36,14 @@ namespace MauiApp1
                 builder.Services.AddTransient<IJsonDeserializerService, JsonDeserializerService>();
                 builder.Services.AddSingleton<IProfileService, ProfileService>();
                 builder.Services.AddSingleton<IClubService, ClubService>();
+                builder.Services.AddSingleton<INoteService, NoteService>();
                 builder.Services.AddSingleton<UserProfileViewModel>();
                 builder.Services.AddSingleton<ClubsViewModel>();
+                builder.Services.AddSingleton<ClubProfileViewModel>();
                 builder.Services.AddTransient<ProfilePage>();
                 builder.Services.AddSingleton<HttpClient>();
 
                 builder.Services.AddHttpClient<IProfileService, ProfileService>();
-                builder.Services.AddSingleton<IClubService, ClubService>();
 
 #if DEBUG
                 builder.Logging.AddDebug();

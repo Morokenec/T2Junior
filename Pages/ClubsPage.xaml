@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             xmlns:vm="clr-namespace:MauiApp1.ViewModel"
+             xmlns:vm="clr-namespace:MauiApp1.ViewModels.ClubViewModel"
              x:Class="MauiApp1.ClubsPage"
              x:Name="Clubs"
              Title="Клубы">
@@ -32,7 +32,7 @@
                        HorizontalOptions="Center"
                        WidthRequest="24"
                        HeightRequest="24"
-                       IsVisible="{Binding Source={x:Reference Clubs}, Path=Redirected}"/>
+                       IsVisible="{Binding Source={x:Reference Clubs}}"/>
             </Frame>
             <Frame x:Name="ClubTextFrame"
                    BorderColor="Transparent"
