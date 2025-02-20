@@ -32,7 +32,6 @@ namespace T2JuniorAPI.MappingProfiles
             CreateMap<ClubUser, SubscriberProfileDTO>()
                 .ForMember(dest => dest.Id, opt => opt.MapFrom(src => src.IdUser))
                 .ForMember(dest => dest.FullName, opt => opt.MapFrom(src => $"{src.IdUserNavigation.FirstName} {src.IdUserNavigation.LastName}"))
-                .ForMember(dest => dest.FullName, opt => opt.MapFrom(src => $"{src.IdUserNavigation.FirstName} {src.IdUserNavigation.LastName}"))
                 .ForMember(dest => dest.AvatarPath, opt => opt.MapFrom(src => src.IdUserNavigation.UserAvatars
                     .Where(ua => !ua.IsDelete)
                     .OrderByDescending(ua => ua.CreationDate)

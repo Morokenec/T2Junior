@@ -24,12 +24,20 @@ namespace T2JuniorAPI.MappingProfiles
                 .ForMember(dest => dest.LikeCount, opt => opt.MapFrom(src => 0)); // Устанавливаем LikeCount в 0
 
             CreateMap<Comment, CommentDTO>()
+                .ForMember(dest => dest.UserAvatarUrl, opt => opt.MapFrom(src => src.IdUserNavigation.UserAvatars
+                    .Where(ua => !ua.IsDelete)
+                    .OrderByDescending(ua => ua.CreationDate)
+                    .FirstOrDefault().Media.Path))
                 .ForMember(dest => dest.UserName, opt => opt.MapFrom(src => $"{src.IdUserNavigation.FirstName} {src.IdUserNavigation.LastName}"))
                 .ForMember(dest => dest.NoteId, opt => opt.MapFrom(src => src.IdNote))
-                .ForMember(dest => dest.SubComments, opt => opt.MapFrom(src => src.InverseParrentComment));
+                .ForMember(dest => dest.SubComments, opt => opt.MapFrom(src => src.InverseParrentComment
+                    .Where(pc => pc.ParrentCommentId != null)));
 
             CreateMap<MediaComment, MediaCommentDTO>()
+                .ForMember(dest => dest.CommentId, opt => opt.MapFrom(src => src.IdComment))
+                .ForMember(dest => dest.MediaId, opt => opt.MapFrom(src => src.IdMedia))
                 .ForMember(dest => dest.MediaUrl, opt => opt.MapFrom(src => src.IdMediaNavigation.Path));
         }
     }
 }
+

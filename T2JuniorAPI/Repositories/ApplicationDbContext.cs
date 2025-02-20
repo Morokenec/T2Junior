@@ -91,13 +91,13 @@ namespace T2JuniorAPI.Data
                 .WithMany(c => c.InverseParrentComment)
                 .HasForeignKey(c => c.ParrentCommentId)
                 .OnDelete(DeleteBehavior.Restrict);
-            
+
             modelBuilder.Entity<Comment>()
                 .HasOne(c => c.IdUserNavigation)
                 .WithMany(u => u.Comments)
                 .HasForeignKey(c => c.IdUser)
                 .OnDelete(DeleteBehavior.Restrict);
-            
+
             modelBuilder.Entity<Comment>()
                 .HasOne(c => c.IdNoteNavigation)
                 .WithMany(n => n.Comments)
@@ -186,6 +186,12 @@ namespace T2JuniorAPI.Data
                 .HasOne(mc => mc.IdMediaNavigation)
                 .WithOne(mf => mf.MediaComment)
                 .HasForeignKey<MediaComment>(mc => mc.IdMedia)
+                .OnDelete(DeleteBehavior.Restrict);
+            
+            modelBuilder.Entity<MediaComment>()
+                .HasOne(mc => mc.IdCommentNavigation)
+                .WithMany(c => c.MediaComments)
+                .HasForeignKey(mc => mc.IdComment)
                 .OnDelete(DeleteBehavior.Restrict);
 
             modelBuilder.Entity<MediaNote>()

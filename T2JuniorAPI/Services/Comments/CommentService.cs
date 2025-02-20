@@ -37,12 +37,24 @@ namespace T2JuniorAPI.Services.Comments
         {
             var comment = await _context.Comments
                 .Include(c => c.IdNoteNavigation)
+                    .ThenInclude(n => n.IdWallNavigation)
                 .FirstOrDefaultAsync(c => c.Id == commentId && !c.IsDelete);
 
             if (comment == null)
                 throw new ApplicationException("Comment Not Found");
 
-            if (comment.IdUser != userId && comment.IdNoteNavigation.IdWallNavigation.IdClubOwner != userId && comment.IdNoteNavigation.IdWallNavigation.IdUserOwner != userId)
+            if (comment.IdUser != userId)
+                Console.WriteLine("User are not author");
+
+            if (comment.IdNoteNavigation.IdWallNavigation.IdClubOwner != userId)
+                Console.WriteLine("User are not ClubOwner");
+
+            if (comment.IdNoteNavigation.IdWallNavigation.IdUserOwner != userId)
+                Console.WriteLine("User are not UserOwner");
+
+            if (comment.IdUser != userId && 
+                (comment.IdNoteNavigation.IdWallNavigation?.IdClubOwner != userId &&
+                 comment.IdNoteNavigation.IdWallNavigation?.IdUserOwner != userId))
                 throw new ApplicationException("You do not have parmission to delete this comment");
 
             comment.IsDelete = true;

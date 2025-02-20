@@ -94,22 +94,48 @@ namespace T2JuniorAPI.Services.Notes
 
         public async Task<IEnumerable<NoteDTO>> GetNotesByIdOwnerAsync(Guid idOwner)
         {
+            // Загрузка стены
             var wall = await _context.Walls
                 .Include(w => w.Notes)
                     .ThenInclude(n => n.MediaNotes)
                         .ThenInclude(mn => mn.IdMediaNavigation)
-                .Include(w => w.Notes)
-                    .ThenInclude(n => n.Comments)
-                        .ThenInclude(c => c.InverseParrentComment)
-                            .ThenInclude(pc => pc.CommentLikes)
-                 .Include(w => w.Notes)
-                    .ThenInclude(n => n.Comments)
-                        .ThenInclude(c => c.MediaComments)
-                            .ThenInclude(mc => mc.IdMediaNavigation)
-                .FirstOrDefaultAsync(w => (w.IdUserOwner == idOwner || w.IdClubOwner == idOwner) & !w.IsDelete);
+                .AsSplitQuery()
+                .FirstOrDefaultAsync(w => (w.IdUserOwner == idOwner || w.IdClubOwner == idOwner) && !w.IsDelete);
 
-            if (wall == null) throw new ApplicationException("Wall not found for the owner");
+            if (wall == null)
+                throw new ApplicationException("Wall not found for the owner");
 
+            // Загрузка комментариев к записям
+            var noteIds = wall.Notes.Select(n => n.Id).ToList();
+            var comments = await _context.Comments
+                .Include(c => c.MediaComments)
+                    .ThenInclude(mc => mc.IdMediaNavigation)
+                .Include(c => c.IdUserNavigation)
+                    .ThenInclude(u => u.UserAvatars)
+                        .ThenInclude(ua => ua.Media)
+                .Include(c => c.CommentLikes)
+                .Where(c => noteIds.Contains(c.IdNote) && c.ParrentCommentId == null && !c.IsDelete)
+                .ToListAsync();
+
+            // Загрузка подкомментариев
+            var commentIds = comments.Select(c => c.Id).ToList();
+            var subComments = await _context.Comments
+                .Include(c => c.MediaComments)
+                    .ThenInclude(mc => mc.IdMediaNavigation)
+                .Include(c => c.IdUserNavigation)
+                    .ThenInclude(u => u.UserAvatars)
+                        .ThenInclude(ua => ua.Media)
+                .Include(c => c.CommentLikes)
+                .Where(c => commentIds.Contains(c.ParrentCommentId.Value) && !c.IsDelete)
+                .ToListAsync();
+
+            // Объединение подкомментариев с комментариями
+            foreach (var comment in comments)
+            {
+                comment.InverseParrentComment = subComments.Where(sc => sc.ParrentCommentId == comment.Id).ToList();
+            }
+
+            // Маппинг записей в DTO
             var notes = _mapper.Map<IEnumerable<NoteDTO>>(wall.Notes);
             return notes;
         }

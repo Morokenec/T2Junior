@@ -681,9 +681,6 @@ namespace T2JuniorAPI.Migrations
                     b.Property<Guid>("IdComment")
                         .HasColumnType("TEXT");
 
-                    b.Property<Guid>("IdCommentNavigationId")
-                        .HasColumnType("TEXT");
-
                     b.Property<Guid>("IdMedia")
                         .HasColumnType("TEXT");
 
@@ -699,7 +696,7 @@ namespace T2JuniorAPI.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("IdCommentNavigationId");
+                    b.HasIndex("IdComment");
 
                     b.HasIndex("IdMedia")
                         .IsUnique();
@@ -1350,8 +1347,8 @@ namespace T2JuniorAPI.Migrations
                 {
                     b.HasOne("T2JuniorAPI.Entities.Comment", "IdCommentNavigation")
                         .WithMany("MediaComments")
-                        .HasForeignKey("IdCommentNavigationId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .HasForeignKey("IdComment")
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.HasOne("T2JuniorAPI.Entities.Mediafile", "IdMediaNavigation")
