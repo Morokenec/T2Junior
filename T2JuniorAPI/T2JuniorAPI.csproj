@@ -7,7 +7,6 @@
     <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
     <DockerfileContext>.</DockerfileContext>
     <GenerateDocumentationFile>True</GenerateDocumentationFile>
-    <DocumentationFile>C:\Users\matvey-win10\Desktop\mat api\mat_api5\T2JuniorAPI\documentation.xml</DocumentationFile>
   </PropertyGroup>
 
   <ItemGroup>
@@ -31,7 +30,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <None Update="app.db">
+    <None Update="documentation.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
   </ItemGroup>
