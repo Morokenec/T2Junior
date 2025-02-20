@@ -21,6 +21,8 @@ using T2JuniorAPI.Services.WallTypes;
 using T2JuniorAPI.Services.Notes;
 using T2JuniorAPI.Services.NoteStatuses;
 using T2JuniorAPI.Services.MediaNotes;
+using T2JuniorAPI.Services.Comments;
+using T2JuniorAPI.Services.MediaComments;
 
 
 
@@ -63,18 +65,30 @@ builder.Services.AddCors(options =>
     });
 });
 
-builder.Services.AddAutoMapper(cnf => cnf.AddProfile<ClubProfile>(), typeof(Program).Assembly);
 builder.Services.AddSingleton<SubscribersProfile>();
 builder.Services.AddSingleton<SubscriptionsProfile>();
-builder.Services.AddAutoMapper(typeof(EventProfile));
-builder.Services.AddAutoMapper(typeof(MediaProfile));
-builder.Services.AddAutoMapper(typeof(MediaClubProfile));
-builder.Services.AddAutoMapper(typeof(AchievementProfile));
-builder.Services.AddAutoMapper(typeof(WallProfile));
-builder.Services.AddAutoMapper(typeof(WallTypeProfile));
-builder.Services.AddAutoMapper(typeof(NoteProfile));
-builder.Services.AddAutoMapper(typeof(MediaNoteProfile));
-builder.Services.AddAutoMapper(typeof(NoteStatusProfile));
+builder.Services.AddAutoMapper(config =>
+{
+    config.AddProfile<AccountProfile>();
+    config.AddProfile<AchievementProfile>();
+    config.AddProfile<ClubProfile>();
+    config.AddProfile<ClubRoleProfile>();
+    config.AddProfile<EventProfile>();
+    config.AddProfile<MediaClubProfile>();
+    config.AddProfile<MediaEventProfile>();
+    config.AddProfile<MediaNoteProfile>();
+    config.AddProfile<MediaProfile>();
+    config.AddProfile<MediaTypeProfile>();
+    config.AddProfile<NoteProfile>();
+    config.AddProfile<NoteStatusProfile>();
+    config.AddProfile<OrganizationProfile>();
+    config.AddProfile<SubscribersProfile>();
+    config.AddProfile<SubscriptionsProfile>();
+    config.AddProfile<WallProfile>();
+    config.AddProfile<WallTypeProfile>();
+    config.AddProfile<CommentProfile>();
+});
+
 
 builder.Services.AddScoped<IAccountService, AccountService>();
 builder.Services.AddScoped<ITokenService, TokenService>();
@@ -92,6 +106,8 @@ builder.Services.AddScoped<IWallTypeService, WallTypeService>();
 builder.Services.AddScoped<INoteService, NoteService>();
 builder.Services.AddScoped<INoteStatusService, NoteStatusService>();
 builder.Services.AddScoped<IMediaNoteService, MediaNoteService>();
+builder.Services.AddScoped<ICommentService, CommentService>();
+builder.Services.AddScoped<IMediaCommentService, MediaCommentService>();
 
 
 builder.Services.AddControllers();

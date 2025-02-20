@@ -98,6 +98,14 @@ namespace T2JuniorAPI.Services.Notes
                 .Include(w => w.Notes)
                     .ThenInclude(n => n.MediaNotes)
                         .ThenInclude(mn => mn.IdMediaNavigation)
+                .Include(w => w.Notes)
+                    .ThenInclude(n => n.Comments)
+                        .ThenInclude(c => c.InverseParrentComment)
+                            .ThenInclude(pc => pc.CommentLikes)
+                 .Include(w => w.Notes)
+                    .ThenInclude(n => n.Comments)
+                        .ThenInclude(c => c.MediaComments)
+                            .ThenInclude(mc => mc.IdMediaNavigation)
                 .FirstOrDefaultAsync(w => (w.IdUserOwner == idOwner || w.IdClubOwner == idOwner) & !w.IsDelete);
 
             if (wall == null) throw new ApplicationException("Wall not found for the owner");

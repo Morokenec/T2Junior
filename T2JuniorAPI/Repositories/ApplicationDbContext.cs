@@ -17,6 +17,7 @@ namespace T2JuniorAPI.Data
         public DbSet<ClubRole> ClubRoles { get; set; }
         public DbSet<ClubUser> ClubUsers { get; set; }
         public DbSet<Comment> Comments { get; set; }
+        public DbSet<CommentLike> CommentLikes { get; set; }
         public DbSet<Event> Events { get; set; }
         public DbSet<EventDirection> EventDirections { get; set; }
         public DbSet<Note> Notes { get; set; }
@@ -33,7 +34,7 @@ namespace T2JuniorAPI.Data
         public DbSet<Achievement> Achievements { get; set; }
         public DbSet<UserAchievement> UserAchievements { get; set; }
         public DbSet<UserAvatar> UserAvatars { get; set; }
-        public DbSet<NoteLike> Likes { get; set; }
+        public DbSet<NoteLike> NoteLikes { get; set; }
 
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -89,6 +90,30 @@ namespace T2JuniorAPI.Data
                 .HasOne(c => c.ParrentComment)
                 .WithMany(c => c.InverseParrentComment)
                 .HasForeignKey(c => c.ParrentCommentId)
+                .OnDelete(DeleteBehavior.Restrict);
+            
+            modelBuilder.Entity<Comment>()
+                .HasOne(c => c.IdUserNavigation)
+                .WithMany(u => u.Comments)
+                .HasForeignKey(c => c.IdUser)
+                .OnDelete(DeleteBehavior.Restrict);
+            
+            modelBuilder.Entity<Comment>()
+                .HasOne(c => c.IdNoteNavigation)
+                .WithMany(n => n.Comments)
+                .HasForeignKey(c => c.IdNote)
+                .OnDelete(DeleteBehavior.Restrict);
+
+            modelBuilder.Entity<CommentLike>()
+                .HasOne(cl => cl.Comment)
+                .WithMany(c => c.CommentLikes)
+                .HasForeignKey(cl => cl.CommentId)
+                .OnDelete(DeleteBehavior.Restrict);
+            
+            modelBuilder.Entity<CommentLike>()
+                .HasOne(cl => cl.User)
+                .WithMany(u => u.CommentLikes)
+                .HasForeignKey(cl => cl.UserId)
                 .OnDelete(DeleteBehavior.Restrict);
 
             modelBuilder.Entity<Note>()

@@ -25,11 +25,12 @@ namespace T2JuniorAPI.Services.Comments
 
             var comment = _mapper.Map<Comment>(commentDTO);
             comment.IdNote = noteId;
+            comment.ParrentCommentId = null;
 
             await _context.Comments.AddAsync(comment);
             await _context.SaveChangesAsync();
 
-            return _mapper.Map<CommentDTO>(commentDTO);
+            return _mapper.Map<CommentDTO>(comment);
         }
 
         public async Task<bool> DeleteComment(Guid commentId, Guid userId)
@@ -73,6 +74,7 @@ namespace T2JuniorAPI.Services.Comments
                 throw new ApplicationException("Parent comment not found");
 
             var comment = _mapper.Map<Comment>(commentDTO);
+            comment.IdNote = parrentComment.IdNote;
             comment.ParrentCommentId = parrentId;
 
             await _context.Comments.AddAsync(comment);

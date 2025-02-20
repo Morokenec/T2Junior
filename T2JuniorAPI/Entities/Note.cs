@@ -24,7 +24,7 @@ public class Note : BaseCommonProperties
     public int LikeCount { get; set; } = 0;
 
 
-    public virtual ICollection<Comment> Comments { get; set; } = new List<Comment>();
+    public virtual ICollection<Comment> Comments { get; set; }
 
     public virtual Note? IdRepostNavigation { get; set; }
 
