@@ -10,10 +10,11 @@ namespace MauiApp1;
 public partial class ProfilePage : ContentPage
 {
     int netStatus = 1;
-    //int clickCount = 0;
+
     private readonly UserProfileViewModel _viewModel;
 
     public bool DirectAccessed { get; set; } = BackNavigationState.IsDirectAccess;
+
     public ProfilePage(UserProfileViewModel userProfileViewModel)
     {
         InitializeComponent();
@@ -26,7 +27,6 @@ public partial class ProfilePage : ContentPage
     {
         base.OnAppearing();
 
-        // Вызов команды при появлении страницы
         if (BindingContext is UserProfileViewModel viewModel)
         {
             await viewModel.LoadDataAsync();

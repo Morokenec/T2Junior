@@ -47,4 +47,3 @@ public partial class ClubsPage : ContentPage
         }
     }
 }
-
