@@ -8,6 +8,9 @@ using T2JuniorAPI.Entities;
 
 namespace T2JuniorAPI.Services.MediaTypes
 {
+    /// <summary>
+    /// Сервис для работы с типами медиафайлов
+    /// </summary>
     public class MediaTypeService : IMediaTypeService
     {
         private readonly ApplicationDbContext _context;
@@ -19,6 +22,11 @@ namespace T2JuniorAPI.Services.MediaTypes
             _mapper = mapper;
         }
 
+        /// <summary>
+        /// Получает тип медиафайла по имени, либо создает новый, если он не найден
+        /// </summary>
+        /// <param name="mediaTypeDTO">Данные для создания или обновления типа медиафайла</param>
+        /// <returns>Данные о типе медиафайла</returns>
         public async Task<MediaTypeDTO> GetGuidOrCreateMediaType(MediaTypeDTO mediaTypeDTO)
         {
             if (string.IsNullOrWhiteSpace(mediaTypeDTO.Name))
@@ -38,6 +46,10 @@ namespace T2JuniorAPI.Services.MediaTypes
             return _mapper.Map<MediaTypeDTO>(newType);
         }
 
+        /// <summary>
+        /// Возвращает список всех неудаленных типов медиафайлов
+        /// </summary>
+        /// <returns>Коллекция типов медиафайлов</returns>
         public async Task<List<MediaTypeDTO>> GetAllMediaTypes()
         {
             return await _context.MediaTypes
@@ -46,6 +58,11 @@ namespace T2JuniorAPI.Services.MediaTypes
                 .ToListAsync();
         }
 
+        /// <summary>
+        /// Помечает тип медиафайла как удаленный
+        /// </summary>
+        /// <param name="id">Id типа медиафайла</param>
+        /// <returns>True, если операция прошла успешно, иначе false</returns>
         public async Task<bool> DeleteMediaType(Guid id)
         {
             var mediaType = await _context.MediaTypes.FindAsync(id);

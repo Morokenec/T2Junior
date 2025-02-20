@@ -7,6 +7,9 @@ using T2JuniorAPI.DTOs.Users;
 
 namespace T2JuniorAPI.Services.Users
 {
+    /// <summary>
+    /// Сервис для работы с пользователями
+    /// </summary>
     public class UserService : IUserService
     {
         private readonly ApplicationDbContext _context;
@@ -14,6 +17,13 @@ namespace T2JuniorAPI.Services.Users
         private readonly IMapper _subscriptionsMapper;
         private readonly IMapper _mapper;
 
+        /// <summary>
+        /// Конструктор для внедрения зависимостей
+        /// </summary>
+        /// <param name="context">Контекст базы данных</param>
+        /// <param name="subscribersProfile">Профиль маппера для работы с подписчиками</param>
+        /// <param name="subscriptionsProfile">Профиль маппера для работы с подписками</param>
+        /// <param name="mapper">Основной маппер</param>
         public UserService(ApplicationDbContext context, SubscribersProfile subscribersProfile, SubscriptionsProfile subscriptionsProfile, IMapper mapper)
         {
             _context = context;
@@ -22,6 +32,11 @@ namespace T2JuniorAPI.Services.Users
             _mapper = mapper;
         }
 
+        /// <summary>
+        /// Подписывает пользователя на другого пользователя
+        /// </summary>
+        /// <param name="subscribeUser">Данные о подписчике и подписке</param>
+        /// <returns>Сообщение о результате операции</returns>
         public async Task<string> SubscribeUserToUser(SubscribeUserDTO subscribeUser)
         {
             var user = await _context.Users.FindAsync(subscribeUser.UserId);
@@ -51,6 +66,11 @@ namespace T2JuniorAPI.Services.Users
             return "User successfully subscribe";
         }
 
+        /// <summary>
+        /// Отписывает пользователя от другого пользователя
+        /// </summary>
+        /// <param name="unsubscribeUser">Данные о отписке</param>
+        /// <returns>Сообщение о результате операции</returns>
         public async Task<string> UnsubscribeUserFromUser(UnsubscribeUserDTO unsubscribeUser)
         {
             var userSubscriber = await _context.UserSubscribers
@@ -74,6 +94,11 @@ namespace T2JuniorAPI.Services.Users
             return "User successfully unsubscribed";
         }
 
+        /// <summary>
+        /// Возвращает список подписчиков указанного пользователя
+        /// </summary>
+        /// <param name="userId">Id пользователя, чьи подписчики требуется получить</param>
+        /// <returns>Коллекция подписчиков</returns>
         public async Task<IEnumerable<SubscriberProfileDTO>> GetSubscribers(Guid userId)
         {
             var subscribers = await _context.UserSubscribers
@@ -84,6 +109,11 @@ namespace T2JuniorAPI.Services.Users
             return _subscribersMapper.Map<IEnumerable<SubscriberProfileDTO>>(subscribers);
         }
 
+        /// <summary>
+        /// Возвращает список подписок указанного пользователя
+        /// </summary>
+        /// <param name="userId">Id пользователя, чьи подписки требуется получить</param>
+        /// <returns>Коллекция подписок</returns>
         public async Task<IEnumerable<SubscriberProfileDTO>> GetSubscriptions(Guid userId)
         {
             var subscriptions = await _context.UserSubscribers

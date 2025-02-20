@@ -23,6 +23,13 @@ namespace T2JuniorAPI.Controllers
             _wallTypeService = wallTypeService;
         }
 
+        /// <summary>
+        /// Получение ленты записей (стены) пользователя
+        /// </summary>
+        /// <param name="createWallTypeDTO">Тип стены</param>
+        /// <returns></returns>
+        /// <response code="200">Успешное выполнение</response>
+        /// <response code="400">Ошибка API</response>
         [HttpPost]
         public async Task<ActionResult<WallTypeDTO>> CreateOrGetWallType(CreateWallTypeDTO createWallTypeDTO)
         {
@@ -30,6 +37,13 @@ namespace T2JuniorAPI.Controllers
             return Ok(wallType);
         }
 
+        /// <summary>
+        /// Создание или получение типа ленты записей (стены)
+        /// </summary>
+        /// <param name="id">Тип стены</param>
+        /// <returns></returns>
+        /// <response code="200">Успешное выполнение</response>
+        /// <response code="400">Ошибка API</response>
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteWallType(Guid id)
         {
@@ -40,6 +54,12 @@ namespace T2JuniorAPI.Controllers
             return Ok(result);
         }
 
+        /// <summary>
+        /// Получение списка всех типов лент записей (стен)
+        /// </summary>
+        /// <returns></returns>
+        /// <response code="200">Успешное выполнение</response>
+        /// <response code="400">Ошибка API</response>
         [HttpGet]
         public async Task<ActionResult<List<WallTypeDTO>>> GetAllWallTypes()
         {

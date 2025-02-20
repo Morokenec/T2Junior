@@ -9,6 +9,9 @@ using T2JuniorAPI.Services.MediaTypes;
 
 namespace T2JuniorAPI.Services.MediaClubs
 {
+    /// <summary>
+    /// Сервис для работы с медиаклубами, включая добавление медиа, установку аватара, удаление медиа и получение всех медиаклубов.
+    /// </summary>
     public class MediaClubService : IMediaClubService
     {
         private readonly ApplicationDbContext _context;
@@ -17,6 +20,15 @@ namespace T2JuniorAPI.Services.MediaClubs
         private readonly IMediaTypeService _mediaTypeService;
         private readonly IMediafileService _mediafileService;
 
+
+        /// <summary>
+        /// Конструктор для инициализации сервисов.
+        /// </summary>
+        /// <param name="context">Контекст базы данных.</param>
+        /// <param name="mapper">Маппер для преобразования объектов.</param>
+        /// <param name="mediaTypeService">Сервис для работы с типами медиа.</param>
+        /// <param name="userManager">Менеджер пользователей для работы с пользователями.</param>
+        /// <param name="mediafileService">Сервис для работы с медиафайлами.</param>
         public MediaClubService(ApplicationDbContext context, IMapper mapper, IMediaTypeService mediaTypeService, UserManager<ApplicationUser> userManager, IMediafileService mediafileService)
         {
             _context = context;
@@ -26,6 +38,13 @@ namespace T2JuniorAPI.Services.MediaClubs
             _mediafileService = mediafileService;
         }
 
+        /// <summary>
+        /// Добавляет медиа в медиаклуб.
+        /// </summary>
+        /// <param name="mediafileUpload">Объект с данными медиафайла.</param>
+        /// <param name="clubId">Идентификатор медиаклуба.</param>
+        /// <returns>Объект с данными добавленного медиаклуба.</returns>
+        /// <exception cref="UnauthorizedAccessException">Выбрасывается, если пользователь не является администратором медиаклуба.</exception>
         public async Task<MediaClubDTO> AddMediaByClubId(MediafileUploadDTO mediafileUpload, Guid clubId)
         {
             if (!await IsUserAdminInClub(mediafileUpload.IdUser, clubId))
@@ -40,6 +59,13 @@ namespace T2JuniorAPI.Services.MediaClubs
             return _mapper.Map<MediaClubDTO>(mediaClub);
         }
 
+        /// <summary>
+        /// Устанавливает аватар для медиаклуба.
+        /// </summary>
+        /// <param name="uploadDTO">Объект с данными медиафайла.</param>
+        /// <param name="clubId">Идентификатор медиаклуба.</param>
+        /// <returns>Строка с результатом установки аватара.</returns>
+        /// <exception cref="UnauthorizedAccessException">Выбрасывается, если пользователь не является администратором медиаклуба.</exception>
         public async Task<string> SetAvatarForClub(MediafileUploadDTO uploadDTO, Guid clubId)
         {
             if (!await IsUserAdminInClub(uploadDTO.IdUser, clubId))
@@ -54,6 +80,13 @@ namespace T2JuniorAPI.Services.MediaClubs
             return "Avatar set successfully";
         }
 
+        /// <summary>
+        /// Удаление медиа из медиаклуба
+        /// </summary>
+        /// <param name="clubId">Идентификатор медиаклуба</param>
+        /// <param name="mediaId">Идентификатор медиа</param>
+        /// <param name="userId">Идентификатор пользователя</param>
+        /// <returns>Сообщение об успешном удалении медиа</returns>
         public async Task<string> DeleteMediaByClubId(Guid clubId, Guid mediaId, Guid userId)
         {
             if (!await IsUserAdminInClub(userId, clubId))
@@ -77,6 +110,13 @@ namespace T2JuniorAPI.Services.MediaClubs
             return "Media deleted successfully";
         }
 
+        /// <summary>
+        /// Удаление аватара из медиаклуба
+        /// </summary>
+        /// <param name="clubId">Идентификатор медиаклуба</param>
+        /// <param name="mediaId">Идентификатор медиа</param>
+        /// <param name="userId">Идентификатор пользователя</param>
+        /// <returns>Сообщение об успешном удалении аватара</returns>
         public async Task<string> DeleteAvatarFromClub(Guid clubId, Guid mediaId, Guid userId)
         {
             if (!await IsUserAdminInClub(userId, clubId))
@@ -92,11 +132,17 @@ namespace T2JuniorAPI.Services.MediaClubs
                 return "Avatar not found";
 
             mediaClub.IsDelete = true;
-            mediaClub.UpdateDate= DateTime.Now;
+            mediaClub.UpdateDate = DateTime.Now;
             await _context.SaveChangesAsync();
 
             return "Avatar deleted successfully";
         }
+
+        /// <summary>
+        /// Получение всех медиаклубов по идентификатору клуба
+        /// </summary>
+        /// <param name="clubId">Идентификатор клуба</param>
+        /// <returns>Список медиаклубов</returns>
         public async Task<IEnumerable<MediaClubDTO>> GetAllMediaByClubId(Guid clubId)
         {
             var mediaClubs = await _context.MediaClubs
@@ -107,6 +153,12 @@ namespace T2JuniorAPI.Services.MediaClubs
             return _mapper.Map<IEnumerable<MediaClubDTO>>(mediaClubs);
         }
 
+        /// <summary>
+        /// Проверка, является ли пользователь администратором в клубе
+        /// </summary>
+        /// <param name="userId">Идентификатор пользователя</param>
+        /// <param name="clubId">Идентификатор клуба</param>
+        /// <returns>Результат проверки</returns>
         public async Task<bool> IsUserAdminInClub(Guid userId, Guid clubId)
         {
             var clubUser = await _context.ClubUsers

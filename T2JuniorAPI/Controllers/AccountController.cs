@@ -21,6 +21,13 @@ public class AccountController : ControllerBase
         _accountService = accountService;
     }
 
+    /// <summary>
+    /// Регистрация аккаунта
+    /// </summary>
+    /// <param name="registerUserDto">Пользователь</param>
+    /// <returns></returns>
+    /// <response code="200">Успешное выполнение</response>
+    /// <response code="400">Ошибка API</response>
     [HttpPost("register")]
     public async Task<IActionResult> Register([FromBody] RegisterUserDto registerUserDto)
     {
@@ -35,6 +42,13 @@ public class AccountController : ControllerBase
         }
     }
 
+    /// <summary>
+    /// Авторизация пользователя
+    /// </summary>
+    /// <param name="loginDto">Пользователь</param>
+    /// <returns></returns>
+    /// <response code="200">Успешное выполнение</response>
+    /// <response code="400">Ошибка API</response>
     [HttpPost("login")]
     public async Task<IActionResult> Login([FromBody] LoginDto loginDto)
     {
@@ -57,6 +71,13 @@ public class AccountController : ControllerBase
         }
     }
 
+    /// <summary>
+    /// Получение профиля по ID
+    /// </summary>
+    /// <param name="id">Пользователь</param>
+    /// <returns></returns>
+    /// <response code="200">Успешное выполнение</response>
+    /// <response code="400">Ошибка API</response>
     [HttpGet("profile/{id}")]
     public IActionResult GetUserProfile(Guid id)
     {
@@ -69,7 +90,13 @@ public class AccountController : ControllerBase
 
         return Ok(userProfile);
     }
-    
+
+    /// <summary>
+    /// Получение всех профилей
+    /// </summary>
+    /// <returns></returns>
+    /// <response code="200">Успешное выполнение</response>
+    /// <response code="400">Ошибка API</response>
     [HttpGet("all")]
     public IActionResult GetAllUsers()
     {
@@ -83,6 +110,14 @@ public class AccountController : ControllerBase
         return Ok(userProfile);
     }
 
+    /// <summary>
+    /// Обновление профиля пользователя
+    /// </summary>
+    /// <param name="id">Пользователь</param>
+    /// <param name="updateUserDto">Пользователь</param>
+    /// <returns></returns>
+    /// <response code="200">Успешное выполнение</response>
+    /// <response code="400">Ошибка API</response>
     [HttpPut("change/{id}")]
     public async Task<IActionResult> UpdateUserProfileById(Guid id, [FromBody] UpdateUserDto updateUserDto)
     {
@@ -96,7 +131,14 @@ public class AccountController : ControllerBase
             return BadRequest(new { Error = ex.Message });
         }
     }
-    
+
+    /// <summary>
+    /// Восстановление пароля пользователя
+    /// </summary>
+    /// <param name="recoveryPassword">Пользователь</param>
+    /// <returns></returns>
+    /// <response code="200">Успешное выполнение</response>
+    /// <response code="400">Ошибка API</response>
     [HttpPut("password-recovery")]
     public async Task<IActionResult> RecoveryUserPassword([FromBody] RecoveryPasswordDTO recoveryPassword)
     {
@@ -111,6 +153,13 @@ public class AccountController : ControllerBase
         }
     }
 
+    /// <summary>
+    /// Удаление пользователя по ID
+    /// </summary>
+    /// <param name="id">Пользователь</param>
+    /// <returns></returns>
+    /// <response code="200">Успешное выполнение</response>
+    /// <response code="400">Ошибка API</response>
     [HttpDelete("delete/{id}")]
     public async Task<IActionResult> DeleteUser(Guid id)
     {

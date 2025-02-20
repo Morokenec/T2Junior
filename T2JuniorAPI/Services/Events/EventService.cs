@@ -10,6 +10,9 @@ using T2JuniorAPI.Services.Medias;
 
 namespace T2JuniorAPI.Services.Events
 {
+    /// <summary>
+    /// Сервис для работы с событиями.
+    /// </summary>
     public class EventService : IEventService
     {
         private readonly ApplicationDbContext _context;
@@ -17,6 +20,13 @@ namespace T2JuniorAPI.Services.Events
         private readonly IMediaClubService _mediaClubService;
         private readonly IMediafileService _mediafileService;
 
+        /// <summary>
+        /// Инициализирует новый класс
+        /// </summary>
+        /// <param name="context">Контекст базы данных.</param>
+        /// <param name="mapper">Маппер для преобразования объектов.</param>
+        /// <param name="mediaClubService">Сервис для работы с медиаклубами.</param>
+        /// <param name="mediafileService">Сервис для работы с медиафайлами.</param>
         public EventService(ApplicationDbContext context, IMapper mapper, IMediaClubService mediaClubService, IMediafileService mediafileService)
         {
             _context = context;
@@ -25,6 +35,13 @@ namespace T2JuniorAPI.Services.Events
             _mediafileService = mediafileService;
         }
 
+        /// <summary>
+        /// Возвращает календарь событий для указанного пользователя.
+        /// </summary>
+        /// <param name="userId">Идентификатор пользователя.</param>
+        /// <param name="month">Месяц.</param>
+        /// <param name="year">Год.</param>
+        /// <returns>Список событий.</returns>
         public async Task<List<EventCalendarDTO>> GetUserCalendar(Guid userId, int month, int year)
         {
             var startDate = new DateTime(year, month, 1);
@@ -48,6 +65,13 @@ namespace T2JuniorAPI.Services.Events
             return events;
         }
 
+        /// <summary>
+        /// Возвращает календарь событий для указанного медиаклуба.
+        /// </summary>
+        /// <param name="clubId">Идентификатор медиаклуба.</param>
+        /// <param name="month">Месяц.</param>
+        /// <param name="year">Год.</param>
+        /// <returns>Список событий.</returns>
         public async Task<List<EventCalendarDTO>> GetClubCalendar(Guid clubId, int month, int year)
         {
             var startDate = new DateTime(year, month, 1);
@@ -61,6 +85,12 @@ namespace T2JuniorAPI.Services.Events
             return events;
         }
 
+        /// <summary>
+        /// Создает событие.
+        /// </summary>
+        /// <param name="createEventDto">Данные для создания события.</param>
+        /// <param name="uploadDTO">Данные для загрузки медиафайла.</param>
+        /// <returns>Идентификатор созданного события.</returns>
         public async Task<Guid> CreateEvent(CreateEventDTO createEventDto, MediafileUploadDTO uploadDTO = null)
         {
             try
@@ -107,6 +137,11 @@ namespace T2JuniorAPI.Services.Events
         }
 
 
+        /// <summary>
+        /// Удаляет событие по идентификатору.
+        /// </summary>
+        /// <param name="eventId">Идентификатор события.</param>
+        /// <returns>Задача, которая удаляет событие.</returns>
         public async Task DeleteEvent(Guid eventId)
         {
             var eventToDelete = await _context.Events.Where(e => e.Id == eventId && !e.IsDelete).FirstOrDefaultAsync();
@@ -130,6 +165,11 @@ namespace T2JuniorAPI.Services.Events
             }
         }
 
+        /// <summary>
+        /// Обновляет существующее событие.
+        /// </summary>
+        /// <param name="updateEventDTO">Данные для обновления события.</param>
+        /// <returns>Задача, которая обновляет событие.</returns>
         public async Task PutEvent(UpdateEventDTO updateEventDTO)
         {
             var eventToUpdate = await _context.Events.FindAsync(updateEventDTO.IdEvent);
@@ -141,6 +181,12 @@ namespace T2JuniorAPI.Services.Events
             }
         }
 
+
+        /// <summary>
+        /// Возвращает детальную информацию о событии по идентификатору.
+        /// </summary>
+        /// <param name="eventId">Идентификатор события.</param>
+        /// <returns>Задача, которая возвращает детальную информацию о событии.</returns>
         public async Task<EventDTO> GetEventById(Guid eventId)
         {
             var eventDetail = await _context.Events
@@ -150,6 +196,12 @@ namespace T2JuniorAPI.Services.Events
 
             return eventDetail;
         }
+
+
+        /// <summary>
+        /// Возвращает список всех направлений событий.
+        /// </summary>
+        /// <returns>Задача, которая возвращает список всех направлений событий.</returns>
         public async Task<List<EventDirectionDTO>> GetEventDirection()
         {
             var directions = await _context.EventDirections
@@ -159,6 +211,12 @@ namespace T2JuniorAPI.Services.Events
 
             return directions;
         }
+
+        /// <summary>
+        /// Создает новое направление события.
+        /// </summary>
+        /// <param name="createEventDirectionDto">Данные для создания направления события.</param>
+        /// <returns>Задача, которая создает новое направление события.</returns>
         public async Task<Guid> CreateEventDirection(EventDirectionDTO createEventDirectionDto)
         {
             var newDirection = _mapper.Map<EventDirection>(createEventDirectionDto);
@@ -169,6 +227,11 @@ namespace T2JuniorAPI.Services.Events
             return newDirection.Id;
         }
 
+        /// <summary>
+        /// Удаляет направление события по идентификатору.
+        /// </summary>
+        /// <param name="directionId">Идентификатор направления события.</param>
+        /// <returns>Задача, которая удаляет направление события.</returns>
         public async Task DeleteEventDirection(Guid directionId)
         {
             var directionToDelete = await _context.EventDirections.FindAsync(directionId);
@@ -180,6 +243,11 @@ namespace T2JuniorAPI.Services.Events
             }
         }
 
+        /// <summary>
+        /// Обновляет существующее направление события.
+        /// </summary>
+        /// <param name="updateEventDirectionDto">Данные для обновления направления события.</param>
+        /// <returns>Задача, которая обновляет направление события.</returns>
         public async Task PutEventDirection(EventDirectionDTO updateEventDirectionDto)
         {
             var directionToUpdate = await _context.EventDirections.FindAsync(updateEventDirectionDto.IdDirection);

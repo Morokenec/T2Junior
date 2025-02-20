@@ -27,6 +27,13 @@ namespace T2JuniorAPI.Controllers
             _context = applicationDbContext;
         }
 
+        /// <summary>
+        /// Добавление медиафайла пользователем
+        /// </summary>
+        /// <param name="uploadDTO">Медиафайлы</param>
+        /// <returns></returns>
+        /// <response code="200">Успешное выполнение</response>
+        /// <response code="400">Ошибка API</response>
         [HttpPost("add-by-user-id")]
         public async Task<IActionResult> UploadMediaFile([FromForm] MediafileUploadDTO uploadDTO)
         {
@@ -45,6 +52,13 @@ namespace T2JuniorAPI.Controllers
             }
         }
 
+        /// <summary>
+        /// Скачивание медиафайлов пользователем
+        /// </summary>
+        /// <param name="id">Медиафайлы</param>
+        /// <returns></returns>
+        /// <response code="200">Успешное выполнение</response>
+        /// <response code="400">Ошибка API</response>
         [HttpGet("download/{id}")]
         public async Task<IActionResult> DownloadMediafile(Guid id)
         {
@@ -60,6 +74,13 @@ namespace T2JuniorAPI.Controllers
             return File(fileBytes, "application/octet-stream", Path.GetFileName(filepath));
         }
 
+        /// <summary>
+        /// Удаление медиафайлов пользователем
+        /// </summary>
+        /// <param name="mediafileDeleteDTO">Медиафайлы</param>
+        /// <returns></returns>
+        /// <response code="200">Успешное выполнение</response>
+        /// <response code="400">Ошибка API</response>
         [HttpDelete("delete-by-user-id")]
         public async Task<IActionResult> DeleteMediaByUserId([FromBody] MediafileDeleteDTO mediafileDeleteDTO)
         {
@@ -75,6 +96,13 @@ namespace T2JuniorAPI.Controllers
             }
         }
 
+        /// <summary>
+        /// Получения всех медиафайлов, связанных с пользователем
+        /// </summary>
+        /// <param name="userId">Пользователь</param>
+        /// <returns></returns>
+        /// <response code="200">Успешное выполнение</response>
+        /// <response code="400">Ошибка API</response>
         [HttpGet("get-all-by-user-id")]
         public async Task<IActionResult> GetAllMediaByUserId([FromQuery] Guid userId)
         {
@@ -97,6 +125,13 @@ namespace T2JuniorAPI.Controllers
             }
         }
 
+        /// <summary>
+        /// Установка аватара пользователем
+        /// </summary>
+        /// <param name="uploadDTO">Пользователь</param>
+        /// <returns></returns>
+        /// <response code="200">Успешное выполнение</response>
+        /// <response code="400">Ошибка API</response>
         [HttpPost("set-avatar-for-user")]
         public async Task<IActionResult> SetAvaterByUserId([FromForm] MediafileUploadDTO uploadDTO)
         {
@@ -112,6 +147,13 @@ namespace T2JuniorAPI.Controllers
             }
         }
 
+        /// <summary>
+        /// Удаление аватара пользователем
+        /// </summary>
+        /// <param name="deleteDTO">Пользователь</param>
+        /// <returns></returns>
+        /// <response code="200">Успешное выполнение</response>
+        /// <response code="400">Ошибка API</response>
         [HttpDelete("delete-avatar-by-user-id")]
         public async Task<IActionResult> DeleteAvatarByUserId([FromBody] MediafileDeleteDTO deleteDTO)
         {

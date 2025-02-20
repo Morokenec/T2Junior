@@ -15,6 +15,15 @@ namespace T2JuniorAPI.Controllers
             _mediaClubService = mediaClubService;
         }
 
+
+        /// <summary>
+        /// Добавление медиафайла в клуб
+        /// </summary>
+        /// <param name="clubId">Клуб</param>
+        /// <param name="uploadDTO">Медиафайлы</param>
+        /// <returns></returns>
+        /// <response code="200">Успешное выполнение</response>
+        /// <response code="400">Ошибка API</response>
         [HttpPost("add/{clubId}")]
         public async Task<IActionResult> AddMediaByClubId(Guid clubId, [FromForm] MediafileUploadDTO uploadDTO)
         {
@@ -29,6 +38,15 @@ namespace T2JuniorAPI.Controllers
             }
         }
 
+        /// <summary>
+        /// Удаление медиафайла из клуба
+        /// </summary>
+        /// <param name="clubId">Клуб</param>
+        /// <param name="mediaId">Медиафайлы</param>
+        /// <param name="userId">Пользователь</param>
+        /// <returns></returns>
+        /// <response code="200">Успешное выполнение</response>
+        /// <response code="400">Ошибка API</response>
         [HttpDelete("delete/{clubId}/{mediaId}")]
         public async Task<IActionResult> DeleteMediaByClubId(Guid clubId, Guid mediaId, [FromQuery] Guid userId)
         {
@@ -43,6 +61,13 @@ namespace T2JuniorAPI.Controllers
             }
         }
 
+        /// <summary>
+        /// Получение всех медиафайлов, связанных с клубом
+        /// </summary>
+        /// <param name="clubId">Клуб</param>
+        /// <returns></returns>
+        /// <response code="200">Успешное выполнение</response>
+        /// <response code="400">Ошибка API</response>
         [HttpGet("{clubId}")]
         public async Task<IActionResult> GetAllMediaByClubId(Guid clubId)
         {
@@ -58,6 +83,14 @@ namespace T2JuniorAPI.Controllers
             }
         }
 
+        /// <summary>
+        /// Установка аватара для клуба
+        /// </summary>
+        /// <param name="clubId">Клуб</param>
+        /// <param name="uploadDTO">Медиафайлы</param>
+        /// <returns></returns>
+        /// <response code="200">Успешное выполнение</response>
+        /// <response code="400">Ошибка API</response>
         [HttpPost("set-avatar/{clubId}")]
         public async Task<IActionResult> SetAvatarForClub(Guid clubId, [FromForm] MediafileUploadDTO uploadDTO)
         {
@@ -72,6 +105,15 @@ namespace T2JuniorAPI.Controllers
             }
         }
 
+        /// <summary>
+        /// Удаление аватара из клуба
+        /// </summary>
+        /// <param name="clubId">Клуб</param>
+        /// <param name="mediaId">Медиафайлы</param>
+        /// <param name="userId">Пользователь</param>
+        /// <returns></returns>
+        /// <response code="200">Успешное выполнение</response>
+        /// <response code="400">Ошибка API</response>
         [HttpDelete("delete-avatar")]
         public async Task<IActionResult> DeleteAvatarFromClub([FromQuery] Guid clubId, [FromQuery] Guid mediaId, [FromQuery] Guid userId)
         {
