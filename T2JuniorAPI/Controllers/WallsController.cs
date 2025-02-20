@@ -23,19 +23,19 @@ namespace T2JuniorAPI.Controllers
             _wallService = wallService;
         }
 
+        /// <summary>
+        /// Получение ленты записей (стены) пользователя
+        /// </summary>
+        /// <param name="idOwner">Стена</param>
+        /// <returns></returns>
+        /// <response code="200">Успешное выполнение</response>
+        /// <response code="400">Ошибка API</response>
         [HttpGet("{idOwner}")]
         public async Task<ActionResult<WallDTO>> GetWallByIdOwner(Guid idOwner)
         {
             var wall = await _wallService.GetWallByIdOwnerAsync(idOwner);
             if (wall == null) 
                 return NotFound();
-            return Ok(wall);
-        }
-
-        [HttpPost]
-        public async Task<ActionResult<WallDTO>> CreateWall(Guid idOwner)
-        {
-            var wall = _wallService.CreateWallAsync(idOwner);
             return Ok(wall);
         }
     }

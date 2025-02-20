@@ -1,0 +1,649 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>T2JuniorAPI</name>
+    </assembly>
+    <members>
+        <member name="M:AccountController.Register(RegisterUserDto)">
+            <summary>
+            Регистрация аккаунта
+            </summary>
+            <param name="registerUserDto">Пользователь</param>
+            <returns></returns>
+            <response code="200">Успешное выполнение</response>
+            <response code="400">Ошибка API</response>
+        </member>
+        <member name="M:AccountController.Login(LoginDto)">
+            <summary>
+            Авторизация пользователя
+            </summary>
+            <param name="loginDto">Пользователь</param>
+            <returns></returns>
+            <response code="200">Успешное выполнение</response>
+            <response code="400">Ошибка API</response>
+        </member>
+        <member name="M:AccountController.GetUserProfile(System.Guid)">
+            <summary>
+            Получение профиля по ID
+            </summary>
+            <param name="id">Пользователь</param>
+            <returns></returns>
+            <response code="200">Успешное выполнение</response>
+            <response code="400">Ошибка API</response>
+        </member>
+        <member name="M:AccountController.GetAllUsers">
+            <summary>
+            Получение всех профилей
+            </summary>
+            <returns></returns>
+            <response code="200">Успешное выполнение</response>
+            <response code="400">Ошибка API</response>
+        </member>
+        <member name="M:AccountController.UpdateUserProfileById(System.Guid,T2JuniorAPI.DTOs.Users.UpdateUserDto)">
+            <summary>
+            Обновление профиля пользователя
+            </summary>
+            <param name="id">Пользователь</param>
+            <param name="updateUserDto">Пользователь</param>
+            <returns></returns>
+            <response code="200">Успешное выполнение</response>
+            <response code="400">Ошибка API</response>
+        </member>
+        <member name="M:AccountController.RecoveryUserPassword(T2JuniorAPI.DTOs.Users.RecoveryPasswordDTO)">
+            <summary>
+            Восстановление пароля пользователя
+            </summary>
+            <param name="recoveryPassword">Пользователь</param>
+            <returns></returns>
+            <response code="200">Успешное выполнение</response>
+            <response code="400">Ошибка API</response>
+        </member>
+        <member name="M:AccountController.DeleteUser(System.Guid)">
+            <summary>
+            Удаление пользователя по ID
+            </summary>
+            <param name="id">Пользователь</param>
+            <returns></returns>
+            <response code="200">Успешное выполнение</response>
+            <response code="400">Ошибка API</response>
+        </member>
+        <member name="M:T2JuniorAPI.Controllers.AchievementsController.GetAchievementsAllByUserId(System.Guid)">
+            <summary>
+            Получение всех достижений, с выделением пользовательских по его ID
+            </summary>
+            <param name="id">Достижения</param>
+            <returns></returns>
+            <response code="200">Успешное выполнение</response>
+            <response code="400">Ошибка API</response>
+        </member>
+        <member name="M:T2JuniorAPI.Controllers.AchievementsController.GetAchievementsByUserId(System.Guid)">
+            <summary>
+            Получение достижения пользователя по ID
+            </summary>
+            <param name="id">Достижения</param>
+            <returns></returns>
+            <response code="200">Успешное выполнение</response>
+            <response code="400">Ошибка API</response>
+        </member>
+        <member name="M:T2JuniorAPI.Controllers.AchievementsController.PostAchievement(T2JuniorAPI.DTOs.Achievements.CreateAchievementDTO,T2JuniorAPI.DTOs.Medias.MediafileUploadDTO)">
+            <summary>
+            Создание нового достижения
+            </summary>
+            <param name="achievementDto">Достижение</param>
+            <param name="uploadDTO">Медиафайл</param>
+            <returns></returns>
+            <response code="200">Успешное выполнение</response>
+            <response code="400">Ошибка API</response>
+        </member>
+        <member name="M:T2JuniorAPI.Controllers.AchievementsController.PutAchievement(T2JuniorAPI.DTOs.Achievements.UpdateAchievementDTO,T2JuniorAPI.DTOs.Medias.MediafileUploadDTO)">
+            <summary>
+            Обновление существующего достижение
+            </summary>
+            <param name="achievementDto">Достижения</param>
+            <param name="uploadDTO">Медиафайл</param>
+            <returns></returns>
+            <response code="200">Успешное выполнение</response>
+            <response code="400">Ошибка API</response>
+        </member>
+        <member name="M:T2JuniorAPI.Controllers.AchievementsController.PostAchievementToUser(System.Guid,System.Guid)">
+            <summary>
+            Выдача достижения пользователю
+            </summary>
+            <param name="userId))">Пользователь</param>
+            <param name="achievementId))">Достижения</param>
+            <returns></returns>
+            <response code="200">Успешное выполнение</response>
+            <response code="400">Ошибка API</response>
+        </member>
+        <member name="M:T2JuniorAPI.Controllers.AchievementsController.DeleteAchievement(System.Guid)">
+            <summary>
+            Удаление достижения
+            </summary>
+            <param name="id">Достижения</param>
+            <returns></returns>
+            <response code="200">Успешное выполнение</response>
+            <response code="400">Ошибка API</response>
+        </member>
+        <member name="M:T2JuniorAPI.Controllers.AchievementsController.ActivateAchievement(System.Guid)">
+            <summary>
+            Активация достижения
+            </summary>
+            <param name="id))">Достижения</param>
+            <returns></returns>
+            <response code="200">Успешное выполнение</response>
+            <response code="400">Ошибка API</response>
+        </member>
+        <member name="M:T2JuniorAPI.Controllers.AchievementsController.DeactivateAchievement(System.Guid)">
+            <summary>
+            Деактивация достижения
+            </summary>
+            <param name="id))">Достижения</param>
+            <returns></returns>
+            <response code="200">Успешное выполнение</response>
+            <response code="400">Ошибка API</response>
+        </member>
+        <member name="M:T2JuniorAPI.Controllers.ClubRolesController.GetClubRoles">
+            <summary>
+            Получение списка всех ролей клубов
+            </summary>
+            <returns></returns>
+            <response code="200">Успешное выполнение</response>
+            <response code="400">Ошибка API</response>
+        </member>
+        <member name="M:T2JuniorAPI.Controllers.ClubRolesController.GetClubRole(System.Guid)">
+            <summary>
+            Получение роли в клубе по ID
+            </summary>
+            <param name="id">Роли в клубе</param>
+            <returns></returns>
+            <response code="200">Успешное выполнение</response>
+            <response code="400">Ошибка API</response>
+        </member>
+        <member name="M:T2JuniorAPI.Controllers.ClubRolesController.PutClubRole(System.Guid,T2JuniorAPI.DTOs.ClubRoles.ClubRolesDTO)">
+            <summary>
+            Обновление роли в клубе по ID
+            </summary>
+            <param name="clubRoleDto">Роли в клубе</param>
+            <returns></returns>
+            <response code="200">Успешное выполнение</response>
+            <response code="400">Ошибка API</response>
+        </member>
+        <member name="M:T2JuniorAPI.Controllers.ClubRolesController.PostClubRole(T2JuniorAPI.DTOs.ClubRoles.ClubRolesDTO)">
+            <summary>
+            Создание новой роли в клубе
+            </summary>
+            <param name="roleDTO">Роли в клубе</param>
+            <returns></returns>
+            <response code="200">Успешное выполнение</response>
+            <response code="400">Ошибка API</response>
+        </member>
+        <member name="M:T2JuniorAPI.Controllers.ClubRolesController.DeleteClubRole(System.Guid)">
+            <summary>
+            Удаление роли в клубе по ID
+            </summary>
+            <param name="id">Роли в клубе</param>
+            <returns></returns>
+            <response code="200">Успешное выполнение</response>
+            <response code="400">Ошибка API</response>
+        </member>
+        <member name="M:T2JuniorAPI.Controllers.ClubsController.GetAllClubsByUserId(System.Guid)">
+            <summary>
+            Получение списка всех клубов, с выделением участия пользователем в них
+            </summary>
+            <param name="userId">Клуб</param>
+            <returns></returns>
+            <response code="200">Успешное выполнение</response>
+            <response code="400">Ошибка API</response>
+        </member>
+        <member name="M:T2JuniorAPI.Controllers.ClubsController.GetAllClubs">
+            <summary>
+            Получение списка всех клубов
+            </summary>
+            <returns></returns>
+            <response code="200">Успешное выполнение</response>
+            <response code="400">Ошибка API</response>
+        </member>
+        <member name="M:T2JuniorAPI.Controllers.ClubsController.GetClubProfile(System.Guid)">
+            <summary>
+            Получение профиля клуба по ID
+            </summary>
+            <param name="clubId">Клуб</param>
+            <returns></returns>
+            <response code="200">Успешное выполнение</response>
+            <response code="400">Ошибка API</response>
+        </member>
+        <member name="M:T2JuniorAPI.Controllers.ClubsController.GetClubInfoById(System.Guid)">
+            <summary>
+            Получение информации о клубе по ID
+            </summary>
+            <param name="clubId">Клуб</param>
+            <returns></returns>
+            <response code="200">Успешное выполнение</response>
+            <response code="400">Ошибка API</response>
+        </member>
+        <member name="M:T2JuniorAPI.Controllers.ClubsController.PutClub(System.Guid,T2JuniorAPI.DTOs.Clubs.UpdateClubDTO)">
+            <summary>
+            Обновление информации о клубе по ID
+            </summary>
+            <param name="id">Пользователь</param>
+            <param name="updateClubDTO">Клуб</param>
+            <returns></returns>
+            <response code="200">Успешное выполнение</response>
+            <response code="400">Ошибка API</response>
+        </member>
+        <member name="M:T2JuniorAPI.Controllers.ClubsController.CreateClub(T2JuniorAPI.DTOs.Clubs.CreateClubDTO)">
+            <summary>
+            Создание нового клуба
+            </summary>
+            <param name="club">Клуб</param>
+            <returns></returns>
+            <response code="200">Успешное выполнение</response>
+            <response code="400">Ошибка API</response>
+        </member>
+        <member name="M:T2JuniorAPI.Controllers.ClubsController.AddUserToClub(System.Guid,T2JuniorAPI.DTOs.Users.AddUserToClubDTO)">
+            <summary>
+            Добавление пользователя с указанной ролью в клуб(по ID клуба).
+            </summary>
+            <param name="clubId">Клуб</param>
+            <param name="user">Пользователь</param>
+            <returns></returns>
+            <response code="200">Успешное выполнение</response>
+            <response code="400">Ошибка API</response>
+        </member>
+        <member name="M:T2JuniorAPI.Controllers.ClubsController.DeleteUserFromClub(System.Guid,System.Guid)">
+            <summary>
+            Удаление пользователя из клуба
+            </summary>
+            <param name="clubId">Клуб</param>
+            <param name="userId">Пользователь</param>
+            <returns></returns>
+            <response code="200">Успешное выполнение</response>
+            <response code="400">Ошибка API</response>
+        </member>
+        <member name="M:T2JuniorAPI.Controllers.ClubsController.DeleteClub(System.Guid)">
+            <summary>
+            Удаление клуба по его ID
+            </summary>
+            <param name="id">Клуб</param>
+            <returns></returns>
+            <response code="200">Успешное выполнение</response>
+            <response code="400">Ошибка API</response>
+        </member>
+        <member name="M:T2JuniorAPI.Controllers.EventController.GetUserCalendar(System.Guid,System.Int32,System.Int32)">
+            <summary>
+            Получение календаря событий пользователя за указанный месяц и год
+            </summary>
+            <param name="userId">Пользователь</param>
+            <param name="year">Год</param>
+            <param name="month">Месяц</param>
+            <returns></returns>
+            <response code="200">Успешное выполнение</response>
+            <response code="400">Ошибка API</response>
+        </member>
+        <member name="M:T2JuniorAPI.Controllers.EventController.GetClubCalendar(System.Guid,System.Int32,System.Int32)">
+            <summary>
+            Получение календаря событий клуба за указанный месяц и год
+            </summary>
+            <param name="clubId">Пользователь</param>
+            <param name="year">Год</param>
+            <param name="month">Месяц</param>
+            <returns></returns>
+            <response code="200">Успешное выполнение</response>
+            <response code="400">Ошибка API</response>
+        </member>
+        <member name="M:T2JuniorAPI.Controllers.EventController.CreateEvent(T2JuniorAPI.DTOs.Events.CreateEventDTO,T2JuniorAPI.DTOs.Medias.MediafileUploadDTO)">
+            <summary>
+            Создание новых событий
+            </summary>
+            <param name="createEventDTO">Событие</param>
+            <param name="mediafile">Медиафайлы</param>
+            <returns></returns>
+            <response code="200">Успешное выполнение</response>
+            <response code="400">Ошибка API</response>
+        </member>
+        <member name="M:T2JuniorAPI.Controllers.EventController.DeleteEvent(System.Guid)">
+            <summary>
+            Удаление события по его ID
+            </summary>
+            <param name="eventId">Событие</param>
+            <returns></returns>
+            <response code="200">Успешное выполнение</response>
+            <response code="400">Ошибка API</response>
+        </member>
+        <member name="M:T2JuniorAPI.Controllers.EventController.PutEvent(T2JuniorAPI.DTOs.Events.UpdateEventDTO)">
+            <summary>
+            Обновление существующего события
+            </summary>
+            <param name="updateEventDTO">Событие</param>
+            <returns></returns>
+            <response code="200">Успешное выполнение</response>
+            <response code="400">Ошибка API</response>
+        </member>
+        <member name="M:T2JuniorAPI.Controllers.EventController.GetEventById(System.Guid)">
+            <summary>
+            Получение информации о событии по его ID
+            </summary>
+            <param name="eventId">Событие</param>
+            <returns></returns>
+            <response code="200">Успешное выполнение</response>
+            <response code="400">Ошибка API</response>
+        </member>
+        <member name="M:T2JuniorAPI.Controllers.EventDirectionsController.GetEventDirection">
+            <summary>
+            Получение списка направлений событий
+            </summary>
+            <returns></returns>
+            <response code="200">Успешное выполнение</response>
+            <response code="400">Ошибка API</response>
+        </member>
+        <member name="M:T2JuniorAPI.Controllers.EventDirectionsController.CreateEventDirection(T2JuniorAPI.DTOs.Events.EventDirectionDTO)">
+            <summary>
+            Создание нового направления события
+            </summary>
+            <param name="createEventDirectionDto">Направление событий</param>
+            <returns></returns>
+            <response code="200">Успешное выполнение</response>
+            <response code="400">Ошибка API</response>
+        </member>
+        <member name="M:T2JuniorAPI.Controllers.EventDirectionsController.DeleteEventDirection(System.Guid)">
+            <summary>
+            Удаление направления события по ID
+            </summary>
+            <param name="directionId">Направление событий</param>
+            <returns></returns>
+            <response code="200">Успешное выполнение</response>
+            <response code="400">Ошибка API</response>
+        </member>
+        <member name="M:T2JuniorAPI.Controllers.EventDirectionsController.PutEventDirection(T2JuniorAPI.DTOs.Events.EventDirectionDTO)">
+            <summary>
+            Обновление существующего направления события
+            </summary>
+            <param name="updateEventDirectionDto">Направление событий</param>
+            <returns></returns>
+            <response code="200">Успешное выполнение</response>
+            <response code="400">Ошибка API</response>
+        </member>
+        <member name="M:T2JuniorAPI.Controllers.MediaClubsController.AddMediaByClubId(System.Guid,T2JuniorAPI.DTOs.Medias.MediafileUploadDTO)">
+            <summary>
+            Добавление медиафайла в клуб
+            </summary>
+            <param name="clubId">Клуб</param>
+            <param name="uploadDTO">Медиафайлы</param>
+            <returns></returns>
+            <response code="200">Успешное выполнение</response>
+            <response code="400">Ошибка API</response>
+        </member>
+        <member name="M:T2JuniorAPI.Controllers.MediaClubsController.DeleteMediaByClubId(System.Guid,System.Guid,System.Guid)">
+            <summary>
+            Удаление медиафайла из клуба
+            </summary>
+            <param name="clubId">Клуб</param>
+            <param name="mediaId">Медиафайлы</param>
+            <param name="userId">Пользователь</param>
+            <returns></returns>
+            <response code="200">Успешное выполнение</response>
+            <response code="400">Ошибка API</response>
+        </member>
+        <member name="M:T2JuniorAPI.Controllers.MediaClubsController.GetAllMediaByClubId(System.Guid)">
+            <summary>
+            Получение всех медиафайлов, связанных с клубом
+            </summary>
+            <param name="clubId">Клуб</param>
+            <returns></returns>
+            <response code="200">Успешное выполнение</response>
+            <response code="400">Ошибка API</response>
+        </member>
+        <member name="M:T2JuniorAPI.Controllers.MediaClubsController.SetAvatarForClub(System.Guid,T2JuniorAPI.DTOs.Medias.MediafileUploadDTO)">
+            <summary>
+            Установка аватара для клуба
+            </summary>
+            <param name="clubId">Клуб</param>
+            <param name="uploadDTO">Медиафайлы</param>
+            <returns></returns>
+            <response code="200">Успешное выполнение</response>
+            <response code="400">Ошибка API</response>
+        </member>
+        <member name="M:T2JuniorAPI.Controllers.MediaClubsController.DeleteAvatarFromClub(System.Guid,System.Guid,System.Guid)">
+            <summary>
+            Удаление аватара из клуба
+            </summary>
+            <param name="clubId">Клуб</param>
+            <param name="mediaId">Медиафайлы</param>
+            <param name="userId">Пользователь</param>
+            <returns></returns>
+            <response code="200">Успешное выполнение</response>
+            <response code="400">Ошибка API</response>
+        </member>
+        <member name="M:T2JuniorAPI.Controllers.MediaController.UploadMediaFile(T2JuniorAPI.DTOs.Medias.MediafileUploadDTO)">
+            <summary>
+            Добавление медиафайла пользователем
+            </summary>
+            <param name="uploadDTO">Медиафайлы</param>
+            <returns></returns>
+            <response code="200">Успешное выполнение</response>
+            <response code="400">Ошибка API</response>
+        </member>
+        <member name="M:T2JuniorAPI.Controllers.MediaController.DownloadMediafile(System.Guid)">
+            <summary>
+            Скачивание медиафайлов пользователем
+            </summary>
+            <param name="id">Медиафайлы</param>
+            <returns></returns>
+            <response code="200">Успешное выполнение</response>
+            <response code="400">Ошибка API</response>
+        </member>
+        <member name="M:T2JuniorAPI.Controllers.MediaController.DeleteMediaByUserId(T2JuniorAPI.DTOs.Medias.MediafileDeleteDTO)">
+            <summary>
+            Удаление медиафайлов пользователем
+            </summary>
+            <param name="mediafileDeleteDTO">Медиафайлы</param>
+            <returns></returns>
+            <response code="200">Успешное выполнение</response>
+            <response code="400">Ошибка API</response>
+        </member>
+        <member name="M:T2JuniorAPI.Controllers.MediaController.GetAllMediaByUserId(System.Guid)">
+            <summary>
+            Получения всех медиафайлов, связанных с пользователем
+            </summary>
+            <param name="userId">Пользователь</param>
+            <returns></returns>
+            <response code="200">Успешное выполнение</response>
+            <response code="400">Ошибка API</response>
+        </member>
+        <member name="M:T2JuniorAPI.Controllers.MediaController.SetAvaterByUserId(T2JuniorAPI.DTOs.Medias.MediafileUploadDTO)">
+            <summary>
+            Установка аватара пользователем
+            </summary>
+            <param name="uploadDTO">Пользователь</param>
+            <returns></returns>
+            <response code="200">Успешное выполнение</response>
+            <response code="400">Ошибка API</response>
+        </member>
+        <member name="M:T2JuniorAPI.Controllers.MediaController.DeleteAvatarByUserId(T2JuniorAPI.DTOs.Medias.MediafileDeleteDTO)">
+            <summary>
+            Удаление аватара пользователем
+            </summary>
+            <param name="deleteDTO">Пользователь</param>
+            <returns></returns>
+            <response code="200">Успешное выполнение</response>
+            <response code="400">Ошибка API</response>
+        </member>
+        <member name="M:T2JuniorAPI.Controllers.MediaTypesController.GetMediaTypes">
+            <summary>
+            Получение всех типов медиафайлов
+            </summary>
+            <returns></returns>
+            <response code="200">Успешное выполнение</response>
+            <response code="400">Ошибка API</response>
+        </member>
+        <member name="M:T2JuniorAPI.Controllers.MediaTypesController.CreateMediaType(T2JuniorAPI.DTOs.MediaTypes.MediaTypeDTO)">
+            <summary>
+            Создание нового типа медиафайлов
+            </summary>
+            <param name="mediaTypeDTO">Пользователь</param>
+            <returns></returns>
+            <response code="200">Успешное выполнение</response>
+            <response code="400">Ошибка API</response>
+        </member>
+        <member name="M:T2JuniorAPI.Controllers.MediaTypesController.DeleteMediaType(System.Guid)">
+            <summary>
+            Удаление типа медиафайла
+            </summary>
+            <param name="id">Пользователь</param>
+            <returns></returns>
+            <response code="200">Успешное выполнение</response>
+            <response code="400">Ошибка API</response>
+        </member>
+        <member name="M:T2JuniorAPI.Controllers.UserSubscribersController.GetSubscribers(System.Guid)">
+            <summary>
+            Получение списка подписчиков определенного пользователя
+            </summary>
+            <param name="userId">Организация</param>
+            <returns></returns>
+            <response code="200">Успешное выполнение</response>
+            <response code="400">Ошибка API</response>
+        </member>
+        <member name="M:T2JuniorAPI.Controllers.UserSubscribersController.GetSubscriptions(System.Guid)">
+            <summary>
+            Получение списка подписок определенного пользователя
+            </summary>
+            <param name="userId">Организация</param>
+            <returns></returns>
+            <response code="200">Успешное выполнение</response>
+            <response code="400">Ошибка API</response>
+        </member>
+        <member name="M:T2JuniorAPI.Controllers.UserSubscribersController.SubscribeUserToUser(T2JuniorAPI.DTOs.Users.SubscribeUserDTO)">
+            <summary>
+            Подписка одного пользователя на другого пользователя
+            </summary>
+            <param name="subscribeUser">Организация</param>
+            <returns></returns>
+            <response code="200">Успешное выполнение</response>
+            <response code="400">Ошибка API</response>
+        </member>
+        <member name="M:T2JuniorAPI.Controllers.UserSubscribersController.UnsubscribeUser(T2JuniorAPI.DTOs.Users.UnsubscribeUserDTO)">
+            <summary>
+            Отмена подписки одного пользователя на другого пользователя
+            </summary>
+            <param name="unsubscribeUser">Организация</param>
+            <returns></returns>
+            <response code="200">Успешное выполнение</response>
+            <response code="400">Ошибка API</response>
+        </member>
+        <member name="M:T2JuniorAPI.Controllers.WallsController.GetWallByIdOwner(System.Guid)">
+            <summary>
+            Получение ленты записей (стены) пользователя
+            </summary>
+            <param name="idOwner">Стена</param>
+            <returns></returns>
+            <response code="200">Успешное выполнение</response>
+            <response code="400">Ошибка API</response>
+        </member>
+        <member name="M:T2JuniorAPI.Controllers.WallTypesController.CreateOrGetWallType(T2JuniorAPI.DTOs.WallTypes.CreateWallTypeDTO)">
+            <summary>
+            Получение ленты записей (стены) пользователя
+            </summary>
+            <param name="createWallTypeDTO">Тип стены</param>
+            <returns></returns>
+            <response code="200">Успешное выполнение</response>
+            <response code="400">Ошибка API</response>
+        </member>
+        <member name="M:T2JuniorAPI.Controllers.WallTypesController.DeleteWallType(System.Guid)">
+            <summary>
+            Создание или получение типа ленты записей (стены)
+            </summary>
+            <param name="id">Тип стены</param>
+            <returns></returns>
+            <response code="200">Успешное выполнение</response>
+            <response code="400">Ошибка API</response>
+        </member>
+        <member name="M:T2JuniorAPI.Controllers.WallTypesController.GetAllWallTypes">
+            <summary>
+            Получение списка всех типов лент записей (стен)
+            </summary>
+            <returns></returns>
+            <response code="200">Успешное выполнение</response>
+            <response code="400">Ошибка API</response>
+        </member>
+        <member name="T:T2JuniorAPI.Services.Accounts.AccountService">
+            <summary>
+            Сервис для работы с аккаунтами пользователей, включая регистрацию, вход в систему, обновление и удаление профилей.
+            </summary>
+        </member>
+        <member name="M:T2JuniorAPI.Services.Accounts.AccountService.#ctor(Microsoft.AspNetCore.Identity.UserManager{ApplicationUser},Microsoft.AspNetCore.Identity.SignInManager{ApplicationUser},AutoMapper.IMapper,T2JuniorAPI.Data.ApplicationDbContext)">
+            <summary>
+            Конструктор для инициализации сервисов UserManager и SignInManager.
+            </summary>
+            <param name="userManager">Менеджер пользователей для работы с пользователями.</param>
+            <param name="signInManager">Менеджер входа для работы с аутентификацией.</param>
+        </member>
+        <member name="M:T2JuniorAPI.Services.Accounts.AccountService.RegisterUserAsync(RegisterUserDto)">
+            <summary>
+            Регистрирует нового пользователя в системе.
+            </summary>
+            <param name="registerUserDto">Объект с данными нового пользователя.</param>
+            <returns>Строка с результатом регистрации пользователя.</returns>
+            <exception cref="T:System.ApplicationException">Выбрасывается, если регистрация не удалась.</exception>
+        </member>
+        <member name="M:T2JuniorAPI.Services.Accounts.AccountService.GetUserProfileAsync(System.Guid)">
+            <summary>
+            Получает профиль пользователя по его идентификатору.
+            </summary>
+            <param name="userId">Идентификатор пользователя.</param>
+            <returns>Объект профиля пользователя.</returns>
+            <exception cref="T:System.ApplicationException">Выбрасывается, если пользователь не найден.</exception>
+        </member>
+        <member name="M:T2JuniorAPI.Services.Accounts.AccountService.UpdateUserProfileAsync(System.Guid,T2JuniorAPI.DTOs.Users.UpdateUserDto)">
+            <summary>
+            Обновляет профиль пользователя.
+            </summary>
+            <param name="userId">Идентификатор пользователя.</param>
+            <param name="updateUserDto">Объект с новыми данными для обновления.</param>
+            <returns>Строка с результатом обновления.</returns>
+            <exception cref="T:System.ApplicationException">Выбрасывается, если пользователь не найден или обновление не удалось.</exception>
+        </member>
+        <member name="M:T2JuniorAPI.Services.Accounts.AccountService.DeleteUserAsync(System.Guid)">
+            <summary>
+            Удаляет пользователя из системы.
+            </summary>
+            <param name="userId">Идентификатор пользователя, которого нужно удалить.</param>
+            <returns>Строка с результатом удаления пользователя.</returns>
+            <exception cref="T:System.ApplicationException">Выбрасывается, если пользователь не найден или удаление не удалось.</exception>
+        </member>
+        <member name="M:OrganizationsController.GetAllOrganizations">
+            <summary>
+            Получения списков всех организаций
+            </summary>
+            <returns></returns>
+            <response code="200">Успешное выполнение</response>
+            <response code="400">Ошибка API</response>
+        </member>
+        <member name="M:OrganizationsController.CreateOrganization(T2JuniorAPI.DTOs.Organizations.OrganizationDto)">
+            <summary>
+            Создание организации
+            </summary>
+            <param name="organization">Организация</param>
+            <returns></returns>
+            <response code="200">Успешное выполнение</response>
+            <response code="400">Ошибка API</response>
+        </member>
+        <member name="M:OrganizationsController.UpdateOrganization(System.Guid,T2JuniorAPI.DTOs.Organizations.OrganizationDto)">
+            <summary>
+            Обновление данных организации
+            </summary>
+            <param name="organizationDto">Организация</param>
+            <returns></returns>
+            <response code="200">Успешное выполнение</response>
+            <response code="400">Ошибка API</response>
+        </member>
+        <member name="M:OrganizationsController.DeleteOrganization(System.Guid)">
+            <summary>
+            Удаление организации по ID
+            </summary>
+            <param name="id">Организация</param>
+            <returns></returns>
+            <response code="200">Успешное выполнение</response>
+            <response code="400">Ошибка API</response>
+        </member>
+    </members>
+</doc>
