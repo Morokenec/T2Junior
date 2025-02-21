@@ -8,6 +8,7 @@ namespace T2JuniorAPI.DTOs.Notes
         public Guid Id { get; set; }
         public Guid IdWall { get; set; }
         public Guid IdStatus { get; set; }
+        public DateTime CreationDate { get; set; }
         public string Name { get; set; }
         public string Description { get; set; }
         public Guid? IdRepost { get; set; }

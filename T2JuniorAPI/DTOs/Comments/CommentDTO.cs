@@ -6,6 +6,7 @@ namespace T2JuniorAPI.DTOs.Comments
     {
         public Guid Id { get; set; }
         public Guid NoteId { get; set; }
+        public DateTime CreationDate { get; set; }
         public string UserName { get; set; }
         public string UserAvatarUrl { get; set; }
         public string Text { get; set; }

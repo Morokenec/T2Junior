@@ -24,6 +24,7 @@ namespace T2JuniorAPI.MappingProfiles
                 .ForMember(dest => dest.LikeCount, opt => opt.MapFrom(src => 0)); // Устанавливаем LikeCount в 0
 
             CreateMap<Comment, CommentDTO>()
+                .ForMember(dest => dest.CreationDate, opt => opt.MapFrom(src => src.CreationDate))
                 .ForMember(dest => dest.UserAvatarUrl, opt => opt.MapFrom(src => src.IdUserNavigation.UserAvatars
                     .Where(ua => !ua.IsDelete)
                     .OrderByDescending(ua => ua.CreationDate)

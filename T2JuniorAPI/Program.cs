@@ -23,6 +23,7 @@ using T2JuniorAPI.Services.NoteStatuses;
 using T2JuniorAPI.Services.MediaNotes;
 using T2JuniorAPI.Services.Comments;
 using T2JuniorAPI.Services.MediaComments;
+using T2JuniorAPI.Services.NewsFeeds;
 
 
 
@@ -78,6 +79,7 @@ builder.Services.AddAutoMapper(config =>
     config.AddProfile<MediaEventProfile>();
     config.AddProfile<MediaNoteProfile>();
     config.AddProfile<MediaProfile>();
+    config.AddProfile<MappingProfile>();
     config.AddProfile<MediaTypeProfile>();
     config.AddProfile<NoteProfile>();
     config.AddProfile<NoteStatusProfile>();
@@ -108,6 +110,7 @@ builder.Services.AddScoped<INoteStatusService, NoteStatusService>();
 builder.Services.AddScoped<IMediaNoteService, MediaNoteService>();
 builder.Services.AddScoped<ICommentService, CommentService>();
 builder.Services.AddScoped<IMediaCommentService, MediaCommentService>();
+builder.Services.AddScoped<INewsFeedService, NewsFeedService>();
 
 
 builder.Services.AddControllers();
