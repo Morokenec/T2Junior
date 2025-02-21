@@ -38,6 +38,8 @@ namespace T2JuniorAPI.Services.NewsFeeds
                 .Where(n => wallIds.Contains(n.IdWall) && !n.IsDelete)
                 .Include(n => n.Likes)
                 .Include(n => n.Comments)
+                .Include(n => n.MediaNotes)
+                    .ThenInclude(mn => mn.IdMediaNavigation)
                 .OrderByDescending(n => n.CreationDate)
                 .ToListAsync();
 
