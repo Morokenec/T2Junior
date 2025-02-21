@@ -79,7 +79,7 @@
                            HorizontalOptions="Fill"
                            VerticalOptions="Fill"
                            Padding="16,20,16,16"
-                           Margin="8,10,8,12"
+                           Margin="8,10,8,0"
                            BackgroundColor="White">
                         <StackLayout>
                             <StackLayout.GestureRecognizers>
@@ -96,12 +96,12 @@
                                     <Label Text="{Binding Name}"
                                            HorizontalOptions="Start"
                                            HeightRequest="24"
-                                           FontSize="13"
+                                           FontSize="14"
                                            FontFamily="RedRoseBold" />
                                     <Label Text="{Binding Description}"
                                            HorizontalOptions="Start"
-                                           HeightRequest="24"
-                                           FontSize="11"
+                                           
+                                           FontSize="12"
                                            TextColor="#9C9B9A"
                                            FontFamily="ManropeExtraLight" />
                                     <Image x:Name="NewsHolder"

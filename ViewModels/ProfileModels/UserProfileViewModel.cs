@@ -94,6 +94,7 @@ namespace MauiApp1.ViewModels.Profile
         public async Task RefreshDataAsync()
         {
             IsRefreshing = true;
+            Notes.Clear();
             await LoadDataAsync();
             IsRefreshing = false;
         }

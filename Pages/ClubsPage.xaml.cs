@@ -17,8 +17,12 @@ public partial class ClubsPage : ContentPage
         InitializeComponent();
         _clubsViewModel = clubsViewModel;
         BindingContext = _clubsViewModel;
+    }
 
-        clubsViewModel.LoadClubsAsync();
+    protected override void OnAppearing()
+    {
+        base.OnAppearing();
+        _clubsViewModel.LoadClubsAsync();
     }
 
     private void OnBackButtonTapped(object sender, EventArgs e)

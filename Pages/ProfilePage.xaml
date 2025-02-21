@@ -334,118 +334,95 @@
                              HeightRequest="2"
                              Margin="16, 0"/>
 
-                    <Frame x:Name="ActivitiesFrame" 
+                        <Frame x:Name="ActivitiesFrame" 
                            HasShadow="False" 
                            BorderColor="Transparent"
                            WidthRequest="303"
                            HeightRequest="48"
                            Padding="0, 8">
-                        <Frame.GestureRecognizers>
-                            <TapGestureRecognizer Tapped="OnActivitiesFrameTapped" />
-                        </Frame.GestureRecognizers>
-                        <HorizontalStackLayout Spacing="12">
-                            <Image x:Name="ActivitiesImage"
+                            <Frame.GestureRecognizers>
+                                <TapGestureRecognizer Tapped="OnActivitiesFrameTapped" />
+                            </Frame.GestureRecognizers>
+                            <HorizontalStackLayout Spacing="12">
+                                <Image x:Name="ActivitiesImage"
                                    Source="activities.svg"
                                    Aspect="AspectFill"
                                    WidthRequest="24"
                                    HeightRequest="24"/>
 
-                            <Label x:Name="ActivitiesText"
+                                <Label x:Name="ActivitiesText"
                                    Text="Активности" 
                                    TextColor="#191C30"
                                    FontSize="15"
                                    VerticalOptions="Center"
                                    WidthRequest="231"/>
-                            <Image Source="redirect.svg"
+                                <Image Source="redirect.svg"
                                    Aspect="AspectFill"/>
-                        </HorizontalStackLayout>
-                    </Frame>
-                    <BoxView x:Name="ActivitiesBoxView"
-                             BackgroundColor="#E4E4E4" 
-                             HorizontalOptions="FillAndExpand" 
-                             VerticalOptions="End"
-                             HeightRequest="2"
-                             Margin="16, 0"/>
-
-                    <Frame x:Name="NewsFrame"
-                           HasShadow="False" 
-                           BorderColor="Transparent"
-                           WidthRequest="303"
-                           HeightRequest="48"
-                           Padding="0, 8">
-                        <Frame.GestureRecognizers>
-                            <TapGestureRecognizer Tapped="OnNewsFrameTapped" />
-                        </Frame.GestureRecognizers>
-                        <HorizontalStackLayout Spacing="12">
-                            <Image x:Name="NewsImage"
-                                   Source="profile_news.svg"
-                                   Aspect="AspectFill" 
-                                   WidthRequest="24"
-                                   HeightRequest="24"/>
-
-                            <Label x:Name="NewsText"
-                                   Text="Новости" 
-                                   TextColor="#191C30"
-                                   FontSize="15"
-                                   HorizontalOptions="FillAndExpand"
-                                   VerticalOptions="Center"
-                                   WidthRequest="231"/>
-                            
-                            <Image Source="redirect.svg"
-                                   Aspect="AspectFill"/>
-                        </HorizontalStackLayout>
-                    </Frame>
-                </VerticalStackLayout>
+                            </HorizontalStackLayout>
+                        </Frame>
+                    </VerticalStackLayout>
             </Frame>
 
-        <CollectionView ItemsSource="{Binding FilteredNotes}"
-                        x:Name="NewsCollection"
-                        Grid.Row="5"
-                        Margin="0,4,0,0"
+                <CollectionView ItemsSource="{Binding Notes}"
+                        x:Name="NotesCollection"
+                        Grid.Row="6"
+                        Margin="0,12,0,0"
                         BackgroundColor="#EBEBEB">
-            <CollectionView.ItemsLayout>
-                <GridItemsLayout Span="1" Orientation="Vertical"/>
-            </CollectionView.ItemsLayout>
+                    <CollectionView.ItemsLayout>
+                        <GridItemsLayout Span="1"
+                                 Orientation="Vertical" />
+                    </CollectionView.ItemsLayout>
                     <CollectionView.ItemTemplate>
                         <DataTemplate>
-                            <Frame CornerRadius="10" 
-                            HorizontalOptions="Fill"
-                            HeightRequest="183" 
-                            HasShadow="True"
-                            Padding="20,20,20,16"
-                            Margin="0,12,0,0"
-                            BackgroundColor="White">
-                                <CollectionView ItemsSource="{Binding Notes}">
-                                    <CollectionView.ItemTemplate>
-                                        <DataTemplate>
-                                            <StackLayout>
-                                            <Label Text="{Binding Name}" 
-                                               HorizontalOptions="Start"
-                                               HeightRequest="24"
-                                               FontSize="13"
-                                               TextColor="#303345"
-                                               FontFamily="ManropeExtraBold"/>
-
-                                            <Label Text="{Binding Description}" 
-                                               HorizontalOptions="Start"
-                                               HeightRequest="24"
-                                               FontSize="11"
-                                               TextColor="#6B6D80"
-                                               FontFamily="ManropeExtraLight"/>
-
-                                            <!--<Image x:Name="NewsHolder"
-                                               IsVisible="{Binding HolderIsVisible}"
-                                               Source="{Binding NoteMediaSource}"
-                                               HorizontalOptions="Fill"
-                                               VerticalOptions="Fill"
-                                               Margin="0,12,0,0"/>-->
-                                            </StackLayout>
-                                        </DataTemplate>
-                                    </CollectionView.ItemTemplate>
-                                </CollectionView>
+                            <Frame CornerRadius="10"
+                           HorizontalOptions="Fill"
+                           VerticalOptions="Fill"
+                           Padding="16,20,16,16"
+                           Margin="8,10,8,0"
+                           BackgroundColor="White">
+                                <StackLayout>
+                                    <!--<StackLayout.GestureRecognizers>
+                                        <TapGestureRecognizer Tapped="OnNoteTapped" />
+                                    </StackLayout.GestureRecognizers>-->
+                                    <Frame HorizontalOptions="Fill"
+                                   VerticalOptions="Fill"
+                                   BorderColor="Transparent"
+                                   HasShadow="True">
+                                        <StackLayout>
+                                            <!--<StackLayout.GestureRecognizers>
+                                                <TapGestureRecognizer Tapped="OnNoteTapped" />
+                                            </StackLayout.GestureRecognizers>-->
+                                            <Label Text="{Binding Name}"
+                                           HorizontalOptions="Start"
+                                           HeightRequest="24"
+                                           FontSize="14"
+                                           FontFamily="RedRoseBold" />
+                                            <Label Text="{Binding Description}"
+                                           HorizontalOptions="Start"
+                                           
+                                           FontSize="12"
+                                           TextColor="#9C9B9A"
+                                           FontFamily="ManropeExtraLight" />
+                                            <Image x:Name="NewsHolder"
+                                           IsVisible="True"
+                                           Aspect="AspectFill"
+                                           Source="{Binding NoteMediaSource}"
+                                           HorizontalOptions="Fill"
+                                           VerticalOptions="Fill"
+                                           Margin="0,12,0,0" />
+                                        </StackLayout>
+                                    </Frame>
+                                </StackLayout>
                             </Frame>
                         </DataTemplate>
                     </CollectionView.ItemTemplate>
+                    <CollectionView.EmptyView>
+                        <Label Text="Результаты не найдены."
+                       HorizontalOptions="Center"
+                       VerticalOptions="Start"
+                       Margin="0,50,0,0"
+                       FontSize="24" />
+                    </CollectionView.EmptyView>
                 </CollectionView>
             </Grid>
         </ScrollView>

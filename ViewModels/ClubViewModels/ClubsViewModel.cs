@@ -102,14 +102,12 @@ namespace MauiApp1.ViewModels.ClubViewModel
             FilteredClubs = new ObservableCollection<Club>();
 
             SubscriptionCheckCommand = new Command(ToggleSubscription);
-
-            LoadClubsAsync();
         }
 
         /// <summary>
         /// Асинхронно загружает данные о клубах и обновляет коллекции.
         /// </summary>
-        public async void LoadClubsAsync()
+        public async Task LoadClubsAsync()
         {
             var clubLists = await _clubService.GetClubsAsync();
             if (clubLists != null)
@@ -180,10 +178,10 @@ namespace MauiApp1.ViewModels.ClubViewModel
             IsSubscribed = !IsSubscribed;
         }
 
-        public void RefreshDataAsync()
+        public async Task RefreshDataAsync()
         {
             IsRefreshing = true;
-            LoadClubsAsync();
+            await LoadClubsAsync();
             IsRefreshing = false;
         }
 

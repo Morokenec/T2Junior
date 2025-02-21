@@ -17,6 +17,10 @@ public partial class ClubProfilePage : ContentPage
     protected override async void OnAppearing()
     {
         base.OnAppearing();
-        await _viewModel.LoadClubsAsync();
+        if (BindingContext is ClubProfileViewModel viewModel)
+        {
+            await viewModel.LoadClubsAsync();
+
+        }
     }
 }

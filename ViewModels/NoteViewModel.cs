@@ -49,8 +49,7 @@ namespace MauiApp1.ViewModels
                 Name = "День защитника Отечества",
                 Description = "«День защитника Отечества» — праздник, отмечаемый ежегодно 23 февраля в Белоруссии, Кыргызстане, России, Таджикистане и непризнанной ПМР.ие проекта",
                  },
-            new Note { Id = new Guid().ToString(), Name = "НазваниеНовости", Description = "ТекстНовости"},
-            new Note { Id = new Guid().ToString() }
+            new Note { Id = new Guid().ToString(), Name = "НазваниеНовости", Description = "ТекстНовости"}
         };
 
             FilteredNotes = new ObservableCollection<Note>(Notes);
