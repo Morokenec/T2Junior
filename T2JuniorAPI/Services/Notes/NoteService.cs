@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using Microsoft.EntityFrameworkCore;
 using T2JuniorAPI.Data;
+using T2JuniorAPI.DTOs.Comments;
 using T2JuniorAPI.DTOs.Notes;
 using T2JuniorAPI.Entities;
 using T2JuniorAPI.Services.NoteStatuses;
@@ -92,7 +93,7 @@ namespace T2JuniorAPI.Services.Notes
             return _mapper.Map<NoteDTO>(repostNote);
         }
 
-        public async Task<IEnumerable<NoteDTO>> GetNotesByIdOwnerAsync(Guid idOwner)
+        public async Task<IEnumerable<NoteDTO>> GetNotesWithCommentCountAsync(Guid idOwner)
         {
             // Загрузка стены
             var wall = await _context.Walls
@@ -108,36 +109,56 @@ namespace T2JuniorAPI.Services.Notes
             // Загрузка комментариев к записям
             var noteIds = wall.Notes.Select(n => n.Id).ToList();
             var comments = await _context.Comments
-                .Include(c => c.MediaComments)
-                    .ThenInclude(mc => mc.IdMediaNavigation)
-                .Include(c => c.IdUserNavigation)
-                    .ThenInclude(u => u.UserAvatars)
-                        .ThenInclude(ua => ua.Media)
-                .Include(c => c.CommentLikes)
-                .Where(c => noteIds.Contains(c.IdNote) && c.ParrentCommentId == null && !c.IsDelete)
+                .Where(c => noteIds.Contains(c.IdNote) && !c.IsDelete)
                 .ToListAsync();
 
-            // Загрузка подкомментариев
-            var commentIds = comments.Select(c => c.Id).ToList();
-            var subComments = await _context.Comments
-                .Include(c => c.MediaComments)
-                    .ThenInclude(mc => mc.IdMediaNavigation)
-                .Include(c => c.IdUserNavigation)
-                    .ThenInclude(u => u.UserAvatars)
-                        .ThenInclude(ua => ua.Media)
-                .Include(c => c.CommentLikes)
-                .Where(c => commentIds.Contains(c.ParrentCommentId.Value) && !c.IsDelete)
-                .ToListAsync();
+            // Группировка комментариев по записям
+            var commentsByNote = comments
+                .GroupBy(c => c.IdNote)
+                .ToDictionary(g => g.Key, g => g.Count());
 
-            // Объединение подкомментариев с комментариями
-            foreach (var comment in comments)
+            // Маппинг записей в DTO и добавление количества комментариев
+            var notes = wall.Notes.Select(note =>
             {
-                comment.InverseParrentComment = subComments.Where(sc => sc.ParrentCommentId == comment.Id).ToList();
-            }
+                var noteDTO = _mapper.Map<NoteDTO>(note);
+                noteDTO.CommentsCount = commentsByNote.GetValueOrDefault(note.Id, 0);
+                return noteDTO;
+            }).ToList();
 
-            // Маппинг записей в DTO
-            var notes = _mapper.Map<IEnumerable<NoteDTO>>(wall.Notes);
             return notes;
+        }
+
+        public async Task<IEnumerable<CommentDTO>> GetCommentsWithSubCommentsAsync(Guid noteId)
+        {
+            var comments = await _context.Comments
+                .Include(c => c.MediaComments)
+                    .ThenInclude(mc => mc.IdMediaNavigation)
+                .Include(c => c.IdUserNavigation)
+                    .ThenInclude(u => u.UserAvatars)
+                        .ThenInclude(ua => ua.Media)
+                .Include(c => c.CommentLikes)
+                .Include(c => c.InverseParrentComment) // Включаем подкомментарии
+                .Where(c => c.IdNote == noteId && !c.IsDelete)
+                .ToListAsync();
+
+            // Группируем комментарии по родительским и подкомментариям
+            var commentsDictionary = comments
+                .GroupBy(c => c.ParrentCommentId ?? Guid.Empty)
+                .ToDictionary(g => g.Key, g => g.ToList());
+
+            // Маппим комментарии в DTO и добавляем подкомментарии
+            var result = commentsDictionary.GetValueOrDefault(Guid.Empty, new List<Comment>())
+                .Select(comment =>
+                {
+                    var commentDTO = _mapper.Map<CommentDTO>(comment);
+                    var subComments = commentsDictionary.GetValueOrDefault(comment.Id, new List<Comment>());
+                    commentDTO.SubComments = _mapper.Map<IEnumerable<CommentDTO>>(subComments);
+                    commentDTO.SubCommentsCount = subComments.Count;
+                    return commentDTO;
+                })
+                .ToList();
+
+            return result;
         }
 
         public async Task<bool> UpdateNoteStatusAsync(Guid idNote, Guid idStatus)

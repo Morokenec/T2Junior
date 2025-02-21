@@ -31,7 +31,9 @@ namespace T2JuniorAPI.MappingProfiles
                 .ForMember(dest => dest.UserName, opt => opt.MapFrom(src => $"{src.IdUserNavigation.FirstName} {src.IdUserNavigation.LastName}"))
                 .ForMember(dest => dest.NoteId, opt => opt.MapFrom(src => src.IdNote))
                 .ForMember(dest => dest.SubComments, opt => opt.MapFrom(src => src.InverseParrentComment
-                    .Where(pc => pc.ParrentCommentId != null)));
+                    .Where(pc => pc.ParrentCommentId != null)
+                    .OrderBy(pc => pc.CreationDate)))
+                .ForMember(dest => dest.SubCommentsCount, opt => opt.MapFrom(src => src.InverseParrentComment.Count(pc => pc.ParrentCommentId != null)));
 
             CreateMap<MediaComment, MediaCommentDTO>()
                 .ForMember(dest => dest.CommentId, opt => opt.MapFrom(src => src.IdComment))

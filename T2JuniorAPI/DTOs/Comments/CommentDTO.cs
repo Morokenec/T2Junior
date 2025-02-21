@@ -11,6 +11,7 @@ namespace T2JuniorAPI.DTOs.Comments
         public string Text { get; set; }
         public Guid? ParrentCommentId { get; set; }
         public int LikeCount { get; set; }
+        public int SubCommentsCount { get; set; }
         public IEnumerable<CommentDTO> SubComments { get; set; }
         public IEnumerable<MediaCommentDTO> MediaComments { get; set; }
     }

@@ -12,7 +12,7 @@ namespace T2JuniorAPI.DTOs.Notes
         public string Description { get; set; }
         public Guid? IdRepost { get; set; }
         public int LikeCount { get; set; }
+        public int CommentsCount { get; set; }
         public IEnumerable<MediaNoteDTO> MediaNotes { get; set; }
-        public IEnumerable<CommentDTO> Comments { get; set; }
     }
 }

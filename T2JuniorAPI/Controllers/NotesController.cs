@@ -48,7 +48,14 @@ namespace T2JuniorAPI.Controllers
         [HttpGet("get-by-id-owner/{idOwner}")]
         public async Task<ActionResult<IEnumerable<NoteDTO>>> GetNotesByIdOwner(Guid idOwner)
         {
-            var notes = await _noteService.GetNotesByIdOwnerAsync(idOwner);
+            var notes = await _noteService.GetNotesWithCommentCountAsync(idOwner);
+            return Ok(notes);
+        }
+        
+        [HttpGet("get-comments-by-id-note/{idNote}")]
+        public async Task<ActionResult<IEnumerable<NoteDTO>>> GetSubCommentsByParrent(Guid idNote)
+        {
+            var notes = await _noteService.GetCommentsWithSubCommentsAsync(idNote);
             return Ok(notes);
         }
 
