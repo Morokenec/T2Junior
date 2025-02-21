@@ -89,8 +89,6 @@ public partial class ProfilePage : ContentPage
 
     private async void OnClubsButtonTapped(object sender, EventArgs e)
     {
-        IClubService _clubService = new ClubService(new HttpClient(), new JsonDeserializerService());
-        await Navigation.PushAsync(new ClubsPage(_clubService));
     }
 
     private async void OnProjectsFrameTapped(object sender, EventArgs e)

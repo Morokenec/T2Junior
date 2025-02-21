@@ -7,19 +7,16 @@ public partial class ClubProfilePage : ContentPage
 {
     private readonly ClubProfileViewModel _viewModel;
 
-    public ClubProfilePage(IClubService clubService, Guid clubId)
+    public ClubProfilePage(ClubProfileViewModel clubProfileViewModel)
     {
         InitializeComponent();
-        _viewModel = new ClubProfileViewModel(clubService);
+        _viewModel = clubProfileViewModel;
         BindingContext = _viewModel;
-
-        // Передаем clubId в ViewModel, если это необходимо
-        _viewModel.SelectedClubId = clubId;
     }
 
     protected override async void OnAppearing()
     {
         base.OnAppearing();
-        await _viewModel.LoadClubProfileAsync(_viewModel.SelectedClub.ToString());
+        await _viewModel.LoadClubsAsync();
     }
 }

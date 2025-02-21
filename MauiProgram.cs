@@ -37,10 +37,15 @@ namespace MauiApp1
                 builder.Services.AddSingleton<IProfileService, ProfileService>();
                 builder.Services.AddSingleton<IClubService, ClubService>();
                 builder.Services.AddSingleton<INoteService, NoteService>();
+
                 builder.Services.AddSingleton<UserProfileViewModel>();
                 builder.Services.AddSingleton<ClubsViewModel>();
                 builder.Services.AddSingleton<ClubProfileViewModel>();
+
                 builder.Services.AddTransient<ProfilePage>();
+                builder.Services.AddTransient<ClubsPage>();
+                builder.Services.AddTransient<ClubProfilePage>();
+
                 builder.Services.AddSingleton<HttpClient>();
 
                 builder.Services.AddHttpClient<IProfileService, ProfileService>();

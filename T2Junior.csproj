@@ -60,7 +60,6 @@
 	  <Compile Remove="Pages\GeneralNotesPage.xaml.cs" />
 	  <Compile Remove="PixelToDPI.cs" />
 	  <Compile Remove="ViewModels\MessageViewModel.cs" />
-	  <Compile Remove="ViewModels\NoteViewModel.cs" />
 	</ItemGroup>
 
 	<ItemGroup>

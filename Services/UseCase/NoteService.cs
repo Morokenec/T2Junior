@@ -25,7 +25,6 @@ namespace MauiApp1.Services.UseCase
         {
             try
             {
-                // Пример URL для получения списка заметок
                 string url = $"{AppSetings.base_url}/api/Notes/get-by-id-owner/{AppSetings.test_user_guid}";
 
                 HttpResponseMessage response = await _httpClient.GetAsync(url);

@@ -1,28 +1,23 @@
 using MauiApp1.Models.ClubModels.Club;
 using MauiApp1.Services.AppHelper;
 using MauiApp1.Services.UseCase.Interface;
+using MauiApp1.ViewModels.ClubProfileViewModel;
 using MauiApp1.ViewModels.ClubViewModel;
 
 namespace MauiApp1;
 
 public partial class ClubsPage : ContentPage
 {
-    private readonly IClubService _clubService;
+    private readonly ClubsViewModel _clubsViewModel;
+    private readonly ClubProfileViewModel _clubProfileViewModel;
 
     // Конструктор с зависимостью IClubService
-    public ClubsPage(IClubService clubService)
+    public ClubsPage(ClubsViewModel clubsViewModel)
     {
         InitializeComponent();
-        _clubService = clubService ?? throw new ArgumentNullException(nameof(clubService));
-        BindingContext = new ClubsViewModel();
+        _clubsViewModel = clubsViewModel;
+        BindingContext = _clubsViewModel;
 
-        // Загружаем клубы при инициализации
-        LoadClubsAsync();
-    }
-
-    private async Task LoadClubsAsync()
-    {
-        var clubsViewModel = (ClubsViewModel)BindingContext;
         clubsViewModel.LoadClubsAsync();
     }
 
@@ -42,8 +37,7 @@ public partial class ClubsPage : ContentPage
         var tappedClub = (sender as StackLayout)?.BindingContext as Club;
         if (tappedClub != null)
         {
-            // Переходим с передачей ID клуба
-            await Application.Current.MainPage.Navigation.PushAsync(new ClubProfilePage(_clubService, tappedClub.id));
+            await Application.Current.MainPage.Navigation.PushAsync(new ClubProfilePage(_clubProfileViewModel));
         }
     }
 }

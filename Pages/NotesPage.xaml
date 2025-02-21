@@ -8,7 +8,7 @@
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
             <RowDefinition Height="Auto" />
-            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
         </Grid.RowDefinitions>
 
         <HorizontalStackLayout x:Name="NotesLayout"
@@ -29,7 +29,7 @@
                        HorizontalOptions="Center"
                        WidthRequest="24"
                        HeightRequest="24"
-                       IsVisible="{Binding Source={x:Reference Notes}, Path=Redirected}"/>
+                       IsVisible="{Binding Source={x:Reference Notes}, Path=Redirected}" />
             </Frame>
             <Frame x:Name="NotesTextFrame"
                    BorderColor="Transparent"
@@ -42,5 +42,88 @@
                        HeightRequest="24" />
             </Frame>
         </HorizontalStackLayout>
+
+        <Frame Grid.Row="1"
+               HeightRequest="44"
+               CornerRadius="12"
+               Margin="16,0">
+            <HorizontalStackLayout VerticalOptions="Center">
+                <Frame HasShadow="True"
+                       WidthRequest="295"
+                       HeightRequest="44"
+                       BorderColor="Transparent">
+                    <Entry x:Name="searchEntry"
+                           Text="{Binding SearchText}"
+                           Placeholder="Поиск"
+                           PlaceholderColor="#A2A4AF"
+                           FontFamily="Manrope"
+                           HorizontalOptions="FillAndExpand"
+                           FontSize="13"
+                           Margin="12,0" />
+                </Frame>
+            </HorizontalStackLayout>
+        </Frame>
+
+        <CollectionView ItemsSource="{Binding FilteredNotes}"
+                        x:Name="NotesCollection"
+                        Grid.Row="2"
+                        Margin="0,12,0,0"
+                        BackgroundColor="#EBEBEB">
+            <CollectionView.ItemsLayout>
+                <GridItemsLayout Span="1"
+                                 Orientation="Vertical" />
+            </CollectionView.ItemsLayout>
+            <CollectionView.ItemTemplate>
+                <DataTemplate>
+                    <Frame CornerRadius="10"
+                           HorizontalOptions="Fill"
+                           VerticalOptions="Fill"
+                           Padding="16,20,16,16"
+                           Margin="8,10,8,12"
+                           BackgroundColor="White">
+                        <StackLayout>
+                            <StackLayout.GestureRecognizers>
+                                <TapGestureRecognizer Tapped="OnNoteTapped" />
+                            </StackLayout.GestureRecognizers>
+                            <Frame HorizontalOptions="Fill"
+                                   VerticalOptions="Fill"
+                                   BorderColor="Transparent"
+                                   HasShadow="True">
+                                <StackLayout>
+                                    <StackLayout.GestureRecognizers>
+                                        <TapGestureRecognizer Tapped="OnNoteTapped" />
+                                    </StackLayout.GestureRecognizers>
+                                    <Label Text="{Binding Name}"
+                                           HorizontalOptions="Start"
+                                           HeightRequest="24"
+                                           FontSize="13"
+                                           FontFamily="RedRoseBold" />
+                                    <Label Text="{Binding Description}"
+                                           HorizontalOptions="Start"
+                                           HeightRequest="24"
+                                           FontSize="11"
+                                           TextColor="#9C9B9A"
+                                           FontFamily="ManropeExtraLight" />
+                                    <Image x:Name="NewsHolder"
+                                           IsVisible="True"
+                                           Aspect="AspectFill"
+                                           Source="{Binding NoteMediaSource}"
+                                           HorizontalOptions="Fill"
+                                           VerticalOptions="Fill"
+                                           Margin="0,12,0,0" />
+                                </StackLayout>
+                            </Frame>
+                        </StackLayout>
+                    </Frame>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+            <CollectionView.EmptyView>
+                <Label Text="Результаты не найдены."
+                       HorizontalOptions="Center"
+                       VerticalOptions="Start"
+                       Margin="0,50,0,0"
+                       FontSize="24" />
+            </CollectionView.EmptyView>
+        </CollectionView>
     </Grid>
 </ContentPage>
