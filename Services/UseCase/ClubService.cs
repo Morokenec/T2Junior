@@ -6,17 +6,32 @@ using System.Diagnostics;
 
 namespace MauiApp1.Services.UseCase
 {
+    /// <summary>
+    /// Сервис для работы с клубами.
+    /// </summary>
+    /// <remarks>
+    /// Этот сервис предоставляет методы для получения списка клубов и информации о конкретном клубе.
+    /// </remarks>
     public class ClubService : IClubService
     {
         private readonly HttpClient _httpClient;
         private readonly IJsonDeserializerService _jsonDeserializerService;
 
+        /// <summary>
+        /// Конструктор сервиса ClubService.
+        /// </summary>
+        /// <param name="httpClient">HTTP-клиент для выполнения запросов.</param>
+        /// <param name="jsonDeserializerService">Сервис для десериализации JSON.</param>
         public ClubService(HttpClient httpClient, IJsonDeserializerService jsonDeserializerService)
         {
             _httpClient = httpClient;
             _jsonDeserializerService = jsonDeserializerService;
         }
 
+        /// <summary>
+        /// Получает список клубов для текущего пользователя.
+        /// </summary>
+        /// <returns>Список клубов или null в случае ошибки.</returns>
         public async Task<List<ClubList>> GetClubsAsync()
         {
             try
@@ -43,6 +58,11 @@ namespace MauiApp1.Services.UseCase
             }
         }
 
+        /// <summary>
+        /// Получает информацию о клубе по его идентификатору.
+        /// </summary>
+        /// <param name="clubId">Идентификатор клуба.</param>
+        /// <returns>Информация о клубе или null в случае ошибки.</returns>
         public async Task<Club> GetClubById(string clubId)
         {
             try

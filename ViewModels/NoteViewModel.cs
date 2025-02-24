@@ -8,10 +8,20 @@ using System.Threading.Tasks;
 
 namespace MauiApp1.ViewModels
 {
+    /// <summary>
+    /// ViewModel для управления заметками.
+    /// </summary>
+    /// <remarks>
+    /// Предоставление методов для фильтрации и отображения заметок.
+    /// </remarks>
     public class NoteViewModel : BindableObject
     {
 
         private string _searchText;
+
+        /// <summary>
+        /// Текст для поиска заметок.
+        /// </summary>
         public string SearchText
         {
             get => _searchText;
@@ -25,11 +35,22 @@ namespace MauiApp1.ViewModels
                 }
             }
         }
+
+        /// <summary>
+        /// Полный список заметок.
+        /// </summary>
         public ObservableCollection<Note> Notes { get; set; }
+
+        /// <summary>
+        /// Отфильтрованный список заметок.
+        /// </summary>
         public ObservableCollection<Note> FilteredNotes { get; set; }
 
         private Note _selectedNote;
 
+        /// <summary>
+        /// Выбранная заметка.
+        /// </summary>
         public Note SelectedNote
         {
             get => _selectedNote;
@@ -40,6 +61,9 @@ namespace MauiApp1.ViewModels
             }
         }
 
+        /// <summary>
+        /// Конструктор класса NoteViewModel.
+        /// </summary>
         public NoteViewModel()
         {
             //LoadDetailedNote();
@@ -62,6 +86,9 @@ namespace MauiApp1.ViewModels
         //    SelectedNote = viewModel.GetNoteById(DetailedNotePage.SelectedNoteId);
         //}
 
+        /// <summary>
+        /// Фильтрация замеоки по тексту поиска.
+        /// </summary>
         public void FilterNotes()
         {
             if (string.IsNullOrWhiteSpace(SearchText))
@@ -83,6 +110,11 @@ namespace MauiApp1.ViewModels
             }
         }
 
+        /// <summary>
+        /// Возвращение заметок по её идентификатору.
+        /// </summary>
+        /// <param name="idNote">Идентификатор заметки.</param>
+        /// <returns>Заметка с заданным идентификатором или null, если не найдена.</returns>
         public Note GetNoteById(string idNote)
         {
             return Notes.FirstOrDefault(c => c.Id == idNote);

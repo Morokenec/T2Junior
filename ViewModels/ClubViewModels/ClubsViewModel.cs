@@ -8,6 +8,12 @@ using MauiApp1.Models.ClubModels.Club;
 
 namespace MauiApp1.ViewModels.ClubViewModel
 {
+    /// <summary>
+    /// ViewModel для управления списком клубов.
+    /// </summary>
+    /// <remarks>
+    /// Предоставление методов для загрузки, фильтрации и обновления списка клубов, а также для управления подписками на клубы.
+    /// </remarks>
     public class ClubsViewModel : BindableObject, INotifyPropertyChanged
     {
         private readonly ClubService _clubService;
@@ -31,6 +37,10 @@ namespace MauiApp1.ViewModels.ClubViewModel
         }
 
         private ObservableCollection<Club> _clubs;
+
+        /// <summary>
+        /// Текст для поиска клубов.
+        /// </summary>
         public ObservableCollection<Club> Clubs
         {
             get => _clubs;
@@ -45,6 +55,10 @@ namespace MauiApp1.ViewModels.ClubViewModel
         }
 
         private ObservableCollection<Club> _filteredClubs;
+
+        /// <summary>
+        /// Отфильтрованный список клубов.
+        /// </summary>
         public ObservableCollection<Club> FilteredClubs
         {
             get => _filteredClubs;
@@ -58,10 +72,21 @@ namespace MauiApp1.ViewModels.ClubViewModel
             }
         }
 
+        /// <summary>
+        /// Команда для проверки подписки на клуб.
+        /// </summary>
         public ICommand SubscriptionCheckCommand { get; }
+
+        /// <summary>
+        /// Команда для обновления списка клубов.
+        /// </summary>
         public ICommand RefreshCommand { get; }
 
         private bool _isSubscribed;
+
+        /// <summary>
+        /// Флаг, указывающий, подписан ли пользователь на клуб.
+        /// </summary>
         public bool IsSubscribed
         {
             get => _isSubscribed;
@@ -76,6 +101,9 @@ namespace MauiApp1.ViewModels.ClubViewModel
             }
         }
 
+        /// <summary>
+        /// Флаг, указывающий, на статус выполнения обновления списка клубов.
+        /// </summary>
         public bool IsRefreshing
         {
             get => _isRefreshing;
@@ -89,9 +117,12 @@ namespace MauiApp1.ViewModels.ClubViewModel
             }
         }
 
-        // Отображаемое изображение зависит от состояния подписки
+        // Отображение изображения зависит от статуса подписки
         public string SubImageSource => IsSubscribed ? "already_subbed.svg" : "add_a_new.svg";
 
+        /// <summary>
+        /// Конструктор класса ClubsViewModel.
+        /// </summary>
         public ClubsViewModel()
         {
             _httpClient = new HttpClient();
@@ -107,7 +138,7 @@ namespace MauiApp1.ViewModels.ClubViewModel
         }
 
         /// <summary>
-        /// Асинхронно загружает данные о клубах и обновляет коллекции.
+        /// Асинхронная загрузка данных о клубах и обновление коллекции.
         /// </summary>
         public async void LoadClubsAsync()
         {
@@ -145,7 +176,7 @@ namespace MauiApp1.ViewModels.ClubViewModel
         }
 
         /// <summary>
-        /// Фильтрует список клубов по введённому тексту.
+        /// Фильтрация списка клубов по введённому тексту.
         /// </summary>
         public void FilterClubs()
         {
@@ -173,7 +204,7 @@ namespace MauiApp1.ViewModels.ClubViewModel
         }
 
         /// <summary>
-        /// Переключает состояние подписки.
+        /// Переключение состояние подписки.
         /// </summary>
         private void ToggleSubscription()
         {
@@ -188,7 +219,7 @@ namespace MauiApp1.ViewModels.ClubViewModel
         }
 
         /// <summary>
-        /// Возвращает клуб по идентификатору.
+        /// Возвращение клуба по идентификатору.
         /// </summary>
         /// <param name="idClub">Идентификатор клуба.</param>
         /// <returns>Клуб с заданным идентификатором или null, если не найден.</returns>
