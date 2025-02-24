@@ -1,5 +1,6 @@
 using MauiApp1.Models.ClubModels.Club;
 using MauiApp1.Services.AppHelper;
+using MauiApp1.Services.UseCase;
 using MauiApp1.Services.UseCase.Interface;
 using MauiApp1.ViewModels.ClubProfileViewModel;
 using MauiApp1.ViewModels.ClubViewModel;
@@ -9,9 +10,7 @@ namespace MauiApp1;
 public partial class ClubsPage : ContentPage
 {
     private readonly ClubsViewModel _clubsViewModel;
-    private readonly ClubProfileViewModel _clubProfileViewModel;
 
-    // Конструктор с зависимостью IClubService
     public ClubsPage(ClubsViewModel clubsViewModel)
     {
         InitializeComponent();
@@ -41,7 +40,9 @@ public partial class ClubsPage : ContentPage
         var tappedClub = (sender as StackLayout)?.BindingContext as Club;
         if (tappedClub != null)
         {
-            await Application.Current.MainPage.Navigation.PushAsync(new ClubProfilePage(_clubProfileViewModel));
+            HttpClient httpClient = new HttpClient();
+            JsonDeserializerService jsonDeserializerService = new JsonDeserializerService();
+            await Application.Current.MainPage.Navigation.PushAsync(new ClubProfilePage(new ClubProfileViewModel(new ClubService(httpClient, jsonDeserializerService), new NoteService(httpClient, jsonDeserializerService), tappedClub.Id)));
         }
     }
 }

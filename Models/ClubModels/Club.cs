@@ -12,21 +12,21 @@ namespace MauiApp1.Models.ClubModels.Club
     public class Club
     {
         [JsonPropertyName("id")]
-        public Guid id { get; set; }
+        public Guid Id { get; set; }
 
         [JsonPropertyName("name")]
-        public string name { get; set; } = "КофеКлуб";
+        public string Name { get; set; } = "КофеКлуб";
 
         [JsonPropertyName("target")]
-        public string target { get; set; } = "Клуб кофеманов";
+        public string Target { get; set; } = "Клуб кофеманов";
 
         [JsonPropertyName("avatarPath")]
-        public string avatarPath { get; set; } = "club_placeholder.svg";
+        public string AvatarPath { get; set; } = "club_placeholder.svg";
 
         public string SubImageSource => IsSubscribed ? "already_subbed.svg" : "add_a_new.svg";
 
         [JsonPropertyName("usersCount")]
-        public int usersCount { get; set; } = 13;
+        public int UsersCount { get; set; } = 13;
 
         [NotMapped]
         private bool _isSubscribed;

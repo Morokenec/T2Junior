@@ -93,7 +93,7 @@
                                     <HorizontalStackLayout.GestureRecognizers>
                                         <TapGestureRecognizer Tapped="OnClubTapped" />
                                     </HorizontalStackLayout.GestureRecognizers>
-                                        <Image Source="{Binding avatarPath}" 
+                                        <Image Source="{Binding AvatarPath}" 
                                            VerticalOptions="Start" 
                                            HorizontalOptions="Start"
                                            WidthRequest="74"
@@ -115,11 +115,11 @@
                                     <StackLayout.GestureRecognizers>
                                         <TapGestureRecognizer Tapped="OnClubTapped" />
                                     </StackLayout.GestureRecognizers>
-                                    <Label Text="{Binding name}" 
+                                    <Label Text="{Binding Name}" 
                                            HorizontalOptions="Start" 
                                            FontSize="13"
                                            TextColor="#303345"/>
-                                    <Label Text="{Binding target}" 
+                                    <Label Text="{Binding Target}" 
                                            HorizontalOptions="Start" 
                                            FontSize="11"
                                            TextColor="#6B6D80"

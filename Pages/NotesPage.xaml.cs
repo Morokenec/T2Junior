@@ -7,7 +7,7 @@ namespace MauiApp1;
 
 public partial class NotesPage : ContentPage
 {
-    public bool HolderIsVisible { get; set; } = true; //�������� �������
+    public bool HolderIsVisible { get; set; } = true; 
     public bool Redirected { get; set; } = BackNavigationState.IsDirectAccess;
     public NotesPage()
     {

@@ -3,6 +3,8 @@ using MauiApp1.Models.ClubModels.ClubList;
 using MauiApp1.Services.AppHelper;
 using MauiApp1.Services.UseCase.Interface;
 using System.Diagnostics;
+using System.Text.Json;
+using System.Text;
 
 namespace MauiApp1.Services.UseCase
 {
@@ -10,6 +12,7 @@ namespace MauiApp1.Services.UseCase
     {
         private readonly HttpClient _httpClient;
         private readonly IJsonDeserializerService _jsonDeserializerService;
+
 
         public ClubService(HttpClient httpClient, IJsonDeserializerService jsonDeserializerService)
         {
@@ -21,7 +24,7 @@ namespace MauiApp1.Services.UseCase
         {
             try
             {
-                string url = $"{AppSetings.base_url}/api/Clubs/by-user/{AppSetings.test_user_guid}";
+                string url = $"{AppSettings.base_url}/api/Clubs/by-user/{AppSettings.test_user_guid}";
 
                 HttpResponseMessage response = await _httpClient.GetAsync(url);
                 string responseContent = await response.Content.ReadAsStringAsync();
@@ -43,11 +46,11 @@ namespace MauiApp1.Services.UseCase
             }
         }
 
-        public async Task<Club> GetClubById(string clubId)
+        public async Task<Club> GetClubById(Guid clubId)
         {
             try
             {
-                string url = $"{AppSetings.base_url}/api/Clubs/{clubId}/profile";
+                string url = $"{AppSettings.base_url}/api/Clubs/{clubId.ToString()}/profile";
                 HttpResponseMessage response = await _httpClient.GetAsync(url);
                 string responseContent = await response.Content.ReadAsStringAsync();
                 Debug.WriteLine($"[DEBUG] Response: {responseContent}");
@@ -66,6 +69,25 @@ namespace MauiApp1.Services.UseCase
                 Debug.WriteLine($"[ERROR] Exception: {ex.Message}");
                 return null;
             }
+        }
+
+        public async Task SubscribeClub(Guid clubId, Guid userId, Guid roleId)
+        {
+            string url = $"{AppSettings.base_url}/api/Clubs/{clubId}/add-user";
+
+            var requestBody = new
+            {
+                userId = userId.ToString(),
+                roleId = roleId.ToString()
+            };
+
+            using var content = new StringContent(
+                JsonSerializer.Serialize(requestBody),
+                Encoding.UTF8,
+                "application/json");
+
+            using var response = await _httpClient.PostAsync(url, content);
+            response.EnsureSuccessStatusCode();
         }
     }
 }

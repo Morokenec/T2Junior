@@ -20,7 +20,7 @@ namespace MauiApp1.Services.UseCase
         {
             try
             {
-                string url = $"{AppSetings.base_url}/api/Account/profile/{AppSetings.test_user_guid}";
+                string url = $"{AppSettings.base_url}/api/Account/profile/{AppSettings.test_user_guid}";
 
                 HttpResponseMessage response = await _httpClient.GetAsync(url);
 

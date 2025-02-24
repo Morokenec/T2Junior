@@ -25,7 +25,7 @@ namespace MauiApp1.Services.UseCase
         {
             try
             {
-                string url = $"{AppSetings.base_url}/api/Notes/get-by-id-owner/{AppSetings.test_user_guid}";
+                string url = $"{AppSettings.base_url}/api/Notes/get-by-id-owner/{AppSettings.test_user_guid}";
 
                 HttpResponseMessage response = await _httpClient.GetAsync(url);
                 string responseContent = await response.Content.ReadAsStringAsync();
@@ -52,7 +52,7 @@ namespace MauiApp1.Services.UseCase
             try
             {
                 // Пример URL для получения конкретной заметки по её ID
-                string url = $"{AppSetings.base_url}/api/Notes/{noteId}";
+                string url = $"{AppSettings.base_url}/api/Notes/{noteId}";
 
                 HttpResponseMessage response = await _httpClient.GetAsync(url);
                 string responseContent = await response.Content.ReadAsStringAsync();

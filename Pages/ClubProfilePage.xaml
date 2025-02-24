@@ -53,7 +53,7 @@
                    VerticalOptions="FillAndExpand"
                    HorizontalOptions="FillAndExpand"
                    CornerRadius="10">
-                <StackLayout>
+                < >
                     <Frame x:Name="RatingFrame"
                            BackgroundColor="#F4FAFF"
                            HorizontalOptions="End"
@@ -113,7 +113,7 @@
                                CornerRadius="50"
                                Margin="24, 24, 24, 5">
                             <Image x:Name="AvatarImage"
-                                   Source="{Binding SelectedClub.AvatarPath}"
+                                   Source="club_placeholder"
                                    Aspect="AspectFill"
                                    VerticalOptions="Start"
                                    HorizontalOptions="Start"
@@ -130,31 +130,176 @@
                                HorizontalOptions="Start"
                                FontSize="20"/>
                         <Label x:Name="RoleLabel"
-                               Text="{Binding SelectedClub.Target}" 
+                               Text="{Binding SelectedClub.Target}"
                                HorizontalOptions="Start"
                                VerticalOptions="Center"
                                FontSize="15"
                                TextColor="#1A68AF"/>
                         <Label x:Name="JobLabel"
                                TextColor="#838281"
-                               Text="{Binding SelectedClub.UsersCount, StringFormat='Количество участников {0}'}" 
+                               Text="{Binding SelectedClub.UsersCount, StringFormat='Количество участников {0}'}"
                                HorizontalOptions="Start"
                                VerticalOptions="Center"
                                FontSize="12"/>
                         <Button x:Name="SubscribeButton"
                                 BackgroundColor="#0057A6"
                                 BorderWidth="1"
-                                Text="{Binding SubscriptionText}"
+                                IsVisible="True"
+                                Text="Подписаться"
                                 TextColor="White"
                                 FontSize="15"
                                 HorizontalOptions="Start"
                                 VerticalOptions="Center"
-                                Command="{Binding SubscribeCommand}"
+                                Clicked="SubscribeButton_Clicked"
                                 WidthRequest="319"
                                 Margin="0, 10, 0, 0"/>
                     </VerticalStackLayout>
-                </StackLayout>
+                </>
             </Frame>
+
+            <HorizontalStackLayout x:Name="HorizontalContentLayout" 
+                               Grid.Row="4"
+                               Spacing="10"
+                               Margin="8, 20">
+                <Frame x:Name="CalendarFrame"
+                       CornerRadius="16"
+                       HasShadow="True"
+                       WidthRequest="107.76"
+                       HeightRequest="76"
+                       Padding="12">
+                    <!--<Frame.GestureRecognizers>
+                        <TapGestureRecognizer Tapped="OnCalendarButtonTapped" />
+                    </Frame.GestureRecognizers>-->
+                    <StackLayout x:Name="CalendarLayout"
+                             Spacing="8">
+                        <Image Source="monochrome_calendar.svg"
+                           Aspect="AspectFill"
+                           VerticalOptions="Start"
+                           HorizontalOptions="Start"
+                           HeightRequest="24"
+                           WidthRequest="24"/>
+
+                        <Label Text="Календарь" 
+                           FontSize="13" 
+                           FontFamily="ManropeMid" 
+                           TextColor="#9C9B9A"
+                           HorizontalOptions="Start"/>
+                    </StackLayout>
+                </Frame>
+
+                <Frame x:Name="RulesFrame"
+                   CornerRadius="16"
+                   HasShadow="True"
+                   WidthRequest="107.76"
+                   HeightRequest="76"
+                   Padding="12">
+                    <!--<Frame.GestureRecognizers>
+                        <TapGestureRecognizer Tapped="OnRulesButtonTapped" />
+                    </Frame.GestureRecognizers>-->
+                    <StackLayout x:Name="RulesLayout"
+                             Spacing="8">
+                        <Image Source="rules.svg"
+                           Aspect="AspectFill"
+                           VerticalOptions="Start"
+                           HorizontalOptions="Start"
+                           HeightRequest="24"
+                           WidthRequest="24"/>
+
+                        <Label Text="Правила" 
+                           FontSize="13" 
+                           FontFamily="ManropeMid" 
+                           TextColor="#9C9B9A"/>
+                    </StackLayout>
+                </Frame>
+
+                <Frame x:Name="InitiumFrame"
+                   CornerRadius="16"
+                   HasShadow="True"
+                   WidthRequest="107.76"
+                   HeightRequest="76"
+                   Padding="12">
+                    <!--<Frame.GestureRecognizers>
+                        <TapGestureRecognizer Tapped="OnInitiumButtonTapped" />
+                    </Frame.GestureRecognizers>-->
+                    <StackLayout x:Name="InitiumLayout"
+                             Spacing="6">
+                        <Image Source="initium.svg"
+                           Aspect="AspectFill"
+                           VerticalOptions="Start"
+                           HorizontalOptions="Start"
+                           HeightRequest="24"
+                           WidthRequest="24"/>
+
+                        <Label Text="Инициативы" 
+                           FontSize="13" 
+                           FontFamily="ManropeMid" 
+                           TextColor="#9C9B9A"/>
+                    </StackLayout>
+                </Frame>
+            </HorizontalStackLayout>
+
+
+            <CollectionView ItemsSource="{Binding Notes}"
+          x:Name="NotesCollection"
+          Grid.Row="6"
+          Margin="0,12,0,0"
+          BackgroundColor="#EBEBEB">
+                <CollectionView.ItemsLayout>
+                    <GridItemsLayout Span="1"
+                   Orientation="Vertical" />
+                </CollectionView.ItemsLayout>
+                <CollectionView.ItemTemplate>
+                    <DataTemplate>
+                        <Frame CornerRadius="10"
+             HorizontalOptions="Fill"
+             VerticalOptions="Fill"
+             Padding="16,20,16,16"
+             Margin="8,10,8,0"
+             BackgroundColor="White">
+                            <StackLayout>
+                                <!--<StackLayout.GestureRecognizers>
+                          <TapGestureRecognizer Tapped="OnNoteTapped" />
+                      </StackLayout.GestureRecognizers>-->
+                                <Frame HorizontalOptions="Fill"
+                     VerticalOptions="Fill"
+                     BorderColor="Transparent"
+                     HasShadow="True">
+                                    <StackLayout>
+                                        <!--<StackLayout.GestureRecognizers>
+                                  <TapGestureRecognizer Tapped="OnNoteTapped" />
+                              </StackLayout.GestureRecognizers>-->
+                                        <Label Text="{Binding Name}"
+                             HorizontalOptions="Start"
+                             HeightRequest="24"
+                             FontSize="14"
+                             FontFamily="RedRoseBold" />
+                                        <Label Text="{Binding Description}"
+                             HorizontalOptions="Start"
+                             
+                             FontSize="12"
+                             TextColor="#9C9B9A"
+                             FontFamily="ManropeExtraLight" />
+                                        <Image x:Name="NewsHolder"
+                             IsVisible="True"
+                             Aspect="AspectFill"
+                             Source="{Binding NoteMediaSource}"
+                             HorizontalOptions="Fill"
+                             VerticalOptions="Fill"
+                             Margin="0,12,0,0" />
+                                    </StackLayout>
+                                </Frame>
+                            </StackLayout>
+                        </Frame>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+                <CollectionView.EmptyView>
+                    <Label Text="Результаты не найдены."
+                     HorizontalOptions="Center"
+                     VerticalOptions="Start"
+                     Margin="0,50,0,0"
+                     FontSize="24" />
+                </CollectionView.EmptyView>
+            </CollectionView>
         </Grid>
     </ScrollView>
 </ContentPage>

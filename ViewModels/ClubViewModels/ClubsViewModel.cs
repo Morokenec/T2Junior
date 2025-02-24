@@ -120,11 +120,11 @@ namespace MauiApp1.ViewModels.ClubViewModel
                     {
                         var club = new Club
                         {
-                            id = clubItem.Id,
-                            name = clubItem.Name,
+                            Id = clubItem.Id,
+                            Name = clubItem.Name,
                             IsSubscribed = clubItem.IsSubscribe,
                         };
-                        Debug.WriteLine($"[DATA]{club.id} - {club.name} - {club.IsSubscribed} ");
+                        Debug.WriteLine($"[DATA]{club.Id} - {club.Name} - {club.IsSubscribed} ");
                         Clubs.Add(club);
                     }
 
@@ -160,7 +160,7 @@ namespace MauiApp1.ViewModels.ClubViewModel
                 }
                 else
                 {
-                    var filtered = Clubs.Where(c => c.name.Contains(SearchText, StringComparison.OrdinalIgnoreCase)).ToList();
+                    var filtered = Clubs.Where(c => c.Name.Contains(SearchText, StringComparison.OrdinalIgnoreCase)).ToList();
                     FilteredClubs.Clear();
                     foreach (var club in filtered)
                     {
@@ -192,7 +192,7 @@ namespace MauiApp1.ViewModels.ClubViewModel
         /// <returns>Клуб с заданным идентификатором или null, если не найден.</returns>
         public Club GetClubById(Guid idClub)
         {
-            return Clubs.FirstOrDefault(c => c.id == idClub);
+            return Clubs.FirstOrDefault(c => c.Id == idClub);
         }
     }
 }

@@ -106,7 +106,7 @@
                                            VerticalOptions="End"
                                            FontFamily="MyriadProBold"/>
 
-                                    <Label FontSize="9"
+                                    <Label FontSize="9" 
                                            Text="из"
                                            VerticalOptions="End"
                                            TextColor="#9C9B9A"/>

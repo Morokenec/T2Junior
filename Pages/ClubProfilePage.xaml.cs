@@ -19,8 +19,16 @@ public partial class ClubProfilePage : ContentPage
         base.OnAppearing();
         if (BindingContext is ClubProfileViewModel viewModel)
         {
-            await viewModel.LoadClubsAsync();
+            await viewModel.LoadClubProfileAsync();
 
+        }
+    }
+
+    private void SubscribeButton_Clicked(object sender, EventArgs e)
+    {
+        if (BindingContext is ClubProfileViewModel viewModel)
+        {
+            viewModel.SubscribeClub();
         }
     }
 }

@@ -1,27 +1,33 @@
-﻿using MauiApp1.Models.ClubModels.Club;
+﻿using MauiApp1.DataModel;
+using MauiApp1.Models.ClubModels.Club;
 using MauiApp1.Models.ClubModels.ClubList;
+using MauiApp1.Models.Profile;
 using MauiApp1.Services.UseCase.Interface;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.Threading.Tasks;
+using System.Windows.Input;
 
 namespace MauiApp1.ViewModels.ClubProfileViewModel
 {
     public class ClubProfileViewModel : BindableObject
     {
         private readonly IClubService _clubService;
-        private Club _selectedClubI;
+        private readonly INoteService _noteService;
+
+        private Club _selectedClub;
         private Guid _selectedClubId;
 
         public ObservableCollection<ClubList> Clubs { get; set; }
         public ObservableCollection<Club> ClubProfiles { get; set; }
+        public ObservableCollection<Note> Notes { get; set; } = new ObservableCollection<Note>();
 
         public Club SelectedClub
         {
-            get => _selectedClubI;
+            get => _selectedClub;
             set
             {
-                _selectedClubI = value;
+                _selectedClub = value;
                 OnPropertyChanged();
             }
         }
@@ -36,11 +42,17 @@ namespace MauiApp1.ViewModels.ClubProfileViewModel
             }
         }
 
-        public ClubProfileViewModel(IClubService clubService)
+        public ClubProfileViewModel(IClubService clubService, INoteService noteService)
         {
             _clubService = clubService;
+            _noteService = noteService;
             Clubs = new ObservableCollection<ClubList>();
             ClubProfiles = new ObservableCollection<Club>();
+        }
+
+        public ClubProfileViewModel(IClubService clubService, INoteService noteService, Guid id) : this(clubService, noteService)
+        {
+            SelectedClubId = id;
         }
 
         public async Task LoadClubsAsync()
@@ -54,15 +66,37 @@ namespace MauiApp1.ViewModels.ClubProfileViewModel
                     Clubs.Add(club);
                 }
             }
-        }
+         }
 
-        public async Task LoadClubProfileAsync(string clubId)
+        public async Task LoadClubProfileAsync()
         {
-            var clubProfile = await _clubService.GetClubById(clubId);
+            var clubProfile = await _clubService.GetClubById(SelectedClubId);
             if (clubProfile != null)
             {
                 SelectedClub = clubProfile;
             }
+           await LoadNotes();
+        }
+
+        private async Task LoadNotes()
+        {
+            var notes = await _noteService.GetNotesAsync();
+            if (notes != null)
+            {
+                foreach (var note in notes)
+                {
+                    Notes.Add(note);
+                }
+            }
+        }
+
+        public async Task SubscribeClub()
+        {
+            if(SelectedClub.IsSubscribed == false)
+            {
+                await _clubService.SubscribeClub(SelectedClubId, Guid.Parse(AppSettings.test_user_guid), Guid.Parse(AppSettings.role_id_user_guid));
+            }
+
         }
     }
 }
