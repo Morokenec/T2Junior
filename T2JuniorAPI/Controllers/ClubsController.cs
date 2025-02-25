@@ -63,13 +63,14 @@ namespace T2JuniorAPI.Controllers
         /// Получение профиля клуба по ID
         /// </summary>
         /// <param name="clubId">Клуб</param>
+        /// <param name="userId">Пользователь</param>
         /// <returns></returns>
         /// <response code="200">Успешное выполнение</response>
         /// <response code="400">Ошибка API</response>
         [HttpGet("{clubId}/profile")]
-        public async Task<IActionResult> GetClubProfile(Guid clubId)
+        public async Task<IActionResult> GetClubProfile(Guid clubId, [FromQuery] Guid userId)
         {
-            var clubProfile = await _clubService.GetClubProfileById(clubId);
+            var clubProfile = await _clubService.GetClubProfileById(clubId, userId);
             return Ok(clubProfile);
         }
 

@@ -189,7 +189,7 @@ namespace T2JuniorAPI.Services.Clubs
         /// </summary>
         /// <param name="clubId">Уникальный идентификатор клуба.</param>
         /// <returns>DTO-объект профиля клуба или `null`, если клуб не найден.</returns>
-        public async Task<ClubProfileDTO> GetClubProfileById(Guid clubId)
+        public async Task<ClubProfileDTO> GetClubProfileById(Guid clubId, Guid userId)
         {
             var club = await _context.Clubs
                 .Include(c => c.MediaClubs)
@@ -202,6 +202,9 @@ namespace T2JuniorAPI.Services.Clubs
                 return null;
 
             club.UsersCount = await _context.ClubUsers.CountAsync(cu => cu.IdClub == clubId && !cu.IsDelete);
+
+            //Проверка подписки пользователя
+            club.IsUserSubscribed = await _context.ClubUsers.AnyAsync(cu => cu.IdClub == clubId && cu.IdUser == userId && !cu.IsDelete);
 
             return club;
         }

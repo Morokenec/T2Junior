@@ -23,7 +23,8 @@ namespace T2JuniorAPI.MappingProfiles
                 .ForMember(dest => dest.AvatarPath, opt => opt.MapFrom(src => src.MediaClubs
                     .Where(mc => mc.IsAvatar && !mc.IsDelete)
                     .OrderByDescending(mc => mc.CreationDate)
-                    .FirstOrDefault().MediaFilesNavigation.Path));
+                    .FirstOrDefault().MediaFilesNavigation.Path))
+                .ForMember(dest => dest.IsUserSubscribed, opt => opt.Ignore());
 
             CreateMap<CreateClubDTO, Club>()
                 .ForMember(dest => dest.Id, opt => opt.Ignore()) // Ignore Id because auto increment

@@ -10,7 +10,7 @@ namespace T2JuniorAPI.Services.Clubs
         Task<string> CreateClub(CreateClubDTO club);
         Task<string> AddUserToClub(Guid clubId, AddUserToClubDTO user);
         Task<string> DeleteUserFromClub(Guid clubId, Guid userId);
-        Task<ClubProfileDTO> GetClubProfileById(Guid clubId);
+        Task<ClubProfileDTO> GetClubProfileById(Guid clubId, Guid userId);
         Task<List<AllClubsDTO>> GetAllClubsByUserId(Guid userId);
         Task<string> UpdateClub(Guid id, UpdateClubDTO updateClubDto);
         Task<string> DeleteClub(Guid id);
