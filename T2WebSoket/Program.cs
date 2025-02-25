@@ -16,6 +16,7 @@ app.UseRouting();
 app.UseEndpoints(endpoints =>
 {
     endpoints.MapHub<ChatHub>("/chatHub");
+    endpoints.MapFallbackToFile("index.html");
 });
 
 app.Run();

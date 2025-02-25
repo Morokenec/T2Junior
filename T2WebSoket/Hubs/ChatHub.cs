@@ -27,5 +27,15 @@ namespace T2WebSoket.Hubs
             await _context.SaveChangesAsync();
             await Clients.Group(chatId.ToString()).SendAsync("ReceiveMessage", userName, message, chatMessage.CreationDate, mediaUrl);
         }
+
+        public async Task JoinGroup(Guid chatId)
+        {
+            await Groups.AddToGroupAsync(Context.ConnectionId, chatId.ToString());
+        }
+
+        public async Task LeaveGroup(Guid chatId)
+        {
+            await Groups.RemoveFromGroupAsync(Context.ConnectionId, chatId.ToString());
+        }
     }
 }

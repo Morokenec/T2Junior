@@ -1,4 +1,6 @@
-﻿namespace T2JuniorAPI.DTOs.Clubs
+﻿using AutoMapper;
+
+namespace T2JuniorAPI.DTOs.Clubs
 {
     public class ClubProfileDTO
     {
@@ -11,5 +13,6 @@
         public string? AvatarPath { get; set; }
 
         public int UsersCount { get; set; }
+        public bool IsUserSubscribed { get; set; }
     }
 }
