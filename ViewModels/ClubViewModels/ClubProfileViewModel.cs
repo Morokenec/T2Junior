@@ -70,6 +70,7 @@ namespace MauiApp1.ViewModels.ClubProfileViewModel
 
         public async Task LoadClubProfileAsync()
         {
+            SelectedClub = null;
             var clubProfile = await _clubService.GetClubById(SelectedClubId);
             if (clubProfile != null)
             {
@@ -92,7 +93,7 @@ namespace MauiApp1.ViewModels.ClubProfileViewModel
 
         public async Task SubscribeClub()
         {
-            if(SelectedClub.IsSubscribed == false)
+            if(SelectedClub.IsUserSubscribed == false)
             {
                 await _clubService.SubscribeClub(SelectedClubId, Guid.Parse(AppSettings.test_user_guid), Guid.Parse(AppSettings.role_id_user_guid));
             }

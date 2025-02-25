@@ -122,9 +122,9 @@ namespace MauiApp1.ViewModels.ClubViewModel
                         {
                             Id = clubItem.Id,
                             Name = clubItem.Name,
-                            IsSubscribed = clubItem.IsSubscribe,
+                            IsUserSubscribed = clubItem.IsSubscribe,
                         };
-                        Debug.WriteLine($"[DATA]{club.Id} - {club.Name} - {club.IsSubscribed} ");
+                        Debug.WriteLine($"[DATA]{club.Id} - {club.Name} - {club.IsUserSubscribed} ");
                         Clubs.Add(club);
                     }
 

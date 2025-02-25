@@ -48,22 +48,10 @@ public partial class ProfilePage : ContentPage
 
     private async void OnProfilePhotoTapped(object sender, EventArgs e)
     {
-        try
+        if (BindingContext is UserProfileViewModel viewModel)
         {
-            var chosenImage = await FilePicker.PickAsync(new PickOptions
-            {
-                PickerTitle = "Выберите изображение"
-            });
+            await viewModel.SetAvatarProfile();
 
-            if (chosenImage != null)
-            {
-                var stream = await chosenImage.OpenReadAsync();
-                //AvatarImage.Source = ImageSource.FromStream(() => stream);
-            }
-        }
-        catch (Exception ex)
-        {
-            await DisplayAlert("Фото не было выбрано.", ex.Message, "OK");
         }
     }
 

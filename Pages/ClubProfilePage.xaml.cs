@@ -29,6 +29,7 @@ public partial class ClubProfilePage : ContentPage
         if (BindingContext is ClubProfileViewModel viewModel)
         {
             viewModel.SubscribeClub();
+            viewModel.LoadClubProfileAsync();
         }
     }
 }

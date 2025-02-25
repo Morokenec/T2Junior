@@ -50,7 +50,7 @@ namespace MauiApp1.Services.UseCase
         {
             try
             {
-                string url = $"{AppSettings.base_url}/api/Clubs/{clubId.ToString()}/profile";
+                string url = $"{AppSettings.base_url}/api/Clubs/{clubId.ToString()}/profile?userId={AppSettings.test_user_guid}";
                 HttpResponseMessage response = await _httpClient.GetAsync(url);
                 string responseContent = await response.Content.ReadAsStringAsync();
                 Debug.WriteLine($"[DEBUG] Response: {responseContent}");

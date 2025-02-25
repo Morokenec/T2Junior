@@ -2,6 +2,8 @@
 using MauiApp1.Services.AppHelper;
 using MauiApp1.Services.UseCase.Interface;
 using System.Diagnostics;
+using System.Text.Json;
+using System.Text;
 
 namespace MauiApp1.Services.UseCase
 {
@@ -39,6 +41,32 @@ namespace MauiApp1.Services.UseCase
             {
                 Debug.WriteLine($"[ERROR] Exception: {ex.Message}");
                 return null;
+            }
+        }
+
+        public async Task SetAvatarProfileUploadServer(Guid userId, Stream chosenImage)
+        {
+            try
+            {
+                string url = $"{AppSettings.base_url}/api/Media/set-avatar-for-user";
+
+                using var content = new MultipartFormDataContent();
+
+                content.Add(
+                    new StreamContent(chosenImage),
+                    fileName: "1.png",
+                    name: "File");
+
+                content.Add(
+                    new StringContent(userId.ToString()),
+                    name: "IdUser");
+
+                using var response = await _httpClient.PostAsync(url, content);
+                response.EnsureSuccessStatusCode();
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine($"[ERROR] Exception: {ex.Message}");
             }
         }
     }

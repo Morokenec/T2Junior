@@ -10,5 +10,6 @@ namespace MauiApp1.Services.UseCase.Interface
     public interface IProfileService
     {
         Task<ProfileResponse> GetProfileDataAsync();
+        Task SetAvatarProfileUploadServer(Guid userId, Stream chosenImage);
     }
 }

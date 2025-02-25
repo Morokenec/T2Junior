@@ -4,6 +4,7 @@ using MauiApp1.Services.UseCase.Interface;
 using System;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
 using System.Windows.Input;
@@ -55,7 +56,9 @@ namespace MauiApp1.ViewModels.Profile
                 if (_pathAvatarUser != value)
                 {
                     value = value.Replace("wwwroot/", "");
-                    _pathAvatarUser = $"t2.hahatun.fun/{value}";
+                    value = $"https://t2.hahatun.fun/{value}";
+                    _pathAvatarUser = value;
+                    Debug.WriteLine($"[SOURCE]{value}");
                     OnPropertyChanged();
                 }
             }
@@ -91,14 +94,6 @@ namespace MauiApp1.ViewModels.Profile
             }
         }
 
-        public async Task RefreshDataAsync()
-        {
-            IsRefreshing = true;
-            Notes.Clear();
-            await LoadDataAsync();
-            IsRefreshing = false;
-        }
-
         private async Task LoadNotes()
         {
             var notes = await _noteService.GetNotesAsync();
@@ -108,6 +103,36 @@ namespace MauiApp1.ViewModels.Profile
                 {
                     Notes.Add(note);
                 }
+            }
+        }
+
+        public async Task RefreshDataAsync()
+        {
+            IsRefreshing = true;
+            Notes.Clear();
+            await LoadDataAsync();
+            IsRefreshing = false;
+        }
+
+        public async Task SetAvatarProfile()
+        {
+            try
+            {
+                var chosenImage = await FilePicker.PickAsync(new PickOptions
+                {
+                    PickerTitle = "Выберите изображение"
+                });
+
+                if (chosenImage != null)
+                {
+                    using var stream = await chosenImage.OpenReadAsync();
+
+                    await _profileService.SetAvatarProfileUploadServer(Guid.Parse(AppSettings.test_user_guid), stream);
+                }
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine($"[ERROR] {ex.Message}");
             }
         }
 

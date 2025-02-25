@@ -23,8 +23,8 @@
                HasShadow="False"
                Padding="0,0,0,0">
 
-                <StackLayout>
-                    <Grid ColumnDefinitions="*, Auto">
+                    <StackLayout>
+                        <Grid ColumnDefinitions="*, Auto">
                         <Frame x:Name="CoinFrame"
                                HorizontalOptions="Start"
                                BackgroundColor="#FFFFFF"
@@ -124,28 +124,30 @@
 
                     <Grid x:Name="UserInfoGrid"
                       Grid.Row="1">
-                        <Frame BorderColor="Transparent"
-                               WidthRequest="100"
-                               HeightRequest="100"
-                               HorizontalOptions="Center"
-                               CornerRadius="50"
-                               Margin="0,8,0,8">
-                            <Frame.GestureRecognizers>
-                                <TapGestureRecognizer Tapped="OnProfilePhotoTapped" />
-                            </Frame.GestureRecognizers>
-
-                            <Image x:Name="AvatarImage"
-                                   Source="profile_placeholder."
-                                   Aspect="AspectFill"
-                                   VerticalOptions="Start"/>
-
-                        </Frame>
-                        <Frame x:Name="CircleOverlay" 
+                            <Border Stroke="Transparent" HeightRequest="150" WidthRequest="150">
+                                <Border.StrokeShape>
+                                    <RoundRectangle CornerRadius="190" />
+                                </Border.StrokeShape>
+                                <Image x:Name="AvatarImage"
+                                           Aspect="AspectFill"
+                                           WidthRequest="200"
+                                           HeightRequest="200"
+                                           VerticalOptions="Start">
+                                    <Image.Source>
+                                        <UriImageSource Uri="{Binding PathAvatarUser}"
+                                                           CacheValidity="2:00:00.0"/>
+                                    </Image.Source>
+                                    <Image.GestureRecognizers>
+                                        <TapGestureRecognizer Tapped="OnProfilePhotoTapped" />
+                                    </Image.GestureRecognizers>
+                                </Image>
+                            </Border>
+                            <Frame x:Name="CircleOverlay" 
                                BackgroundColor="#3DC47C" 
                                CornerRadius="25"
                                WidthRequest="20"
                                HeightRequest="20"
-                               Margin="96, 81, 31, 0">
+                               Margin="150, 87, 31, 0">
                         </Frame>
                     </Grid>
                     <VerticalStackLayout x:Name="FullInfoLayout"
