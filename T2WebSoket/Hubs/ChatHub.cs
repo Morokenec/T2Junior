@@ -13,20 +13,48 @@ namespace T2WebSoket.Hubs
             _context = context;
         }
 
-        public async Task SendMessage(string userName, string message, Guid chatId, string mediaUrl = null)
+        public async Task Send(string userId, string message, string chatId)
         {
-            var chatMessage = new Message
+            Console.WriteLine("we a enter in the server method");
+            try
             {
-                UserId = chatId,
-                ChatId = chatId,
-                Body = message,
-                MediaUrl = mediaUrl
-            };
+                var user = await _context.Users.FindAsync(Guid.Parse(userId));
+                Console.WriteLine("try user check");
+                if (user == null)
+                {
+                    Console.Error.WriteLine($"User not found: {userId}");
+                    throw new Exception($"User not found: {userId}");
+                }
+                Console.WriteLine("user check success!\n try chat check");
 
-            _context.Messages.Add(chatMessage);
-            await _context.SaveChangesAsync();
-            await Clients.Group(chatId.ToString()).SendAsync("ReceiveMessage", userName, message, chatMessage.CreationDate, mediaUrl);
+                var chat = await _context.Chats.FindAsync(Guid.Parse(chatId));
+                if (chat == null)
+                {
+                    Console.Error.WriteLine($"Chat not found: {chatId}");
+                    throw new Exception($"Chat not found: {chatId}");
+                }
+                Console.WriteLine("chat Check success!");
+
+                var chatMessage = new Message
+                {
+                    UserId = user.Id,
+                    ChatId = chat.Id,
+                    Body = message,
+                    MediaUrl = null
+                };
+
+                _context.Messages.Add(chatMessage);
+                await _context.SaveChangesAsync();
+                await Clients.Group(chatId.ToString()).SendAsync("ReceiveMessage", user.UserName, message, chatMessage.CreationDate, null);
+            }
+            catch (Exception ex)
+            {
+                // Логирование ошибки для отладки
+                Console.Error.WriteLine($"Error sending message: {ex.Message}");
+                throw; // Можно выбросить исключение, чтобы клиент знал о проблеме
+            }
         }
+
 
         public async Task JoinGroup(Guid chatId)
         {

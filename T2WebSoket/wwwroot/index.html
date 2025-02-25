@@ -1,53 +1,102 @@
 ﻿<!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <meta charset="utf-8" />
-    <title>ChatApp</title>
+    <meta charset="UTF-8">
+    <title>Chat App</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/microsoft-signalr/3.1.19/signalr.min.js"></script>
 </head>
 <body>
     <div>
-        Введите логин:<br />
-        <input id="userName" type="text" /><br /><br />
-        Введите сообщение:<br />
-        <input type="text" id="message" /><br /><br />
-        <input type="button" id="sendBtn" value="Отправить" disabled="disabled" />
+        <label>User ID:</label>
+        <input type="text" id="userId" />
+        <button onclick="loadChats()">Load Chats</button>
     </div>
-    <div id="chatroom"></div>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/microsoft-signalr/6.0.1/signalr.js"></script>
+    <div id="chats"></div>
+    <div id="messages"></div>
+    <input type="text" id="messageInput" placeholder="Type a message" />
+    <input type="button" id="sendBtn" value="Otpravit"/>
+
     <script>
-        const hubConnection = new signalR.HubConnectionBuilder()
+        const connection = new signalR.HubConnectionBuilder()
             .withUrl("/chatHub")
             .build();
 
+        let currentChatId = null; // Переменная для хранения текущего chatId
+
         document.getElementById("sendBtn").addEventListener("click", function () {
-            const userName = document.getElementById("userName").value;
-            const message = document.getElementById("message").value;
+            sendMessage();
+        })
 
-            hubConnection.invoke("SendMessage", userName, message, "your-chat-id")
-                .catch(function (err) {
-                    return console.error(err.toString());
-                });
+
+
+        connection.on("ReceiveMessage", (userName, message, timestamp, mediaUrl) => {
+            const messagesDiv = document.getElementById("messages");
+            const messageElement = document.createElement("div");
+            messageElement.textContent = `${userName} (${new Date(timestamp).toLocaleTimeString()}): ${message}`;
+            messagesDiv.appendChild(messageElement);
         });
 
-        hubConnection.on("ReceiveMessage", function (userName, message, timestamp, mediaUrl) {
-            const userNameElem = document.createElement("b");
-            userNameElem.textContent = `${userName}: `;
+        async function loadChats() {
+            const userId = document.getElementById("userId").value;
+            const response = await fetch(`/api/chat/${userId}`);
+            const chats = await response.json();
 
-            const elem = document.createElement("p");
-            elem.appendChild(userNameElem);
-            elem.appendChild(document.createTextNode(message));
-
-            const firstElem = document.getElementById("chatroom").firstChild;
-            document.getElementById("chatroom").insertBefore(elem, firstElem);
-        });
-
-        hubConnection.start()
-            .then(function () {
-                document.getElementById("sendBtn").disabled = false;
-            })
-            .catch(function (err) {
-                return console.error(err.toString());
+            const chatsDiv = document.getElementById("chats");
+            chatsDiv.innerHTML = "";
+            chats.forEach(chat => {
+                const chatButton = document.createElement("button");
+                chatButton.textContent = chat.name;
+                chatButton.onclick = () => joinChat(chat.id);
+                chatsDiv.appendChild(chatButton);
             });
+        }
+
+        async function joinChat(chatId) {
+            console.log(`connected to chat ${chatId}`)
+            currentChatId = chatId; // Сохраняем текущий chatId
+            try {
+                if (connection.state === signalR.HubConnectionState.Disconnected) {
+                    await connection.start();
+                }
+                await connection.invoke("JoinGroup", currentChatId);
+                // Load existing messages for the chat
+            } catch (err) {
+                console.error("Error joining chat:", err);
+            }
+        }
+
+        async function sendMessage() {
+            console.log("sendMessage called");
+            const messageInput = document.getElementById("messageInput");
+            const message = messageInput.value;
+            const userId = document.getElementById("userId").value;
+
+            if (!currentChatId) {
+                alert("Please select a chat first.");
+                return;
+            }
+            console.log("Sending message:", { userId, message, currentChatId });
+
+
+            try {
+                console.log("Connection state before sending message:", connection.state);
+                if (connection.state === signalR.HubConnectionState.Disconnected) {
+                    await connection.start();
+                }
+                console.log("Sending message:", { userId, message, currentChatId });
+                await connection.invoke("Send", userId, message, currentChatId)
+                    .catch(function (err) {
+                        return console.error(err.toString());
+                    });
+                messageInput.value = "";
+            } catch (err) {
+                console.error("Error sending message:", err);
+                alert("Failed to send message. Please check the console for more details.");
+            }
+        }
+
+        // Start the connection when the page loads
+        connection.start().catch(err => console.error("Error connecting to chat hub:", err));
     </script>
 </body>
 </html>

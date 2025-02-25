@@ -11,7 +11,20 @@ namespace T2WebSoket.Repositories
         public DbSet<UsersChats> UsersChats { get; set; }
         public DbSet<ChatType> ChatTypes { get; set; }
 
-        public ChatDbContext(DbContextOptions<ChatDbContext> options) : base(options) { }
+        public ChatDbContext(DbContextOptions<ChatDbContext> options) : base(options) 
+        {
+        }
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            base.OnModelCreating(modelBuilder);
+
+            modelBuilder.Entity<Chat>()
+                .HasOne(c => c.ChatType)
+                .WithMany(ct => ct.Chats)
+                .HasForeignKey(c => c.TypeId)
+                .OnDelete(DeleteBehavior.Restrict);
+        }
 
         private static void ConfigureCommonFields(ModelBuilder modelBuilder)
         {
