@@ -455,13 +455,7 @@ namespace T2JuniorAPI.Migrations
                     b.Property<Guid>("IdNote")
                         .HasColumnType("TEXT");
 
-                    b.Property<Guid>("IdNoteNavigationId")
-                        .HasColumnType("TEXT");
-
                     b.Property<Guid>("IdUser")
-                        .HasColumnType("TEXT");
-
-                    b.Property<Guid>("IdUserNavigationId")
                         .HasColumnType("TEXT");
 
                     b.Property<bool>("IsDelete")
@@ -486,13 +480,51 @@ namespace T2JuniorAPI.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("IdNoteNavigationId");
+                    b.HasIndex("IdNote");
 
-                    b.HasIndex("IdUserNavigationId");
+                    b.HasIndex("IdUser");
 
                     b.HasIndex("ParrentCommentId");
 
                     b.ToTable("Comments");
+                });
+
+            modelBuilder.Entity("T2JuniorAPI.Entities.CommentLike", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("TEXT")
+                        .HasColumnName("Id")
+                        .HasColumnOrder(0);
+
+                    b.Property<Guid>("CommentId")
+                        .HasColumnType("TEXT");
+
+                    b.Property<DateTime>("CreationDate")
+                        .HasColumnType("TEXT")
+                        .HasColumnName("CreationDate")
+                        .HasColumnOrder(1);
+
+                    b.Property<bool>("IsDelete")
+                        .HasColumnType("INTEGER")
+                        .HasColumnName("IsDelete")
+                        .HasColumnOrder(3);
+
+                    b.Property<DateTime>("UpdateDate")
+                        .HasColumnType("TEXT")
+                        .HasColumnName("UpdateDate")
+                        .HasColumnOrder(2);
+
+                    b.Property<Guid>("UserId")
+                        .HasColumnType("TEXT");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CommentId");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("CommentLikes");
                 });
 
             modelBuilder.Entity("T2JuniorAPI.Entities.Event", b =>
@@ -649,9 +681,6 @@ namespace T2JuniorAPI.Migrations
                     b.Property<Guid>("IdComment")
                         .HasColumnType("TEXT");
 
-                    b.Property<Guid>("IdCommentNavigationId")
-                        .HasColumnType("TEXT");
-
                     b.Property<Guid>("IdMedia")
                         .HasColumnType("TEXT");
 
@@ -667,7 +696,7 @@ namespace T2JuniorAPI.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("IdCommentNavigationId");
+                    b.HasIndex("IdComment");
 
                     b.HasIndex("IdMedia")
                         .IsUnique();
@@ -833,9 +862,6 @@ namespace T2JuniorAPI.Migrations
                         .HasColumnName("CreationDate")
                         .HasColumnOrder(1);
 
-                    b.Property<DateTime>("CreationDatetime")
-                        .HasColumnType("TEXT");
-
                     b.Property<string>("Description")
                         .IsRequired()
                         .HasColumnType("TEXT");
@@ -846,13 +872,7 @@ namespace T2JuniorAPI.Migrations
                     b.Property<Guid>("IdStatus")
                         .HasColumnType("TEXT");
 
-                    b.Property<Guid>("IdStatusNavigationId")
-                        .HasColumnType("TEXT");
-
                     b.Property<Guid>("IdWall")
-                        .HasColumnType("TEXT");
-
-                    b.Property<Guid>("IdWallNavigationId")
                         .HasColumnType("TEXT");
 
                     b.Property<bool>("IsDelete")
@@ -876,11 +896,49 @@ namespace T2JuniorAPI.Migrations
 
                     b.HasIndex("IdRepost");
 
-                    b.HasIndex("IdStatusNavigationId");
+                    b.HasIndex("IdStatus");
 
-                    b.HasIndex("IdWallNavigationId");
+                    b.HasIndex("IdWall");
 
                     b.ToTable("Notes");
+                });
+
+            modelBuilder.Entity("T2JuniorAPI.Entities.NoteLike", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("TEXT")
+                        .HasColumnName("Id")
+                        .HasColumnOrder(0);
+
+                    b.Property<DateTime>("CreationDate")
+                        .HasColumnType("TEXT")
+                        .HasColumnName("CreationDate")
+                        .HasColumnOrder(1);
+
+                    b.Property<bool>("IsDelete")
+                        .HasColumnType("INTEGER")
+                        .HasColumnName("IsDelete")
+                        .HasColumnOrder(3);
+
+                    b.Property<Guid>("NoteId")
+                        .HasColumnType("TEXT");
+
+                    b.Property<DateTime>("UpdateDate")
+                        .HasColumnType("TEXT")
+                        .HasColumnName("UpdateDate")
+                        .HasColumnOrder(2);
+
+                    b.Property<Guid>("UserId")
+                        .HasColumnType("TEXT");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("NoteId");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("NoteLikes");
                 });
 
             modelBuilder.Entity("T2JuniorAPI.Entities.NoteStatus", b =>
@@ -922,6 +980,26 @@ namespace T2JuniorAPI.Migrations
 
                     b.Property<Guid>("IdAchievement")
                         .HasColumnType("TEXT");
+
+                    b.Property<DateTime>("CreationDate")
+                        .HasColumnType("TEXT")
+                        .HasColumnName("CreationDate")
+                        .HasColumnOrder(1);
+
+                    b.Property<Guid>("Id")
+                        .HasColumnType("TEXT")
+                        .HasColumnName("Id")
+                        .HasColumnOrder(0);
+
+                    b.Property<bool>("IsDelete")
+                        .HasColumnType("INTEGER")
+                        .HasColumnName("IsDelete")
+                        .HasColumnOrder(3);
+
+                    b.Property<DateTime>("UpdateDate")
+                        .HasColumnType("TEXT")
+                        .HasColumnName("UpdateDate")
+                        .HasColumnOrder(2);
 
                     b.HasKey("IdUser", "IdAchievement");
 
@@ -1016,13 +1094,13 @@ namespace T2JuniorAPI.Migrations
                         .HasColumnName("CreationDate")
                         .HasColumnOrder(1);
 
-                    b.Property<Guid>("IdOwner")
+                    b.Property<Guid?>("IdClubOwner")
                         .HasColumnType("TEXT");
 
                     b.Property<Guid>("IdType")
                         .HasColumnType("TEXT");
 
-                    b.Property<Guid>("IdTypeNavigationId")
+                    b.Property<Guid?>("IdUserOwner")
                         .HasColumnType("TEXT");
 
                     b.Property<bool>("IsDelete")
@@ -1037,9 +1115,11 @@ namespace T2JuniorAPI.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("IdOwner");
+                    b.HasIndex("IdClubOwner");
 
-                    b.HasIndex("IdTypeNavigationId");
+                    b.HasIndex("IdType");
+
+                    b.HasIndex("IdUserOwner");
 
                     b.ToTable("Walls");
                 });
@@ -1180,14 +1260,14 @@ namespace T2JuniorAPI.Migrations
                 {
                     b.HasOne("T2JuniorAPI.Entities.Note", "IdNoteNavigation")
                         .WithMany("Comments")
-                        .HasForeignKey("IdNoteNavigationId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .HasForeignKey("IdNote")
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.HasOne("ApplicationUser", "IdUserNavigation")
                         .WithMany("Comments")
-                        .HasForeignKey("IdUserNavigationId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .HasForeignKey("IdUser")
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.HasOne("T2JuniorAPI.Entities.Comment", "ParrentComment")
@@ -1200,6 +1280,25 @@ namespace T2JuniorAPI.Migrations
                     b.Navigation("IdUserNavigation");
 
                     b.Navigation("ParrentComment");
+                });
+
+            modelBuilder.Entity("T2JuniorAPI.Entities.CommentLike", b =>
+                {
+                    b.HasOne("T2JuniorAPI.Entities.Comment", "Comment")
+                        .WithMany("CommentLikes")
+                        .HasForeignKey("CommentId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("ApplicationUser", "User")
+                        .WithMany("CommentLikes")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("Comment");
+
+                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("T2JuniorAPI.Entities.Event", b =>
@@ -1247,9 +1346,9 @@ namespace T2JuniorAPI.Migrations
             modelBuilder.Entity("T2JuniorAPI.Entities.MediaComment", b =>
                 {
                     b.HasOne("T2JuniorAPI.Entities.Comment", "IdCommentNavigation")
-                        .WithMany()
-                        .HasForeignKey("IdCommentNavigationId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .WithMany("MediaComments")
+                        .HasForeignKey("IdComment")
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.HasOne("T2JuniorAPI.Entities.Mediafile", "IdMediaNavigation")
@@ -1329,14 +1428,14 @@ namespace T2JuniorAPI.Migrations
 
                     b.HasOne("T2JuniorAPI.Entities.NoteStatus", "IdStatusNavigation")
                         .WithMany("Notes")
-                        .HasForeignKey("IdStatusNavigationId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .HasForeignKey("IdStatus")
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.HasOne("T2JuniorAPI.Entities.Wall", "IdWallNavigation")
                         .WithMany("Notes")
-                        .HasForeignKey("IdWallNavigationId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .HasForeignKey("IdWall")
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.Navigation("IdRepostNavigation");
@@ -1344,6 +1443,25 @@ namespace T2JuniorAPI.Migrations
                     b.Navigation("IdStatusNavigation");
 
                     b.Navigation("IdWallNavigation");
+                });
+
+            modelBuilder.Entity("T2JuniorAPI.Entities.NoteLike", b =>
+                {
+                    b.HasOne("T2JuniorAPI.Entities.Note", "Note")
+                        .WithMany("Likes")
+                        .HasForeignKey("NoteId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("ApplicationUser", "User")
+                        .WithMany("Likes")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("Note");
+
+                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("T2JuniorAPI.Entities.UserAchievement", b =>
@@ -1405,36 +1523,38 @@ namespace T2JuniorAPI.Migrations
 
             modelBuilder.Entity("T2JuniorAPI.Entities.Wall", b =>
                 {
-                    b.HasOne("ApplicationUser", "Owner")
+                    b.HasOne("T2JuniorAPI.Entities.Club", "ClubOwner")
                         .WithMany("Walls")
-                        .HasForeignKey("IdOwner")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.HasOne("T2JuniorAPI.Entities.Club", "IdOwnerNavigation")
-                        .WithMany("Walls")
-                        .HasForeignKey("IdOwner")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
+                        .HasForeignKey("IdClubOwner")
+                        .OnDelete(DeleteBehavior.Restrict);
 
                     b.HasOne("T2JuniorAPI.Entities.WallType", "IdTypeNavigation")
                         .WithMany("Walls")
-                        .HasForeignKey("IdTypeNavigationId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .HasForeignKey("IdType")
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
-                    b.Navigation("IdOwnerNavigation");
+                    b.HasOne("ApplicationUser", "UserOwner")
+                        .WithMany("Walls")
+                        .HasForeignKey("IdUserOwner")
+                        .OnDelete(DeleteBehavior.Restrict);
+
+                    b.Navigation("ClubOwner");
 
                     b.Navigation("IdTypeNavigation");
 
-                    b.Navigation("Owner");
+                    b.Navigation("UserOwner");
                 });
 
             modelBuilder.Entity("ApplicationUser", b =>
                 {
                     b.Navigation("ClubUsers");
 
+                    b.Navigation("CommentLikes");
+
                     b.Navigation("Comments");
+
+                    b.Navigation("Likes");
 
                     b.Navigation("Mediafiles");
 
@@ -1475,7 +1595,11 @@ namespace T2JuniorAPI.Migrations
 
             modelBuilder.Entity("T2JuniorAPI.Entities.Comment", b =>
                 {
+                    b.Navigation("CommentLikes");
+
                     b.Navigation("InverseParrentComment");
+
+                    b.Navigation("MediaComments");
                 });
 
             modelBuilder.Entity("T2JuniorAPI.Entities.Event", b =>
@@ -1515,6 +1639,8 @@ namespace T2JuniorAPI.Migrations
                     b.Navigation("Comments");
 
                     b.Navigation("InverseIdRepostNavigation");
+
+                    b.Navigation("Likes");
 
                     b.Navigation("MediaNotes");
                 });

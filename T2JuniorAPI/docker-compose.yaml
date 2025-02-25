@@ -1,0 +1,11 @@
+services:
+  web-api:
+    image: t2junior:latest
+    build:
+      context: .
+      dockerfile: Dockerfile
+    restart: always
+    ports:
+      - "5132:5138"
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Production

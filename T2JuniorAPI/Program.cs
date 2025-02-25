@@ -15,8 +15,20 @@ using T2JuniorAPI.Services.Users;
 using T2JuniorAPI.Services.MediaTypes;
 using T2JuniorAPI.Services.Medias;
 using T2JuniorAPI.Services.MediaClubs;
+using T2JuniorAPI.Services.Achievements;
+using T2JuniorAPI.Services.Walls;
+using T2JuniorAPI.Services.WallTypes;
+using T2JuniorAPI.Services.Notes;
+using T2JuniorAPI.Services.NoteStatuses;
+using T2JuniorAPI.Services.MediaNotes;
+using T2JuniorAPI.Services.Comments;
+using T2JuniorAPI.Services.MediaComments;
+using T2JuniorAPI.Services.NewsFeeds;
+
+
 
 var builder = WebApplication.CreateBuilder(args);
+
 
 builder.Logging.ClearProviders();
 builder.Logging.AddConsole();
@@ -54,12 +66,31 @@ builder.Services.AddCors(options =>
     });
 });
 
-builder.Services.AddAutoMapper(cnf => cnf.AddProfile<ClubProfile>(), typeof(Program).Assembly);
 builder.Services.AddSingleton<SubscribersProfile>();
 builder.Services.AddSingleton<SubscriptionsProfile>();
-builder.Services.AddAutoMapper(typeof(EventProfile));
-builder.Services.AddAutoMapper(typeof(MediaProfile));
-builder.Services.AddAutoMapper(typeof(MediaClubProfile));
+builder.Services.AddAutoMapper(config =>
+{
+    config.AddProfile<AccountProfile>();
+    config.AddProfile<AchievementProfile>();
+    config.AddProfile<ClubProfile>();
+    config.AddProfile<ClubRoleProfile>();
+    config.AddProfile<EventProfile>();
+    config.AddProfile<MediaClubProfile>();
+    config.AddProfile<MediaEventProfile>();
+    config.AddProfile<MediaNoteProfile>();
+    config.AddProfile<MediaProfile>();
+    config.AddProfile<MappingProfile>();
+    config.AddProfile<MediaTypeProfile>();
+    config.AddProfile<NoteProfile>();
+    config.AddProfile<NoteStatusProfile>();
+    config.AddProfile<OrganizationProfile>();
+    config.AddProfile<SubscribersProfile>();
+    config.AddProfile<SubscriptionsProfile>();
+    config.AddProfile<WallProfile>();
+    config.AddProfile<WallTypeProfile>();
+    config.AddProfile<CommentProfile>();
+});
+
 
 builder.Services.AddScoped<IAccountService, AccountService>();
 builder.Services.AddScoped<ITokenService, TokenService>();
@@ -71,16 +102,37 @@ builder.Services.AddScoped<IEventService, EventService>();
 builder.Services.AddScoped<IMediaTypeService, MediaTypeService>();
 builder.Services.AddScoped<IMediafileService, MediafileService>();
 builder.Services.AddScoped<IMediaClubService, MediaClubService>();
+builder.Services.AddScoped<IAchievementService, AchievementService>();
+builder.Services.AddScoped<IWallService, WallService>();
+builder.Services.AddScoped<IWallTypeService, WallTypeService>();
+builder.Services.AddScoped<INoteService, NoteService>();
+builder.Services.AddScoped<INoteStatusService, NoteStatusService>();
+builder.Services.AddScoped<IMediaNoteService, MediaNoteService>();
+builder.Services.AddScoped<ICommentService, CommentService>();
+builder.Services.AddScoped<IMediaCommentService, MediaCommentService>();
+builder.Services.AddScoped<INewsFeedService, NewsFeedService>();
+
 
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen(c =>
 {
+    var basePath = AppContext.BaseDirectory;
     c.SwaggerDoc("v1", new() { Title = "T2JuniorAPI", Version = "v1" });
+    var xmlPath = Path.Combine(basePath, "documentation.xml");
+    c.IncludeXmlComments(xmlPath);
 });
+
+
 
 var app = builder.Build();
 
+using (var scope = app.Services.CreateScope())
+{
+    var db = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
+    
+    db.Database.Migrate();
+}
 
 if (app.Environment.IsDevelopment())
 {
@@ -92,7 +144,7 @@ if (app.Environment.IsDevelopment())
     });
 }
 
-app.UseStaticFiles(); // Ёто позвол€ет обслуживать статические файлы
+app.UseStaticFiles();
 app.UseRouting();
 app.UseAuthorization();
 app.UseCors("AllowAll");
@@ -100,3 +152,5 @@ app.UseCors("AllowAll");
 app.MapControllers();
 
 app.Run();
+
+

@@ -22,9 +22,12 @@ public class Comment : BaseCommonProperties
 
     public virtual Note IdNoteNavigation { get; set; } = null!;
 
-    public virtual ApplicationUser IdUserNavigation { get; set; } = null!;
+    public virtual ApplicationUser IdUserNavigation { get; set; }
 
     public virtual ICollection<Comment> InverseParrentComment { get; set; } = new List<Comment>();
 
     public virtual Comment? ParrentComment { get; set; }
+    public virtual ICollection<CommentLike> CommentLikes { get; set; } = new List<CommentLike>();
+    public virtual ICollection<MediaComment> MediaComments { get; set; } = new List<MediaComment>();
+
 }

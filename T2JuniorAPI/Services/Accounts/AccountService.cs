@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using SQLitePCL;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,6 +9,7 @@ using System.Threading.Tasks;
 using T2JuniorAPI.Data;
 using T2JuniorAPI.DTOs.Users;
 using T2JuniorAPI.Entities;
+using T2JuniorAPI.Services.Walls;
 
 namespace T2JuniorAPI.Services.Accounts
 {
@@ -19,17 +21,21 @@ namespace T2JuniorAPI.Services.Accounts
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly SignInManager<ApplicationUser> _signInManager;
         private readonly IMapper _mapper;
+        private readonly ApplicationDbContext _dbContext;
+        private readonly IWallService _wallService;
 
         /// <summary>
         /// Конструктор для инициализации сервисов UserManager и SignInManager.
         /// </summary>
         /// <param name="userManager">Менеджер пользователей для работы с пользователями.</param>
         /// <param name="signInManager">Менеджер входа для работы с аутентификацией.</param>
-        public AccountService(UserManager<ApplicationUser> userManager, SignInManager<ApplicationUser> signInManager, IMapper mapper)
+        public AccountService(UserManager<ApplicationUser> userManager, SignInManager<ApplicationUser> signInManager, IMapper mapper, ApplicationDbContext applicationDbContext, IWallService wallService)
         {
             _userManager = userManager;
             _signInManager = signInManager;
             _mapper = mapper;
+            _dbContext = applicationDbContext;
+            _wallService = wallService;
         }
 
         /// <summary>
@@ -40,15 +46,31 @@ namespace T2JuniorAPI.Services.Accounts
         /// <exception cref="ApplicationException">Выбрасывается, если регистрация не удалась.</exception>
         public async Task<string> RegisterUserAsync(RegisterUserDto registerUserDto)
         {
-            var user = _mapper.Map<ApplicationUser>(registerUserDto);
-
-            var result = await _userManager.CreateAsync(user, registerUserDto.Password);
-            if (!result.Succeeded)
+            try
             {
-                throw new ApplicationException($"Registration failed: {string.Join("; ", result.Errors.Select(e => e.Description))}");
-            }
+                var user = _mapper.Map<ApplicationUser>(registerUserDto);
 
-            return "User registered successfully";
+                // Проверка существования организации
+                var organizationExists = await _dbContext.Organizations.AnyAsync(o => o.Id == registerUserDto.OrganizationId);
+                if (!organizationExists)
+                {
+                    return "Organization not found";
+                }
+
+                var result = await _userManager.CreateAsync(user, registerUserDto.Password);
+                if (!result.Succeeded)
+                {
+                    throw new ApplicationException($"Registration failed: {string.Join("; ", result.Errors.Select(e => e.Description))}");
+                }
+                await _wallService.CreateWallAsync(user.Id);
+
+                return "User registered successfully";
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error during registration: {ex.Message}");
+                throw new ApplicationException("An unexpected error occurred during registration.", ex);
+            }
         }
 
         /// <summary>
@@ -78,6 +100,29 @@ namespace T2JuniorAPI.Services.Accounts
         }
 
         /// <summary>
+        /// Получение всех профилей пользователей
+        /// </summary>
+        /// <returns>Объект профилей пользователей.</returns>
+        /// <exception cref="ApplicationException">Выбрасывается, если пользователи не найдены или обновление не удалось.</exception>
+        public async Task<List<UserProfileDTO>> GetAllUserProfilesAsync()
+        {
+            var users = await _userManager.Users
+                .Include(u => u.Organization)
+                .Include(u => u.Subscribers)
+                .Include(u => u.ClubUsers)
+                .Include(u => u.UserAvatars)
+                .ThenInclude(ua => ua.Media)
+                .ToListAsync();
+            if (users == null || !users.Any())
+            {
+                return new List<UserProfileDTO>();
+            }
+
+            var usersProdiles = _mapper.Map<List<UserProfileDTO>>(users);
+            return usersProdiles;
+        }
+
+        /// <summary>
         /// Обновляет профиль пользователя.
         /// </summary>
         /// <param name="userId">Идентификатор пользователя.</param>
@@ -99,6 +144,12 @@ namespace T2JuniorAPI.Services.Accounts
             return "User profile updated successfully";
         }
 
+        /// <summary>
+        /// Восстановление пароля пользователя.
+        /// </summary>
+        /// <param name="recoveryPassword">Сброс пароля</param>
+        /// <returns>Строка с результатом обновления.</returns>
+        /// <exception cref="ApplicationException">Выбрасывается, если пользователь не найден или обновление не удалось.</exception>
         public async Task<string> UserPasswordRecovery(RecoveryPasswordDTO recoveryPassword)
         {
             var user = await _userManager.FindByEmailAsync(recoveryPassword.Email);
@@ -125,6 +176,8 @@ namespace T2JuniorAPI.Services.Accounts
 
             user.IsDeleted = true;
             await _userManager.UpdateAsync(user);
+
+            await _wallService.DeleteWallAsync(userId);
 
             return "User deleted successfully";
         }

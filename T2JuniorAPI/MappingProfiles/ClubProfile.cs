@@ -32,7 +32,6 @@ namespace T2JuniorAPI.MappingProfiles
             CreateMap<ClubUser, SubscriberProfileDTO>()
                 .ForMember(dest => dest.Id, opt => opt.MapFrom(src => src.IdUser))
                 .ForMember(dest => dest.FullName, opt => opt.MapFrom(src => $"{src.IdUserNavigation.FirstName} {src.IdUserNavigation.LastName}"))
-                .ForMember(dest => dest.FullName, opt => opt.MapFrom(src => $"{src.IdUserNavigation.FirstName} {src.IdUserNavigation.LastName}"))
                 .ForMember(dest => dest.AvatarPath, opt => opt.MapFrom(src => src.IdUserNavigation.UserAvatars
                     .Where(ua => !ua.IsDelete)
                     .OrderByDescending(ua => ua.CreationDate)
@@ -40,6 +39,7 @@ namespace T2JuniorAPI.MappingProfiles
 
             CreateMap<Club, AllClubsDTO>()
                 .ForMember(dest => dest.IsSubscribe, opt => opt.Ignore())
+                .ForMember(dest => dest.Target, opt => opt.MapFrom(src => src.Target))
                 .ForMember(dest => dest.AvatarPath, opt => opt.MapFrom(src => src.MediaClubs
                     .Where(mc => mc.IsAvatar && !mc.IsDelete)
                     .OrderByDescending(mc => mc.CreationDate)
@@ -51,6 +51,8 @@ namespace T2JuniorAPI.MappingProfiles
                 .ForMember(dest => dest.IdClub, opt => opt.Ignore())
                 .ForMember(dest => dest.IdUser, opt => opt.MapFrom(src => src.UserId))
                 .ForMember(dest => dest.IdRole, opt => opt.MapFrom(src => src.RoleId));
+
+            CreateMap<ClubUserDTO, ClubUser>();
         }
     }
 }

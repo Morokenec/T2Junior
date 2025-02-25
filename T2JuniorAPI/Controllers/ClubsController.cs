@@ -19,11 +19,30 @@ namespace T2JuniorAPI.Controllers
             _context = context;
         }
 
+        /// <summary>
+        /// Получение списка всех клубов, с выделением участия пользователем в них
+        /// </summary>
+        /// <param name="userId">Клуб</param>
+        /// <returns></returns>
+        /// <response code="200">Успешное выполнение</response>
+        /// <response code="400">Ошибка API</response>
         // GET: api/Clubs
         [HttpGet("by-user/{userId}")]
         public async Task<ActionResult<List<AllClubsDTO>>> GetAllClubsByUserId(Guid userId)
         {
             return await _clubService.GetAllClubsByUserId(userId);
+        }
+
+        /// <summary>
+        /// Получение списка всех клубов
+        /// </summary>
+        /// <returns></returns>
+        /// <response code="200">Успешное выполнение</response>
+        /// <response code="400">Ошибка API</response>
+        [HttpGet("all")]
+        public async Task<ActionResult<List<AllClubsDTO>>> GetAllClubs()
+        {
+            return await _clubService.GetAllClubs();
         }
 
         //// GET: api/Clubs/5
@@ -40,6 +59,13 @@ namespace T2JuniorAPI.Controllers
         //    return club;
         //}
 
+        /// <summary>
+        /// Получение профиля клуба по ID
+        /// </summary>
+        /// <param name="clubId">Клуб</param>
+        /// <returns></returns>
+        /// <response code="200">Успешное выполнение</response>
+        /// <response code="400">Ошибка API</response>
         [HttpGet("{clubId}/profile")]
         public async Task<IActionResult> GetClubProfile(Guid clubId)
         {
@@ -47,6 +73,13 @@ namespace T2JuniorAPI.Controllers
             return Ok(clubProfile);
         }
 
+        /// <summary>
+        /// Получение информации о клубе по ID
+        /// </summary>
+        /// <param name="clubId">Клуб</param>
+        /// <returns></returns>
+        /// <response code="200">Успешное выполнение</response>
+        /// <response code="400">Ошибка API</response>
         [HttpGet("{clubId}/info")]
         public async Task<IActionResult> GetClubInfoById(Guid clubId)
         {
@@ -65,6 +98,14 @@ namespace T2JuniorAPI.Controllers
             }
         }
 
+        /// <summary>
+        /// Обновление информации о клубе по ID
+        /// </summary>
+        /// <param name="id">Пользователь</param>
+        /// <param name="updateClubDTO">Клуб</param>
+        /// <returns></returns>
+        /// <response code="200">Успешное выполнение</response>
+        /// <response code="400">Ошибка API</response>
         // PUT: api/Clubs/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
@@ -81,6 +122,13 @@ namespace T2JuniorAPI.Controllers
             }
         }
 
+        /// <summary>
+        /// Создание нового клуба
+        /// </summary>
+        /// <param name="club">Клуб</param>
+        /// <returns></returns>
+        /// <response code="200">Успешное выполнение</response>
+        /// <response code="400">Ошибка API</response>
         // POST: api/Clubs
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
@@ -93,6 +141,14 @@ namespace T2JuniorAPI.Controllers
             return Ok(result);
         }
 
+        /// <summary>
+        /// Добавление пользователя с указанной ролью в клуб(по ID клуба).
+        /// </summary>
+        /// <param name="clubId">Клуб</param>
+        /// <param name="user">Пользователь</param>
+        /// <returns></returns>
+        /// <response code="200">Успешное выполнение</response>
+        /// <response code="400">Ошибка API</response>
         [HttpPost("{clubId}/add-user")]
         public async Task<IActionResult> AddUserToClub(Guid clubId, [FromBody] AddUserToClubDTO user)
         {
@@ -103,6 +159,14 @@ namespace T2JuniorAPI.Controllers
             return Ok(result);
         }
 
+        /// <summary>
+        /// Удаление пользователя из клуба
+        /// </summary>
+        /// <param name="clubId">Клуб</param>
+        /// <param name="userId">Пользователь</param>
+        /// <returns></returns>
+        /// <response code="200">Успешное выполнение</response>
+        /// <response code="400">Ошибка API</response>
         // DELETE: api/Clubs/{clubId}/deleteUser/{userId}
         [HttpDelete("{clubId}/delete-user/{userId}")]
         public async Task<IActionResult> DeleteUserFromClub(Guid clubId, Guid userId)
@@ -111,6 +175,13 @@ namespace T2JuniorAPI.Controllers
             return Ok(result);
         }
 
+        /// <summary>
+        /// Удаление клуба по его ID
+        /// </summary>
+        /// <param name="id">Клуб</param>
+        /// <returns></returns>
+        /// <response code="200">Успешное выполнение</response>
+        /// <response code="400">Ошибка API</response>
         // DELETE: api/Clubs/5
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteClub(Guid id)

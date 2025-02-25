@@ -25,6 +25,13 @@ namespace T2JuniorAPI.Controllers
             _context = context;
         }
 
+        /// <summary>
+        /// Получение списка подписчиков определенного пользователя
+        /// </summary>
+        /// <param name="userId">Организация</param>
+        /// <returns></returns>
+        /// <response code="200">Успешное выполнение</response>
+        /// <response code="400">Ошибка API</response>
         [HttpGet("subscribers")]
         public async Task<ActionResult<IEnumerable<SubscriberProfileDTO>>> GetSubscribers([FromQuery] Guid userId)
         {
@@ -32,6 +39,13 @@ namespace T2JuniorAPI.Controllers
             return Ok(subscribers);
         }
 
+        /// <summary>
+        /// Получение списка подписок определенного пользователя
+        /// </summary>
+        /// <param name="userId">Организация</param>
+        /// <returns></returns>
+        /// <response code="200">Успешное выполнение</response>
+        /// <response code="400">Ошибка API</response>
         [HttpGet("subscriptions")]
         public async Task<ActionResult<IEnumerable<SubscriberProfileDTO>>> GetSubscriptions([FromQuery] Guid userId)
         {
@@ -39,6 +53,13 @@ namespace T2JuniorAPI.Controllers
             return Ok(subscriptions);
         }
 
+        /// <summary>
+        /// Подписка одного пользователя на другого пользователя
+        /// </summary>
+        /// <param name="subscribeUser">Организация</param>
+        /// <returns></returns>
+        /// <response code="200">Успешное выполнение</response>
+        /// <response code="400">Ошибка API</response>
         [HttpPost("subscribe")]
         public async Task<IActionResult> SubscribeUserToUser([FromBody] SubscribeUserDTO subscribeUser)
         {
@@ -49,6 +70,13 @@ namespace T2JuniorAPI.Controllers
             return Ok(result);
         }
 
+        /// <summary>
+        /// Отмена подписки одного пользователя на другого пользователя
+        /// </summary>
+        /// <param name="unsubscribeUser">Организация</param>
+        /// <returns></returns>
+        /// <response code="200">Успешное выполнение</response>
+        /// <response code="400">Ошибка API</response>
         // DELETE: api/UserSubscribers/5
         [HttpDelete("unsubscribe")]
         public async Task<IActionResult> UnsubscribeUser([FromBody] UnsubscribeUserDTO unsubscribeUser)
