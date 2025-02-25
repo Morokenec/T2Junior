@@ -45,49 +45,49 @@ public partial class ProfilePage : ContentPage
         }
     }
 
-    private async void OnCoinButtonTapped(object sender, EventArgs e)
+    private void OnCoinButtonTapped(object sender, EventArgs e)
     {
-        await Navigation.PushAsync(new NotesPage());
+         Navigation.PushAsync(new CoinsPage());
     }
 
-    private async void OnRatingButtonTapped(object sender, EventArgs e)
+    private void OnRatingButtonTapped(object sender, EventArgs e)
     {
-        await Navigation.PushAsync(new RatingPage());
+         Navigation.PushAsync(new RatingPage());
     }
 
-    private async void OnSubscribersButtonTapped(object sender, EventArgs e)
+    private void OnSubscribersButtonTapped(object sender, EventArgs e)
     {
-        await Navigation.PushAsync(new SubscribersPage());
+         Navigation.PushAsync(new SubscribersPage());
     }
 
-    private async void OnFollowingButtonTapped(object sender, EventArgs e)
+    private void OnFollowingButtonTapped(object sender, EventArgs e)
     {
-        await Navigation.PushAsync(new FollowingPage());
+         Navigation.PushAsync(new FollowingPage());
     }
 
-    private async void OnClubsButtonTapped(object sender, EventArgs e)
+    private void OnClubsButtonTapped(object sender, EventArgs e)
     {
-        await Navigation.PushAsync(new ClubsPage());
+         Navigation.PushAsync(new ClubsPage());
     }
 
-    private async void OnProjectsFrameTapped(object sender, EventArgs e)
+    private void OnProjectsFrameTapped(object sender, EventArgs e)
     {
-        await Navigation.PushAsync(new ProjectsPage());
+         Navigation.PushAsync(new ProjectsPage());
     }
 
-    private async void OnActivitiesFrameTapped(object sender, EventArgs e)
+    private void OnActivitiesFrameTapped(object sender, EventArgs e)
     {
-        await Navigation.PushAsync(new ActivitiesPage());
+         Navigation.PushAsync(new ActivitiesPage());
     }
 
-    private async void OnCalendarFrameTapped(object sender, EventArgs e)
+    private void OnCalendarFrameTapped(object sender, EventArgs e)
     {
-        await Navigation.PushAsync(new CalendarPage());
+         Navigation.PushAsync(new CalendarPage());
     }
 
-    private async void OnNewsFrameTapped(object sender, EventArgs e)
+    private void OnNewsFrameTapped(object sender, EventArgs e)
     {
-        await Navigation.PushAsync(new NotesPage());
+         Navigation.PushAsync(new NotesPage());
     }
 
     private void OnSubUnsubButtonTapped(object sender, EventArgs e)

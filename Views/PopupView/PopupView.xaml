@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<toolkit:Popup xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+               xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+               xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+               x:Class="MauiApp1.Pages.PopupPage.PopupView"
+               x:Name="PopupThing">
+    <Grid BackgroundColor="Transparent">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+
+        <Frame Padding="20, 8"
+               HeightRequest="104"
+               BackgroundColor="White"
+               Grid.Row="1"
+               HasShadow="False"
+               CornerRadius="12"
+               VerticalOptions="End">
+        <StackLayout>
+            <HorizontalStackLayout>
+                <HorizontalStackLayout.GestureRecognizers>
+                    <TapGestureRecognizer Tapped="UnsubTapped" />
+                </HorizontalStackLayout.GestureRecognizers>
+                <Image Source="unsub.svg" />
+                <Label Text="Отписаться"
+                       HorizontalOptions="Start"
+                       VerticalOptions="Center"
+                       TextColor="#303345"
+                       FontSize="15"
+                       Margin="12, 12, 0, 12" />
+            </HorizontalStackLayout>
+            <BoxView BackgroundColor="#E4E4E4"
+                     HorizontalOptions="FillAndExpand"
+                     VerticalOptions="End"
+                     HeightRequest="2" />
+            <HorizontalStackLayout>
+                <HorizontalStackLayout.GestureRecognizers>
+                    <TapGestureRecognizer Tapped="SubTapped" />
+                </HorizontalStackLayout.GestureRecognizers>
+                <Label Text="Просмотреть всех подписчиков"
+                       HorizontalOptions="FillAndExpand"
+                       VerticalOptions="Center"
+                       WidthRequest="267"
+                       TextColor="#303345"
+                       FontSize="15" />
+                <ImageButton Source="redirect.svg"
+                             Margin="12, 0, 0, 0" />
+            </HorizontalStackLayout>
+        </StackLayout>
+    </Frame>
+    </Grid>
+</toolkit:Popup>

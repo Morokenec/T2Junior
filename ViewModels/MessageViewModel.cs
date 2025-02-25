@@ -1,11 +1,6 @@
 ﻿using MauiApp1.Models;
-using System;
-using System.Collections.Generic;
+using MauiApp1.Pages;
 using System.Collections.ObjectModel;
-using System.Linq;
-using System.Net.Mime;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace MauiApp1.ViewModels
 {
@@ -25,29 +20,78 @@ namespace MauiApp1.ViewModels
                 }
             }
         }
+        private Chat _selectedChat;
+
+        public Chat SelectedChat
+        {
+            get => _selectedChat;
+            set
+            {
+                _selectedChat = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private bool _visibility;
+
+        public bool Visibility
+        {
+            get => _visibility;
+            private set
+            {
+                if (_visibility != value)
+                {
+                    _visibility = value;
+                    OnPropertyChanged(nameof(Visibility));
+                }
+            }
+        }
+
         public List<string> ChatTypes { get; }
 
-        public ObservableCollection<Message> Chats { get; set; }
+        public ObservableCollection<Chat> Chats { get; set; }
 
-        public ObservableCollection<Message> FilteredChats { get; set; }
+        public ObservableCollection<Message> Messages { get; set; }
+
+        public ObservableCollection<Chat> FilteredChats { get; set; }
+
+        public ObservableCollection<Message> FilteredMessages { get; set; }
 
         public MessageViewModel()
         {
-            Chats = new ObservableCollection<Message>
-        {
-            new Message { IdChat = 1, Type = Message.TypeName.Личные, UnreadCount = 3},
-            new Message { IdChat = 2, Type = Message.TypeName.Личные },
-            new Message { IdChat = 3, ChatName = "КофеКлуб", Photo = "club_placeholder.svg", Type = Message.TypeName.Сообщества },
-            new Message { IdChat = 4, ChatName = "КофеКлуб", Photo = "club_placeholder.svg", Type = Message.TypeName.Сообщества},
-            new Message { IdChat = 5, ChatName = "КофеКлуб", Photo = "club_placeholder.svg", Type = Message.TypeName.Сообщества },
-            new Message { IdChat = 6 },
-            new Message { IdChat = 7, ChatName = "КофеКлуб", Photo = "club_placeholder.svg", Type = Message.TypeName.Сообщества },
-            new Message { IdChat = 8, ChatName = "КофеКлуб", Photo = "club_placeholder.svg", Type = Message.TypeName.Сообщества },
-            new Message { IdChat = 9 }
-        };
+            Chats = new ObservableCollection<Chat>
+            {
+                new Chat { IdChat = 1, Type = Chat.TypeName.Личные, UnreadCount = 3},
+                new Chat { IdChat = 2, Type = Chat.TypeName.Личные },
+                new Chat { IdChat = 3, ChatName = "КофеКлуб", Photo = "club_placeholder.svg", Type = Chat.TypeName.Сообщества },
+                new Chat { IdChat = 4, ChatName = "КофеКлуб", Photo = "club_placeholder.svg", Type = Chat.TypeName.Сообщества },
+                new Chat { IdChat = 5, ChatName = "КофеКлуб", Photo = "club_placeholder.svg", Type = Chat.TypeName.Сообщества, UnreadCount = 7 },
+                new Chat { IdChat = 6 },
+                new Chat { IdChat = 7, ChatName = "КофеКлуб", Photo = "club_placeholder.svg", Type = Chat.TypeName.Сообщества },
+                new Chat { IdChat = 8, ChatName = "КофеКлуб", Photo = "club_placeholder.svg", Type = Chat.TypeName.Сообщества },
+                new Chat { IdChat = 9 }
+            };
+            Messages = new ObservableCollection<Message>
+            {
+                new Message {IdChat = 1, Body = "Дизайн сообщения"},
+                new Message {IdChat = 2, Body = "СообщениеСообщение"},
+                new Message {IdChat = 3, Body = "Сообщение"}
+            };
 
-            FilteredChats = new ObservableCollection<Message>(Chats);
-            ChatTypes = Enum.GetValues(typeof(Message.TypeName)).Cast<Message.TypeName>().Select(t => t.ToString()).ToList();
+            foreach (Chat chat in Chats)
+            {
+                UpdateVisibility(chat);
+                chat.CountIsVisible = Visibility;
+            }
+
+            FilteredChats = new ObservableCollection<Chat>(Chats);
+            FilteredMessages = new ObservableCollection<Message>(Messages);
+            ChatTypes = Enum.GetValues(typeof(Chat.TypeName)).Cast<Chat.TypeName>().Select(t => t.ToString()).ToList();
+        }
+
+        private void UpdateVisibility(Chat chat)
+        {
+            Visibility = chat.UnreadCount != 0;
         }
 
         public void FilterChats()
@@ -71,11 +115,11 @@ namespace MauiApp1.ViewModels
             }
         }
 
-        public void FilterChatsByType(Message.TypeName type)
+        public void FilterChatsByType(Chat.TypeName type)
         {
             FilteredChats.Clear();
 
-            if (type == Message.TypeName.Все)
+            if (type == Chat.TypeName.Все)
             {
                 foreach (var chat in Chats)
                 {
@@ -92,20 +136,31 @@ namespace MauiApp1.ViewModels
             }
         }
 
-        public List<Message.TypeName> StringToType(string input) => input switch
+        public List<Chat.TypeName> StringToType(string input) => input switch
         {
-            "Все" => new List<Message.TypeName> { Message.TypeName.Личные, Message.TypeName.Сообщества },
-            "Личные" => new List<Message.TypeName> { Message.TypeName.Личные },
-            "Сообщества" => new List<Message.TypeName> { Message.TypeName.Сообщества },
+            "Все" => new List<Chat.TypeName> { Chat.TypeName.Личные, Chat.TypeName.Сообщества },
+            "Личные" => new List<Chat.TypeName> { Chat.TypeName.Личные },
+            "Сообщества" => new List<Chat.TypeName> { Chat.TypeName.Сообщества },
             _ => throw new ArgumentException("Такой категории нет.", nameof(input))
         };
 
-        public List<Message.TypeName> GetOppositeType(string input) => input switch
+        public List<Chat.TypeName> GetOppositeType(string input) => input switch
         {
-            "Личные" => new List<Message.TypeName> { Message.TypeName.Сообщества },
-            "Сообщества" => new List<Message.TypeName> { Message.TypeName.Личные },
-            "Все" => new List<Message.TypeName> { Message.TypeName.Личные, Message.TypeName.Сообщества },
+            "Личные" => new List<Chat.TypeName> { Chat.TypeName.Сообщества },
+            "Сообщества" => new List<Chat.TypeName> { Chat.TypeName.Личные },
+            "Все" => new List<Chat.TypeName> { Chat.TypeName.Личные, Chat.TypeName.Сообщества },
             _ => throw new ArgumentException("такого нет.", nameof(input))
         };
+
+        private void LoadDialogDetails()
+        {
+            var dialogViewModel = new MessageViewModel();
+            SelectedChat = dialogViewModel.GetChatById(ChatPage.SelectedChatId);
+        }
+
+        public Chat GetChatById(int idChat)
+        {
+            return Chats.FirstOrDefault(c => c.IdChat == idChat);
+        }
     }
 }

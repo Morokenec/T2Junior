@@ -1,7 +1,6 @@
 using MauiApp1.DataModel;
 using MauiApp1.Services;
 using MauiApp1.ViewModel;
-using System.Windows.Input;
 
 namespace MauiApp1;
 
@@ -27,7 +26,8 @@ public partial class ClubsPage : ContentPage
 
     private async void OnClubTapped(object sender, EventArgs e)
     {
-        var tappedClub = (sender as StackLayout)?.BindingContext as Club;
+        var tappedClub = (sender as Frame)?.BindingContext as Club;
+
         if (tappedClub != null)
         {
             ClubProfilePage.SelectedClubId = tappedClub.IdClub;

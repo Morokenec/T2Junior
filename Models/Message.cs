@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -8,20 +9,19 @@ namespace MauiApp1.Models
 {
     public class Message
     {
+        [Required]
         public int IdMessage { get; set; }
-        public int IdChat { get; set; }
-        public string ChatName { get; set; } = "Дмитрий Ушаков";
-        public int IdType { get; set; }
-        public enum TypeName 
-        { 
-            Все,
-            Личные,
-            Сообщества
-        }
-        public TypeName Type { get; set; } = TypeName.Личные;
-        public string Photo { get; set; } = "profile_placeholder.svg";
-        public int IdUser { get; set; }
+
+        public static Chat Chat { get; } = new Chat();
+
+        public int IdChat { get; set; } = Chat.IdChat;
+
+        public static UserProfileDTO User { get; set; } = new UserProfileDTO();
+
+        public int IdUser { get; set; } = User.IdUser;
+
+        public string DialogName { get; set; } = User.FullName; //заменить
+
         public string Body { get; set; } = "Сообщение";
-        public int UnreadCount { get; set; } = 1;
     }
 }

@@ -57,7 +57,7 @@
 	</ItemGroup>
 
 	<ItemGroup>
-	  <Compile Remove="Pages\GeneralNotesPage.xaml.cs" />
+	  <Compile Remove="Views\GeneralNotesPage.xaml.cs" />
 	  <Compile Remove="PixelToDPI.cs" />
 	</ItemGroup>
 
@@ -76,7 +76,7 @@
 	</ItemGroup>
 
 	<ItemGroup>
-	  <MauiXaml Remove="Pages\GeneralNotesPage.xaml" />
+	  <MauiXaml Remove="Views\GeneralNotesPage.xaml" />
 	</ItemGroup>
 
 	<ItemGroup>
@@ -118,6 +118,7 @@
 	  <None Remove="Resources\Images\redirect.svg" />
 	  <None Remove="Resources\Images\rules.svg" />
 	  <None Remove="Resources\Images\search_icon.svg" />
+	  <None Remove="Resources\Images\unsub.svg" />
 	</ItemGroup>
 
 	<ItemGroup>
@@ -128,64 +129,67 @@
 	</ItemGroup>
 
 	<ItemGroup>
-	  <Compile Update="Pages\AuthorizationPage.xaml.cs">
+	  <Compile Update="Views\AuthorizationPage.xaml.cs">
 	    <DependentUpon>AuthorizationPage.xaml</DependentUpon>
 	  </Compile>
-	  <Compile Update="Pages\NotesPage.xaml.cs">
+	  <Compile Update="Views\NotesPage.xaml.cs">
 	    <DependentUpon>NotesPage.xaml</DependentUpon>
 	  </Compile>
-	  <Compile Update="Pages\ProfilePage.xaml.cs">
+	  <Compile Update="Views\ProfilePage.xaml.cs">
 	    <DependentUpon>ProfilePage.xaml</DependentUpon>
 	  </Compile>
 	</ItemGroup>
 
 	<ItemGroup>
-	  <MauiXaml Update="Pages\ActivitiesPage.xaml">
+	  <MauiXaml Update="Views\ActivitiesPage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
-	  <MauiXaml Update="Pages\CalendarPage.xaml">
+	  <MauiXaml Update="Views\CalendarPage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
-	  <MauiXaml Update="Pages\ChatPage.xaml">
+	  <MauiXaml Update="Views\ChatPage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
-	  <MauiXaml Update="Pages\ClubProfilePage.xaml">
+	  <MauiXaml Update="Views\ClubProfilePage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
-	  <MauiXaml Update="Pages\ClubsPage.xaml">
+	  <MauiXaml Update="Views\ClubsPage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
-	  <MauiXaml Update="Pages\CoinsPage.xaml">
+	  <MauiXaml Update="Views\CoinsPage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
-	  <MauiXaml Update="Pages\DetailedNotePage.xaml">
+	  <MauiXaml Update="Views\DetailedNotePage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
-	  <MauiXaml Update="Pages\FollowingPage.xaml">
+	  <MauiXaml Update="Views\FollowingPage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
-	  <MauiXaml Update="Pages\InitiumPage.xaml">
+	  <MauiXaml Update="Views\InitiumPage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
-	  <MauiXaml Update="Pages\MessagesPage.xaml">
+	  <MauiXaml Update="Views\MessagesPage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
-	  <MauiXaml Update="Pages\NotesPage.xaml">
+	  <MauiXaml Update="Views\NotesPage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
-	  <MauiXaml Update="Pages\ProfilePage.xaml">
+	  <MauiXaml Update="Views\PopupView\PopupView.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
-	  <MauiXaml Update="Pages\ProjectsPage.xaml">
+	  <MauiXaml Update="Views\ProfilePage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
-	  <MauiXaml Update="Pages\RatingPage.xaml">
+	  <MauiXaml Update="Views\ProjectsPage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
-	  <MauiXaml Update="Pages\RulesPage.xaml">
+	  <MauiXaml Update="Views\RatingPage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
-	  <MauiXaml Update="Pages\SubscribersPage.xaml">
+	  <MauiXaml Update="Views\RulesPage.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="Views\SubscribersPage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	</ItemGroup>

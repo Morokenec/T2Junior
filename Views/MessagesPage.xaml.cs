@@ -12,11 +12,19 @@ public partial class MessagesPage : ContentPage
 
     private bool bothFramesClickedOnce = false;
     public bool Redirected { get; set; } = BackNavigationState.IsDirectAccess;
+    public string MessageTime { get; set; } = DateTime.Now.ToString("HH:MM");
+    public bool UnreadVisibleStatus { get; set; }
     public MessagesPage()
     {
         InitializeComponent();
         BindingContext = new MessageViewModel();
     }
+
+    protected override void OnAppearing()
+    {
+        base.OnAppearing();
+    }
+
     private void OnBackButtonTapped(object sender, EventArgs e)
     {
         BackClick.OnPageClicked();
@@ -28,13 +36,13 @@ public partial class MessagesPage : ContentPage
         clubContext.FilterChats();
     }
 
-    private async void OnChatTapped(object sender, EventArgs e)
+    private void OnChatTapped(object sender, EventArgs e)
     {
-        var tappedChat = (sender as StackLayout)?.BindingContext as Message;
+        var tappedChat = (sender as StackLayout)?.BindingContext as Chat;
         if (tappedChat != null)
         {
             ChatPage.SelectedChatId = tappedChat.IdChat;
-            await Application.Current.MainPage.Navigation.PushAsync(new ChatPage());
+            Application.Current.MainPage.Navigation.PushAsync(new ChatPage());
         }
     }
 
@@ -79,7 +87,7 @@ public partial class MessagesPage : ContentPage
                     typeFrame.BorderColor = Color.FromArgb("#E0E0E0");
                     bothFramesClickedOnce = true;
                     clickCounts[labelText] = 1;
-                    chatContext.FilterChatsByType(Message.TypeName.Все);
+                    chatContext.FilterChatsByType(Chat.TypeName.Все);
                 }
 
             }
@@ -99,7 +107,7 @@ public partial class MessagesPage : ContentPage
                     }
                     else
                     {
-                        chatContext.FilterChatsByType(Message.TypeName.Все);
+                        chatContext.FilterChatsByType(Chat.TypeName.Все);
                     }
 
                     clickCounts[labelText] = 0;
@@ -109,7 +117,7 @@ public partial class MessagesPage : ContentPage
                     typeFrame.BorderColor = Color.FromArgb("#0057A6");
                     if (bothFramesClickedOnce)
                     {
-                        chatContext.FilterChatsByType(Message.TypeName.Все);
+                        chatContext.FilterChatsByType(Chat.TypeName.Все);
                     }
                     else
                     {
@@ -128,13 +136,13 @@ public partial class MessagesPage : ContentPage
             if (clickCounts[labelText] == 2)
             {
                 typeFrame.BorderColor = Color.FromArgb("#E0E0E0");
-                chatContext.FilterChatsByType(Message.TypeName.Все);
+                chatContext.FilterChatsByType(Chat.TypeName.Все);
                 clickCounts[labelText] = 0;
             }
             else if (clickCounts[labelText] == 1)
             {
                 typeFrame.BorderColor = Color.FromArgb("#0057A6");
-                chatContext.FilterChatsByType(Message.TypeName.Все);
+                chatContext.FilterChatsByType(Chat.TypeName.Все);
             }
         }
     }

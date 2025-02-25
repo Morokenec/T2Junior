@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="MauiApp1.FollowingPage"
+             Title="Подписки">
+    <VerticalStackLayout>
+
+        <Frame x:Name="SubFrame"
+               BorderColor="Transparent">
+            <HorizontalStackLayout>
+                <Frame x:Name="BackFrame"
+                       BorderColor="Transparent">
+                    <Frame.GestureRecognizers>
+                        <TapGestureRecognizer Tapped="OnBackButtonTapped" />
+                    </Frame.GestureRecognizers>
+                    <Image Source="back_icon.svg"
+                           Aspect="AspectFill" />
+                </Frame>
+                <Frame x:Name="FollowTextFrame"
+                       BorderColor="Transparent">
+                    <Label x:Name="FollowText"
+                           Text="Подписки"
+                           FontSize="20"
+                           HorizontalOptions="Center" />
+                </Frame>
+            </HorizontalStackLayout>
+        </Frame>
+
+        <Frame x:Name="ProfContainerFrame"
+               CornerRadius="20"
+               HasShadow="True">
+            <VerticalStackLayout x:Name="ProfilesLayout">
+                <StackLayout>
+                    <Frame HasShadow="False"
+                           BorderColor="Transparent">
+                        <HorizontalStackLayout>
+                            <Image Source="profile_placeholder.svg"
+                                   Aspect="AspectFill" />
+                            <Label Text="Дмитрий Ушаков"
+                                   TextColor="#191C30" />
+                            <Image Source="redirect.svg"
+                                   Aspect="AspectFill" />
+                        </HorizontalStackLayout>
+                    </Frame>
+                    <BoxView BackgroundColor="#E4E4E4"
+                             HorizontalOptions="FillAndExpand"
+                             VerticalOptions="End" />
+                    <Frame HasShadow="False"
+                           BorderColor="Transparent">
+                        <HorizontalStackLayout>
+                            <Image Source="profile_placeholder.svg"
+                                   Aspect="AspectFill" />
+                            <Label Text="Виталий Таран"
+                                   TextColor="#191C30" />
+                            <Image Source="redirect.svg"
+                                   Aspect="AspectFill" />
+                        </HorizontalStackLayout>
+                    </Frame>
+                    <BoxView BackgroundColor="#E4E4E4"
+                             HorizontalOptions="FillAndExpand"
+                             VerticalOptions="End" />
+                </StackLayout>
+                <StackLayout>
+                    <Frame HasShadow="False"
+                           BorderColor="Transparent">
+                        <HorizontalStackLayout>
+                            <Image Source="profile_placeholder.svg"
+                                   Aspect="AspectFill" />
+                            <Label Text="Матвей Абрамов"
+                                   TextColor="#191C30"
+                                   FontSize="15" />
+                            <Image Source="redirect.svg"
+                                   Aspect="AspectFill" />
+                        </HorizontalStackLayout>
+                    </Frame>
+                    <BoxView BackgroundColor="#E4E4E4"
+                             HorizontalOptions="FillAndExpand"
+                             VerticalOptions="End" />
+                </StackLayout>
+                <StackLayout>
+                    <Frame HasShadow="False"
+                           BorderColor="Transparent">
+                        <HorizontalStackLayout>
+                            <Image Source="profile_placeholder.svg"
+                                   Aspect="AspectFill" />
+                            <Label Text="Тимофей Багин"
+                                   TextColor="#191C30" />
+                            <Image Source="redirect.svg"
+                                   Aspect="AspectFill" />
+                        </HorizontalStackLayout>
+                    </Frame>
+                    <BoxView BackgroundColor="#E4E4E4"
+                             HorizontalOptions="FillAndExpand"
+                             VerticalOptions="End" />
+                </StackLayout>
+                <StackLayout>
+                    <Frame HasShadow="False"
+                           BorderColor="Transparent">
+                        <HorizontalStackLayout>
+                            <Image Source="profile_placeholder.svg"
+                                   Aspect="AspectFill" />
+                            <Label Text="Дмитрий Ушаков"
+                                   TextColor="#191C30" />
+                            <Image Source="redirect.svg"
+                                   Aspect="AspectFill" />
+                        </HorizontalStackLayout>
+                    </Frame>
+                </StackLayout>
+            </VerticalStackLayout>
+        </Frame>
+
+    </VerticalStackLayout>
+</ContentPage>

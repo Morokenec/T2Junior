@@ -34,7 +34,7 @@
                    HeightRequest="24"
                    Margin="0,0,0,8"
                    WidthRequest="295">
-                <Label Text="Баллы"
+                <Label Text="Правила"
                        FontSize="20"
                        HorizontalOptions="Center"
                        HeightRequest="24" />

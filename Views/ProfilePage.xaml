@@ -98,17 +98,20 @@
                                            FontSize="20"
                                            HeightRequest="22"
                                            Text="0"
+                                           HorizontalOptions="Center"
                                            VerticalOptions="End"
                                            FontFamily="MyriadProBold"/>
 
                                     <Label FontSize="9"
                                            Text="из"
+                                           HorizontalOptions="Center"
                                            VerticalOptions="End"
                                            TextColor="#9C9B9A"/>
 
                                     <Label x:Name="RatingCountLabel"
                                            FontSize="9"
                                            Text="0"
+                                           HorizontalOptions="Center"
                                            VerticalOptions="End"
                                            TextColor="#9C9B9A"/>
 

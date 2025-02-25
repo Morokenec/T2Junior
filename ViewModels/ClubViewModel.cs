@@ -21,6 +21,7 @@ namespace MauiApp1.ViewModel
                 {
                     _searchText = value;
                     OnPropertyChanged();
+                    FilterClubs();
                 }
             }
         }

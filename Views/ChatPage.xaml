@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="MauiApp1.MessagesPage"
+             x:Class="MauiApp1.Pages.ChatPage"
              x:Name="Messages"
-             Title="Сообщения">
+             Title="ChatPage">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
@@ -12,7 +12,7 @@
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
 
-        <HorizontalStackLayout x:Name="ChatsLayout"
+        <HorizontalStackLayout x:Name="MessagesLayout"
                                Grid.Row="0"
                                Margin="20,16"
                                Padding="0,8"
@@ -32,7 +32,7 @@
                        HeightRequest="24"
                        IsVisible="{Binding Source={x:Reference Messages}, Path=Redirected}" />
             </Frame>
-            <Frame x:Name="ChatTextFrame"
+            <Frame x:Name="MessagesTextFrame"
                    BorderColor="Transparent"
                    HeightRequest="24"
                    Margin="0,0,0,8"
@@ -44,73 +44,9 @@
             </Frame>
         </HorizontalStackLayout>
 
-        <Frame Grid.Row="1"
-               HeightRequest="44"
-               CornerRadius="12"
-               Margin="16,0">
-            <HorizontalStackLayout VerticalOptions="Center">
-                <Frame HasShadow="True"
-                       WidthRequest="295"
-                       HeightRequest="44"
-                       BorderColor="Transparent">
-                    <Entry x:Name="searchEntry"
-                           Text="{Binding SearchText}"
-                           Placeholder="Поиск"
-                           PlaceholderColor="#A2A4AF"
-                           FontFamily="Manrope"
-                           HorizontalOptions="FillAndExpand"
-                           FontSize="13"
-                           Margin="12,0" />
-                </Frame>
-            </HorizontalStackLayout>
-        </Frame>
-
-        <CollectionView ItemsSource="{Binding ChatTypes}"
-                        x:Name="TypesCollection"
-                        Grid.Row="2"
-                        Margin="16,6,16,0">
-            <CollectionView.ItemsLayout>
-                <GridItemsLayout Orientation="Horizontal" />
-            </CollectionView.ItemsLayout>
-            <CollectionView.ItemTemplate>
-                <DataTemplate>
-                    <Frame x:Name="TypeFrame"
-                           BorderColor="#E0E0E0"
-                           CornerRadius="10"
-                           HorizontalOptions="FillAndExpand"
-                           VerticalOptions="Fill"
-                           HasShadow="True"
-                           Margin="0,0,5,0"
-                           BackgroundColor="White">
-                        <Frame.GestureRecognizers>
-                            <TapGestureRecognizer Tapped="OnTypeTapped" />
-                        </Frame.GestureRecognizers>
-
-                        <StackLayout>
-                            <Frame BorderColor="Transparent"
-                                   HorizontalOptions="Fill"
-                                   VerticalOptions="Fill"
-                                   Margin="24, 8">
-                                <StackLayout>
-                                    <StackLayout.GestureRecognizers>
-                                        <TapGestureRecognizer Tapped="OnTypeTapped" />
-                                    </StackLayout.GestureRecognizers>
-                                    <Label Text="{Binding .}"
-                                           HorizontalOptions="Center"
-                                           VerticalOptions="Center"
-                                           FontSize="15"
-                                           TextColor="#838281" />
-                                </StackLayout>
-                            </Frame>
-                        </StackLayout>
-                    </Frame>
-                </DataTemplate>
-            </CollectionView.ItemTemplate>
-        </CollectionView>
-
-        <CollectionView ItemsSource="{Binding FilteredChats}"
+        <CollectionView ItemsSource="{Binding FilteredMessages}"
                         x:Name="ChatsCollection"
-                        Grid.Row="3"
+                        Grid.Row="1"
                         Margin="0,2,0,0">
             <CollectionView.ItemsLayout>
                 <GridItemsLayout Span="1"
@@ -126,7 +62,7 @@
                            BackgroundColor="White">
                         <HorizontalStackLayout>
                             <HorizontalStackLayout.GestureRecognizers>
-                                <TapGestureRecognizer/>
+                                <TapGestureRecognizer />
                             </HorizontalStackLayout.GestureRecognizers>
                             <Frame BorderColor="Transparent">
                                 <HorizontalStackLayout>
@@ -138,7 +74,7 @@
                                            VerticalOptions="Fill"
                                            HorizontalOptions="Start"
                                            WidthRequest="54"
-                                           HeightRequest="54"/>
+                                           HeightRequest="54" />
                                 </HorizontalStackLayout>
                             </Frame>
 
@@ -147,11 +83,11 @@
                                    HeightRequest="36"
                                    BorderColor="Transparent"
                                    Margin="8,4,0,0">
-                                <StackLayout> 
+                                <StackLayout>
                                     <StackLayout.GestureRecognizers>
                                         <TapGestureRecognizer />
                                     </StackLayout.GestureRecognizers>
-                                    <Label Text="{Binding ChatName}"
+                                    <Label Text="{Binding DialogName}"
                                            HorizontalOptions="Start"
                                            FontSize="15"
                                            TextColor="#0057A6" />
