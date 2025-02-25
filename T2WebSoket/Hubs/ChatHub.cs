@@ -1,4 +1,6 @@
 ﻿using Microsoft.AspNetCore.SignalR;
+using Microsoft.EntityFrameworkCore;
+using T2WebSoket.DTOs;
 using T2WebSoket.Models;
 using T2WebSoket.Repositories;
 
@@ -11,6 +13,23 @@ namespace T2WebSoket.Hubs
         public ChatHub(ChatDbContext context)
         {
             _context = context;
+        }
+        
+        public async Task<List<MessageDTO>> GetChatHistory(Guid chatId)
+        {
+            var chatMessages = await _context.Messages
+                .Where(m => m.ChatId == chatId)
+                .OrderBy(m => m.CreationDate)
+                .Include(m => m.User)
+                .Select(m => new MessageDTO
+                {
+                    Body = m.Body,
+                    CreationDate = m.CreationDate,
+                    UserName = m.User.UserName,
+                })
+                .ToListAsync();
+
+            return chatMessages;
         }
 
         public async Task Send(string userId, string message, string chatId)

@@ -60,6 +60,15 @@
                 }
                 await connection.invoke("JoinGroup", currentChatId);
                 // Load existing messages for the chat
+
+                const chatHistory = await connection.invoke("GetChatHistory", chatId);
+                const messagesDiv = document.getElementById("messages");
+                messagesDiv.innerHTML = "";
+                chatHistory.forEach(message => {
+                    const messageElement = document.createElement("div");
+                    messageElement.textContent = `${message.userName} (${new Date(message.creationDate).toLocaleTimeString()}): ${message.body}`;
+                    messagesDiv.appendChild(messageElement);
+                });
             } catch (err) {
                 console.error("Error joining chat:", err);
             }
