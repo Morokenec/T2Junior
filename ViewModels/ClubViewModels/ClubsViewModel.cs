@@ -89,7 +89,6 @@ namespace MauiApp1.ViewModels.ClubViewModel
             }
         }
 
-        // Отображаемое изображение зависит от состояния подписки
         public string SubImageSource => IsSubscribed ? "already_subbed.svg" : "add_a_new.svg";
 
         public ClubsViewModel()
@@ -112,7 +111,6 @@ namespace MauiApp1.ViewModels.ClubViewModel
             var clubLists = await _clubService.GetClubsAsync();
             if (clubLists != null)
             {
-                // Обновление коллекций на главном потоке
                 MainThread.BeginInvokeOnMainThread(() =>
                 {
                     Clubs.Clear();

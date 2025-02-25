@@ -97,7 +97,6 @@ namespace MauiApp1.ViewModels.ClubProfileViewModel
             {
                 await _clubService.SubscribeClub(SelectedClubId, Guid.Parse(AppSettings.test_user_guid), Guid.Parse(AppSettings.role_id_user_guid));
             }
-
         }
     }
 }

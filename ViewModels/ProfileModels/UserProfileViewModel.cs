@@ -118,16 +118,15 @@ namespace MauiApp1.ViewModels.Profile
         {
             try
             {
-                var chosenImage = await FilePicker.PickAsync(new PickOptions
-                {
-                    PickerTitle = "Выберите изображение"
-                });
+
+                var chosenImage = await MediaPicker.PickPhotoAsync();
 
                 if (chosenImage != null)
+
                 {
                     using var stream = await chosenImage.OpenReadAsync();
-
                     await _profileService.SetAvatarProfileUploadServer(Guid.Parse(AppSettings.test_user_guid), stream);
+                    await LoadDataAsync();
                 }
             }
             catch (Exception ex)
