@@ -42,8 +42,6 @@ namespace T2WebSoket.Services
         {
             try
             {
-                Console.WriteLine($"\n\n\nUploading file for user ID: {fileUpload.IdUser}\n\n\n");
-
                 if (!Guid.TryParse(fileUpload.IdUser.ToString(), out Guid userId))
                 {
                     throw new ArgumentException("Invalid userId format.");
@@ -63,7 +61,6 @@ namespace T2WebSoket.Services
                 _chatDbContext.Files.Add(file);
                 await _chatDbContext.SaveChangesAsync();
 
-                Console.WriteLine("File uploaded successfully.");
                 return file;
             }
             catch (DbUpdateException ex)

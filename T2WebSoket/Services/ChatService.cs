@@ -41,8 +41,13 @@ namespace T2WebSoket.Services
 
         public async Task<ChatDTO> CreatePrivateChatAsync(Guid userId1, Guid userId2)
         {
+            var user1 = await _context.Users.FindAsync(userId1);
+            var user2 = await _context.Users.FindAsync(userId2);
+            if ((user1 == null && !user1.IsDelete) || (user2 == null && !user2.IsDelete))
+                throw new ApplicationException("Users not found");
+
             var chatType = await _context.ChatTypes.SingleOrDefaultAsync(ct => ct.Name == "Private");
-            var chat = new Chat { Name = $"Private Chat", TypeId = chatType.Id };
+            var chat = new Chat { Name = $"{user1.UserName}-{user2.UserName}", TypeId = chatType.Id };
             _context.Chats.Add(chat);
             await _context.SaveChangesAsync();
 

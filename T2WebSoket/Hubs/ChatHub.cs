@@ -18,6 +18,11 @@ namespace T2WebSoket.Hubs
             _fileService = fileService;
         }
 
+        /// <summary>
+        /// Получение истории сообщений чата.
+        /// </summary>
+        /// <param name="chatId">Идентификатор чата.</param>
+        /// <returns>Список сообщений чата.</returns>
         public async Task<List<MessageDTO>> GetChatHistory(Guid chatId)
         {
             var chatMessages = await _context.Messages
@@ -43,27 +48,27 @@ namespace T2WebSoket.Hubs
             return chatMessages;
         }
 
+        /// <summary>
+        /// Отправка текстового сообщения.
+        /// </summary>
+        /// <param name="userId">Идентификатор пользователя.</param>
+        /// <param name="message">Текст сообщения.</param>
+        /// <param name="chatId">Идентификатор чата.</param>
         public async Task Send(string userId, string message, string chatId)
         {
-            Console.WriteLine("we a enter in the server method");
             try
             {
                 var user = await _context.Users.FindAsync(Guid.Parse(userId));
-                Console.WriteLine("try user check");
                 if (user == null)
                 {
-                    Console.Error.WriteLine($"User not found: {userId}");
                     throw new Exception($"User not found: {userId}");
                 }
-                Console.WriteLine("user check success!\n try chat check");
 
                 var chat = await _context.Chats.FindAsync(Guid.Parse(chatId));
                 if (chat == null)
                 {
-                    Console.Error.WriteLine($"Chat not found: {chatId}");
                     throw new Exception($"Chat not found: {chatId}");
                 }
-                Console.WriteLine("chat Check success!");
 
                 var chatMessage = new Message
                 {
@@ -74,6 +79,8 @@ namespace T2WebSoket.Hubs
 
                 _context.Messages.Add(chatMessage);
                 await _context.SaveChangesAsync();
+
+                // Отправка сообщения всем участникам группы
                 await Clients.Group(chatId.ToString()).SendAsync("ReceiveMessage", user.UserName, message, chatMessage.CreationDate);
             }
             catch (Exception ex)
@@ -84,17 +91,29 @@ namespace T2WebSoket.Hubs
             }
         }
 
-
+        /// <summary>
+        /// Присоединение клиента к группе чата.
+        /// </summary>
+        /// <param name="chatId">Идентификатор чата.</param>
         public async Task JoinGroup(Guid chatId)
         {
             await Groups.AddToGroupAsync(Context.ConnectionId, chatId.ToString());
         }
 
+        /// <summary>
+        /// Удаление клиента из группы чата.
+        /// </summary>
+        /// <param name="chatId">Идентификатор чата.</param>
         public async Task LeaveGroup(Guid chatId)
         {
             await Groups.RemoveFromGroupAsync(Context.ConnectionId, chatId.ToString());
         }
 
+        /// <summary>
+        /// Определение типа файла по его расширению.
+        /// </summary>
+        /// <param name="filePath">Путь к файлу.</param>
+        /// <returns>Тип файла (image, video, file).</returns>
         private static string GetFileType(string filePath)
         {
             var extension = Path.GetExtension(filePath).ToLower();
@@ -113,13 +132,19 @@ namespace T2WebSoket.Hubs
                     return "file";
             }
         }
+
+        /// <summary>
+        /// Отправка уведомления о новом сообщении с файлом.
+        /// </summary>
+        /// <param name="userId">Идентификатор пользователя.</param>
+        /// <param name="message">Текст сообщения.</param>
+        /// <param name="chatId">Идентификатор чата.</param>
+        /// <param name="fileId">Идентификатор файла.</param>
+        /// <param name="filePath">Путь к файлу.</param>
         public async Task SendWithFileNotification(string userId, string message, string chatId, string fileId, string filePath)
         {
             try
             {
-                Console.WriteLine("Welcome to SendWithFileNotification.");
-                Console.WriteLine($"Received parameters - userId: {userId}, chatId: {chatId}, fileId: {fileId}, filePath: {filePath}");
-
                 var user = await _context.Users.FindAsync(Guid.Parse(userId));
                 if (user == null)
                 {
@@ -164,65 +189,6 @@ namespace T2WebSoket.Hubs
                 throw;
             }
         }
-
-
-        //public async Task SendWithFile(string userId, string message, string chatId, IFormFile file)
-        //{
-        //    try
-        //    {
-        //        var user = await _context.Users.FindAsync(Guid.Parse(userId));
-        //        if (user == null)
-        //        {
-        //            throw new Exception($"User not found: {userId}");
-        //        }
-
-        //        var chat = await _context.Chats.FindAsync(Guid.Parse(chatId));
-        //        if (chat == null)
-        //        {
-        //            throw new Exception($"Chat not found: {chatId}");
-        //        }
-
-        //        // Загрузка файла
-        //        var fileUploadDto = new FileUploadDTO
-        //        {
-        //            File = file,
-        //            IdUser = userId
-        //        };
-
-        //        var fileDto = await _fileService.UploadFileAsync(fileUploadDto);
-
-        //        string fileType = GetFileType(fileDto.FilePath);
-
-        //        // Создание сообщения
-        //        var chatMessage = new Message
-        //        {
-        //            UserId = user.Id,
-        //            ChatId = chat.Id,
-        //            Text = message,
-        //        };
-
-        //        _context.Messages.Add(chatMessage);
-        //        await _context.SaveChangesAsync();
-
-        //        // Создание связи между сообщением и файлом
-        //        var messageFile = new MessageFile
-        //        {
-        //            IdMessage = chatMessage.Id,
-        //            IdFile = fileDto.Id,
-        //        };
-
-        //        _context.MessageFiles.Add(messageFile);
-        //        await _context.SaveChangesAsync();
-
-        //        // Отправка сообщения клиентам
-        //        await Clients.Group(chatId.ToString()).SendAsync("ReceiveMessage", user.UserName, message, chatMessage.CreationDate, fileDto.FilePath, fileType);
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        Console.Error.WriteLine($"Error sending message with file: {ex.Message}");
-        //        throw;
-        //    }
-        //}
 
     }
 }
