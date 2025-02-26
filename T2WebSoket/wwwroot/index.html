@@ -15,9 +15,11 @@
     <div id="messages"></div>
     <input type="text" id="messageInput" placeholder="Type a message" />
     <input type="button" id="sendBtn" value="Otpravit"/>
+    <input type="file" id="fileInput"/>
+    <button onclick="sendMessageWithFile()">Send Message with File</button>
 
     <script>
-        const connection = new signalR.HubConnectionBuilder()
+        let connection = new signalR.HubConnectionBuilder()
             .withUrl("/chatHub")
             .build();
 
@@ -29,12 +31,44 @@
 
 
 
-        connection.on("ReceiveMessage", (userName, message, timestamp, mediaUrl) => {
+        connection.on("ReceiveMessage", (userName, message, timestamp, filePath, fileType) => {
             const messagesDiv = document.getElementById("messages");
             const messageElement = document.createElement("div");
-            messageElement.textContent = `${userName} (${new Date(timestamp).toLocaleTimeString()}): ${message}`;
+
+            // Отображение текста сообщения
+            const textElement = document.createElement("p");
+            textElement.textContent = `${userName} (${new Date(timestamp).toLocaleTimeString()}): ${message}`;
+            messageElement.appendChild(textElement);
+
+            // Отображение файла, если он есть
+            if (filePath) {
+                switch (fileType) {
+                    case "image":
+                        const imgElement = document.createElement("img");
+                        imgElement.src = filePath + "?t=" + new Date().getTime();;
+                        resizeMedia(imgElement, 300, 200);
+                        messageElement.appendChild(imgElement);
+                        break;
+                    case "video":
+                        const videoElement = document.createElement("video");
+                        videoElement.src = filePath + "?t=" + new Date().getTime(); // Добавление параметра для обхода кэша
+                        videoElement.controls = true;
+                        resizeMedia(videoElement, 400, 300); // Установите нужный размер
+                        messageElement.appendChild(videoElement);
+                        break;
+                    default:
+                        const fileLink = document.createElement("a");
+                        fileLink.href = filePath + "?t=" + new Date().getTime(); // Добавление параметра для обхода кэша
+                        fileLink.textContent = "Download File";
+                        fileLink.download = "";
+                        messageElement.appendChild(fileLink);
+                        break;
+                }
+            }
+
             messagesDiv.appendChild(messageElement);
         });
+
 
         async function loadChats() {
             const userId = document.getElementById("userId").value;
@@ -52,21 +86,97 @@
         }
 
         async function joinChat(chatId) {
-            console.log(`connected to chat ${chatId}`)
+            console.log(`Switching to chat ${chatId}`);
+
+            // Закрываем текущее соединение
+            if (connection.state === signalR.HubConnectionState.Connected) {
+                await connection.stop();
+            }
+
+            // Открываем новое соединение
+            connection = new signalR.HubConnectionBuilder()
+                .withUrl("/chatHub")
+                .build();
+
+            connection.on("ReceiveMessage", (userName, message, timestamp, filePath, fileType) => {
+                const messagesDiv = document.getElementById("messages");
+                const messageElement = document.createElement("div");
+
+                // Отображение текста сообщения
+                const textElement = document.createElement("p");
+                textElement.textContent = `${userName} (${new Date(timestamp).toLocaleTimeString()}): ${message}`;
+                messageElement.appendChild(textElement);
+
+                // Отображение файла, если он есть
+                if (filePath) {
+                    switch (fileType) {
+                        case "image":
+                            const imgElement = document.createElement("img");
+                            imgElement.src = filePath + "?t=" + new Date().getTime();
+                            resizeMedia(imgElement, 300, 200);
+                            messageElement.appendChild(imgElement);
+                            break;
+                        case "video":
+                            const videoElement = document.createElement("video");
+                            videoElement.src = filePath + "?t=" + new Date().getTime();
+                            videoElement.controls = true;
+                            resizeMedia(videoElement, 400, 300);
+                            messageElement.appendChild(videoElement);
+                            break;
+                        default:
+                            const fileLink = document.createElement("a");
+                            fileLink.href = filePath + "?t=" + new Date().getTime();
+                            fileLink.textContent = "Download File";
+                            fileLink.download = "";
+                            messageElement.appendChild(fileLink);
+                            break;
+                    }
+                }
+
+                messagesDiv.appendChild(messageElement);
+            });
+
             currentChatId = chatId; // Сохраняем текущий chatId
             try {
-                if (connection.state === signalR.HubConnectionState.Disconnected) {
-                    await connection.start();
-                }
+                await connection.start();
                 await connection.invoke("JoinGroup", currentChatId);
-                // Load existing messages for the chat
 
+                // Загрузка существующих сообщений для чата
                 const chatHistory = await connection.invoke("GetChatHistory", chatId);
                 const messagesDiv = document.getElementById("messages");
                 messagesDiv.innerHTML = "";
                 chatHistory.forEach(message => {
                     const messageElement = document.createElement("div");
-                    messageElement.textContent = `${message.userName} (${new Date(message.creationDate).toLocaleTimeString()}): ${message.body}`;
+
+                    const textElement = document.createElement("p");
+                    textElement.textContent = `${message.userName} (${new Date(message.creationDate).toLocaleTimeString()}): ${message.text}`;
+                    messageElement.appendChild(textElement);
+
+                    if (message.filePath) {
+                        switch (message.fileType) {
+                            case "image":
+                                const imgElement = document.createElement("img");
+                                imgElement.src = message.filePath;
+                                resizeMedia(imgElement, 300, 200);
+                                messageElement.appendChild(imgElement);
+                                break;
+                            case "video":
+                                const videoElement = document.createElement("video");
+                                videoElement.src = message.filePath;
+                                videoElement.controls = true;
+                                resizeMedia(videoElement, 400, 300);
+                                messageElement.appendChild(videoElement);
+                                break;
+                            default:
+                                const fileLink = document.createElement("a");
+                                fileLink.href = message.filePath;
+                                fileLink.textContent = "Download File";
+                                fileLink.download = "";
+                                messageElement.appendChild(fileLink);
+                                break;
+                        }
+                    }
+
                     messagesDiv.appendChild(messageElement);
                 });
             } catch (err) {
@@ -103,6 +213,89 @@
                 alert("Failed to send message. Please check the console for more details.");
             }
         }
+
+        async function uploadFile() {
+            const fileInput = document.getElementById("fileInput");
+            const file = fileInput.files[0];
+            const userId = document.getElementById("userId").value;
+
+            if (!file) {
+                alert("Please select a file to upload.");
+                return;
+            }
+
+            const formData = new FormData();
+            formData.append("File", file);
+            formData.append("IdUser", userId);
+
+            const response = await fetch("/api/FileUpload/upload", {
+                method: "POST",
+                body: formData,
+            });
+
+            const result = await response.json();
+            if (result.fileId) {
+                // Отправить сообщение с прикрепленным файлом
+                await sendMessageWithFile(result.fileId, result.filePath);
+            } else {
+                alert("File upload failed.");
+            }
+        }
+
+        async function sendMessageWithFile() {
+            const messageInput = document.getElementById("messageInput");
+            const message = messageInput.value;
+            const userId = document.getElementById("userId").value;
+            const fileInput = document.getElementById("fileInput");
+            const file = fileInput.files[0];
+
+            if (!currentChatId) {
+                alert("Please select a chat first.");
+                return;
+            }
+
+            if (!file) {
+                alert("Please select a file to upload.");
+                return;
+            }
+
+            const formData = new FormData();
+            formData.append("file", file);
+            formData.append("IdUser", userId);
+
+            try {
+                // Логирование данных перед отправкой
+                console.log("Sending file:", file);
+                console.log("FormData content:", [...formData.entries()]);
+
+                const response = await fetch("/api/File/upload", {
+                    method: "POST",
+                    body: formData,
+                });
+
+                if (!response.ok) {
+                    throw new Error("Failed to upload file.");
+                }
+
+                const result = await response.json();
+
+                // Вызов метода SignalR для отправки уведомления
+                await connection.invoke("SendWithFileNotification", userId, message, currentChatId, result.id, result.filePath);
+
+                messageInput.value = "";
+                fileInput.value = "";
+            } catch (err) {
+                console.error("Error sending message with file:", err);
+                alert("Failed to send message with file. Please check the console for more details.");
+            }
+        }
+
+        function resizeMedia(element, maxWidth, maxHeight) {
+            element.style.maxWidth = `${maxWidth}px`;
+            element.style.maxHeight = `${maxHeight}px`;
+        }
+        
+
 
         // Start the connection when the page loads
         connection.start().catch(err => console.error("Error connecting to chat hub:", err));

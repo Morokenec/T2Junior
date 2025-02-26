@@ -10,6 +10,10 @@ namespace T2WebSoket.MappingProfiles
             CreateMap<User, UserDTO>()
                 .ForMember(dest => dest.Name, opt => opt.MapFrom(src => src.UserName)).ReverseMap();
             CreateMap<Chat, ChatDTO>().ReverseMap();
+
+            CreateMap<ChatFile, FileDTO>();
+            CreateMap<FileUploadDTO, ChatFile>()
+                .ForMember(dest => dest.UserId, opt => opt.MapFrom(src => src.IdUser));
         }
     }
 }
