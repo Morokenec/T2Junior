@@ -4,6 +4,8 @@ using MauiApp1.Services.UseCase.Interface;
 using System.Diagnostics;
 using System.Text.Json;
 using System.Text;
+using System.Net.Http.Json;
+using MauiApp1.Models;
 
 namespace MauiApp1.Services.UseCase
 {
@@ -68,6 +70,34 @@ namespace MauiApp1.Services.UseCase
             {
                 Debug.WriteLine($"[ERROR] Exception: {ex.Message}");
             }
+        }
+
+        public async Task<string?> LoginAsync(string email, string password)
+        {
+            string url = $"{AppSettings.base_url}/api/Account/login";
+            var authRequest = new AuthRequest { Email = email, Password = password };
+
+            try
+            {
+                var response = await _httpClient.PostAsJsonAsync(url, authRequest);
+
+                if (response.IsSuccessStatusCode)
+                {
+                    var authResponse = await response.Content.ReadFromJsonAsync<AuthResponse>();
+                    return authResponse?.Token;
+                }
+                else
+                {
+                    var error = await response.Content.ReadAsStringAsync();
+                    Console.WriteLine($"Ошибка авторизации: {response.StatusCode}, {error}");
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Не коректное значение: {ex.Message}");
+            }
+
+            return null;
         }
     }
 }

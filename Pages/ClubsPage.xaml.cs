@@ -37,6 +37,10 @@ public partial class ClubsPage : ContentPage
 
     private async void OnClubTapped(object sender, EventArgs e)
     {
+        var currentPage = Navigation.NavigationStack.LastOrDefault();
+        if (currentPage?.GetType() == typeof(ClubProfilePage))
+            return;
+
         var tappedClub = (sender as StackLayout)?.BindingContext as Club;
         if (tappedClub != null)
         {

@@ -2,12 +2,12 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="MauiApp1.ProfilePage"
-             BackgroundColor="#F2F2F7"
+             BackgroundColor="White"
              Title="Профиль">
     <RefreshView IsRefreshing="{Binding IsRefreshing}"
              Command="{Binding RefreshCommand}">
     <ScrollView>
-        <Grid>
+        <Grid Background="White">
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto" />
                 <RowDefinition Height="Auto" />
@@ -19,7 +19,6 @@
                 </Grid.RowDefinitions>
 
             <Frame Grid.Row="0"
-               BackgroundColor="White"
                HasShadow="False"
                Padding="0,0,0,0">
 
@@ -30,7 +29,7 @@
                                BackgroundColor="#FFFFFF"
                                CornerRadius="10"
                                HasShadow="True"
-                               Padding="10, 2.25, 0, 0"
+                               Padding="10, 2.25, 10, 0"
                                Margin="16,20,0,0">
                             <Frame.GestureRecognizers>
                                 <TapGestureRecognizer Tapped="OnCoinButtonTapped" />
@@ -369,7 +368,8 @@
                         x:Name="NotesCollection"
                         Grid.Row="6"
                         Margin="0,12,0,0"
-                        BackgroundColor="#EBEBEB">
+                        BackgroundColor="#EBEBEB"
+                                Background="White">
                     <CollectionView.ItemsLayout>
                         <GridItemsLayout Span="1"
                                  Orientation="Vertical" />
@@ -380,7 +380,7 @@
                            HorizontalOptions="Fill"
                            VerticalOptions="Fill"
                            Padding="16,20,16,16"
-                           Margin="8,10,8,0"
+                           Margin="8,10,8,2"
                            BackgroundColor="White">
                                 <StackLayout>
                                     <!--<StackLayout.GestureRecognizers>
@@ -404,13 +404,17 @@
                                            FontSize="12"
                                            TextColor="#9C9B9A"
                                            FontFamily="ManropeExtraLight" />
-                                           <Image x:Name="NewsHolder"
+                                            <Image x:Name="NewsHolder"
                                            IsVisible="True"
                                            Aspect="AspectFill"
-                                           Source="{Binding MediaHandler0}"
                                            HorizontalOptions="Fill"
                                            VerticalOptions="Fill"
-                                           Margin="0,12,0,0" />
+                                           Margin="0,12,0,0">
+                                                <Image.Source>
+                                                    <UriImageSource Uri="{Binding MediaHandler}"
+                                                           CacheValidity="2:00:00.0"/>
+                                                </Image.Source>
+                                            </Image>
                                         </StackLayout>
                                     </Frame>
                                 </StackLayout>

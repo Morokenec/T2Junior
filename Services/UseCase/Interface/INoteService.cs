@@ -9,7 +9,6 @@ namespace MauiApp1.Services.UseCase.Interface
 {
     public interface INoteService
     {
-        Task<List<Note>> GetNotesAsync();
-        Task<Note> GetNoteByIdAsync(string noteId);
+        Task<List<Note>> GetNotesAsync(Guid idOwner);
     }
 }

@@ -4,6 +4,7 @@ using MauiApp1.Services.UseCase;
 using MauiApp1.Services.UseCase.Interface;
 using MauiApp1.ViewModels.Profile;
 using System.Collections.ObjectModel;
+using System.Windows.Input;
 
 namespace MauiApp1;
 
@@ -26,7 +27,7 @@ public partial class ProfilePage : ContentPage
     protected override async void OnAppearing()
     {
         base.OnAppearing();
-
+        
         if (BindingContext is UserProfileViewModel viewModel)
         {
             await viewModel.LoadDataAsync();
@@ -51,27 +52,42 @@ public partial class ProfilePage : ContentPage
         if (BindingContext is UserProfileViewModel viewModel)
         {
             await viewModel.SetAvatarProfile();
-
         }
     }
 
     private async void OnCoinButtonTapped(object sender, EventArgs e)
     {
-        await Navigation.PushAsync(new NotesPage());
+        var currentPage = Navigation.NavigationStack.LastOrDefault();
+        if (currentPage?.GetType() == typeof(NotesPage))
+            return;
+
+        await Navigation.PushAsync(new NotesPage(), true);
     }
 
     private async void OnRatingButtonTapped(object sender, EventArgs e)
     {
-        await Navigation.PushAsync(new RatingPage());
+        var currentPage = Navigation.NavigationStack.LastOrDefault();
+        if (currentPage?.GetType() == typeof(RatingPage))
+            return;
+
+         await Navigation.PushAsync(new RatingPage());
     }
 
     private async void OnSubscribersButtonTapped(object sender, EventArgs e)
     {
+        var currentPage = Navigation.NavigationStack.LastOrDefault();
+        if (currentPage?.GetType() == typeof(SubscribersPage))
+            return;
+
         await Navigation.PushAsync(new SubscribersPage());
     }
 
     private async void OnFollowingButtonTapped(object sender, EventArgs e)
     {
+        var currentPage = Navigation.NavigationStack.LastOrDefault();
+        if (currentPage?.GetType() == typeof(FollowingPage))
+            return;
+
         await Navigation.PushAsync(new FollowingPage());
     }
 
@@ -79,23 +95,39 @@ public partial class ProfilePage : ContentPage
     {
     }
 
-    private async void OnProjectsFrameTapped(object sender, EventArgs e)
+    private  async void OnProjectsFrameTapped(object sender, EventArgs e)
     {
+        var currentPage = Navigation.NavigationStack.LastOrDefault();
+        if (currentPage?.GetType() == typeof(ProjectsPage))
+            return;
+
         await Navigation.PushAsync(new ProjectsPage());
     }
 
     private async void OnActivitiesFrameTapped(object sender, EventArgs e)
     {
+        var currentPage = Navigation.NavigationStack.LastOrDefault();
+        if (currentPage?.GetType() == typeof(ActivitiesPage))
+            return;
+
         await Navigation.PushAsync(new ActivitiesPage());
     }
 
     private async void OnCalendarFrameTapped(object sender, EventArgs e)
     {
+        var currentPage = Navigation.NavigationStack.LastOrDefault();
+        if (currentPage?.GetType() == typeof(CalendarPage))
+            return;
+
         await Navigation.PushAsync(new CalendarPage());
     }
 
     private async void OnNewsFrameTapped(object sender, EventArgs e)
     {
+        var currentPage = Navigation.NavigationStack.LastOrDefault();
+        if (currentPage?.GetType() == typeof(NotesPage))
+            return;
+
         await Navigation.PushAsync(new NotesPage());
     }
 

@@ -81,7 +81,8 @@ namespace MauiApp1.ViewModels.ClubProfileViewModel
 
         private async Task LoadNotes()
         {
-            var notes = await _noteService.GetNotesAsync();
+            Notes.Clear();
+            var notes = await _noteService.GetNotesAsync(SelectedClub.Id);
             if (notes != null)
             {
                 foreach (var note in notes)

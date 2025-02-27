@@ -1,4 +1,6 @@
-﻿using MauiApp1.Services.UseCase;
+﻿using MauiApp1.DataModel;
+using MauiApp1.Services.UseCase;
+using MauiApp1.ViewModels;
 using MauiApp1.ViewModels.Profile;
 using System.Text.RegularExpressions;
 
@@ -8,24 +10,28 @@ namespace MauiApp1
     {
         private bool _isVisible = false;
 
-        private readonly UserProfileViewModel _userViewModel;
+        private readonly AuthorizationViewModel _viewModel;
 
-        public AuthorizationPage()
+        public AuthorizationPage(AuthorizationViewModel userViewModel)
         {
+            _viewModel = userViewModel;
+            BindingContext = _viewModel;
             InitializeComponent();
+        }
+
+        protected override void OnAppearing()
+        {
+            base.OnAppearing();           
         }
 
         private async void OnForgotPasswordTapped(object sender, EventArgs e)
         {
-            await Navigation.PushAsync(new ProfilePage(_userViewModel));
         }
 
         private void OnPasswordVisibilityClicked(object sender, EventArgs e)
         {
             _isVisible = !_isVisible;
             PswdEntry.IsPassword = !_isVisible;
-
-            TogglePasswordVisibilityButton.Source = _isVisible ? "eye_open.svg" : "eye_closed.svg";
         }
 
         private void OnEnterClicked(object sender, EventArgs e)
@@ -40,21 +46,17 @@ namespace MauiApp1
 
             }
             else
-            {
-                if (Regex.IsMatch(PswdEntry.Text, pattern) && Regex.IsMatch(EmailEntry.Text, phonePattern))
-                {
-                    ValidationLabel.IsVisible = true;
-                    ValidationLabel.Text = "Всё ништяк!";
-                    ValidationLabel.TextColor = Colors.Green;
-                }
-                else
-                {
-                    ValidationLabel.IsVisible = true;
-                    ValidationLabel.Text = "It's over";
-                    ValidationLabel.TextColor = Colors.Red;
-                }
-
+            { 
+                ValidationLabel.IsVisible = true;
+                ValidationLabel.TextColor = Colors.Green;
+                _viewModel.LoginAsync();
             }
+
+        }
+
+        protected override bool OnBackButtonPressed()
+        {
+            return true; // Предотвращает навигацию назад
         }
     }
 

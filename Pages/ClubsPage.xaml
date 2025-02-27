@@ -4,7 +4,8 @@
              xmlns:vm="clr-namespace:MauiApp1.ViewModels.ClubViewModel"
              x:Class="MauiApp1.ClubsPage"
              x:Name="Clubs"
-             Title="Клубы">
+             Title="Клубы"
+             Background="White">
     <RefreshView IsRefreshing="{Binding IsRefreshing}"
              Command="{Binding RefreshCommand}">
         <Grid>

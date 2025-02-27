@@ -1,24 +1,31 @@
 ﻿using MauiApp1.Services;
+using MauiApp1.Services.AppHelper;
+using MauiApp1.Services.UseCase;
+using MauiApp1.ViewModels;
 
 namespace MauiApp1
 {
     public partial class AppShell : Shell
     {
+        public bool IsUserAuthorized { get; } = false;
+
         public AppShell()
         {
             InitializeComponent();
-            //this.Navigating += OnShellNavigating;
+            Routing.RegisterRoute("LoginPage", typeof(AuthorizationPage));
+            Routing.RegisterRoute("NotesPage", typeof(NotesPage));
+            Routing.RegisterRoute("Main", typeof(AppShell));
         }
 
-        //private void OnShellNavigating(object sender, ShellNavigatingEventArgs e)
-        //{
-        //    if (e.Target.Location.OriginalString.Contains("NotesPage") ||
-        //    e.Target.Location.OriginalString.Contains("MessagesPage") ||
-        //    e.Target.Location.OriginalString.Contains("ClubsPage") ||
-        //    e.Target.Location.OriginalString.Contains("ProfilePage"))
-        //    {
-        //        BackNavigationState.IsDirectAccess = true;
-        //    }
-        //}
+        protected override async void OnAppearing()
+        {
+            base.OnAppearing();
+
+            if (!IsUserAuthorized)
+            {
+                await Navigation.PushModalAsync(new AuthorizationPage(new AuthorizationViewModel(new ProfileService(new HttpClient(), new JsonDeserializerService()))));
+            }
+        }
     }
+
 }

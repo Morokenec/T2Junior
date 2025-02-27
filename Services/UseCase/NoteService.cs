@@ -21,11 +21,11 @@ namespace MauiApp1.Services.UseCase
             _jsonDeserializerService = jsonDeserializerService;
         }
 
-        public async Task<List<Note>> GetNotesAsync()
+        public async Task<List<Note>> GetNotesAsync(Guid idOwner)
         {
             try
             {
-                string url = $"{AppSettings.base_url}/api/Notes/get-by-id-owner/{AppSettings.test_user_guid}";
+                string url = $"{AppSettings.base_url}/api/Notes/get-by-id-owner/{idOwner.ToString()}";
 
                 HttpResponseMessage response = await _httpClient.GetAsync(url);
                 string responseContent = await response.Content.ReadAsStringAsync();
@@ -73,5 +73,6 @@ namespace MauiApp1.Services.UseCase
                 return null;
             }
         }
+
     }
 }

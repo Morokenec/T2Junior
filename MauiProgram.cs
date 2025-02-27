@@ -45,6 +45,7 @@ namespace MauiApp1
                 builder.Services.AddTransient<ProfilePage>();
                 builder.Services.AddTransient<ClubsPage>();
                 builder.Services.AddTransient<ClubProfilePage>();
+                builder.Services.AddTransient<AuthorizationPage>();
 
                 builder.Services.AddSingleton<HttpClient>();
 

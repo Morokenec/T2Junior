@@ -3,7 +3,8 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="MauiApp1.ClubProfilePage"
              x:Name="ClubProfile"
-             Title="ClubProfilePage">
+             Title="ClubProfilePage"
+                       BackgroundColor="#EBEBEB">
     <ScrollView Orientation="Vertical">
         <Grid>
             <Grid.RowDefinitions>
@@ -16,12 +17,15 @@
                 <RowDefinition Height="Auto"/>
             </Grid.RowDefinitions>
 
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto"/>
+            </Grid.ColumnDefinitions>
+
             <HorizontalStackLayout x:Name="ClubProfileLayout" 
                                    Grid.Row="0"
-                                   Margin="20,16" 
-                                   Padding="0,8"
-                                   WidthRequest="343"
-                                   HeightRequest="40">
+                                   Padding="10"
+                                   HeightRequest="50"
+                                   Background="White">
                 <Frame x:Name="BackFrame"
                        BorderColor="Transparent"
                        Margin="0,0,0,8">
@@ -49,7 +53,7 @@
 
             <Frame Grid.Row="1"
                    HasShadow="True"
-                   HeightRequest="355"
+                   HeightRequest="390"
                    VerticalOptions="FillAndExpand"
                    HorizontalOptions="FillAndExpand"
                    CornerRadius="10">
@@ -293,7 +297,8 @@
                                         <Image x:Name="NewsHolder"
                              IsVisible="True"
                              Aspect="AspectFill"
-                             Source="{Binding NoteMediaSource}"
+                                             WidthRequest="300"
+                             Source="{Binding MediaHandler}"
                              HorizontalOptions="Fill"
                              VerticalOptions="Fill"
                              Margin="0,12,0,0" />

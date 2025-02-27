@@ -2,7 +2,6 @@
 {
     public partial class App : Application
     {
-        public static MauiApp CreateMauiApp() => MauiProgram.CreateMauiApp();
         public App()
         {
             InitializeComponent();
