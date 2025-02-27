@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using T2JuniorAPI.DTOs.Initiatives;
+using T2JuniorAPI.DTOs.Medias;
 using T2JuniorAPI.Entities;
 
 namespace T2JuniorAPI.MappingProfiles
@@ -14,6 +15,9 @@ namespace T2JuniorAPI.MappingProfiles
                 .ForMember(dest => dest.StatusName, opt => opt.MapFrom(src =>  src.Status.Name))
                 .ForMember(dest => dest.VotesCount, opt => opt.MapFrom(src => src.Votes.Count()))
                 .ForMember(dest => dest.Comments, opt => opt.MapFrom(src => src.InitiativeComments))
+                .ForMember(dest => dest.Mediafiles, opt => opt.MapFrom(src => src.MediaInitiatives
+                    .Where(mi => !mi.IsDelete)
+                    .Select(mi => mi.Mediafile)))
                 .ForMember(dest => dest.Team, opt => opt.MapFrom(src => src.UserInitiatives
                     .Where(ui => !ui.IsDelete)
                     .Select(ui => ui.User)));
@@ -38,6 +42,7 @@ namespace T2JuniorAPI.MappingProfiles
             CreateMap<InitiativeStatus, InitiativeStatusDTO>()
                 .ForMember(dest => dest.StatusName, opt => opt.MapFrom(src => src.Name))
                 .ForMember(dest => dest.IdStatus, opt => opt.MapFrom(src => src.Id));
+
         }
     }
 }

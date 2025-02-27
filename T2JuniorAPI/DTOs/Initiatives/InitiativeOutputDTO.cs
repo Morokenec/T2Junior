@@ -1,4 +1,6 @@
-﻿namespace T2JuniorAPI.DTOs.Initiatives
+﻿using T2JuniorAPI.DTOs.Medias;
+
+namespace T2JuniorAPI.DTOs.Initiatives
 {
     public class InitiativeOutputDTO
     {
@@ -13,6 +15,7 @@
         public string Relevance { get; set; }
         public string ExpectedResult { get; set; }
         public List<InitiativeUserDTO> Team {  get; set; }
+        public List<MediafileDTO> Mediafiles { get; set; }
         public int VotesCount { get; set; }
         public List<InitiativeCommentDTO> Comments { get; set; }
     }

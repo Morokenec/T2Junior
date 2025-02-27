@@ -4,6 +4,7 @@ using Microsoft.EntityFrameworkCore;
 using T2JuniorAPI.Data;
 using T2JuniorAPI.DTOs.Comments;
 using T2JuniorAPI.DTOs.Initiatives;
+using T2JuniorAPI.DTOs.Medias;
 using T2JuniorAPI.Entities;
 
 namespace T2JuniorAPI.Services.Initiatives
@@ -70,6 +71,9 @@ namespace T2JuniorAPI.Services.Initiatives
                             .ThenInclude(ua => ua.Media)
                 .Include(i => i.UserInitiatives.Where(ui => !ui.IsDelete))
                     .ThenInclude(ui => ui.User)
+                .Include(i => i.MediaInitiatives.Where(mi => !mi.IsDelete))
+                    .ThenInclude(mi => mi.Mediafile)
+                        .ThenInclude(mf => mf.IdMediaTypesNavigation)
                 .Where(i => !i.IsDelete)
                 .OrderByDescending(i => i.Votes.Count + i.InitiativeComments.Count)
                 .ToListAsync();
@@ -83,6 +87,7 @@ namespace T2JuniorAPI.Services.Initiatives
                 initiativeDto.VotesCount = initiative.Votes.Count(v => !v.IsDelete);
                 initiativeDto.Comments = _mapper.Map<List<InitiativeCommentDTO>>(initiative.InitiativeComments.Where(c => !c.IsDelete));
                 initiativeDto.Team = _mapper.Map<List<InitiativeUserDTO>>(initiative.UserInitiatives.Where(ui => !ui.IsDelete).Select(ui => ui.User));
+                initiativeDto.Mediafiles = _mapper.Map<List<MediafileDTO>>(initiative.MediaInitiatives.Where(mi => !mi.IsDelete).Select(mi => mi.Mediafile));
             }
 
             return initiativeDtos;
@@ -100,6 +105,9 @@ namespace T2JuniorAPI.Services.Initiatives
                             .ThenInclude(ua => ua.Media)
                 .Include(i => i.UserInitiatives.Where(ui => !ui.IsDelete))
                     .ThenInclude(ui => ui.User)
+                .Include(i => i.MediaInitiatives.Where(mi => !mi.IsDelete))
+                    .ThenInclude(mi => mi.Mediafile)
+                        .ThenInclude(mf => mf.IdMediaTypesNavigation)
                 .Where(i => !i.IsDelete)
                 .FirstOrDefaultAsync(i => i.Id == id && !i.IsDelete);
 
@@ -108,6 +116,7 @@ namespace T2JuniorAPI.Services.Initiatives
             var initiativeDto = _mapper.Map<InitiativeOutputDTO>(initiative);
             initiativeDto.StatusName = initiative.Status.Name;
             initiativeDto.Team = _mapper.Map<List<InitiativeUserDTO>>(initiative.UserInitiatives.Where(ui => !ui.IsDelete).Select(ui => ui.User));
+            initiativeDto.Mediafiles = _mapper.Map<List<MediafileDTO>>(initiative.MediaInitiatives.Where(mi => !mi.IsDelete).Select(mi => mi.Mediafile));
 
             return initiativeDto;
         }
