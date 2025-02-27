@@ -4,110 +4,19 @@
     <meta charset="UTF-8">
     <title>Chat App</title>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/microsoft-signalr/3.1.19/signalr.min.js"></script>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            display: flex;
-            flex-direction: column;
-            height: 100vh;
-            margin: 0;
-            background-color: #f0f0f5;
-        }
-
-        .header {
-            width: 100%;
-            padding: 10px;
-            background-color: #333;
-            color: white;
-            text-align: center;
-            position: fixed;
-            top: 0;
-            z-index: 1000;
-        }
-
-        .main-container {
-            display: flex;
-            flex-grow: 1;
-            margin-top: 50px;
-            padding-bottom: 60px; /* Добавлен отступ снизу для контейнера сообщений */
-        }
-
-        .chat-list {
-            width: 15%; /* Уменьшена ширина списка чатов */
-            background-color: #eaeaea;
-            padding: 10px;
-            overflow-y: auto;
-            border-right: 1px solid #ccc;
-            position: fixed; /* Зафиксированный список чатов */
-            height: calc(100vh - 110px); /* Высота с учетом заголовка и контейнера ввода */
-            top: 50px; /* Смещение сверху для заголовка */
-        }
-
-        .chat-window {
-            width: 85%; /* Увеличена ширина окна чата */
-            background-color: white;
-            padding: 20px;
-            overflow-y: auto;
-            margin-left: 15%; /* Смещение слева для списка чатов */
-        }
-
-        .input-container {
-            width: 100%;
-            position: fixed;
-            bottom: 0;
-            background-color: #fff;
-            padding: 10px;
-            box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.1);
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            gap: 10px; /* Добавлен отступ между элементами */
-        }
-
-            .input-container input, .input-container button {
-                padding: 10px;
-                margin: 0; /* Убраны отступы для элементов ввода */
-            }
-
-        .message {
-            margin-bottom: 10px;
-            padding-left: 20px; /* Отступ слева для сообщений */
-        }
-
-            .message p {
-                margin: 5px 0;
-            }
-
-            .message img, .message video {
-                display: block;
-                margin-top: 10px;
-            }
-
-        .date-separator {
-            margin: 20px 0;
-            padding-left: 20px;
-            border-top: 1px solid #ccc;
-            color: #888;
-            font-size: 14px;
-        }
-    </style>
 </head>
 <body>
-    <div class="header">
+    <div>
         <label>User ID:</label>
         <input type="text" id="userId" />
         <button onclick="loadChats()">Load Chats</button>
     </div>
-    <div class="main-container">
-        <div class="chat-list" id="chats"></div>
-        <div class="chat-window" id="messages"></div>
-    </div>
-    <div class="input-container">
-        <input type="text" id="messageInput" placeholder="Type a message" />
-        <input type="file" id="fileInput" />
-        <button id="sendBtn">Send</button>
-        <button onclick="sendMessageWithFile()">Send Message with File</button>
-    </div>
+    <div id="chats"></div>
+    <div id="messages"></div>
+    <input type="text" id="messageInput" placeholder="Type a message" />
+    <input type="button" id="sendBtn" value="Send" />
+    <input type="file" id="fileInput" />
+    <button onclick="sendMessageWithFile()">Send Message with File</button>
 
     <script>
         let connection;
@@ -137,7 +46,6 @@
         function displayMessage(userName, message, timestamp, filePath, fileType) {
             const messagesDiv = document.getElementById("messages");
             const messageElement = document.createElement("div");
-            messageElement.classList.add("message");
 
             // Отображение текста сообщения
             const textElement = document.createElement("p");
@@ -238,17 +146,7 @@
         function renderChatHistory(chatHistory) {
             const messagesDiv = document.getElementById("messages");
             messagesDiv.innerHTML = "";
-            let lastDate = null;
-
             chatHistory.forEach(message => {
-                const messageDate = new Date(message.creationDate).toLocaleDateString();
-                if (messageDate !== lastDate) {
-                    const dateSeparator = document.createElement("div");
-                    dateSeparator.classList.add("date-separator");
-                    dateSeparator.textContent = messageDate;
-                    messagesDiv.appendChild(dateSeparator);
-                    lastDate = messageDate;
-                }
                 displayMessage(message.userName, message.text, message.creationDate, message.filePath, message.fileType);
             });
         }
