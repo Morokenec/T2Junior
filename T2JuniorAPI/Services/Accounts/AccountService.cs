@@ -83,11 +83,15 @@ namespace T2JuniorAPI.Services.Accounts
         {
             var user = await _userManager.Users
                 .Include(u => u.Organization)
-                .Include(u => u.Subscribers)
+                .Include(u => u.SubscribersAsUser)
+                .Include(u => u.SubscribersAsSubscriber)
                 .Include(u => u.ClubUsers)
                 .Include(u => u.UserAvatars)
                 .ThenInclude(ua => ua.Media)
+                .AsSplitQuery()
                 .FirstOrDefaultAsync(u => u.Id == userId);
+
+            Console.WriteLine($"\n\n{user}\n\n");
             if (user == null)
             {
                 return null;
@@ -108,7 +112,8 @@ namespace T2JuniorAPI.Services.Accounts
         {
             var users = await _userManager.Users
                 .Include(u => u.Organization)
-                .Include(u => u.Subscribers)
+                .Include(u => u.SubscribersAsSubscriber)
+                .Include(u => u.SubscribersAsUser)
                 .Include(u => u.ClubUsers)
                 .Include(u => u.UserAvatars)
                 .ThenInclude(ua => ua.Media)

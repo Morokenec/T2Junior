@@ -35,6 +35,12 @@ namespace T2JuniorAPI.Data
         public DbSet<UserAchievement> UserAchievements { get; set; }
         public DbSet<UserAvatar> UserAvatars { get; set; }
         public DbSet<NoteLike> NoteLikes { get; set; }
+        public DbSet<Vote> Votes { get; set; }
+        public DbSet<UserInitiative> UserInitiatives { get; set; }
+        public DbSet<MediaInitiative> MediaInitiatives { get; set; }
+        public DbSet<InitiativeStatus> InitiativeStatuses { get; set; }
+        public DbSet<InitiativeComment> InitiativeComments { get; set; }
+        public DbSet<Initiative> Initiatives { get; set; }
 
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -76,13 +82,13 @@ namespace T2JuniorAPI.Data
 
             modelBuilder.Entity<UserSubscribers>()
                 .HasOne(us => us.User)
-                .WithMany(u => u.Subscribers)
+                .WithMany(u => u.SubscribersAsUser)
                 .HasForeignKey(us => us.IdUser)
                 .OnDelete(DeleteBehavior.Restrict);
 
             modelBuilder.Entity<UserSubscribers>()
                 .HasOne(us => us.Subscriber)
-                .WithMany()
+                .WithMany(u => u.SubscribersAsSubscriber)
                 .HasForeignKey(us => us.IdSubscriber)
                 .OnDelete(DeleteBehavior.Restrict);
 
