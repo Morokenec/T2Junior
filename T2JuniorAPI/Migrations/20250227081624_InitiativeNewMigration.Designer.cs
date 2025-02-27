@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using T2JuniorAPI.Data;
 
@@ -10,9 +11,11 @@ using T2JuniorAPI.Data;
 namespace T2JuniorAPI.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250227081624_InitiativeNewMigration")]
+    partial class InitiativeNewMigration
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder.HasAnnotation("ProductVersion", "8.0.12");
@@ -1312,6 +1315,9 @@ namespace T2JuniorAPI.Migrations
                     b.Property<Guid>("IdUser")
                         .HasColumnType("TEXT");
 
+                    b.Property<Guid>("InitiativeId")
+                        .HasColumnType("TEXT");
+
                     b.Property<bool>("IsDelete")
                         .HasColumnType("INTEGER")
                         .HasColumnName("IsDelete")
@@ -1322,11 +1328,14 @@ namespace T2JuniorAPI.Migrations
                         .HasColumnName("UpdateDate")
                         .HasColumnOrder(2);
 
+                    b.Property<Guid>("UserId")
+                        .HasColumnType("TEXT");
+
                     b.HasKey("Id");
 
-                    b.HasIndex("IdInitiative");
+                    b.HasIndex("InitiativeId");
 
-                    b.HasIndex("IdUser");
+                    b.HasIndex("UserId");
 
                     b.ToTable("Votes");
                 });
@@ -1843,14 +1852,14 @@ namespace T2JuniorAPI.Migrations
                 {
                     b.HasOne("T2JuniorAPI.Entities.Initiative", "Initiative")
                         .WithMany("Votes")
-                        .HasForeignKey("IdInitiative")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .HasForeignKey("InitiativeId")
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("ApplicationUser", "User")
-                        .WithMany("Votes")
-                        .HasForeignKey("IdUser")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("Initiative");
@@ -1906,8 +1915,6 @@ namespace T2JuniorAPI.Migrations
                     b.Navigation("UserAvatars");
 
                     b.Navigation("UserInitiatives");
-
-                    b.Navigation("Votes");
 
                     b.Navigation("Walls");
                 });

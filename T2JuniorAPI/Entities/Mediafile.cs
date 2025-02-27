@@ -21,6 +21,8 @@ namespace T2JuniorAPI.Entities
         public virtual MediaComment MediaComment { get; set; } = null!;
         [JsonIgnore] 
         public virtual MediaNote MediaNote { get; set; } = null!;
+        [JsonIgnore] 
+        public virtual MediaInitiative MediaInitiative{ get; set; }
         [JsonIgnore]
         public virtual ICollection<Achievement> Achievements { get; set; } = new List<Achievement>();
         [JsonIgnore] 

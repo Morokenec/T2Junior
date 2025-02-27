@@ -19,10 +19,10 @@ namespace T2JuniorAPI.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult<Initiative>> CreateInitiative(InitiativeDTO initiativeDto)
+        public async Task<ActionResult<InitiativeOutputDTO>> CreateInitiative(InitiativeInputDTO initiativeDto)
         {
             var initiative = await _initiativeService.CreateInitiativeAsync(initiativeDto);
-            return CreatedAtAction(nameof(GetInitiative), new { id = initiative.Id }, initiative);
+            return Ok(initiative);
         }
 
         [HttpGet("{id}")]
@@ -36,12 +36,12 @@ namespace T2JuniorAPI.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Initiative>>> GetAllInitiatives()
         {
-            var initiatives = await _initiativeService.GetAllInitiativesAsync();
+            var initiatives = await _initiativeService.GetAllInitiativesWithDetailsAsync();
             return Ok(initiatives);
         }
 
         [HttpPut("{id}")]
-        public async Task<IActionResult> UpdateInitiative(Guid id, InitiativeDTO initiativeDto)
+        public async Task<IActionResult> UpdateInitiative(Guid id, InitiativeInputDTO initiativeDto)
         {
             var initiative = await _initiativeService.UpdateInitiativeAsync(id, initiativeDto);
             if (initiative == null) return NotFound();
@@ -57,16 +57,15 @@ namespace T2JuniorAPI.Controllers
         }
 
         [HttpPost("{id}/vote")]
-        public async Task<IActionResult> VoteForInitiative(Guid id)
+        public async Task<IActionResult> VoteForInitiative(Guid id, Guid userId)
         {
-            var userId = Guid.Parse(User.Identity.Name); // Предполагается, что пользователь аутентифицирован
             var result = await _initiativeService.VoteForInitiativeAsync(id, userId);
             if (!result) return NotFound();
             return Ok();
         }
 
         [HttpPost("{id}/comment")]
-        public async Task<IActionResult> CommentOnInitiative(Guid id, InitiativeCommentDTO commentDto)
+        public async Task<IActionResult> CommentOnInitiative(Guid id, CreateInitiativeComment commentDto)
         {
             var result = await _initiativeService.CommentOnInitiativeAsync(id, commentDto);
             if (!result) return NotFound();
@@ -80,5 +79,29 @@ namespace T2JuniorAPI.Controllers
             if (!result) return NotFound();
             return Ok();
         }
+
+        [HttpPost("{id}/add-user")]
+        public async Task<IActionResult> AddUserToInitiative(Guid id, Guid userId)
+        {
+            var result = await _initiativeService.AddUserToInitiativeAsync(id, userId);
+            if (!result) return NotFound();
+            return Ok();
+        }
+
+        [HttpDelete("{id}/del-user")]
+        public async Task<IActionResult> RemoveUserFromInitiative(Guid id, Guid userId)
+        {
+            var result = await _initiativeService.RemoveUserFromInitiativeAsync(id, userId);
+            if (!result) return NotFound();
+            return Ok();
+        }
+
+        [HttpGet("statuses")]
+        public async Task<ActionResult<IEnumerable<InitiativeStatusDTO>>> GetInitiativeStatuses()
+        {
+            var statuses = await _initiativeService.GetInitiativeStatuses();
+            return Ok(statuses);
+        }
+
     }
 }

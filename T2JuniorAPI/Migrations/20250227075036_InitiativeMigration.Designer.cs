@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using T2JuniorAPI.Data;
 
@@ -10,9 +11,11 @@ using T2JuniorAPI.Data;
 namespace T2JuniorAPI.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250227075036_InitiativeMigration")]
+    partial class InitiativeMigration
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder.HasAnnotation("ProductVersion", "8.0.12");
@@ -666,6 +669,9 @@ namespace T2JuniorAPI.Migrations
                         .IsRequired()
                         .HasColumnType("TEXT");
 
+                    b.Property<Guid>("StatusId")
+                        .HasColumnType("TEXT");
+
                     b.Property<string>("Target")
                         .IsRequired()
                         .HasColumnType("TEXT");
@@ -681,7 +687,7 @@ namespace T2JuniorAPI.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("IdStatus");
+                    b.HasIndex("StatusId");
 
                     b.ToTable("Initiatives");
                 });
@@ -705,6 +711,9 @@ namespace T2JuniorAPI.Migrations
                     b.Property<Guid>("IdUser")
                         .HasColumnType("TEXT");
 
+                    b.Property<Guid>("InitiativeId")
+                        .HasColumnType("TEXT");
+
                     b.Property<bool>("IsDelete")
                         .HasColumnType("INTEGER")
                         .HasColumnName("IsDelete")
@@ -719,11 +728,14 @@ namespace T2JuniorAPI.Migrations
                         .HasColumnName("UpdateDate")
                         .HasColumnOrder(2);
 
+                    b.Property<Guid>("UserId")
+                        .HasColumnType("TEXT");
+
                     b.HasKey("Id");
 
-                    b.HasIndex("IdInitiative");
+                    b.HasIndex("InitiativeId");
 
-                    b.HasIndex("IdUser");
+                    b.HasIndex("UserId");
 
                     b.ToTable("InitiativeComments");
                 });
@@ -893,10 +905,16 @@ namespace T2JuniorAPI.Migrations
                     b.Property<Guid>("IdMedia")
                         .HasColumnType("TEXT");
 
+                    b.Property<Guid>("InitiativeId")
+                        .HasColumnType("TEXT");
+
                     b.Property<bool>("IsDelete")
                         .HasColumnType("INTEGER")
                         .HasColumnName("IsDelete")
                         .HasColumnOrder(3);
+
+                    b.Property<Guid>("MediafileId")
+                        .HasColumnType("TEXT");
 
                     b.Property<DateTime>("UpdateDate")
                         .HasColumnType("TEXT")
@@ -905,10 +923,9 @@ namespace T2JuniorAPI.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("IdInitiative");
+                    b.HasIndex("InitiativeId");
 
-                    b.HasIndex("IdMedia")
-                        .IsUnique();
+                    b.HasIndex("MediafileId");
 
                     b.ToTable("MediaInitiatives");
                 });
@@ -1239,6 +1256,9 @@ namespace T2JuniorAPI.Migrations
                     b.Property<Guid>("IdUser")
                         .HasColumnType("TEXT");
 
+                    b.Property<Guid>("InitiativeId")
+                        .HasColumnType("TEXT");
+
                     b.Property<bool>("IsDelete")
                         .HasColumnType("INTEGER")
                         .HasColumnName("IsDelete")
@@ -1249,11 +1269,14 @@ namespace T2JuniorAPI.Migrations
                         .HasColumnName("UpdateDate")
                         .HasColumnOrder(2);
 
+                    b.Property<Guid>("UserId")
+                        .HasColumnType("TEXT");
+
                     b.HasKey("Id");
 
-                    b.HasIndex("IdInitiative");
+                    b.HasIndex("InitiativeId");
 
-                    b.HasIndex("IdUser");
+                    b.HasIndex("UserId");
 
                     b.ToTable("UserInitiatives");
                 });
@@ -1312,6 +1335,9 @@ namespace T2JuniorAPI.Migrations
                     b.Property<Guid>("IdUser")
                         .HasColumnType("TEXT");
 
+                    b.Property<Guid>("InitiativeId")
+                        .HasColumnType("TEXT");
+
                     b.Property<bool>("IsDelete")
                         .HasColumnType("INTEGER")
                         .HasColumnName("IsDelete")
@@ -1322,11 +1348,14 @@ namespace T2JuniorAPI.Migrations
                         .HasColumnName("UpdateDate")
                         .HasColumnOrder(2);
 
+                    b.Property<Guid>("UserId")
+                        .HasColumnType("TEXT");
+
                     b.HasKey("Id");
 
-                    b.HasIndex("IdInitiative");
+                    b.HasIndex("InitiativeId");
 
-                    b.HasIndex("IdUser");
+                    b.HasIndex("UserId");
 
                     b.ToTable("Votes");
                 });
@@ -1577,9 +1606,9 @@ namespace T2JuniorAPI.Migrations
             modelBuilder.Entity("T2JuniorAPI.Entities.Initiative", b =>
                 {
                     b.HasOne("T2JuniorAPI.Entities.InitiativeStatus", "Status")
-                        .WithMany("Initiatives")
-                        .HasForeignKey("IdStatus")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .WithMany()
+                        .HasForeignKey("StatusId")
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("Status");
@@ -1589,14 +1618,14 @@ namespace T2JuniorAPI.Migrations
                 {
                     b.HasOne("T2JuniorAPI.Entities.Initiative", "Initiative")
                         .WithMany("InitiativeComments")
-                        .HasForeignKey("IdInitiative")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .HasForeignKey("InitiativeId")
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("ApplicationUser", "User")
-                        .WithMany("InitiativeComments")
-                        .HasForeignKey("IdUser")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("Initiative");
@@ -1665,14 +1694,14 @@ namespace T2JuniorAPI.Migrations
                 {
                     b.HasOne("T2JuniorAPI.Entities.Initiative", "Initiative")
                         .WithMany("MediaInitiatives")
-                        .HasForeignKey("IdInitiative")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .HasForeignKey("InitiativeId")
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("T2JuniorAPI.Entities.Mediafile", "Mediafile")
-                        .WithOne("MediaInitiative")
-                        .HasForeignKey("T2JuniorAPI.Entities.MediaInitiative", "IdMedia")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .WithMany()
+                        .HasForeignKey("MediafileId")
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("Initiative");
@@ -1805,14 +1834,14 @@ namespace T2JuniorAPI.Migrations
                 {
                     b.HasOne("T2JuniorAPI.Entities.Initiative", "Initiative")
                         .WithMany("UserInitiatives")
-                        .HasForeignKey("IdInitiative")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .HasForeignKey("InitiativeId")
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("ApplicationUser", "User")
-                        .WithMany("UserInitiatives")
-                        .HasForeignKey("IdUser")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("Initiative");
@@ -1843,14 +1872,14 @@ namespace T2JuniorAPI.Migrations
                 {
                     b.HasOne("T2JuniorAPI.Entities.Initiative", "Initiative")
                         .WithMany("Votes")
-                        .HasForeignKey("IdInitiative")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .HasForeignKey("InitiativeId")
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("ApplicationUser", "User")
-                        .WithMany("Votes")
-                        .HasForeignKey("IdUser")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("Initiative");
@@ -1891,8 +1920,6 @@ namespace T2JuniorAPI.Migrations
 
                     b.Navigation("Comments");
 
-                    b.Navigation("InitiativeComments");
-
                     b.Navigation("Likes");
 
                     b.Navigation("Mediafiles");
@@ -1904,10 +1931,6 @@ namespace T2JuniorAPI.Migrations
                     b.Navigation("UserAchievements");
 
                     b.Navigation("UserAvatars");
-
-                    b.Navigation("UserInitiatives");
-
-                    b.Navigation("Votes");
 
                     b.Navigation("Walls");
                 });
@@ -1968,11 +1991,6 @@ namespace T2JuniorAPI.Migrations
                     b.Navigation("Votes");
                 });
 
-            modelBuilder.Entity("T2JuniorAPI.Entities.InitiativeStatus", b =>
-                {
-                    b.Navigation("Initiatives");
-                });
-
             modelBuilder.Entity("T2JuniorAPI.Entities.MediaType", b =>
                 {
                     b.Navigation("Mediafiles");
@@ -1988,9 +2006,6 @@ namespace T2JuniorAPI.Migrations
                         .IsRequired();
 
                     b.Navigation("MediaEvents");
-
-                    b.Navigation("MediaInitiative")
-                        .IsRequired();
 
                     b.Navigation("MediaNote")
                         .IsRequired();

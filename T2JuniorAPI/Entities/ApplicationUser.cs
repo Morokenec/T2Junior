@@ -35,6 +35,7 @@ public class ApplicationUser : IdentityUser<Guid>
     public virtual ICollection<ClubUser> ClubUsers { get; set; }
 
     public virtual ICollection<Comment> Comments { get; set; }
+    public virtual ICollection<InitiativeComment> InitiativeComments { get; set; }
 
     public virtual ICollection<Wall>? Walls { get; set; }
 
@@ -44,8 +45,10 @@ public class ApplicationUser : IdentityUser<Guid>
     public virtual ICollection<Mediafile> Mediafiles { get; set; }
 
     public virtual ICollection<UserAchievement> UserAchievements { get; set; }
+    public virtual ICollection<UserInitiative> UserInitiatives { get; set; }
 
     public virtual ICollection<UserAvatar> UserAvatars { get; set; }
+    public virtual ICollection<Vote> Votes { get; set; }
 
     public virtual ICollection<NoteLike> Likes { get; set; } = new List<NoteLike>();
     public virtual ICollection<CommentLike> CommentLikes { get; set; } = new List<CommentLike>();

@@ -47,6 +47,61 @@ namespace T2JuniorAPI.Data
         {
             base.OnModelCreating(modelBuilder);
 
+            modelBuilder.Entity<Vote>()
+                .HasOne(v => v.Initiative)
+                .WithMany(i => i.Votes)
+                .HasForeignKey(v => v.IdInitiative)
+                .OnDelete(DeleteBehavior.Restrict);
+
+            modelBuilder.Entity<Vote>()
+                .HasOne(v => v.User)
+                .WithMany(u => u.Votes)
+                .HasForeignKey(v => v.IdUser)
+                .OnDelete(DeleteBehavior.Restrict);
+
+
+            modelBuilder.Entity<Initiative>()
+                .HasOne(i => i.Status)
+                .WithMany(s => s.Initiatives)
+                .HasForeignKey(i => i.IdStatus)
+                .OnDelete(DeleteBehavior.Restrict);
+
+            modelBuilder.Entity<InitiativeComment>()
+                .HasOne(ic => ic.Initiative)
+                .WithMany(i => i.InitiativeComments)
+                .HasForeignKey(ic => ic.IdInitiative)
+                .OnDelete(DeleteBehavior.Restrict);
+
+            modelBuilder.Entity<InitiativeComment>()
+                .HasOne(ic => ic.User)
+                .WithMany(u => u.InitiativeComments)
+                .HasForeignKey(ic => ic.IdUser)
+                .OnDelete(DeleteBehavior.Restrict);
+
+            modelBuilder.Entity<MediaInitiative>()
+                .HasOne(mi => mi.Initiative)
+                .WithMany(i => i.MediaInitiatives)
+                .HasForeignKey(mi => mi.IdInitiative)
+                .OnDelete(DeleteBehavior.Restrict);
+            
+            modelBuilder.Entity<MediaInitiative>()
+                .HasOne(mi => mi.Mediafile)
+                .WithOne(mf => mf.MediaInitiative)
+                .HasForeignKey<MediaInitiative>(mi => mi.IdMedia)
+                .OnDelete(DeleteBehavior.Restrict);
+
+            modelBuilder.Entity<UserInitiative>()
+                .HasOne(ui => ui.User)
+                .WithMany(u => u.UserInitiatives)
+                .HasForeignKey(ui => ui.IdUser)
+                .OnDelete(DeleteBehavior.Restrict);
+
+            modelBuilder.Entity<UserInitiative>()
+                .HasOne(ui => ui.Initiative)
+                .WithMany(i => i.UserInitiatives)
+                .HasForeignKey(ui => ui.IdInitiative)
+                .OnDelete(DeleteBehavior.Restrict);
+
             modelBuilder.Entity<ClubUser>()
                 .HasKey(cu => new { cu.IdClub, cu.IdUser, cu.IdRole });
 
