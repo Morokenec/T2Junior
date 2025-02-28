@@ -31,5 +31,8 @@ namespace MauiApp1.Models.ClubModels.Club
 
         [NotMapped]
         public bool IsVisibileSubscribeButton => !IsUserSubscribed;
+
+        [NotMapped]
+        public string SubImageSource => IsUserSubscribed ? "already_subbed.svg" : "add_a_new.svg";
     }
 }

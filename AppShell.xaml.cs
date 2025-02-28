@@ -13,6 +13,7 @@ namespace MauiApp1
         {
             InitializeComponent();
             Routing.RegisterRoute("LoginPage", typeof(AuthorizationPage));
+            Routing.RegisterRoute("ProfilePage", typeof(ProfilePage));
             Routing.RegisterRoute("NotesPage", typeof(NotesPage));
             Routing.RegisterRoute("Main", typeof(AppShell));
         }

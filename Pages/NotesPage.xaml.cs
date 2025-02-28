@@ -9,20 +9,26 @@ public partial class NotesPage : ContentPage
 {
     public bool HolderIsVisible { get; set; } = true; 
     public bool Redirected { get; set; } = BackNavigationState.IsDirectAccess;
-    public NotesPage()
+    private readonly NoteViewModel _viewModel;
+
+    public NotesPage(NoteViewModel noteViewModel)
     {
         InitializeComponent();
-        BindingContext = new NoteViewModel();
+        _viewModel = noteViewModel;
+        BindingContext = _viewModel;
     }
+
+    protected override void OnAppearing()
+    {
+        base.OnAppearing();
+        _viewModel.LoadNotes();
+    }
+
     private void OnBackButtonTapped(object sender, EventArgs e)
     {
         BackClick.OnPageClicked();
     }
-    private void OnSearch(object sender, EventArgs e)
-    {
-        var noteContext = (NoteViewModel)BindingContext;
-        noteContext.FilterNotes();
-    }
+
     private void OnNoteTapped(object sender, EventArgs e)
     {
         var tappedNote = (sender as StackLayout)?.BindingContext as Note;

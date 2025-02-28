@@ -4,7 +4,7 @@
              x:Class="MauiApp1.ClubProfilePage"
              x:Name="ClubProfile"
              Title="ClubProfilePage"
-                       BackgroundColor="#EBEBEB">
+                       BackgroundColor="White">
     <ScrollView Orientation="Vertical">
         <Grid>
             <Grid.RowDefinitions>
@@ -18,46 +18,59 @@
             </Grid.RowDefinitions>
 
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
 
-            <HorizontalStackLayout x:Name="ClubProfileLayout" 
-                                   Grid.Row="0"
-                                   Padding="10"
-                                   HeightRequest="50"
-                                   Background="White">
+            <HorizontalStackLayout
+                               Grid.Row="0"
+                               Margin="20,16"
+                               Padding="0,8"
+                               WidthRequest="343"
+                               HeightRequest="40"
+                               Background="White">
                 <Frame x:Name="BackFrame"
-                       BorderColor="Transparent"
-                       Margin="0,0,0,8">
-                    <Frame.GestureRecognizers>
-                        <TapGestureRecognizer Command="{Binding BackCommand}"/>
-                    </Frame.GestureRecognizers>
-                    <Image Source="back_icon.svg"
-                           Aspect="AspectFill"
-                           VerticalOptions="Center"
-                           HorizontalOptions="Center"
-                           WidthRequest="24"
-                           HeightRequest="24"/>
+                   BorderColor="Transparent"
+                   Margin="0,0,0,8">
+                    <!--<Frame.GestureRecognizers>
+                        <TapGestureRecognizer Tapped="OnBackButtonTapped" />
+                    </Frame.GestureRecognizers>-->
+                    <Image Source="back_icon. "
+                       Aspect="AspectFill"
+                       VerticalOptions="Center"
+                       HorizontalOptions="Center"
+                       WidthRequest="24"
+                       HeightRequest="24" />
                 </Frame>
-                <Frame x:Name="ClubProfileTextFrame"
-                       BorderColor="Transparent"
-                       HeightRequest="24"
-                       Margin="0,0,0,8" 
-                       WidthRequest="295">
-                    <Label Text="Клуб"
-                           FontSize="20"
-                           HorizontalOptions="Center"
-                           HeightRequest="24"/>
+                <Frame x:Name="CalendarTextFrame"
+                   BorderColor="Transparent"
+                   HeightRequest="24"
+                   Margin="0,0,0,8"
+                   WidthRequest="295">
+                    <Label Text="Клубы"
+                       FontSize="20"
+                       HorizontalOptions="Center"
+                       HeightRequest="24" />
                 </Frame>
             </HorizontalStackLayout>
 
-            <Frame Grid.Row="1"
-                   HasShadow="True"
-                   HeightRequest="390"
-                   VerticalOptions="FillAndExpand"
-                   HorizontalOptions="FillAndExpand"
-                   CornerRadius="10">
-                <StackLayout>
+            <Border Grid.Row="1"
+                    Stroke="Gray"
+                    StrokeThickness="0.2"
+                    HorizontalOptions="Fill"
+                    Background="White"
+                    Padding="16,8">
+                <Border.StrokeShape>
+                    <RoundRectangle CornerRadius="0,0,10,10" />
+                </Border.StrokeShape>
+                <Border.Shadow>
+                    <Shadow Brush="Black"
+                            Offset="0,2"
+                            Radius="40"
+                            Opacity="0.1"/>
+                </Border.Shadow>
+                <StackLayout
+                    Grid.Row="1"
+                    >
                     <Frame x:Name="RatingFrame"
                            BackgroundColor="#F4FAFF"
                            HorizontalOptions="End"
@@ -70,107 +83,122 @@
                             <TapGestureRecognizer Command="{Binding RateCommand}"/>
                         </Frame.GestureRecognizers>
                         <StackLayout x:Name="VerticalRatingLayout"
-                                     HorizontalOptions="Center"
-                                     VerticalOptions="Center"
-                                     Spacing="5">
+                     HorizontalOptions="Center"
+                     VerticalOptions="Center"
+                     Spacing="5">
                             <HorizontalStackLayout x:Name="HorizontalRatingLayout"
-                                                   Spacing="4">
+                                   Spacing="4">
                                 <Image x:Name="RatingHolder"
-                                       Source="rating_holder.svg"
-                                       Aspect="AspectFill"
-                                       WidthRequest="14"
-                                       HeightRequest="14"/>
+                       Source="rating_holder.svg"
+                       Aspect="AspectFill"
+                       WidthRequest="14"
+                       HeightRequest="14"/>
                                 <Label x:Name="RatingText"
-                                       Text="Рейтинг" 
-                                       TextColor="#498CC4"
-                                       FontSize="12"/>
+                       Text="Рейтинг" 
+                       TextColor="#498CC4"
+                       FontSize="12"/>
                             </HorizontalStackLayout>
                             <HorizontalStackLayout x:Name="RatingCounterLayout"
-                                                   HorizontalOptions="Center"
-                                                   WidthRequest="36"
-                                                   HeightRequest="13"
-                                                   Spacing="1">
+                                   HorizontalOptions="Center"
+                                   WidthRequest="36"
+                                   HeightRequest="13"
+                                   Spacing="1">
 
                                 <Label x:Name="UserRatingLabel"
-                                       FontSize="20"
-                                       HeightRequest="22"
-                                       Text="{Binding SelectedClub.Rating}"
-                                       VerticalOptions="End"
-                                       FontFamily="MyriadProBold"/>
+                       FontSize="20"
+                       HeightRequest="22"
+                       Text="{Binding SelectedClub.Rating}"
+                       VerticalOptions="End"
+                       FontFamily="MyriadProBold"/>
 
                                 <Label FontSize="9"
-                                       Text="из"
-                                       VerticalOptions="End"
-                                       TextColor="#9C9B9A"/>
+                       Text="из"
+                       VerticalOptions="End"
+                       TextColor="#9C9B9A"/>
 
                                 <Label x:Name="RatingCountLabel"
-                                       FontSize="9"
-                                       Text="105"
-                                       VerticalOptions="End"
-                                       TextColor="#9C9B9A"/>
+                       FontSize="9"
+                       Text="105"
+                       VerticalOptions="End"
+                       TextColor="#9C9B9A"/>
                             </HorizontalStackLayout>
                         </StackLayout>
                     </Frame>
 
-                    <Grid x:Name="UserInfoGrid" Grid.Row="2">
+                    <Grid x:Name="UserInfoGrid" Grid.Row="2" HorizontalOptions="Start">
                         <Frame BorderColor="Transparent"
-                               CornerRadius="50"
-                               Margin="24, 24, 24, 5">
+               CornerRadius="50">
                             <Image x:Name="AvatarImage"
-                                   Source="club_placeholder"
-                                   Aspect="AspectFill"
-                                   VerticalOptions="Start"
-                                   HorizontalOptions="Start"
-                                   WidthRequest="96"
-                                   HeightRequest="96"/>
+                   Source="club_placeholder"
+                   Aspect="AspectFill"
+                   VerticalOptions="Start"
+                   HorizontalOptions="Start"
+                   WidthRequest="96"
+                   HeightRequest="96"/>
                         </Frame>
                     </Grid>
                     <VerticalStackLayout x:Name="FullInfoLayout"
-                                         Grid.Row="3"
-                                         Spacing="5"
-                                         Margin="24, 24, 0, 0">
+                         Grid.Row="3"
+                         Spacing="5"
+                         Margin="0, 24, 0, 0">
                         <Label x:Name="ClubNameLabel"
-                               Text="{Binding SelectedClub.Name}" 
-                               HorizontalOptions="Start"
-                               FontSize="20"/>
+               Text="{Binding SelectedClub.Name}" 
+               HorizontalOptions="Start"
+               FontSize="20"/>
                         <Label x:Name="RoleLabel"
-                               Text="{Binding SelectedClub.Target}"
-                               HorizontalOptions="Start"
-                               VerticalOptions="Center"
-                               FontSize="15"
-                               TextColor="#1A68AF"/>
+               Text="{Binding SelectedClub.Target}"
+               HorizontalOptions="Start"
+               VerticalOptions="Center"
+               FontSize="15"
+               TextColor="#1A68AF"/>
                         <Label x:Name="JobLabel"
-                               TextColor="#838281"
-                               Text="{Binding SelectedClub.UsersCount, StringFormat='Количество участников {0}'}"
-                               HorizontalOptions="Start"
-                               VerticalOptions="Center"
-                               FontSize="12"/>
+                           TextColor="#838281"
+                           Text="{Binding SelectedClub.UsersCount, StringFormat='Количество участников {0}'}"
+                           HorizontalOptions="Start"
+                           VerticalOptions="Center"
+                           FontSize="12"/>
                         <Button x:Name="SubscribeButton"
-                                BackgroundColor="#0057A6"
-                                BorderWidth="1"
-                                IsVisible="{Binding SelectedClub.IsVisibileSubscribeButton}"
-                                Text="Подписаться"
-                                TextColor="White"
-                                FontSize="15"
-                                HorizontalOptions="Start"
-                                VerticalOptions="Center"
-                                Clicked="SubscribeButton_Clicked"
-                                WidthRequest="319"
-                                Margin="0, 10, 0, 0"/>
+                            BackgroundColor="#0057A6"
+                            BorderWidth="1"
+                            IsVisible="{Binding SelectedClub.IsVisibileSubscribeButton}"
+                            Text="Подписаться"
+                            TextColor="White"
+                            FontSize="15"
+                            CornerRadius="10"
+                            HorizontalOptions="Start"
+                            VerticalOptions="Center"
+                            Clicked="SubscribeButton_Clicked"
+                            WidthRequest="319"
+                            Margin="0, 10, 0, 0"/>
                         <Button x:Name="ProjectButton"
-                                BackgroundColor="White"
-                                BorderWidth="1"
-                                Text="Проекты"
-                                TextColor="#0057A6"
-                                BorderColor="#0057A6"
-                                FontSize="15"
-                                HorizontalOptions="Start"
-                                VerticalOptions="Center"
-                                WidthRequest="319"
-                                Margin="0, 10, 0, 0"/>
+                            BackgroundColor="White"
+                            BorderWidth="1"
+                            Text="Проекты"
+                            TextColor="#0057A6"
+                            BorderColor="#0057A6"
+                            FontSize="15"
+                            CornerRadius="10"
+                            HorizontalOptions="Start"
+                            VerticalOptions="Center"
+                            WidthRequest="319"
+                            Margin="0, 10, 0, 0"/>
+                        <Button x:Name="SendNewsButton"
+                            BackgroundColor="White"
+                            BorderWidth="1"
+                            Clicked="SendNewsButton_Clicked"
+                            Text="Опубликовать"
+                            TextColor="#0057A6"
+                            BorderColor="#0057A6"
+                            FontSize="15"
+                            CornerRadius="10"
+                            HorizontalOptions="Start"
+                            VerticalOptions="Center"
+                            WidthRequest="319"
+                            Margin="0, 10, 0, 0"/>
                     </VerticalStackLayout>
                 </StackLayout>
-            </Frame>
+            </Border>
+
 
             <HorizontalStackLayout x:Name="HorizontalContentLayout" 
                                Grid.Row="4"
@@ -258,7 +286,7 @@
           x:Name="NotesCollection"
           Grid.Row="6"
           Margin="0,12,0,0"
-          BackgroundColor="#EBEBEB">
+          BackgroundColor="White">
                 <CollectionView.ItemsLayout>
                     <GridItemsLayout Span="1"
                    Orientation="Vertical" />

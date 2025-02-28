@@ -1,14 +1,16 @@
 ﻿using MauiApp1.DataModel;
+using MauiApp1.Services.UseCase.Interface;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace MauiApp1.ViewModels
 {
-    public class NoteViewModel : BindableObject
+    public class NoteViewModel : BindableObject, INotifyPropertyChanged
     {
 
         private string _searchText;
@@ -25,6 +27,9 @@ namespace MauiApp1.ViewModels
                 }
             }
         }
+
+        private readonly INoteService _noteService;
+
         public ObservableCollection<Note> Notes { get; set; }
         public ObservableCollection<Note> FilteredNotes { get; set; }
 
@@ -40,19 +45,11 @@ namespace MauiApp1.ViewModels
             }
         }
 
-        public NoteViewModel()
+        public NoteViewModel(INoteService noteService)
         {
-            Notes = new ObservableCollection<Note>
-            {
-                new Note { Id = new Guid().ToString(),
-                    Name = "День защитника Отечества",
-                    Description = "«День защитника Отечества» — праздник, отмечаемый ежегодно 23 февраля в Белоруссии, Кыргызстане, России, Таджикистане и непризнанной ПМР.ие проекта",
-                     },
-                new Note { Id = new Guid().ToString(), Name = "НазваниеНовости", Description = "ТекстНовости"}
-            };
-
-            FilteredNotes = new ObservableCollection<Note>(Notes);
+            _noteService = noteService;
         }
+
 
         //private void LoadDetailedNote()
         //{
@@ -81,9 +78,17 @@ namespace MauiApp1.ViewModels
             }
         }
 
-        public Note GetNoteById(string idNote)
+        public async Task LoadNotes()
         {
-            return Notes.FirstOrDefault(c => c.Id == idNote);
+            Notes.Clear();
+            var notes = await _noteService.GetNewsAsync();
+            if (notes != null)
+            {
+                foreach (var note in notes)
+                {
+                    Notes.Add(note);
+                }
+            }
         }
     }
 }

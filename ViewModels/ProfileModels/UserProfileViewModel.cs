@@ -105,6 +105,7 @@ namespace MauiApp1.ViewModels.Profile
                     Notes.Add(note);
                 }
             }
+            Notes.OrderBy(n => n.CreationDate);
         }
 
         public async Task RefreshDataAsync()

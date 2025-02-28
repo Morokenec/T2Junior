@@ -20,5 +20,6 @@ namespace MauiApp1.Models.ClubModels.ClubList
 
         [JsonPropertyName("isSubscribe")]
         public bool IsSubscribe { get; set; }
+
     }
 }

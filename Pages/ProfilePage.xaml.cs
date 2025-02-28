@@ -1,7 +1,9 @@
 using MauiApp1.DataModel;
+using MauiApp1.Pages;
 using MauiApp1.Services.AppHelper;
 using MauiApp1.Services.UseCase;
 using MauiApp1.Services.UseCase.Interface;
+using MauiApp1.ViewModels;
 using MauiApp1.ViewModels.Profile;
 using System.Collections.ObjectModel;
 using System.Windows.Input;
@@ -61,7 +63,7 @@ public partial class ProfilePage : ContentPage
         if (currentPage?.GetType() == typeof(NotesPage))
             return;
 
-        await Navigation.PushAsync(new NotesPage(), true);
+        await Navigation.PushAsync(new NotesPage(new NoteViewModel(new NoteService(new HttpClient(), new JsonDeserializerService()))), true);
     }
 
     private async void OnRatingButtonTapped(object sender, EventArgs e)
@@ -128,7 +130,16 @@ public partial class ProfilePage : ContentPage
         if (currentPage?.GetType() == typeof(NotesPage))
             return;
 
-        await Navigation.PushAsync(new NotesPage());
+        await Navigation.PushAsync(new NotesPage(new NoteViewModel(new NoteService(new HttpClient(), new JsonDeserializerService()))), true);
+    }
+
+    private async void NoteCreateButton_Clicked(object sender, EventArgs e)
+    {
+        var currentPage = Navigation.NavigationStack.LastOrDefault();
+        if (currentPage?.GetType() == typeof(NoteEditorPage))
+            return;
+
+        await Navigation.PushAsync(new NoteEditorPage(new NoteEditorViewModel(new NoteService(new HttpClient(), new JsonDeserializerService()), Guid.Parse(AppSettings.test_user_guid))));
     }
 
     //private void OnSubUnsubButtonTapped(object sender, EventArgs e)
@@ -152,5 +163,5 @@ public partial class ProfilePage : ContentPage
     //            clickCount = 0;
     //        }
     //    }
-    //}
+    //}   
 }

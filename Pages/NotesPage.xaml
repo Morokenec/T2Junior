@@ -3,7 +3,8 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="MauiApp1.NotesPage"
              x:Name="Notes"
-             Title="Новости">
+             Title="Новости"
+             Background="White">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
@@ -11,38 +12,39 @@
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
 
-        <Frame Grid.Row="0">
-            <HorizontalStackLayout x:Name="NotesLayout"
-                               Margin="0,0"
-                               Padding="0, 10, 0, 10"
-                               HeightRequest="40">
-                <Frame x:Name="BackFrame"
+        <HorizontalStackLayout x:Name="CalendarLayout"
+                               Grid.Row="0"
+                               Margin="20,16"
+                               Padding="0,8"
+                               WidthRequest="343"
+                               HeightRequest="40"
+                               Background="White">
+            <Frame x:Name="BackFrame"
                    BorderColor="Transparent"
                    Margin="0,0,0,8">
-                    <Frame.GestureRecognizers>
-                        <TapGestureRecognizer Tapped="OnBackButtonTapped" />
-                    </Frame.GestureRecognizers>
-                    <Image Source="back_icon.png"
+                <Frame.GestureRecognizers>
+                    <TapGestureRecognizer Tapped="OnBackButtonTapped" />
+                </Frame.GestureRecognizers>
+                <Image Source="back_icon.
+                       "
                        Aspect="AspectFill"
                        VerticalOptions="Center"
                        HorizontalOptions="Center"
                        WidthRequest="24"
-                       HeightRequest="24"
-                       IsVisible="{Binding Source={x:Reference Notes}, Path=Redirected}" />
-                </Frame>
-                <Frame x:Name="NotesTextFrame"
+                       HeightRequest="24" />
+            </Frame>
+            <Frame x:Name="CalendarTextFrame"
                    BorderColor="Transparent"
                    HeightRequest="24"
                    Margin="0,0,0,8"
                    WidthRequest="295">
-                    <Label Text="Новости"
+                <Label Text="Новости"
                        FontSize="20"
                        HorizontalOptions="Center"
                        HeightRequest="24" />
-                </Frame>
-            </HorizontalStackLayout>
-        </Frame>
-        <CollectionView ItemsSource="{Binding FilteredNotes}"
+            </Frame>
+        </HorizontalStackLayout>
+        <CollectionView ItemsSource="{Binding Notes}"
                         x:Name="NotesCollection"
                         Grid.Row="2"
                         BackgroundColor="#EBEBEB">

@@ -137,6 +137,9 @@
 	  <Compile Update="Pages\ClubProfilePage.xaml.cs">
 	    <DependentUpon>ClubProfilePage.xaml</DependentUpon>
 	  </Compile>
+	  <Compile Update="Pages\NoteEditorPage.xaml.cs">
+	    <DependentUpon>NoteEditorPage.xaml</DependentUpon>
+	  </Compile>
 	  <Compile Update="Pages\NotesPage.xaml.cs">
 	    <DependentUpon>NotesPage.xaml</DependentUpon>
 	  </Compile>
@@ -168,6 +171,9 @@
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	  <MauiXaml Update="Pages\MessagesPage.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="Pages\NoteEditorPage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	  <MauiXaml Update="Pages\NotesPage.xaml">

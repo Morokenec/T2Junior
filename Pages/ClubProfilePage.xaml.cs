@@ -1,5 +1,9 @@
 using MauiApp1.ViewModels.ClubProfileViewModel;
 using MauiApp1.Services.UseCase.Interface;
+using MauiApp1.Pages;
+using MauiApp1.ViewModels;
+using MauiApp1.Services.UseCase;
+using MauiApp1.Services.AppHelper;
 
 namespace MauiApp1;
 
@@ -31,5 +35,14 @@ public partial class ClubProfilePage : ContentPage
             viewModel.SubscribeClub();
             viewModel.LoadClubProfileAsync();
         }
+    }
+
+    private async void SendNewsButton_Clicked(object sender, EventArgs e)
+    {
+        var currentPage = Navigation.NavigationStack.LastOrDefault();
+        if (currentPage?.GetType() == typeof(NoteEditorPage))
+            return;
+
+        await Navigation.PushAsync(new NoteEditorPage(new NoteEditorViewModel(new NoteService(new HttpClient(), new JsonDeserializerService()), _viewModel.SelectedClub.Id)));
     }
 }

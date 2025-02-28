@@ -34,7 +34,7 @@ namespace MauiApp1
             PswdEntry.IsPassword = !_isVisible;
         }
 
-        private void OnEnterClicked(object sender, EventArgs e)
+        private async void OnEnterClicked(object sender, EventArgs e)
         {
             string pattern = @"^(?=.*[a-zа-я])(?=.*[A-ZА-Я])(?=.*[!@#$%^=&*(),.?"":{}|<>]).{8,}$";
             string phonePattern = @"^(?:\+7|8)\d{10}$";
@@ -49,7 +49,7 @@ namespace MauiApp1
             { 
                 ValidationLabel.IsVisible = true;
                 ValidationLabel.TextColor = Colors.Green;
-                _viewModel.LoginAsync();
+                await _viewModel.LoginAsync();
             }
 
         }
