@@ -1,0 +1,11 @@
+{
+  "type": "https://tools.ietf.org/html/rfc9110#section-15.5.1",
+  "title": "One or more validation errors occurred.",
+  "status": 400,
+  "errors": {
+    "userId": [
+      "The value '{UserId}' is not valid."
+    ]
+  },
+  "traceId": "00-a1685c7cc4bc1e8ba561c8ab000bf753-ac408b744ee403d4-00"
+}

@@ -17,5 +17,6 @@
         public int ClubsCount { get; set; }
 
         public string? AvatarPath { get; set; }
+        public string Email { get; set; }
     }
 }

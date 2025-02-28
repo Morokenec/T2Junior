@@ -24,6 +24,9 @@ using T2JuniorAPI.Services.MediaNotes;
 using T2JuniorAPI.Services.Comments;
 using T2JuniorAPI.Services.MediaComments;
 using T2JuniorAPI.Services.NewsFeeds;
+using T2JuniorAPI.Services.Initiatives;
+using T2JuniorAPI.Repositories;
+using T2JuniorAPI.Services.MediaInitiatives;
 
 
 
@@ -55,6 +58,7 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
 builder.Services.AddIdentity<ApplicationUser, IdentityRole<Guid>>()
     .AddEntityFrameworkStores<ApplicationDbContext>()
     .AddDefaultTokenProviders();
+
 
 builder.Services.AddCors(options =>
 {
@@ -89,6 +93,7 @@ builder.Services.AddAutoMapper(config =>
     config.AddProfile<WallProfile>();
     config.AddProfile<WallTypeProfile>();
     config.AddProfile<CommentProfile>();
+    config.AddProfile<InitiativeProfile>();
 });
 
 
@@ -111,6 +116,8 @@ builder.Services.AddScoped<IMediaNoteService, MediaNoteService>();
 builder.Services.AddScoped<ICommentService, CommentService>();
 builder.Services.AddScoped<IMediaCommentService, MediaCommentService>();
 builder.Services.AddScoped<INewsFeedService, NewsFeedService>();
+builder.Services.AddScoped<IInitiativeService, InitiativeService>();
+builder.Services.AddScoped<IMediaInitiativeService, MediaInitiativeService>();
 
 
 builder.Services.AddControllers();
@@ -130,7 +137,7 @@ var app = builder.Build();
 using (var scope = app.Services.CreateScope())
 {
     var db = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
-    
+    DataInitializer.Initialize(db);
     db.Database.Migrate();
 }
 

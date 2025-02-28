@@ -625,6 +625,141 @@ namespace T2JuniorAPI.Migrations
                     b.ToTable("EventDirections");
                 });
 
+            modelBuilder.Entity("T2JuniorAPI.Entities.Initiative", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("TEXT")
+                        .HasColumnName("Id")
+                        .HasColumnOrder(0);
+
+                    b.Property<string>("Budget")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.Property<DateTime>("CreationDate")
+                        .HasColumnType("TEXT")
+                        .HasColumnName("CreationDate")
+                        .HasColumnOrder(1);
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("ExpectedResult")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.Property<Guid>("IdStatus")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("IdeaName")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.Property<bool>("IsDelete")
+                        .HasColumnType("INTEGER")
+                        .HasColumnName("IsDelete")
+                        .HasColumnOrder(3);
+
+                    b.Property<string>("Relevance")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("Target")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("Tasks")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.Property<DateTime>("UpdateDate")
+                        .HasColumnType("TEXT")
+                        .HasColumnName("UpdateDate")
+                        .HasColumnOrder(2);
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("IdStatus");
+
+                    b.ToTable("Initiatives");
+                });
+
+            modelBuilder.Entity("T2JuniorAPI.Entities.InitiativeComment", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("TEXT")
+                        .HasColumnName("Id")
+                        .HasColumnOrder(0);
+
+                    b.Property<DateTime>("CreationDate")
+                        .HasColumnType("TEXT")
+                        .HasColumnName("CreationDate")
+                        .HasColumnOrder(1);
+
+                    b.Property<Guid>("IdInitiative")
+                        .HasColumnType("TEXT");
+
+                    b.Property<Guid>("IdUser")
+                        .HasColumnType("TEXT");
+
+                    b.Property<bool>("IsDelete")
+                        .HasColumnType("INTEGER")
+                        .HasColumnName("IsDelete")
+                        .HasColumnOrder(3);
+
+                    b.Property<string>("Text")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.Property<DateTime>("UpdateDate")
+                        .HasColumnType("TEXT")
+                        .HasColumnName("UpdateDate")
+                        .HasColumnOrder(2);
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("IdInitiative");
+
+                    b.HasIndex("IdUser");
+
+                    b.ToTable("InitiativeComments");
+                });
+
+            modelBuilder.Entity("T2JuniorAPI.Entities.InitiativeStatus", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("TEXT")
+                        .HasColumnName("Id")
+                        .HasColumnOrder(0);
+
+                    b.Property<DateTime>("CreationDate")
+                        .HasColumnType("TEXT")
+                        .HasColumnName("CreationDate")
+                        .HasColumnOrder(1);
+
+                    b.Property<bool>("IsDelete")
+                        .HasColumnType("INTEGER")
+                        .HasColumnName("IsDelete")
+                        .HasColumnOrder(3);
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.Property<DateTime>("UpdateDate")
+                        .HasColumnType("TEXT")
+                        .HasColumnName("UpdateDate")
+                        .HasColumnOrder(2);
+
+                    b.HasKey("Id");
+
+                    b.ToTable("InitiativeStatuses");
+                });
+
             modelBuilder.Entity("T2JuniorAPI.Entities.MediaClub", b =>
                 {
                     b.Property<Guid>("IdClub")
@@ -737,6 +872,45 @@ namespace T2JuniorAPI.Migrations
                     b.HasIndex("IdMedia");
 
                     b.ToTable("MediaEvents");
+                });
+
+            modelBuilder.Entity("T2JuniorAPI.Entities.MediaInitiative", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("TEXT")
+                        .HasColumnName("Id")
+                        .HasColumnOrder(0);
+
+                    b.Property<DateTime>("CreationDate")
+                        .HasColumnType("TEXT")
+                        .HasColumnName("CreationDate")
+                        .HasColumnOrder(1);
+
+                    b.Property<Guid>("IdInitiative")
+                        .HasColumnType("TEXT");
+
+                    b.Property<Guid>("IdMedia")
+                        .HasColumnType("TEXT");
+
+                    b.Property<bool>("IsDelete")
+                        .HasColumnType("INTEGER")
+                        .HasColumnName("IsDelete")
+                        .HasColumnOrder(3);
+
+                    b.Property<DateTime>("UpdateDate")
+                        .HasColumnType("TEXT")
+                        .HasColumnName("UpdateDate")
+                        .HasColumnOrder(2);
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("IdInitiative");
+
+                    b.HasIndex("IdMedia")
+                        .IsUnique();
+
+                    b.ToTable("MediaInitiatives");
                 });
 
             modelBuilder.Entity("T2JuniorAPI.Entities.MediaNote", b =>
@@ -1046,6 +1220,44 @@ namespace T2JuniorAPI.Migrations
                     b.ToTable("UserAvatars");
                 });
 
+            modelBuilder.Entity("T2JuniorAPI.Entities.UserInitiative", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("TEXT")
+                        .HasColumnName("Id")
+                        .HasColumnOrder(0);
+
+                    b.Property<DateTime>("CreationDate")
+                        .HasColumnType("TEXT")
+                        .HasColumnName("CreationDate")
+                        .HasColumnOrder(1);
+
+                    b.Property<Guid>("IdInitiative")
+                        .HasColumnType("TEXT");
+
+                    b.Property<Guid>("IdUser")
+                        .HasColumnType("TEXT");
+
+                    b.Property<bool>("IsDelete")
+                        .HasColumnType("INTEGER")
+                        .HasColumnName("IsDelete")
+                        .HasColumnOrder(3);
+
+                    b.Property<DateTime>("UpdateDate")
+                        .HasColumnType("TEXT")
+                        .HasColumnName("UpdateDate")
+                        .HasColumnOrder(2);
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("IdInitiative");
+
+                    b.HasIndex("IdUser");
+
+                    b.ToTable("UserInitiatives");
+                });
+
             modelBuilder.Entity("T2JuniorAPI.Entities.UserSubscribers", b =>
                 {
                     b.Property<Guid>("IdUser")
@@ -1079,6 +1291,44 @@ namespace T2JuniorAPI.Migrations
                     b.HasIndex("IdSubscriber");
 
                     b.ToTable("UserSubscribers");
+                });
+
+            modelBuilder.Entity("T2JuniorAPI.Entities.Vote", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("TEXT")
+                        .HasColumnName("Id")
+                        .HasColumnOrder(0);
+
+                    b.Property<DateTime>("CreationDate")
+                        .HasColumnType("TEXT")
+                        .HasColumnName("CreationDate")
+                        .HasColumnOrder(1);
+
+                    b.Property<Guid>("IdInitiative")
+                        .HasColumnType("TEXT");
+
+                    b.Property<Guid>("IdUser")
+                        .HasColumnType("TEXT");
+
+                    b.Property<bool>("IsDelete")
+                        .HasColumnType("INTEGER")
+                        .HasColumnName("IsDelete")
+                        .HasColumnOrder(3);
+
+                    b.Property<DateTime>("UpdateDate")
+                        .HasColumnType("TEXT")
+                        .HasColumnName("UpdateDate")
+                        .HasColumnOrder(2);
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("IdInitiative");
+
+                    b.HasIndex("IdUser");
+
+                    b.ToTable("Votes");
                 });
 
             modelBuilder.Entity("T2JuniorAPI.Entities.Wall", b =>
@@ -1324,6 +1574,36 @@ namespace T2JuniorAPI.Migrations
                     b.Navigation("IdDirectionNavigation");
                 });
 
+            modelBuilder.Entity("T2JuniorAPI.Entities.Initiative", b =>
+                {
+                    b.HasOne("T2JuniorAPI.Entities.InitiativeStatus", "Status")
+                        .WithMany("Initiatives")
+                        .HasForeignKey("IdStatus")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("Status");
+                });
+
+            modelBuilder.Entity("T2JuniorAPI.Entities.InitiativeComment", b =>
+                {
+                    b.HasOne("T2JuniorAPI.Entities.Initiative", "Initiative")
+                        .WithMany("InitiativeComments")
+                        .HasForeignKey("IdInitiative")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("ApplicationUser", "User")
+                        .WithMany("InitiativeComments")
+                        .HasForeignKey("IdUser")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("Initiative");
+
+                    b.Navigation("User");
+                });
+
             modelBuilder.Entity("T2JuniorAPI.Entities.MediaClub", b =>
                 {
                     b.HasOne("T2JuniorAPI.Entities.Club", "IdClubNavigation")
@@ -1379,6 +1659,25 @@ namespace T2JuniorAPI.Migrations
                     b.Navigation("IdEventNavigation");
 
                     b.Navigation("MediaFilesNavigation");
+                });
+
+            modelBuilder.Entity("T2JuniorAPI.Entities.MediaInitiative", b =>
+                {
+                    b.HasOne("T2JuniorAPI.Entities.Initiative", "Initiative")
+                        .WithMany("MediaInitiatives")
+                        .HasForeignKey("IdInitiative")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("T2JuniorAPI.Entities.Mediafile", "Mediafile")
+                        .WithOne("MediaInitiative")
+                        .HasForeignKey("T2JuniorAPI.Entities.MediaInitiative", "IdMedia")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("Initiative");
+
+                    b.Navigation("Mediafile");
                 });
 
             modelBuilder.Entity("T2JuniorAPI.Entities.MediaNote", b =>
@@ -1502,21 +1801,59 @@ namespace T2JuniorAPI.Migrations
                     b.Navigation("User");
                 });
 
+            modelBuilder.Entity("T2JuniorAPI.Entities.UserInitiative", b =>
+                {
+                    b.HasOne("T2JuniorAPI.Entities.Initiative", "Initiative")
+                        .WithMany("UserInitiatives")
+                        .HasForeignKey("IdInitiative")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("ApplicationUser", "User")
+                        .WithMany("UserInitiatives")
+                        .HasForeignKey("IdUser")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("Initiative");
+
+                    b.Navigation("User");
+                });
+
             modelBuilder.Entity("T2JuniorAPI.Entities.UserSubscribers", b =>
                 {
                     b.HasOne("ApplicationUser", "Subscriber")
-                        .WithMany()
+                        .WithMany("SubscribersAsSubscriber")
                         .HasForeignKey("IdSubscriber")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.HasOne("ApplicationUser", "User")
-                        .WithMany("Subscribers")
+                        .WithMany("SubscribersAsUser")
                         .HasForeignKey("IdUser")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.Navigation("Subscriber");
+
+                    b.Navigation("User");
+                });
+
+            modelBuilder.Entity("T2JuniorAPI.Entities.Vote", b =>
+                {
+                    b.HasOne("T2JuniorAPI.Entities.Initiative", "Initiative")
+                        .WithMany("Votes")
+                        .HasForeignKey("IdInitiative")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("ApplicationUser", "User")
+                        .WithMany("Votes")
+                        .HasForeignKey("IdUser")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("Initiative");
 
                     b.Navigation("User");
                 });
@@ -1554,15 +1891,23 @@ namespace T2JuniorAPI.Migrations
 
                     b.Navigation("Comments");
 
+                    b.Navigation("InitiativeComments");
+
                     b.Navigation("Likes");
 
                     b.Navigation("Mediafiles");
 
-                    b.Navigation("Subscribers");
+                    b.Navigation("SubscribersAsSubscriber");
+
+                    b.Navigation("SubscribersAsUser");
 
                     b.Navigation("UserAchievements");
 
                     b.Navigation("UserAvatars");
+
+                    b.Navigation("UserInitiatives");
+
+                    b.Navigation("Votes");
 
                     b.Navigation("Walls");
                 });
@@ -1612,6 +1957,22 @@ namespace T2JuniorAPI.Migrations
                     b.Navigation("Events");
                 });
 
+            modelBuilder.Entity("T2JuniorAPI.Entities.Initiative", b =>
+                {
+                    b.Navigation("InitiativeComments");
+
+                    b.Navigation("MediaInitiatives");
+
+                    b.Navigation("UserInitiatives");
+
+                    b.Navigation("Votes");
+                });
+
+            modelBuilder.Entity("T2JuniorAPI.Entities.InitiativeStatus", b =>
+                {
+                    b.Navigation("Initiatives");
+                });
+
             modelBuilder.Entity("T2JuniorAPI.Entities.MediaType", b =>
                 {
                     b.Navigation("Mediafiles");
@@ -1627,6 +1988,9 @@ namespace T2JuniorAPI.Migrations
                         .IsRequired();
 
                     b.Navigation("MediaEvents");
+
+                    b.Navigation("MediaInitiative")
+                        .IsRequired();
 
                     b.Navigation("MediaNote")
                         .IsRequired();

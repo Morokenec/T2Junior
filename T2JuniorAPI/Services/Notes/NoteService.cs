@@ -118,7 +118,9 @@ namespace T2JuniorAPI.Services.Notes
                 .ToDictionary(g => g.Key, g => g.Count());
 
             // Маппинг записей в DTO и добавление количества комментариев
-            var notes = wall.Notes.Select(note =>
+            var notes = wall.Notes
+                .OrderByDescending(n => n.CreationDate)
+                .Select(note =>
             {
                 var noteDTO = _mapper.Map<NoteDTO>(note);
                 noteDTO.CommentsCount = commentsByNote.GetValueOrDefault(note.Id, 0);

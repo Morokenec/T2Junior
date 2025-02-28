@@ -10,8 +10,41 @@ namespace T2WebSoket.Repositories
         public DbSet<Message> Messages { get; set; }
         public DbSet<UsersChats> UsersChats { get; set; }
         public DbSet<ChatType> ChatTypes { get; set; }
+        public DbSet<MessageFile> MessageFiles { get; set; }
+        public DbSet<ChatFile> Files { get; set; }
 
-        public ChatDbContext(DbContextOptions<ChatDbContext> options) : base(options) { }
+        public ChatDbContext(DbContextOptions<ChatDbContext> options) : base(options) 
+        {
+        }
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            base.OnModelCreating(modelBuilder);
+
+            modelBuilder.Entity<Chat>()
+                .HasOne(c => c.ChatType)
+                .WithMany(ct => ct.Chats)
+                .HasForeignKey(c => c.TypeId)
+                .OnDelete(DeleteBehavior.Restrict);
+
+            modelBuilder.Entity<MessageFile>()
+                .HasOne(mf => mf.Message)
+                .WithMany(m => m.MessageFiles)
+                .HasForeignKey(mf => mf.IdMessage)
+                .OnDelete(DeleteBehavior.Restrict);
+
+            modelBuilder.Entity<MessageFile>()
+                .HasOne(mf => mf.File)
+                .WithMany(cf => cf.MessageFiles)
+                .HasForeignKey(mf => mf.IdFile)
+                .OnDelete(DeleteBehavior.Restrict);
+
+            modelBuilder.Entity<ChatFile>()
+                .HasOne(cf => cf.User)
+                .WithMany(u => u.ChatFiles)
+                .HasForeignKey(cf => cf.UserId)
+                .OnDelete(DeleteBehavior.Restrict);
+        }
 
         private static void ConfigureCommonFields(ModelBuilder modelBuilder)
         {

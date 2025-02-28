@@ -25,9 +25,6 @@ namespace T2WebSoket.Migrations
                         .HasColumnName("Id")
                         .HasColumnOrder(0);
 
-                    b.Property<Guid>("ChatTypeId")
-                        .HasColumnType("TEXT");
-
                     b.Property<DateTime>("CreationDate")
                         .HasColumnType("TEXT")
                         .HasColumnName("CreationDate")
@@ -52,9 +49,50 @@ namespace T2WebSoket.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("ChatTypeId");
+                    b.HasIndex("TypeId");
 
                     b.ToTable("Chats");
+                });
+
+            modelBuilder.Entity("T2WebSoket.Models.ChatFile", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("TEXT")
+                        .HasColumnName("Id")
+                        .HasColumnOrder(0);
+
+                    b.Property<DateTime>("CreationDate")
+                        .HasColumnType("TEXT")
+                        .HasColumnName("CreationDate")
+                        .HasColumnOrder(1);
+
+                    b.Property<string>("FileName")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("FilePath")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.Property<bool>("IsDelete")
+                        .HasColumnType("INTEGER")
+                        .HasColumnName("IsDelete")
+                        .HasColumnOrder(3);
+
+                    b.Property<DateTime>("UpdateDate")
+                        .HasColumnType("TEXT")
+                        .HasColumnName("UpdateDate")
+                        .HasColumnOrder(2);
+
+                    b.Property<Guid>("UserId")
+                        .HasColumnType("TEXT");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("Files");
                 });
 
             modelBuilder.Entity("T2WebSoket.Models.ChatType", b =>
@@ -97,10 +135,6 @@ namespace T2WebSoket.Migrations
                         .HasColumnName("Id")
                         .HasColumnOrder(0);
 
-                    b.Property<string>("Body")
-                        .IsRequired()
-                        .HasColumnType("TEXT");
-
                     b.Property<Guid>("ChatId")
                         .HasColumnType("TEXT");
 
@@ -114,7 +148,8 @@ namespace T2WebSoket.Migrations
                         .HasColumnName("IsDelete")
                         .HasColumnOrder(3);
 
-                    b.Property<string>("MediaUrl")
+                    b.Property<string>("Text")
+                        .IsRequired()
                         .HasColumnType("TEXT");
 
                     b.Property<DateTime>("UpdateDate")
@@ -132,6 +167,44 @@ namespace T2WebSoket.Migrations
                     b.HasIndex("UserId");
 
                     b.ToTable("Messages");
+                });
+
+            modelBuilder.Entity("T2WebSoket.Models.MessageFile", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("TEXT")
+                        .HasColumnName("Id")
+                        .HasColumnOrder(0);
+
+                    b.Property<DateTime>("CreationDate")
+                        .HasColumnType("TEXT")
+                        .HasColumnName("CreationDate")
+                        .HasColumnOrder(1);
+
+                    b.Property<Guid>("IdFile")
+                        .HasColumnType("TEXT");
+
+                    b.Property<Guid>("IdMessage")
+                        .HasColumnType("TEXT");
+
+                    b.Property<bool>("IsDelete")
+                        .HasColumnType("INTEGER")
+                        .HasColumnName("IsDelete")
+                        .HasColumnOrder(3);
+
+                    b.Property<DateTime>("UpdateDate")
+                        .HasColumnType("TEXT")
+                        .HasColumnName("UpdateDate")
+                        .HasColumnOrder(2);
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("IdFile");
+
+                    b.HasIndex("IdMessage");
+
+                    b.ToTable("MessageFiles");
                 });
 
             modelBuilder.Entity("T2WebSoket.Models.User", b =>
@@ -207,12 +280,23 @@ namespace T2WebSoket.Migrations
             modelBuilder.Entity("T2WebSoket.Models.Chat", b =>
                 {
                     b.HasOne("T2WebSoket.Models.ChatType", "ChatType")
-                        .WithMany()
-                        .HasForeignKey("ChatTypeId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .WithMany("Chats")
+                        .HasForeignKey("TypeId")
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.Navigation("ChatType");
+                });
+
+            modelBuilder.Entity("T2WebSoket.Models.ChatFile", b =>
+                {
+                    b.HasOne("T2WebSoket.Models.User", "User")
+                        .WithMany("ChatFiles")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("T2WebSoket.Models.Message", b =>
@@ -224,7 +308,7 @@ namespace T2WebSoket.Migrations
                         .IsRequired();
 
                     b.HasOne("T2WebSoket.Models.User", "User")
-                        .WithMany()
+                        .WithMany("Messages")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -232,6 +316,25 @@ namespace T2WebSoket.Migrations
                     b.Navigation("Chat");
 
                     b.Navigation("User");
+                });
+
+            modelBuilder.Entity("T2WebSoket.Models.MessageFile", b =>
+                {
+                    b.HasOne("T2WebSoket.Models.ChatFile", "File")
+                        .WithMany("MessageFiles")
+                        .HasForeignKey("IdFile")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("T2WebSoket.Models.Message", "Message")
+                        .WithMany("MessageFiles")
+                        .HasForeignKey("IdMessage")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("File");
+
+                    b.Navigation("Message");
                 });
 
             modelBuilder.Entity("T2WebSoket.Models.UsersChats", b =>
@@ -243,7 +346,7 @@ namespace T2WebSoket.Migrations
                         .IsRequired();
 
                     b.HasOne("T2WebSoket.Models.User", "User")
-                        .WithMany()
+                        .WithMany("UserChats")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -258,6 +361,30 @@ namespace T2WebSoket.Migrations
                     b.Navigation("Messages");
 
                     b.Navigation("UsersChats");
+                });
+
+            modelBuilder.Entity("T2WebSoket.Models.ChatFile", b =>
+                {
+                    b.Navigation("MessageFiles");
+                });
+
+            modelBuilder.Entity("T2WebSoket.Models.ChatType", b =>
+                {
+                    b.Navigation("Chats");
+                });
+
+            modelBuilder.Entity("T2WebSoket.Models.Message", b =>
+                {
+                    b.Navigation("MessageFiles");
+                });
+
+            modelBuilder.Entity("T2WebSoket.Models.User", b =>
+                {
+                    b.Navigation("ChatFiles");
+
+                    b.Navigation("Messages");
+
+                    b.Navigation("UserChats");
                 });
 #pragma warning restore 612, 618
         }
