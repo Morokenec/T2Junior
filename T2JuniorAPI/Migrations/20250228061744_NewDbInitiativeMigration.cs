@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace T2JuniorAPI.Migrations
 {
     /// <inheritdoc />
-    public partial class NewDBUpdateMigration : Migration
+    public partial class NewDbInitiativeMigration : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -72,6 +72,21 @@ namespace T2JuniorAPI.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_EventDirections", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "InitiativeStatuses",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "TEXT", nullable: false),
+                    CreationDate = table.Column<DateTime>(type: "TEXT", nullable: false),
+                    UpdateDate = table.Column<DateTime>(type: "TEXT", nullable: false),
+                    IsDelete = table.Column<bool>(type: "INTEGER", nullable: false),
+                    Name = table.Column<string>(type: "TEXT", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_InitiativeStatuses", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -192,6 +207,34 @@ namespace T2JuniorAPI.Migrations
                         name: "FK_Events_EventDirections_IdDirection",
                         column: x => x.IdDirection,
                         principalTable: "EventDirections",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Initiatives",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "TEXT", nullable: false),
+                    CreationDate = table.Column<DateTime>(type: "TEXT", nullable: false),
+                    UpdateDate = table.Column<DateTime>(type: "TEXT", nullable: false),
+                    IsDelete = table.Column<bool>(type: "INTEGER", nullable: false),
+                    IdStatus = table.Column<Guid>(type: "TEXT", nullable: false),
+                    IdeaName = table.Column<string>(type: "TEXT", nullable: false),
+                    Description = table.Column<string>(type: "TEXT", nullable: false),
+                    Target = table.Column<string>(type: "TEXT", nullable: false),
+                    Tasks = table.Column<string>(type: "TEXT", nullable: false),
+                    Budget = table.Column<string>(type: "TEXT", nullable: false),
+                    Relevance = table.Column<string>(type: "TEXT", nullable: false),
+                    ExpectedResult = table.Column<string>(type: "TEXT", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Initiatives", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Initiatives_InitiativeStatuses_IdStatus",
+                        column: x => x.IdStatus,
+                        principalTable: "InitiativeStatuses",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                 });
@@ -357,6 +400,35 @@ namespace T2JuniorAPI.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "InitiativeComments",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "TEXT", nullable: false),
+                    CreationDate = table.Column<DateTime>(type: "TEXT", nullable: false),
+                    UpdateDate = table.Column<DateTime>(type: "TEXT", nullable: false),
+                    IsDelete = table.Column<bool>(type: "INTEGER", nullable: false),
+                    IdInitiative = table.Column<Guid>(type: "TEXT", nullable: false),
+                    IdUser = table.Column<Guid>(type: "TEXT", nullable: false),
+                    Text = table.Column<string>(type: "TEXT", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_InitiativeComments", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_InitiativeComments_AspNetUsers_IdUser",
+                        column: x => x.IdUser,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_InitiativeComments_Initiatives_IdInitiative",
+                        column: x => x.IdInitiative,
+                        principalTable: "Initiatives",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Mediafiles",
                 columns: table => new
                 {
@@ -386,6 +458,34 @@ namespace T2JuniorAPI.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "UserInitiatives",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "TEXT", nullable: false),
+                    CreationDate = table.Column<DateTime>(type: "TEXT", nullable: false),
+                    UpdateDate = table.Column<DateTime>(type: "TEXT", nullable: false),
+                    IsDelete = table.Column<bool>(type: "INTEGER", nullable: false),
+                    IdInitiative = table.Column<Guid>(type: "TEXT", nullable: false),
+                    IdUser = table.Column<Guid>(type: "TEXT", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_UserInitiatives", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_UserInitiatives_AspNetUsers_IdUser",
+                        column: x => x.IdUser,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_UserInitiatives_Initiatives_IdInitiative",
+                        column: x => x.IdInitiative,
+                        principalTable: "Initiatives",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "UserSubscribers",
                 columns: table => new
                 {
@@ -409,6 +509,34 @@ namespace T2JuniorAPI.Migrations
                         name: "FK_UserSubscribers_AspNetUsers_IdUser",
                         column: x => x.IdUser,
                         principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Votes",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "TEXT", nullable: false),
+                    CreationDate = table.Column<DateTime>(type: "TEXT", nullable: false),
+                    UpdateDate = table.Column<DateTime>(type: "TEXT", nullable: false),
+                    IsDelete = table.Column<bool>(type: "INTEGER", nullable: false),
+                    IdInitiative = table.Column<Guid>(type: "TEXT", nullable: false),
+                    IdUser = table.Column<Guid>(type: "TEXT", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Votes", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Votes_AspNetUsers_IdUser",
+                        column: x => x.IdUser,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_Votes_Initiatives_IdInitiative",
+                        column: x => x.IdInitiative,
+                        principalTable: "Initiatives",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                 });
@@ -523,6 +651,34 @@ namespace T2JuniorAPI.Migrations
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "FK_MediaEvents_Mediafiles_IdMedia",
+                        column: x => x.IdMedia,
+                        principalTable: "Mediafiles",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "MediaInitiatives",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "TEXT", nullable: false),
+                    CreationDate = table.Column<DateTime>(type: "TEXT", nullable: false),
+                    UpdateDate = table.Column<DateTime>(type: "TEXT", nullable: false),
+                    IsDelete = table.Column<bool>(type: "INTEGER", nullable: false),
+                    IdInitiative = table.Column<Guid>(type: "TEXT", nullable: false),
+                    IdMedia = table.Column<Guid>(type: "TEXT", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_MediaInitiatives", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_MediaInitiatives_Initiatives_IdInitiative",
+                        column: x => x.IdInitiative,
+                        principalTable: "Initiatives",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_MediaInitiatives_Mediafiles_IdMedia",
                         column: x => x.IdMedia,
                         principalTable: "Mediafiles",
                         principalColumn: "Id",
@@ -870,6 +1026,21 @@ namespace T2JuniorAPI.Migrations
                 column: "IdDirection");
 
             migrationBuilder.CreateIndex(
+                name: "IX_InitiativeComments_IdInitiative",
+                table: "InitiativeComments",
+                column: "IdInitiative");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_InitiativeComments_IdUser",
+                table: "InitiativeComments",
+                column: "IdUser");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Initiatives_IdStatus",
+                table: "Initiatives",
+                column: "IdStatus");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_MediaClubs_IdMedia",
                 table: "MediaClubs",
                 column: "IdMedia");
@@ -899,6 +1070,17 @@ namespace T2JuniorAPI.Migrations
                 name: "IX_Mediafiles_IdUser",
                 table: "Mediafiles",
                 column: "IdUser");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_MediaInitiatives_IdInitiative",
+                table: "MediaInitiatives",
+                column: "IdInitiative");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_MediaInitiatives_IdMedia",
+                table: "MediaInitiatives",
+                column: "IdMedia",
+                unique: true);
 
             migrationBuilder.CreateIndex(
                 name: "IX_MediaNotes_IdMedia",
@@ -947,9 +1129,29 @@ namespace T2JuniorAPI.Migrations
                 column: "IdUser");
 
             migrationBuilder.CreateIndex(
+                name: "IX_UserInitiatives_IdInitiative",
+                table: "UserInitiatives",
+                column: "IdInitiative");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_UserInitiatives_IdUser",
+                table: "UserInitiatives",
+                column: "IdUser");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_UserSubscribers_IdSubscriber",
                 table: "UserSubscribers",
                 column: "IdSubscriber");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Votes_IdInitiative",
+                table: "Votes",
+                column: "IdInitiative");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Votes_IdUser",
+                table: "Votes",
+                column: "IdUser");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Walls_IdClubOwner",
@@ -992,6 +1194,9 @@ namespace T2JuniorAPI.Migrations
                 name: "CommentLikes");
 
             migrationBuilder.DropTable(
+                name: "InitiativeComments");
+
+            migrationBuilder.DropTable(
                 name: "MediaClubs");
 
             migrationBuilder.DropTable(
@@ -999,6 +1204,9 @@ namespace T2JuniorAPI.Migrations
 
             migrationBuilder.DropTable(
                 name: "MediaEvents");
+
+            migrationBuilder.DropTable(
+                name: "MediaInitiatives");
 
             migrationBuilder.DropTable(
                 name: "MediaNotes");
@@ -1013,7 +1221,13 @@ namespace T2JuniorAPI.Migrations
                 name: "UserAvatars");
 
             migrationBuilder.DropTable(
+                name: "UserInitiatives");
+
+            migrationBuilder.DropTable(
                 name: "UserSubscribers");
+
+            migrationBuilder.DropTable(
+                name: "Votes");
 
             migrationBuilder.DropTable(
                 name: "AspNetRoles");
@@ -1031,6 +1245,9 @@ namespace T2JuniorAPI.Migrations
                 name: "Achievements");
 
             migrationBuilder.DropTable(
+                name: "Initiatives");
+
+            migrationBuilder.DropTable(
                 name: "Notes");
 
             migrationBuilder.DropTable(
@@ -1038,6 +1255,9 @@ namespace T2JuniorAPI.Migrations
 
             migrationBuilder.DropTable(
                 name: "Mediafiles");
+
+            migrationBuilder.DropTable(
+                name: "InitiativeStatuses");
 
             migrationBuilder.DropTable(
                 name: "NoteStatuses");

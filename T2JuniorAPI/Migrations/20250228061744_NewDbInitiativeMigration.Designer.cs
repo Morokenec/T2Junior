@@ -11,8 +11,8 @@ using T2JuniorAPI.Data;
 namespace T2JuniorAPI.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20250227081624_InitiativeNewMigration")]
-    partial class InitiativeNewMigration
+    [Migration("20250228061744_NewDbInitiativeMigration")]
+    partial class NewDbInitiativeMigration
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -1315,9 +1315,6 @@ namespace T2JuniorAPI.Migrations
                     b.Property<Guid>("IdUser")
                         .HasColumnType("TEXT");
 
-                    b.Property<Guid>("InitiativeId")
-                        .HasColumnType("TEXT");
-
                     b.Property<bool>("IsDelete")
                         .HasColumnType("INTEGER")
                         .HasColumnName("IsDelete")
@@ -1328,14 +1325,11 @@ namespace T2JuniorAPI.Migrations
                         .HasColumnName("UpdateDate")
                         .HasColumnOrder(2);
 
-                    b.Property<Guid>("UserId")
-                        .HasColumnType("TEXT");
-
                     b.HasKey("Id");
 
-                    b.HasIndex("InitiativeId");
+                    b.HasIndex("IdInitiative");
 
-                    b.HasIndex("UserId");
+                    b.HasIndex("IdUser");
 
                     b.ToTable("Votes");
                 });
@@ -1852,14 +1846,14 @@ namespace T2JuniorAPI.Migrations
                 {
                     b.HasOne("T2JuniorAPI.Entities.Initiative", "Initiative")
                         .WithMany("Votes")
-                        .HasForeignKey("InitiativeId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .HasForeignKey("IdInitiative")
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.HasOne("ApplicationUser", "User")
-                        .WithMany()
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .WithMany("Votes")
+                        .HasForeignKey("IdUser")
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.Navigation("Initiative");
@@ -1915,6 +1909,8 @@ namespace T2JuniorAPI.Migrations
                     b.Navigation("UserAvatars");
 
                     b.Navigation("UserInitiatives");
+
+                    b.Navigation("Votes");
 
                     b.Navigation("Walls");
                 });
