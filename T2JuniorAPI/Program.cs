@@ -137,8 +137,8 @@ var app = builder.Build();
 using (var scope = app.Services.CreateScope())
 {
     var db = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
-    DataInitializer.Initialize(db);
     db.Database.Migrate();
+    DataInitializer.Initialize(db);
 }
 
 if (app.Environment.IsDevelopment())
