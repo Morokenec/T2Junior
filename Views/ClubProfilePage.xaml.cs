@@ -11,19 +11,19 @@ public partial class ClubProfilePage : ContentPage
 
     private bool isLabelClickable = false;
     public bool HolderIsVisible { get; set; } = true; //добавить условия
-    public static int SelectedClubId { get; set; }
+    public int SelectedClubId { get; set; }
 
     public PopupView ActivePopup { get; set; }
     public ClubProfilePage()
     {
         InitializeComponent();
         BindingContext = new ClubProfileViewModel();
-        LoadClubDetails();
     }
 
     protected override void OnAppearing()
     {
         base.OnAppearing();
+        LoadClubDetails();
     }
 
     private void OnBackButtonTapped(object sender, EventArgs e)
@@ -139,5 +139,11 @@ public partial class ClubProfilePage : ContentPage
         var clubViewModel = new ClubViewModel();
         var selectedClub = clubViewModel.GetClubById(SelectedClubId);
         ((ClubProfileViewModel)BindingContext).SelectedClub = selectedClub;
+    }
+
+    public void SetSelectedClubId(int selectedClubId)
+    {
+        SelectedClubId = selectedClubId;
+        LoadClubDetails(); 
     }
 }

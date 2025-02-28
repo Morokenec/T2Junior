@@ -1,11 +1,25 @@
 ﻿using MauiApp1.Models;
 using MauiApp1.Pages;
+using MauiApp1.Services;
 using System.Collections.ObjectModel;
+using System.Windows.Input;
 
 namespace MauiApp1.ViewModels
 {
     public class MessageViewModel : BindableObject
     {
+        private string _newMessageText;
+        public string NewMessageText
+        {
+            get => _newMessageText;
+            set
+            {
+                _newMessageText = value;
+                OnPropertyChanged();
+            }
+        }
+
+
         private string _searchText;
         public string SearchText
         {
@@ -57,36 +71,57 @@ namespace MauiApp1.ViewModels
 
         public ObservableCollection<Message> FilteredMessages { get; set; }
 
+        public ObservableCollection<IChatElementType> ChatElements { get; set; }
+
+        public ICommand SendMessageCommand { get; }
+
         public MessageViewModel()
         {
             Chats = new ObservableCollection<Chat>
             {
                 new Chat { IdChat = 1, Type = Chat.TypeName.Личные, UnreadCount = 3},
-                new Chat { IdChat = 2, Type = Chat.TypeName.Личные },
-                new Chat { IdChat = 3, ChatName = "КофеКлуб", Photo = "club_placeholder.svg", Type = Chat.TypeName.Сообщества },
-                new Chat { IdChat = 4, ChatName = "КофеКлуб", Photo = "club_placeholder.svg", Type = Chat.TypeName.Сообщества },
-                new Chat { IdChat = 5, ChatName = "КофеКлуб", Photo = "club_placeholder.svg", Type = Chat.TypeName.Сообщества, UnreadCount = 7 },
-                new Chat { IdChat = 6 },
-                new Chat { IdChat = 7, ChatName = "КофеКлуб", Photo = "club_placeholder.svg", Type = Chat.TypeName.Сообщества },
-                new Chat { IdChat = 8, ChatName = "КофеКлуб", Photo = "club_placeholder.svg", Type = Chat.TypeName.Сообщества },
-                new Chat { IdChat = 9 }
+                new Chat { IdChat = 2, Name = "Матвей Абрамов", Type = Chat.TypeName.Личные },
+                new Chat { IdChat = 3, Name = "КофеКлуб", Photo = "club_placeholder.svg", Type = Chat.TypeName.Сообщества },
+                new Chat { IdChat = 4, Name = "КофеКлуб1", Photo = "club_placeholder.svg", Type = Chat.TypeName.Сообщества },
+                new Chat { IdChat = 5, Name = "КофеКлуб", Photo = "club_placeholder.svg", Type = Chat.TypeName.Сообщества, UnreadCount = 7 },
+                new Chat { IdChat = 6, Name = "Виталий Таран",},
+                new Chat { IdChat = 7, Name = "КофеКлуб", Photo = "club_placeholder.svg", Type = Chat.TypeName.Сообщества },
+                new Chat { IdChat = 8, Name = "КофеКлуб", Photo = "club_placeholder.svg", Type = Chat.TypeName.Сообщества },
+                new Chat { IdChat = 9, Name = "Тимофей Багин", }
             };
             Messages = new ObservableCollection<Message>
             {
                 new Message {IdChat = 1, Body = "Дизайн сообщения"},
                 new Message {IdChat = 2, Body = "СообщениеСообщение"},
-                new Message {IdChat = 3, Body = "Сообщение"}
+                new Message {IdChat = 3, Body = "Сообщение"},
+                new Message {IdChat = 4, Body = "На перекрёстке солнечных дорог"},
+                new Message {IdChat = 5, Body = "Я видел утро и день"},
+                new Message {IdChat = 6, Body = "Мои слова упали"},
+                new Message {IdChat = 7, Body = "Как в песок тень"},
             };
+
+            ChatElements = new ObservableCollection<IChatElementType>();
 
             foreach (Chat chat in Chats)
             {
                 UpdateVisibility(chat);
                 chat.CountIsVisible = Visibility;
+                ChatElements.Add(chat);
             }
 
             FilteredChats = new ObservableCollection<Chat>(Chats);
             FilteredMessages = new ObservableCollection<Message>(Messages);
             ChatTypes = Enum.GetValues(typeof(Chat.TypeName)).Cast<Chat.TypeName>().Select(t => t.ToString()).ToList();
+            SendMessageCommand = new Command(SendMessage);
+        }
+
+        private void SendMessage()
+        {
+            if (!string.IsNullOrWhiteSpace(NewMessageText))
+            {
+                Messages.Add(new Message { Body = NewMessageText });
+                NewMessageText = string.Empty;
+            }
         }
 
         private void UpdateVisibility(Chat chat)
@@ -106,7 +141,7 @@ namespace MauiApp1.ViewModels
             }
             else
             {
-                var filtered = Chats.Where(m => m.ChatName.Contains(SearchText, StringComparison.OrdinalIgnoreCase)).ToList();
+                var filtered = Chats.Where(m => m.Name.Contains(SearchText, StringComparison.OrdinalIgnoreCase)).ToList();
                 FilteredChats.Clear();
                 foreach (var chat in filtered)
                 {

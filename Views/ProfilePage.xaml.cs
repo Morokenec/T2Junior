@@ -13,7 +13,7 @@ public partial class ProfilePage : ContentPage
 
     public string FullName { get; set; }
     public int CoinCount { get; set; }
-    public static int SelectedProfileId { get; set; } = 0;
+    public int SelectedProfileId { get; set; } = 0;
     public bool DirectAccessed { get; set; } = BackNavigationState.IsDirectAccess;
     public ProfilePage()
     {
@@ -22,7 +22,6 @@ public partial class ProfilePage : ContentPage
         BindingContext = new UserProfileViewModel();
         UserRatingLabel.Text = userRating.ToString();
         RatingCountLabel.Text = ratingCount.ToString();
-
     }
 
     protected override void OnAppearing()
@@ -131,7 +130,13 @@ public partial class ProfilePage : ContentPage
         }
 
         profileViewModel.SelectedProfile = selectedProfile;
-        FullName = selectedProfile.FullName;
+        FullName = selectedProfile.Name;
         CoinCount = selectedProfile.AccumulatedPoints;
+    }
+
+    public void SetSelectedUserId(int selectedClubId)
+    {
+        SelectedProfileId = selectedClubId;
+        LoadProfileDetails(SelectedProfileId);
     }
 }

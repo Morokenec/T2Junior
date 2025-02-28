@@ -20,7 +20,9 @@ namespace MauiApp1.Models
 
         public int IdUser { get; set; } = User.IdUser;
 
-        public string DialogName { get; set; } = User.FullName; //заменить
+        public string DialogImage { get; set; } = Chat.Photo;
+
+        public string Name { get; set; } = User.Name; //заменить
 
         public string Body { get; set; } = "Сообщение";
     }

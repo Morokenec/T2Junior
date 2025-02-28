@@ -13,6 +13,7 @@ namespace MauiApp1
                 .UseMauiCommunityToolkit()
                 .ConfigureFonts(fonts =>
                 {
+                    fonts.AddFont("Manrope-Medium.ttf", "ManropeMedium");
                     fonts.AddFont("Manrope-ExtraBold.ttf", "ManropeExtraBold");
                     fonts.AddFont("Manrope-ExtraLight.ttf", "ManropeExtraLight");
                     fonts.AddFont("RedRose-Bold.ttf", "RedRoseBold");

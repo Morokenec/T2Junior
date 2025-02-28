@@ -1,4 +1,5 @@
-﻿using MauiApp1.DataModel;
+﻿
+using MauiApp1.DataModel;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -47,7 +48,7 @@ namespace MauiApp1.ViewModel
         {
             Clubs = new ObservableCollection<Club>
         {
-            new Club { IdClub = 1, SubCount = 10200, Rating = 5},
+            new Club { IdClub = 1, Name = "КофеКлуб1", SubCount = 10200, Rating = 5},
             new Club { IdClub = 2, SubCount = 13000000, Rating = 13},
             new Club { IdClub = 3 },
             new Club { IdClub = 4 },

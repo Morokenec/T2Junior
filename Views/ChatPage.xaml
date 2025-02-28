@@ -7,9 +7,9 @@
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
-            <RowDefinition Height="Auto" />
-            <RowDefinition Height="Auto" />
             <RowDefinition Height="*" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
 
         <HorizontalStackLayout x:Name="MessagesLayout"
@@ -24,13 +24,15 @@
                 <Frame.GestureRecognizers>
                     <TapGestureRecognizer Tapped="OnBackButtonTapped" />
                 </Frame.GestureRecognizers>
-                <Image Source="back_icon.svg"
-                       Aspect="AspectFill"
-                       VerticalOptions="Center"
-                       HorizontalOptions="Center"
-                       WidthRequest="24"
-                       HeightRequest="24"
-                       IsVisible="{Binding Source={x:Reference Messages}, Path=Redirected}" />
+                <StackLayout Padding="0"
+                             VerticalOptions="Center"
+                             HorizontalOptions="Center"
+                             WidthRequest="24"
+                             HeightRequest="24">
+                    <Image Source="back_icon.svg"
+                           Aspect="AspectFill"
+                           IsVisible="{Binding Source={x:Reference Messages}, Path=Redirected}" />
+                </StackLayout>
             </Frame>
             <Frame x:Name="MessagesTextFrame"
                    BorderColor="Transparent"
@@ -44,69 +46,130 @@
             </Frame>
         </HorizontalStackLayout>
 
-        <CollectionView ItemsSource="{Binding FilteredMessages}"
-                        x:Name="ChatsCollection"
-                        Grid.Row="1"
-                        Margin="0,2,0,0">
-            <CollectionView.ItemsLayout>
-                <GridItemsLayout Span="1"
-                                 Orientation="Vertical" />
-            </CollectionView.ItemsLayout>
-            <CollectionView.ItemTemplate>
-                <DataTemplate>
-                    <Frame CornerRadius="10"
-                           HorizontalOptions="Fill"
-                           HeightRequest="62"
-                           BorderColor="Transparent"
-                           Margin="16,0,16,6"
-                           BackgroundColor="White">
-                        <HorizontalStackLayout>
-                            <HorizontalStackLayout.GestureRecognizers>
-                                <TapGestureRecognizer />
-                            </HorizontalStackLayout.GestureRecognizers>
-                            <Frame BorderColor="Transparent">
-                                <HorizontalStackLayout>
-                                    <HorizontalStackLayout.GestureRecognizers>
-                                        <TapGestureRecognizer />
-                                    </HorizontalStackLayout.GestureRecognizers>
-                                    <Image Source="{Binding Photo}"
-                                           Aspect="AspectFill"
-                                           VerticalOptions="Fill"
-                                           HorizontalOptions="Start"
-                                           WidthRequest="54"
-                                           HeightRequest="54" />
+        <ScrollView Orientation="Vertical"
+                    Grid.Row="1">
+            <StackLayout>
+                <CollectionView ItemsSource="{Binding FilteredMessages}"
+                                x:Name="ChatsCollection"
+                                Margin="0,2,0,0">
+                    <CollectionView.ItemsLayout>
+                        <GridItemsLayout Span="1"
+                                         Orientation="Vertical" />
+                    </CollectionView.ItemsLayout>
+                    <CollectionView.ItemTemplate>
+                        <DataTemplate>
+                            <Frame CornerRadius="10"
+                                   HorizontalOptions="Fill"
+                                   VerticalOptions="Fill"
+                                   BorderColor="Transparent"
+                                   Margin="16,0,16,4"
+                                   BackgroundColor="White">
+                                <Frame.GestureRecognizers>
+                                    <TapGestureRecognizer Tapped="OnAvatarTapped" />
+                                </Frame.GestureRecognizers>
+                                <HorizontalStackLayout Spacing="8">
+                                    <Frame BorderColor="Transparent"
+                                           VerticalOptions="End">
+                                        <Frame.GestureRecognizers>
+                                            <TapGestureRecognizer Tapped="OnAvatarTapped" />
+                                        </Frame.GestureRecognizers>
+                                        <StackLayout>
+                                            <Image Source="{Binding DialogImage}"
+                                                   Aspect="AspectFill"
+                                                   VerticalOptions="End"
+                                                   HorizontalOptions="Start"
+                                                   WidthRequest="30"
+                                                   HeightRequest="30" />
+                                        </StackLayout>
+                                    </Frame>
+
+
+                                    <Grid>
+                                        <Frame HasShadow="False"
+                                               BackgroundColor="Transparent"
+                                               HorizontalOptions="Fill"
+                                               VerticalOptions="Fill">
+                                            <StackLayout>
+                                                <Image Source="other_message_holder.svg"
+                                                       Aspect="AspectFill"
+                                                       HorizontalOptions="FillAndExpand"
+                                                       VerticalOptions="FillAndExpand" />
+                                            </StackLayout>
+                                        </Frame>
+
+                                        <StackLayout Padding="8, 6, 6, 6"
+                                                     Spacing="2">
+                                            <Label Text="{Binding Name}"
+                                                   HorizontalOptions="Start"
+                                                   FontSize="15"
+                                                   TextColor="#0057A6" />
+                                            <Label Text="{Binding Body}"
+                                                   HorizontalOptions="Start"
+                                                   FontSize="12"
+                                                   TextColor="#838281" />
+                                            <Label Text="{Binding Source={x:Reference Messages}, Path=WriteTime}"
+                                                   HorizontalOptions="Start"
+                                                   FontSize="12"
+                                                   TextColor="#838281" />
+                                        </StackLayout>
+                                    </Grid>
                                 </HorizontalStackLayout>
                             </Frame>
+                        </DataTemplate>
+                    </CollectionView.ItemTemplate>
+                    <CollectionView.EmptyView>
+                        <Label Text="Результаты не найдены."
+                               HorizontalOptions="Center"
+                               VerticalOptions="Center"
+                               FontSize="24" />
+                    </CollectionView.EmptyView>
+                </CollectionView>
 
-                            <Frame HorizontalOptions="Fill"
-                                   VerticalOptions="Fill"
-                                   HeightRequest="36"
-                                   BorderColor="Transparent"
-                                   Margin="8,4,0,0">
-                                <StackLayout>
-                                    <StackLayout.GestureRecognizers>
-                                        <TapGestureRecognizer />
-                                    </StackLayout.GestureRecognizers>
-                                    <Label Text="{Binding DialogName}"
-                                           HorizontalOptions="Start"
-                                           FontSize="15"
-                                           TextColor="#0057A6" />
-                                    <Label Text="{Binding Body}"
-                                           HorizontalOptions="Start"
-                                           FontSize="12"
-                                           TextColor="#838281" />
-                                </StackLayout>
-                            </Frame>
-                        </HorizontalStackLayout>
-                    </Frame>
-                </DataTemplate>
-            </CollectionView.ItemTemplate>
-            <CollectionView.EmptyView>
-                <Label Text="Результаты не найдены."
-                       HorizontalOptions="Center"
-                       VerticalOptions="Center"
-                       FontSize="24" />
-            </CollectionView.EmptyView>
-        </CollectionView>
+                <StackLayout x:Name="FramesContainer"
+                             Grid.Row="2" />
+            </StackLayout>
+        </ScrollView>
+
+        <Frame Grid.Row="3"
+               VerticalOptions="End"
+               BorderColor="#D7D7D7"
+               Padding="1">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="Auto" />
+                </Grid.ColumnDefinitions>
+                <ImageButton x:Name="AddAFileButton"
+                             HeightRequest="28"
+                             Source="file_option.svg"
+                             Grid.Column="0" />
+                <Frame BorderColor="#D8E5F1"
+                       BackgroundColor="Transparent"
+                       CornerRadius="12"
+                       Margin="4"
+                       HasShadow="False"
+                       Grid.Column="1">
+                    <StackLayout Padding="0"
+                                 BackgroundColor="Transparent">
+                        <Editor x:Name="TextEntry"
+                                Placeholder="Ваше сообщение..."
+                                PlaceholderColor="#838281"
+                                FontSize="13"
+                                FontFamily="ManropeMedium"
+                                TextColor="#6B6D80"
+                                TextChanged="OnTextLinesCountChanged"
+                                VerticalOptions="Start"/>
+                    </StackLayout>
+                </Frame>
+                <StackLayout VerticalOptions="Center"
+                             Grid.Column="2">
+                    <ImageButton x:Name="SendButton"
+                                 HeightRequest="28"
+                                 Source="send_message.svg"
+                                 Clicked="SendBtnClicked" />
+                </StackLayout>
+            </Grid>
+        </Frame>
     </Grid>
 </ContentPage>

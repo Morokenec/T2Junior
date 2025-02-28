@@ -102,11 +102,13 @@
 	  <None Remove="Resources\Images\coin_holder.png" />
 	  <None Remove="Resources\Images\coin_holder.svg" />
 	  <None Remove="Resources\Images\dotnet_bot.png" />
+	  <None Remove="Resources\Images\file_option.svg" />
 	  <None Remove="Resources\Images\initium.svg" />
 	  <None Remove="Resources\Images\logo.svg" />
 	  <None Remove="Resources\Images\monochrome_calendar.svg" />
 	  <None Remove="Resources\Images\news.svg" />
 	  <None Remove="Resources\Images\news_media_holder.svg" />
+	  <None Remove="Resources\Images\other_message_holder.svg" />
 	  <None Remove="Resources\Images\profile.svg" />
 	  <None Remove="Resources\Images\profile_news.svg" />
 	  <None Remove="Resources\Images\profile_placeholder.png" />
@@ -118,7 +120,9 @@
 	  <None Remove="Resources\Images\redirect.svg" />
 	  <None Remove="Resources\Images\rules.svg" />
 	  <None Remove="Resources\Images\search_icon.svg" />
+	  <None Remove="Resources\Images\send_message.svg" />
 	  <None Remove="Resources\Images\unsub.svg" />
+	  <None Remove="Resources\Images\your_message_holder.svg" />
 	</ItemGroup>
 
 	<ItemGroup>

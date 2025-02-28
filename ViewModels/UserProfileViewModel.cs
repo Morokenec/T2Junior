@@ -6,6 +6,7 @@ namespace MauiApp1.ViewModels
     public class UserProfileViewModel : BindableObject
     {
         private UserProfileDTO _selectedProfile;
+        private int _selectedProfileId;
 
         public UserProfileDTO SelectedProfile
         {
@@ -17,7 +18,15 @@ namespace MauiApp1.ViewModels
             }
         }
 
-        public string FullName => SelectedProfile.FullName;
+        public int SelectedProfileId
+        {
+            get => _selectedProfileId;
+            set
+            {
+                _selectedProfileId = value;
+            }
+        }
+        public string FullName => SelectedProfile.Name;
         public int Coins => SelectedProfile.AccumulatedPoints;
 
         public UserProfileViewModel()
@@ -28,7 +37,7 @@ namespace MauiApp1.ViewModels
         private void LoadProfile()
         {
             UserViewModel userView = new UserViewModel();
-            SelectedProfile = userView.GetProfileById(ProfilePage.SelectedProfileId);
+            SelectedProfile = userView.GetProfileById(SelectedProfileId);
         }
     }
 }

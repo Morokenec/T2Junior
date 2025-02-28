@@ -22,12 +22,13 @@
                 <Frame.GestureRecognizers>
                     <TapGestureRecognizer Tapped="OnBackButtonTapped" />
                 </Frame.GestureRecognizers>
-                <Image Source="back_icon.svg"
-                       Aspect="AspectFill"
-                       VerticalOptions="Center"
-                       HorizontalOptions="Center"
-                       WidthRequest="24"
-                       HeightRequest="24" />
+                <StackLayout VerticalOptions="Center"
+                             HorizontalOptions="Center"
+                             WidthRequest="24"
+                             HeightRequest="24">
+                    <Image Source="back_icon.svg"
+                           Aspect="AspectFill" />
+                </StackLayout>
             </Frame>
             <Frame x:Name="DetailedNoteTextFrame"
                    BorderColor="Transparent"

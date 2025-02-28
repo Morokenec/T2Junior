@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MauiApp1.Services;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -6,10 +7,10 @@ using System.Threading.Tasks;
 
 namespace MauiApp1.Models
 {
-    public class Chat
+    public class Chat : IChatElementType
     {
         public int IdChat { get; set; }
-        public string ChatName { get; set; } = "Дмитрий Ушаков";
+        public string Name { get; set; } = "Дмитрий Ушаков";
         public int IdType { get; set; }
         public enum TypeName 
         { 

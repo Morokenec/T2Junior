@@ -6,6 +6,7 @@ namespace MauiApp1.ViewModel
     public class ClubProfileViewModel : BindableObject
     {
         private Club _selectedClub;
+        private int _selectedClubId;
         public ObservableCollection<Note> Notes { get; set; }
         public ObservableCollection<Note> FilteredNotes { get; set; }
 
@@ -16,6 +17,15 @@ namespace MauiApp1.ViewModel
             {
                 _selectedClub = value;
                 OnPropertyChanged();
+            }
+        }
+
+        public int SelectedClubId
+        {
+            get => _selectedClubId;
+            set
+            {
+                _selectedClubId = value;
             }
         }
 
@@ -35,7 +45,7 @@ namespace MauiApp1.ViewModel
         private void LoadClubDetails()
         {
             var clubViewModel = new ClubViewModel();
-            SelectedClub = clubViewModel.GetClubById(ClubProfilePage.SelectedClubId);
+            SelectedClub = clubViewModel.GetClubById(SelectedClubId);
         }
     }
 }

@@ -28,12 +28,13 @@
                     <Frame.GestureRecognizers>
                         <TapGestureRecognizer Tapped="OnBackButtonTapped" />
                     </Frame.GestureRecognizers>
-                    <Image Source="back_icon.svg"
-                           Aspect="AspectFill"
-                           VerticalOptions="Center"
-                           HorizontalOptions="Center"
-                           WidthRequest="24"
-                           HeightRequest="24" />
+                    <StackLayout VerticalOptions="Center"
+                                 HorizontalOptions="Center"
+                                 WidthRequest="24"
+                                 HeightRequest="24">
+                        <Image Source="back_icon.svg"
+                               Aspect="AspectFill" />
+                    </StackLayout>
                 </Frame>
                 <Frame x:Name="ClubProfileTextFrame"
                        BorderColor="Transparent"
@@ -119,14 +120,14 @@
                             <Frame.GestureRecognizers>
                                 <TapGestureRecognizer />
                             </Frame.GestureRecognizers>
-
-                            <Image x:Name="AvatarImage"
-                                   Source="{Binding SelectedClub.Avatar}"
-                                   Aspect="AspectFill"
-                                   VerticalOptions="Start"
-                                   HorizontalOptions="Start"
-                                   WidthRequest="96"
-                                   HeightRequest="96" />
+                            <StackLayout VerticalOptions="Start"
+                                         HorizontalOptions="Start"
+                                         WidthRequest="96"
+                                         HeightRequest="96">
+                                <Image x:Name="AvatarImage"
+                                       Source="{Binding SelectedClub.Avatar}"
+                                       Aspect="AspectFill" />
+                            </StackLayout>
 
                         </Frame>
                     </Grid>

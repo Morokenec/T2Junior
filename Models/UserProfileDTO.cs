@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MauiApp1.Services;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -6,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace MauiApp1.Models
 {
-    public class UserProfileDTO
+    public class UserProfileDTO : IChatElementType
     {
         public int IdUser { get; set; }
 
@@ -18,7 +19,7 @@ namespace MauiApp1.Models
 
         public string LastName { get; set; } = "Ушаков";
 
-        public string FullName => $"{FirstName} {LastName}";
+        public string Name => $"{FirstName} {LastName}";
 
         public string? Patronymic { get; set; }
 

@@ -24,14 +24,17 @@ public partial class ClubsPage : ContentPage
         clubContext.FilterClubs();
     }
 
-    private async void OnClubTapped(object sender, EventArgs e)
+    private void OnClubTapped(object sender, EventArgs e)
     {
         var tappedClub = (sender as Frame)?.BindingContext as Club;
 
         if (tappedClub != null)
         {
-            ClubProfilePage.SelectedClubId = tappedClub.IdClub;
-            await Application.Current.MainPage.Navigation.PushAsync(new ClubProfilePage());
+            var clubProfilePage = new ClubProfilePage
+            {
+                SelectedClubId = tappedClub.IdClub
+            };
+            Application.Current.MainPage.Navigation.PushAsync(clubProfilePage);
         }
     }
 }

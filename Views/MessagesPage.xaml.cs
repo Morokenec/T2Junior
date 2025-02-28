@@ -1,6 +1,8 @@
+using MauiApp1.DataModel;
 using MauiApp1.Models;
 using MauiApp1.Pages;
 using MauiApp1.Services;
+using MauiApp1.ViewModel;
 using MauiApp1.ViewModels;
 using Microsoft.Maui.Controls;
 
@@ -21,7 +23,7 @@ public partial class MessagesPage : ContentPage
     }
 
     protected override void OnAppearing()
-    {
+    { 
         base.OnAppearing();
     }
 
@@ -36,9 +38,47 @@ public partial class MessagesPage : ContentPage
         clubContext.FilterChats();
     }
 
+    private void OnAvatarTapped(object sender, EventArgs e)
+    {
+        var tappedElement = (sender as Frame)?.BindingContext as IChatElementType;
+
+        if (tappedElement != null)
+        {
+            string tappedName = tappedElement.Name;
+
+            var userViewModel = new UserViewModel();
+            var clubViewModel = new ClubViewModel();
+
+            var userProfile = userViewModel.UserProfiles.FirstOrDefault(u => u.Name == tappedName);
+            var club = clubViewModel.Clubs.FirstOrDefault(c => c.Name == tappedName);
+
+
+            if (userProfile != null)
+            {
+                ProfileService.SelectedUser = userProfile;
+                ProfilePage profPage = new ProfilePage
+                {
+                    SelectedProfileId = userProfile.IdUser
+                };
+
+                Navigation.PushAsync(profPage);
+            }
+            else if (club != null)
+            {
+                ProfileService.SelectedClub = club;
+                ClubProfilePage clubPage = new ClubProfilePage
+                {
+                    SelectedClubId = club.IdClub
+                };
+
+                Navigation.PushAsync(clubPage);
+            }
+        }
+    }
+
     private void OnChatTapped(object sender, EventArgs e)
     {
-        var tappedChat = (sender as StackLayout)?.BindingContext as Chat;
+        var tappedChat = (sender as Frame)?.BindingContext as Chat;
         if (tappedChat != null)
         {
             ChatPage.SelectedChatId = tappedChat.IdChat;

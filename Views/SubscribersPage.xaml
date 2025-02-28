@@ -13,89 +13,93 @@
 
         <VerticalStackLayout>
 
-        <Frame x:Name="SubFrame"
-               Grid.Row="0"
-               BorderColor="Transparent"
-               Margin="10,16"
-               Padding="0,8">
-            <HorizontalStackLayout>
-                <Frame x:Name="BackFrame"
-                       BorderColor="Transparent">
-                    <Frame.GestureRecognizers>
-                        <TapGestureRecognizer Tapped="OnBackButtonTapped" />
-                    </Frame.GestureRecognizers>
-                    <Image Source="back_icon.svg"
-                           Aspect="AspectFill"
-                           />
-                </Frame>
-                <Frame x:Name="SubTextFrame"
-                       BorderColor="Transparent"
-                       Padding="0,0,24,0">
-                    <Label x:Name="SubText"
-                        Text="Подписчики"
-                           FontSize="20"
-                           HorizontalOptions="Fill"
-                           Margin="95,0,0,0"/>
-                </Frame>
-            </HorizontalStackLayout>
-        </Frame>
-
-        <Frame x:Name="ProfContainerFrame"
-               CornerRadius="20"
-               HasShadow="True"
-               Padding="8,0"
-               Margin="8,0">
-                <CollectionView ItemsSource="{Binding UserProfiles}"
-                                x:Name="ProfilesCollection"
-                                Grid.Row="1">
-                    <CollectionView.ItemsLayout>
-                        <GridItemsLayout Span="1"
-                                         Orientation="Vertical" />
-                    </CollectionView.ItemsLayout>
-                    <CollectionView.ItemTemplate>
-                        <DataTemplate>
-                            <StackLayout>
-                                <Grid ColumnDefinitions="*, Auto">
-                                    <Frame HasShadow="False"
-                                           BorderColor="Transparent"
-                                           VerticalOptions="FillAndExpand"
-                                           HeightRequest="56">
-                                        <Frame.GestureRecognizers>
-                                            <TapGestureRecognizer Tapped="OnProfileFrameTapped" />
-                                        </Frame.GestureRecognizers>
-                                        <Grid ColumnDefinitions="*, Auto">
-                                            <HorizontalStackLayout>
-                                                <Image Source="profile_placeholder.svg"
-                                                       Aspect="AspectFit"
-                                                       Margin="9" />
-                                                <Label Text="{Binding FullName}"
-                                                       TextColor="#191C30"
-                                                       VerticalOptions="Center"
-                                                       Margin="0,0,9,0"
-                                                       HorizontalOptions="FillAndExpand"
-                                                       WidthRequest="231" />
-                                                <Image Source="redirect.svg"
-                                                       Aspect="AspectFit" />
-                                            </HorizontalStackLayout>
-                                        </Grid>
-                                    </Frame>
-                                    <BoxView BackgroundColor="#E4E4E4"
-                                             HorizontalOptions="FillAndExpand"
-                                             VerticalOptions="End"
-                                             HeightRequest="2" />
-                                </Grid>
-                            </StackLayout>
-                        </DataTemplate>
-                    </CollectionView.ItemTemplate>
-                    <CollectionView.EmptyView>
-                        <Label Text="Результаты не найдены."
-                               HorizontalOptions="Center"
-                               VerticalOptions="Center"
-                               FontSize="24" />
-                    </CollectionView.EmptyView>
-                </CollectionView>
+            <Frame x:Name="SubFrame"
+                   Grid.Row="0"
+                   BorderColor="Transparent"
+                   Margin="10,16"
+                   Padding="0,8">
+                <HorizontalStackLayout>
+                    <Frame x:Name="BackFrame"
+                           BorderColor="Transparent">
+                        <Frame.GestureRecognizers>
+                            <TapGestureRecognizer Tapped="OnBackButtonTapped" />
+                        </Frame.GestureRecognizers>
+                        <StackLayout VerticalOptions="Center"
+                                     HorizontalOptions="Center">
+                            <Image Source="back_icon.svg"
+                                   Aspect="AspectFill" />
+                        </StackLayout>
+                    </Frame>
+                    <Frame x:Name="SubTextFrame"
+                           BorderColor="Transparent"
+                           Padding="0,0,24,0">
+                        <Label x:Name="SubText"
+                               Text="Подписчики"
+                               FontSize="20"
+                               HorizontalOptions="Fill"
+                               Margin="95,0,0,0" />
+                    </Frame>
+                </HorizontalStackLayout>
             </Frame>
 
-    </VerticalStackLayout>
-</Grid>
+            <Frame x:Name="ProfContainerFrame"
+                   CornerRadius="20"
+                   HasShadow="True"
+                   Padding="8,0"
+                   Margin="8,0">
+                <StackLayout>
+                    <CollectionView ItemsSource="{Binding UserProfiles}"
+                                    x:Name="ProfilesCollection"
+                                    Grid.Row="1">
+                        <CollectionView.ItemsLayout>
+                            <GridItemsLayout Span="1"
+                                             Orientation="Vertical" />
+                        </CollectionView.ItemsLayout>
+                        <CollectionView.ItemTemplate>
+                            <DataTemplate>
+                                <StackLayout>
+                                    <Grid ColumnDefinitions="*, Auto">
+                                        <Frame HasShadow="False"
+                                               BorderColor="Transparent"
+                                               VerticalOptions="FillAndExpand"
+                                               HeightRequest="56">
+                                            <Frame.GestureRecognizers>
+                                                <TapGestureRecognizer Tapped="OnProfileFrameTapped" />
+                                            </Frame.GestureRecognizers>
+                                            <Grid ColumnDefinitions="*, Auto">
+                                                <HorizontalStackLayout>
+                                                    <Image Source="profile_placeholder.svg"
+                                                           Aspect="AspectFit"
+                                                           Margin="9" />
+                                                    <Label Text="{Binding Name}"
+                                                           TextColor="#191C30"
+                                                           VerticalOptions="Center"
+                                                           Margin="0,0,9,0"
+                                                           HorizontalOptions="FillAndExpand"
+                                                           WidthRequest="231" />
+                                                    <Image Source="redirect.svg"
+                                                           Aspect="AspectFit" />
+                                                </HorizontalStackLayout>
+                                            </Grid>
+                                        </Frame>
+                                        <BoxView BackgroundColor="#E4E4E4"
+                                                 HorizontalOptions="FillAndExpand"
+                                                 VerticalOptions="End"
+                                                 HeightRequest="2" />
+                                    </Grid>
+                                </StackLayout>
+                            </DataTemplate>
+                        </CollectionView.ItemTemplate>
+                        <CollectionView.EmptyView>
+                            <Label Text="Результаты не найдены."
+                                   HorizontalOptions="Center"
+                                   VerticalOptions="Center"
+                                   FontSize="24" />
+                        </CollectionView.EmptyView>
+                    </CollectionView>
+                </StackLayout>
+            </Frame>
+
+        </VerticalStackLayout>
+    </Grid>
 </ContentPage>

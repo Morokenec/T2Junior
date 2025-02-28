@@ -24,8 +24,13 @@ public partial class SubscribersPage : ContentPage
 
         var profileId = choosedFrame.BindingContext as UserProfileDTO;
 
-        ProfilePage.SelectedProfileId = profileId.IdUser;
-
-        await Navigation.PushAsync(new ProfilePage());
+        if (profileId != null)
+        {
+            var profilePage = new ProfilePage
+            {
+                SelectedProfileId = profileId.IdUser
+            };
+            await Navigation.PushAsync(profilePage);
+        }
     }
 }
