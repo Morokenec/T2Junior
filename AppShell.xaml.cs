@@ -2,8 +2,14 @@
 
 namespace MauiApp1
 {
+    /// <summary>
+    /// Основная оболочка приложения, управляющая навигацией.
+    /// </summary>
     public partial class AppShell : Shell
     {
+        /// <summary>
+        /// Конструктор класса AppShell.
+        /// </summary>
         public AppShell()
         {
             InitializeComponent();

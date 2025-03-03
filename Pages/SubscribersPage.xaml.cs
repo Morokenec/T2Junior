@@ -3,11 +3,17 @@ using MauiApp1.ViewModels.Profile;
 
 namespace MauiApp1;
 
+/// <summary>
+/// Страница подписчиков, отображающая список подписчиков.
+/// </summary>
 public partial class SubscribersPage : ContentPage
 {
     string portProfileName;
     private UserProfileViewModel _userViewModel;
 
+    /// <summary>
+    /// Конструктор класса SubscribersPage.
+    /// </summary>
     public SubscribersPage()
     {
         InitializeComponent();
@@ -16,11 +22,19 @@ public partial class SubscribersPage : ContentPage
         GetLabelTextFromFrame();
     }
 
+    /// <summary>
+    /// Обработчик события нажатия на кнопку "Назад".
+    /// </summary>
+    /// <param name="sender">Объект, вызвавший событие.</param>
+    /// <param name="e">Аргументы события.</param>
     private void OnBackButtonTapped(object sender, EventArgs e)
     {
         BackClick.OnPageClicked();
     }
 
+    /// <summary>
+    /// Метод для получения текста метки из фрейма.
+    /// </summary>
     private void GetLabelTextFromFrame()
     {
         foreach (var childOfLayout in ProfilesLayout.Children)
@@ -40,6 +54,10 @@ public partial class SubscribersPage : ContentPage
         }
     }
 
+    /// <summary>
+    /// Обработчик события нажатия на фрейм профиля.
+    /// </summary>
+    /// <param name="choosedFrame">Выбранный фрейм.</param>
     private async Task OnProfileFrameTapped(Frame choosedFrame)
     {
         var hsl = (HorizontalStackLayout)choosedFrame.Content;
@@ -51,6 +69,9 @@ public partial class SubscribersPage : ContentPage
         await Navigation.PushAsync(profilePage);
     }
 
+    /// <summary>
+    /// Установка свойств элементов интерфейса.
+    /// </summary>
     private void ElementsProperties()
     {
         SubFrame.WidthRequest = 343;
@@ -73,6 +94,11 @@ public partial class SubscribersPage : ContentPage
         ProfContainerFrame.Padding = new Thickness(8, 10);
     }
 
+    /// <summary>
+    /// Метод для выбора профиля.
+    /// </summary>
+    /// <param name="sender">Объект, вызвавший событие.</param>
+    /// <param name="e">Аргументы события.</param>
     private void ProfileChoosingFactor(object sender, EventArgs e)
     {
         if (sender is Frame clickedFrame)
@@ -95,6 +121,9 @@ public partial class SubscribersPage : ContentPage
         }
     }
 
+    /// <summary>
+    /// Метод для изменения размеров элементов интерфейса.
+    /// </summary>
     private void ResizeFunction()
     {
         foreach (var childOfLayout in ProfilesLayout.Children)

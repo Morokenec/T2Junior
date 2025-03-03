@@ -7,14 +7,24 @@ using System.Collections.ObjectModel;
 
 namespace MauiApp1;
 
+/// <summary>
+/// Страница профиля пользователя в приложении.
+/// </summary>
 public partial class ProfilePage : ContentPage
 {
     int netStatus = 1;
 
     private readonly UserProfileViewModel _viewModel;
 
+    /// <summary>
+    /// Флаг, указывающий, был ли доступ к странице напрямую.
+    /// </summary>
     public bool DirectAccessed { get; set; } = BackNavigationState.IsDirectAccess;
 
+    /// <summary>
+    /// Конструктор класса ProfilePage.
+    /// </summary>
+    /// <param name="userProfileViewModel">Модель представления профиля пользователя.</param>
     public ProfilePage(UserProfileViewModel userProfileViewModel)
     {
         InitializeComponent();
@@ -23,6 +33,9 @@ public partial class ProfilePage : ContentPage
         NetStatus();
     }
 
+    /// <summary>
+    /// Метод, вызываемый при отображении страницы.
+    /// </summary>
     protected override async void OnAppearing()
     {
         base.OnAppearing();
@@ -30,10 +43,13 @@ public partial class ProfilePage : ContentPage
         if (BindingContext is UserProfileViewModel viewModel)
         {
             await viewModel.LoadDataAsync();
-         
+
         }
     }
 
+    /// <summary>
+    /// Метод для установки статуса сети.
+    /// </summary>
     private void NetStatus()
     {
         if (netStatus == 0)
@@ -46,6 +62,11 @@ public partial class ProfilePage : ContentPage
         }
     }
 
+    /// <summary>
+    /// Обработчик события нажатия на фото профиля.
+    /// </summary>
+    /// <param name="sender">Объект, вызвавший событие.</param>
+    /// <param name="e">Аргументы события.</param>
     private async void OnProfilePhotoTapped(object sender, EventArgs e)
     {
         try
@@ -67,45 +88,90 @@ public partial class ProfilePage : ContentPage
         }
     }
 
+    /// <summary>
+    /// Обработчик события нажатия на кнопку монет.
+    /// </summary>
+    /// <param name="sender">Объект, вызвавший событие.</param>
+    /// <param name="e">Аргументы события.</param>
     private async void OnCoinButtonTapped(object sender, EventArgs e)
     {
         await Navigation.PushAsync(new NotesPage());
     }
 
+    /// <summary>
+    /// Обработчик события нажатия на кнопку рейтинга.
+    /// </summary>
+    /// <param name="sender">Объект, вызвавший событие.</param>
+    /// <param name="e">Аргументы события.</param>
     private async void OnRatingButtonTapped(object sender, EventArgs e)
     {
         await Navigation.PushAsync(new RatingPage());
     }
 
+    /// <summary>
+    /// Обработчик события нажатия на кнопку подписчиков.
+    /// </summary>
+    /// <param name="sender">Объект, вызвавший событие.</param>
+    /// <param name="e">Аргументы события.</param>
     private async void OnSubscribersButtonTapped(object sender, EventArgs e)
     {
         await Navigation.PushAsync(new SubscribersPage());
     }
 
+    /// <summary>
+    /// Обработчик события нажатия на кнопку подписок.
+    /// </summary>
+    /// <param name="sender">Объект, вызвавший событие.</param>
+    /// <param name="e">Аргументы события.</param>
     private async void OnFollowingButtonTapped(object sender, EventArgs e)
     {
         await Navigation.PushAsync(new FollowingPage());
     }
 
+    /// <summary>
+    /// Обработчик события нажатия на кнопку клубов.
+    /// </summary>
+    /// <param name="sender">Объект, вызвавший событие.</param>
+    /// <param name="e">Аргументы события.</param>
     private async void OnClubsButtonTapped(object sender, EventArgs e)
     {
     }
 
+    /// <summary>
+    /// Обработчик события нажатия на фрейм проектов.
+    /// </summary>
+    /// <param name="sender">Объект, вызвавший событие.</param>
+    /// <param name="e">Аргументы события.</param>
     private async void OnProjectsFrameTapped(object sender, EventArgs e)
     {
         await Navigation.PushAsync(new ProjectsPage());
     }
 
+    /// <summary>
+    /// Обработчик события нажатия на фрейм активностей.
+    /// </summary>
+    /// <param name="sender">Объект, вызвавший событие.</param>
+    /// <param name="e">Аргументы события.</param>
     private async void OnActivitiesFrameTapped(object sender, EventArgs e)
     {
         await Navigation.PushAsync(new ActivitiesPage());
     }
 
+    /// <summary>
+    /// Обработчик события нажатия на фрейм календаря.
+    /// </summary>
+    /// <param name="sender">Объект, вызвавший событие.</param>
+    /// <param name="e">Аргументы события.</param>
     private async void OnCalendarFrameTapped(object sender, EventArgs e)
     {
         await Navigation.PushAsync(new CalendarPage());
     }
 
+    /// <summary>
+    /// Обработчик события нажатия на фрейм новостей.
+    /// </summary>
+    /// <param name="sender">Объект, вызвавший событие.</param>
+    /// <param name="e">Аргументы события.</param>
     private async void OnNewsFrameTapped(object sender, EventArgs e)
     {
         await Navigation.PushAsync(new NotesPage());

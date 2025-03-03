@@ -8,28 +8,55 @@ using Microsoft.Maui.Controls;
 
 namespace MauiApp1;
 
+/// <summary>
+/// Страница сообщений в приложении.
+/// </summary>
 public partial class MessagesPage : ContentPage
 {
     private Dictionary<object, int> clickCounts = new Dictionary<object, int>();
-
     private bool bothFramesClickedOnce = false;
+
+    /// <summary>
+    /// Флаг, указывающий, был ли выполнен редирект.
+    /// </summary>
     public bool Redirected { get; set; } = BackNavigationState.IsDirectAccess;
+
+    /// <summary>
+    /// Конструктор класса MessagesPage.
+    /// </summary>
     public MessagesPage()
     {
         InitializeComponent();
         BindingContext = new MessageViewModel();
     }
+
+    /// <summary>
+    /// Обработчик события нажатия на кнопку "Назад".
+    /// </summary>
+    /// <param name="sender">Объект, вызвавший событие.</param>
+    /// <param name="e">Аргументы события.</param>
     private void OnBackButtonTapped(object sender, EventArgs e)
     {
         BackClick.OnPageClicked();
     }
 
+    /// <summary>
+    /// Обработчик события поиска.
+    /// </summary>
+    /// <param name="sender">Объект, вызвавший событие.</param>
+    /// <param name="e">Аргументы события.</param>
     private void OnSearch(object sender, EventArgs e)
     {
         var clubContext = (MessageViewModel)BindingContext;
         clubContext.FilterChats();
     }
 
+
+    /// <summary>
+    /// Обработчик события нажатия на чат.
+    /// </summary>
+    /// <param name="sender">Объект, вызвавший событие.</param>
+    /// <param name="e">Аргументы события.</param>
     private async void OnChatTapped(object sender, EventArgs e)
     {
         var tappedChat = (sender as StackLayout)?.BindingContext as Message;
@@ -40,6 +67,11 @@ public partial class MessagesPage : ContentPage
         }
     }
 
+    /// <summary>
+    /// Обработчик события нажатия на тип чата.
+    /// </summary>
+    /// <param name="sender">Объект, вызвавший событие.</param>
+    /// <param name="e">Аргументы события.</param>
     private void OnTypeTapped(object sender, EventArgs e)
     {
         var chatContext = (MessageViewModel)BindingContext;
@@ -141,6 +173,11 @@ public partial class MessagesPage : ContentPage
         }
     }
 
+    /// <summary>
+    /// Получает текст метки из фрейма.
+    /// </summary>
+    /// <param name="frameOfType">Фрейм, из которого извлекается текст метки.</param>
+    /// <returns>Текст метки.</returns>
     private string GetLabelTextFromFrame(Frame frameOfType)
     {
         foreach (var child in frameOfType.Children)
@@ -171,6 +208,11 @@ public partial class MessagesPage : ContentPage
         return null;
     }
 
+    /// <summary>
+    /// Находит фрейм внутри StackLayout.
+    /// </summary>
+    /// <param name="stackLayout">StackLayout, в котором выполняется поиск.</param>
+    /// <returns>Найденный фрейм.</returns>
     private Frame FindAFrame(StackLayout stackLayout)
     {
         while (stackLayout != null)
