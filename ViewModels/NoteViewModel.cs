@@ -87,7 +87,7 @@ namespace MauiApp1.ViewModels
         //}
 
         /// <summary>
-        /// Фильтрация замеоки по тексту поиска.
+        /// Фильтрация заметок на основе текста поиска.
         /// </summary>
         public void FilterNotes()
         {
@@ -111,7 +111,7 @@ namespace MauiApp1.ViewModels
         }
 
         /// <summary>
-        /// Возвращение заметок по её идентификатору.
+        /// Получение заметки по идентификатору.
         /// </summary>
         /// <param name="idNote">Идентификатор заметки.</param>
         /// <returns>Заметка с заданным идентификатором или null, если не найдена.</returns>
