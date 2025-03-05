@@ -8,6 +8,7 @@ namespace MauiApp1
 {
     public partial class AuthorizationPage : ContentPage
     {
+
         private bool _isVisible = false;
 
         private readonly AuthorizationViewModel _viewModel;
@@ -21,7 +22,7 @@ namespace MauiApp1
 
         protected override void OnAppearing()
         {
-            base.OnAppearing();           
+            base.OnAppearing();
         }
 
         private async void OnForgotPasswordTapped(object sender, EventArgs e)

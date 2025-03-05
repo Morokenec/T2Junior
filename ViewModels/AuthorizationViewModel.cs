@@ -13,6 +13,7 @@ namespace MauiApp1.ViewModels
     public class AuthorizationViewModel : BindableObject, INotifyPropertyChanged
     {
         public ICommand LoginCommand { get; }
+        public event EventHandler ModalClosed;
 
         private string _email;
         private string _password;
@@ -90,6 +91,7 @@ namespace MauiApp1.ViewModels
                         await SecureStorage.Default.SetAsync("user_uid", uid);
                         AppSettings.test_user_guid = uid;
                         await Shell.Current.Navigation.PopModalAsync();
+                        ModalClosed?.Invoke(this, EventArgs.Empty);
                     }
                     catch (Exception ex)
                     {

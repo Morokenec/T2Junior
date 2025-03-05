@@ -2,6 +2,7 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="MauiApp1.ProfilePage"
+             xmlns:idk="clr-namespace:Indiko.Maui.Controls.Markdown;assembly=Indiko.Maui.Controls.Markdown"
              Title="Профиль">
     <RefreshView IsRefreshing="{Binding IsRefreshing}"
              Command="{Binding RefreshCommand}">
@@ -163,7 +164,7 @@
                                VerticalOptions="Center"
                                FontSize="12"
                                Margin="16,10"/>
-                        
+
                             <Button x:Name="NoteCreateButton"
                                 BackgroundColor="White"
                                 BorderWidth="1"
@@ -257,9 +258,9 @@
                                HorizontalOptions="FillAndExpand"
                                VerticalOptions="Fill"
                                Padding="12">
-                            <!--<Frame.GestureRecognizers>
+                            <Frame.GestureRecognizers>
                                 <TapGestureRecognizer Tapped="OnClubsButtonTapped" />
-                            </Frame.GestureRecognizers>-->
+                            </Frame.GestureRecognizers>
                             <StackLayout x:Name="ClubsLayout"
                                          Spacing="6">
                                 <Label Text="Клубы"
@@ -278,19 +279,19 @@
             </HorizontalStackLayout>
 
 
-            <Frame x:Name="OtherOptionsFrame"
+                <Frame x:Name="OtherOptionsFrame"
                    Grid.Row="4"
                    CornerRadius="20"
                    Padding="8, 0, 0, 0"
                    Margin="8, 0">
-                <VerticalStackLayout>
-                    <Frame x:Name="ProjectsFrame"
+                    <VerticalStackLayout>
+                        <Frame x:Name="ProjectsFrame"
                            HasShadow="False" 
                            BorderColor="Transparent"
                            WidthRequest="303"
                            HeightRequest="48"
                            Padding="0, 8">
-                        <HorizontalStackLayout Spacing="12">
+                            <HorizontalStackLayout Spacing="12">
                                 <Image x:Name="ProjectsImage"
                                        Source="projects.svg"
                                        Aspect="AspectFill"
@@ -303,44 +304,44 @@
                                    FontSize="15"
                                    VerticalOptions="Center"
                                    WidthRequest="231"/>
-                            <Image Source="redirect.png"
+                                <Image Source="redirect.png"
                                    Aspect="AspectFill"/>
-                        </HorizontalStackLayout>
-                    </Frame>
-                    <BoxView x:Name="ProjectsBoxView"
+                            </HorizontalStackLayout>
+                        </Frame>
+                        <BoxView x:Name="ProjectsBoxView"
                              BackgroundColor="#E4E4E4" 
                              HorizontalOptions="Fill" 
                              VerticalOptions="End"
                              HeightRequest="2"
                              Margin="16, 0"/>
 
-                    <Frame x:Name="CalendarFrame"
+                        <Frame x:Name="CalendarFrame"
                            HasShadow="False" 
                            BorderColor="Transparent"
                            WidthRequest="303"
                            HeightRequest="48"
                            Padding="0, 8">
-                        <Frame.GestureRecognizers>
-                            <TapGestureRecognizer Tapped="OnCalendarFrameTapped" />
-                        </Frame.GestureRecognizers>
-                        <HorizontalStackLayout Spacing="12">
-                            <Image x:Name="CalendarImage"
+                            <Frame.GestureRecognizers>
+                                <TapGestureRecognizer Tapped="OnCalendarFrameTapped" />
+                            </Frame.GestureRecognizers>
+                            <HorizontalStackLayout Spacing="12">
+                                <Image x:Name="CalendarImage"
                                    Source="calendar.svg"
                                    Aspect="AspectFill"
                                    WidthRequest="24"
                                    HeightRequest="24"/>
 
-                            <Label x:Name="CalendarText"
+                                <Label x:Name="CalendarText"
                                    Text="Календарь" 
                                    TextColor="#191C30"
                                    FontSize="15"
                                    VerticalOptions="Center"
                                    WidthRequest="231"/>
-                            <Image Source="redirect.png"
+                                <Image Source="redirect.png"
                                    Aspect="AspectFill"/>
-                        </HorizontalStackLayout>
-                    </Frame>
-                    <BoxView x:Name="CalendarBoxView"
+                            </HorizontalStackLayout>
+                        </Frame>
+                        <BoxView x:Name="CalendarBoxView"
                              BackgroundColor="#E4E4E4" 
                              HorizontalOptions="Fill" 
                              VerticalOptions="End"
@@ -374,8 +375,7 @@
                             </HorizontalStackLayout>
                         </Frame>
                     </VerticalStackLayout>
-            </Frame>
-
+                </Frame>
                 <CollectionView ItemsSource="{Binding Notes}"
                         x:Name="NotesCollection"
                         Grid.Row="6"

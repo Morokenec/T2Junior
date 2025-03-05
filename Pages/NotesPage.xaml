@@ -5,104 +5,107 @@
              x:Name="Notes"
              Title="Новости"
              Background="White">
-    <Grid>
-        <Grid.RowDefinitions>
-            <RowDefinition Height="Auto" />
-            <RowDefinition Height="Auto" />
-            <RowDefinition Height="*" />
-        </Grid.RowDefinitions>
+    <RefreshView IsRefreshing="{Binding IsRefreshing}"
+             Command="{Binding RefreshCommand}">
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="*" />
+            </Grid.RowDefinitions>
 
-        <HorizontalStackLayout x:Name="CalendarLayout"
+            <HorizontalStackLayout x:Name="CalendarLayout"
                                Grid.Row="0"
                                Margin="20,16"
                                Padding="0,8"
                                WidthRequest="343"
                                HeightRequest="40"
                                Background="White">
-            <Frame x:Name="BackFrame"
+                <Frame x:Name="BackFrame"
                    BorderColor="Transparent"
                    Margin="0,0,0,8">
-                <Frame.GestureRecognizers>
-                    <TapGestureRecognizer Tapped="OnBackButtonTapped" />
-                </Frame.GestureRecognizers>
-                <Image Source="back_icon.
+                    <Frame.GestureRecognizers>
+                        <TapGestureRecognizer Tapped="OnBackButtonTapped" />
+                    </Frame.GestureRecognizers>
+                    <Image Source="back_icon.
                        "
                        Aspect="AspectFill"
                        VerticalOptions="Center"
                        HorizontalOptions="Center"
                        WidthRequest="24"
                        HeightRequest="24" />
-            </Frame>
-            <Frame x:Name="CalendarTextFrame"
+                </Frame>
+                <Frame x:Name="CalendarTextFrame"
                    BorderColor="Transparent"
                    HeightRequest="24"
                    Margin="0,0,0,8"
                    WidthRequest="295">
-                <Label Text="Новости"
+                    <Label Text="Новости"
                        FontSize="20"
                        HorizontalOptions="Center"
                        HeightRequest="24" />
-            </Frame>
-        </HorizontalStackLayout>
-        <CollectionView ItemsSource="{Binding Notes}"
+                </Frame>
+            </HorizontalStackLayout>
+            <CollectionView ItemsSource="{Binding Notes}"
                         x:Name="NotesCollection"
                         Grid.Row="2"
                         BackgroundColor="#EBEBEB">
-            <CollectionView.ItemsLayout>
-                <GridItemsLayout Span="1"
+                <CollectionView.ItemsLayout>
+                    <GridItemsLayout Span="1"
                                  Orientation="Vertical" />
-            </CollectionView.ItemsLayout>
-            <CollectionView.ItemTemplate>
-                <DataTemplate>
-                    <Frame CornerRadius="10"
+                </CollectionView.ItemsLayout>
+                <CollectionView.ItemTemplate>
+                    <DataTemplate>
+                        <Frame CornerRadius="10"
                            HorizontalOptions="Fill"
                            VerticalOptions="Fill"
                            Padding="16,20,16,16"
-                           Margin="8,10,8,0"
+                           Margin="8,10,8,2"
                            BackgroundColor="White">
-                        <StackLayout>
-                            <StackLayout.GestureRecognizers>
-                                <TapGestureRecognizer Tapped="OnNoteTapped" />
-                            </StackLayout.GestureRecognizers>
-                            <Frame HorizontalOptions="Fill"
+                            <StackLayout>
+                                <StackLayout.GestureRecognizers>
+                                    <TapGestureRecognizer Tapped="OnNoteTapped" />
+                                </StackLayout.GestureRecognizers>
+                                <Frame HorizontalOptions="Fill"
                                    VerticalOptions="Fill"
                                    BorderColor="Transparent"
                                    HasShadow="True">
-                                <StackLayout>
-                                    <StackLayout.GestureRecognizers>
-                                        <TapGestureRecognizer Tapped="OnNoteTapped" />
-                                    </StackLayout.GestureRecognizers>
-                                    <Label Text="{Binding Name}"
+                                    <StackLayout>
+                                        <StackLayout.GestureRecognizers>
+                                            <TapGestureRecognizer Tapped="OnNoteTapped" />
+                                        </StackLayout.GestureRecognizers>
+                                        <Label Text="{Binding Name}"
                                            HorizontalOptions="Start"
                                            HeightRequest="24"
                                            FontSize="14"
                                            FontFamily="RedRoseBold" />
-                                    <Label Text="{Binding Description}"
+                                        <Label Text="{Binding Description}"
                                            HorizontalOptions="Start"
                                            
                                            FontSize="12"
                                            TextColor="#9C9B9A"
                                            FontFamily="ManropeExtraLight" />
-                                    <Image x:Name="NewsHolder"
+                                        <Image x:Name="NewsHolder"
                                            IsVisible="True"
                                            Aspect="AspectFill"
-                                           Source="{Binding NoteMediaSource}"
+                                           Source="{Binding MediaHandler}"
                                            HorizontalOptions="Fill"
                                            VerticalOptions="Fill"
                                            Margin="0,12,0,0" />
-                                </StackLayout>
-                            </Frame>
-                        </StackLayout>
-                    </Frame>
-                </DataTemplate>
-            </CollectionView.ItemTemplate>
-            <CollectionView.EmptyView>
-                <Label Text="Результаты не найдены."
+                                    </StackLayout>
+                                </Frame>
+                            </StackLayout>
+                        </Frame>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+                <CollectionView.EmptyView>
+                    <Label Text="Результаты не найдены."
                        HorizontalOptions="Center"
                        VerticalOptions="Start"
                        Margin="0,50,0,0"
                        FontSize="24" />
-            </CollectionView.EmptyView>
-        </CollectionView>
-    </Grid>
+                </CollectionView.EmptyView>
+            </CollectionView>
+        </Grid>
+    </RefreshView>
 </ContentPage>

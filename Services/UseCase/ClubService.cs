@@ -89,5 +89,31 @@ namespace MauiApp1.Services.UseCase
             using var response = await _httpClient.PostAsync(url, content);
             response.EnsureSuccessStatusCode();
         }
+
+        public async Task SetAvatarClubUploadServer(Guid clubId, Guid userId, Stream chosenImage)
+        {
+            try
+            {
+                string url = $"{AppSettings.base_url}/api/MediaClubs/set-avatar/{clubId.ToString()}";
+
+                using var content = new MultipartFormDataContent();
+
+                content.Add(
+                    new StreamContent(chosenImage),
+                    fileName: "1.png",
+                    name: "File");
+
+                content.Add(
+                    new StringContent(userId.ToString()),
+                    name: "IdUser");
+
+                using var response = await _httpClient.PostAsync(url, content);
+                response.EnsureSuccessStatusCode();
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine($"[ERROR] Exception: {ex.Message}");
+            }
+        }
     }
 }

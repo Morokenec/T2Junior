@@ -68,9 +68,7 @@
                             Radius="40"
                             Opacity="0.1"/>
                 </Border.Shadow>
-                <StackLayout
-                    Grid.Row="1"
-                    >
+                <StackLayout Grid.Row="1" >
                     <Frame x:Name="RatingFrame"
                            BackgroundColor="#F4FAFF"
                            HorizontalOptions="End"
@@ -78,7 +76,7 @@
                            CornerRadius="10"
                            HasShadow="True"
                            Padding="8, 4.75"
-                           Margin="0, 0, 16, 0">
+                           Margin="0, 0, 2, 0">
                         <Frame.GestureRecognizers>
                             <TapGestureRecognizer Command="{Binding RateCommand}"/>
                         </Frame.GestureRecognizers>
@@ -124,18 +122,26 @@
                             </HorizontalStackLayout>
                         </StackLayout>
                     </Frame>
-
                     <Grid x:Name="UserInfoGrid" Grid.Row="2" HorizontalOptions="Start">
-                        <Frame BorderColor="Transparent"
-               CornerRadius="50">
+                        <Border Stroke="Transparent" HeightRequest="95" WidthRequest="95">
+                            <Border.StrokeShape>
+                                <RoundRectangle CornerRadius="190" />
+                            </Border.StrokeShape>
                             <Image x:Name="AvatarImage"
-                   Source="club_placeholder"
-                   Aspect="AspectFill"
-                   VerticalOptions="Start"
-                   HorizontalOptions="Start"
-                   WidthRequest="96"
-                   HeightRequest="96"/>
-                        </Frame>
+                                   Aspect="AspectFill"
+                                   VerticalOptions="Start"
+                                   HorizontalOptions="Start"
+                                   WidthRequest="96"                               
+                                   HeightRequest="96">
+                                <Image.GestureRecognizers>
+                                    <TapGestureRecognizer Tapped="ClubAvatar_Tapped" />
+                                </Image.GestureRecognizers>
+                                <Image.Source>
+                                    <UriImageSource Uri="{Binding PathClubAvatar}"
+                                                           CacheValidity="2:00:00.0"/>
+                                </Image.Source>
+                            </Image>
+                        </Border>
                     </Grid>
                     <VerticalStackLayout x:Name="FullInfoLayout"
                          Grid.Row="3"
@@ -165,10 +171,9 @@
                             TextColor="White"
                             FontSize="15"
                             CornerRadius="10"
-                            HorizontalOptions="Start"
+                            HorizontalOptions="Fill"
                             VerticalOptions="Center"
                             Clicked="SubscribeButton_Clicked"
-                            WidthRequest="319"
                             Margin="0, 10, 0, 0"/>
                         <Button x:Name="ProjectButton"
                             BackgroundColor="White"
@@ -178,9 +183,8 @@
                             BorderColor="#0057A6"
                             FontSize="15"
                             CornerRadius="10"
-                            HorizontalOptions="Start"
+                            HorizontalOptions="Fill"
                             VerticalOptions="Center"
-                            WidthRequest="319"
                             Margin="0, 10, 0, 0"/>
                         <Button x:Name="SendNewsButton"
                             BackgroundColor="White"
@@ -191,9 +195,8 @@
                             BorderColor="#0057A6"
                             FontSize="15"
                             CornerRadius="10"
-                            HorizontalOptions="Start"
+                            HorizontalOptions="Fill"
                             VerticalOptions="Center"
-                            WidthRequest="319"
                             Margin="0, 10, 0, 0"/>
                     </VerticalStackLayout>
                 </StackLayout>
@@ -281,7 +284,29 @@
                 </Frame>
             </HorizontalStackLayout>
 
-
+            <Frame Grid.Row="5" HeightRequest="44" CornerRadius="12" Margin="16,0">
+                <HorizontalStackLayout VerticalOptions="Fill">
+                    <Frame HasShadow="True" WidthRequest="295" HeightRequest="44" BorderColor="Transparent">
+                        <Entry x:Name="searchEntry"
+                           Text="{Binding SearchText}"
+                           Placeholder="Поиск"
+                           TextColor="Gray"
+                           PlaceholderColor="#A2A4AF"
+                           FontFamily="Manrope"
+                           HorizontalOptions="Fill"
+                           FontSize="13"
+                           Margin="12,0"/>
+                    </Frame>
+                    <Frame Margin="0,0,88,0" BorderColor="Transparent">
+                        <ImageButton Padding="0"
+                                 Source="search_icon.svg" 
+                                 BackgroundColor="Transparent" 
+                                 Clicked="ImageButton_Clicked"
+                                 VerticalOptions="Start" 
+                                 HorizontalOptions="Center"/>
+                    </Frame>
+                </HorizontalStackLayout>
+            </Frame>
             <CollectionView ItemsSource="{Binding Notes}"
           x:Name="NotesCollection"
           Grid.Row="6"

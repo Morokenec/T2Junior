@@ -1,6 +1,7 @@
 ﻿using MauiApp1.DataModel;
 using MauiApp1.Services;
 using MauiApp1.Services.AppHelper;
+using MauiApp1.Services.UseCase;
 using MauiApp1.ViewModels;
 
 namespace MauiApp1;
@@ -14,14 +15,14 @@ public partial class NotesPage : ContentPage
     public NotesPage(NoteViewModel noteViewModel)
     {
         InitializeComponent();
-        _viewModel = noteViewModel;
+        _viewModel = new NoteViewModel(new NoteService(new HttpClient(), new JsonDeserializerService()));
         BindingContext = _viewModel;
     }
 
     protected override void OnAppearing()
     {
         base.OnAppearing();
-        _viewModel.LoadNotes();
+       _viewModel.LoadNotes();
     }
 
     private void OnBackButtonTapped(object sender, EventArgs e)
@@ -37,5 +38,10 @@ public partial class NotesPage : ContentPage
             //DetailedNotePage.SelectedNoteId = tappedNote.IdNote;
             //Application.Current.MainPage.Navigation.PushAsync(new DetailedNotePage());
         }
+    }
+
+    private void Button_Clicked(object sender, EventArgs e)
+    {
+        _viewModel.LoadNotes();
     }
 }

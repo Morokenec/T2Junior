@@ -22,7 +22,6 @@ namespace MauiApp1.Models.ClubModels.Club
 
         [JsonPropertyName("avatarPath")]
         public string AvatarPath { get; set; } = "club_placeholder.svg";
-
         [JsonPropertyName("usersCount")]
         public int UsersCount { get; set; } = 13;
 

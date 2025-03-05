@@ -6,6 +6,7 @@ using MauiApp1.ViewModels;
 using MauiApp1.ViewModels.ClubProfileViewModel;
 using MauiApp1.ViewModels.ClubViewModel;
 using MauiApp1.ViewModels.Profile;
+using MauiApp1.ViewModels.ProfileModels;
 using Microsoft.Extensions.Logging;
 using System.Diagnostics;
 
@@ -43,8 +44,10 @@ namespace MauiApp1
                 builder.Services.AddSingleton<ClubsViewModel>();
                 builder.Services.AddSingleton<ClubProfileViewModel>();
                 builder.Services.AddSingleton<NoteViewModel>();
+                builder.Services.AddSingleton<SubscribersViewModel>();
 
                 builder.Services.AddTransient<ProfilePage>();
+                builder.Services.AddTransient<SubscribersPage>();
                 builder.Services.AddTransient<ClubsPage>();
                 builder.Services.AddTransient<ClubProfilePage>();
                 builder.Services.AddTransient<AuthorizationPage>();

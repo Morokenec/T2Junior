@@ -15,6 +15,7 @@ namespace MauiApp1.ViewModels.ClubProfileViewModel
         private readonly IClubService _clubService;
         private readonly INoteService _noteService;
 
+        private string _pathClubAvatar;
         private Club _selectedClub;
         private Guid _selectedClubId;
 
@@ -29,6 +30,22 @@ namespace MauiApp1.ViewModels.ClubProfileViewModel
             {
                 _selectedClub = value;
                 OnPropertyChanged();
+            }
+        }
+
+        public string PathClubAvatar
+        {
+            get => _pathClubAvatar;
+            set
+            {
+                if (_pathClubAvatar != value)
+                {
+                    value = value.Replace("wwwroot/", "");
+                    value = $"https://t2.hahatun.fun/{value}";
+                    _pathClubAvatar = value;
+                    Debug.WriteLine($"[SOURCE]{value}");
+                    OnPropertyChanged();
+                }
             }
         }
 
@@ -55,19 +72,6 @@ namespace MauiApp1.ViewModels.ClubProfileViewModel
             SelectedClubId = id;
         }
 
-        public async Task LoadClubsAsync()
-        {
-            var clubs = await _clubService.GetClubsAsync();
-            if (clubs != null)
-            {
-                Clubs.Clear();
-                foreach (var club in clubs)
-                {
-                    Clubs.Add(club);
-                }
-            }
-         }
-
         public async Task LoadClubProfileAsync()
         {
             SelectedClub = null;
@@ -75,6 +79,7 @@ namespace MauiApp1.ViewModels.ClubProfileViewModel
             if (clubProfile != null)
             {
                 SelectedClub = clubProfile;
+                PathClubAvatar = clubProfile.AvatarPath;
             }
            await LoadNotes();
         }
@@ -100,5 +105,25 @@ namespace MauiApp1.ViewModels.ClubProfileViewModel
             }
         }
 
+        public async Task SetAvatarClub()
+        {
+            try
+            {
+
+                var chosenImage = await MediaPicker.PickPhotoAsync();
+
+                if (chosenImage != null)
+
+                {
+                    using var stream = await chosenImage.OpenReadAsync();
+                    await _clubService.SetAvatarClubUploadServer(SelectedClub.Id, Guid.Parse(AppSettings.test_user_guid), stream);
+                    await LoadClubProfileAsync();
+                }
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine($"[ERROR] {ex.Message}");
+            }
+        }
     }
 }

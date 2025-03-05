@@ -7,108 +7,106 @@
     <VerticalStackLayout>
 
         <Frame x:Name="SubFrame"
-           BorderColor="Transparent" >
+               BorderColor="Transparent">
             <HorizontalStackLayout>
                 <Frame x:Name="BackFrame"
-                   BorderColor="Transparent">
+                       BorderColor="Transparent">
                     <Frame.GestureRecognizers>
                         <TapGestureRecognizer Tapped="OnBackButtonTapped" />
                     </Frame.GestureRecognizers>
-                    <Image Source="back_icon.svg"
-                       Aspect="AspectFill"
-                       />
+                    <StackLayout VerticalOptions="Center"
+                                 HorizontalOptions="Center">
+                        <Image Source="back_icon.svg"
+                               Aspect="AspectFill" />
+                    </StackLayout>
                 </Frame>
                 <Frame x:Name="FollowTextFrame"
-                   BorderColor="Transparent">
+                       BorderColor="Transparent">
                     <Label x:Name="FollowText"
-                    Text="Подписки"
-                       FontSize="20"
-                       HorizontalOptions="Center"/>
+                           Text="Подписки"
+                           FontSize="20"
+                           HorizontalOptions="Center" />
                 </Frame>
             </HorizontalStackLayout>
         </Frame>
 
         <Frame x:Name="ProfContainerFrame"
-           CornerRadius="20"
-           HasShadow="True">
+               CornerRadius="20"
+               HasShadow="True">
             <VerticalStackLayout x:Name="ProfilesLayout">
                 <StackLayout>
-                    <Frame HasShadow="False" 
-                   BorderColor="Transparent">
+                    <Frame HasShadow="False"
+                           BorderColor="Transparent">
                         <HorizontalStackLayout>
                             <Image Source="profile_placeholder.svg"
-                           Aspect="AspectFill"/>
-                            <Label Text="Дмитрий Ушаков" 
-                           TextColor="#191C30"/>
+                                   Aspect="AspectFill" />
+                            <Label Text="Дмитрий Ушаков"
+                                   TextColor="#191C30" />
                             <Image Source="redirect.svg"
-                           Aspect="AspectFill"/>
+                                   Aspect="AspectFill" />
                         </HorizontalStackLayout>
                     </Frame>
-                    <BoxView
-                     BackgroundColor="#E4E4E4" 
-                     HorizontalOptions="FillAndExpand" 
-                     VerticalOptions="End" />
-                    <Frame HasShadow="False" 
-                   BorderColor="Transparent">
+                    <BoxView BackgroundColor="#E4E4E4"
+                             HorizontalOptions="FillAndExpand"
+                             VerticalOptions="End" />
+                    <Frame HasShadow="False"
+                           BorderColor="Transparent">
                         <HorizontalStackLayout>
                             <Image Source="profile_placeholder.svg"
-                           Aspect="AspectFill"/>
-                            <Label Text="Виталий Таран" 
-                           TextColor="#191C30"/>
+                                   Aspect="AspectFill" />
+                            <Label Text="Виталий Таран"
+                                   TextColor="#191C30" />
                             <Image Source="redirect.svg"
-                           Aspect="AspectFill"/>
+                                   Aspect="AspectFill" />
                         </HorizontalStackLayout>
                     </Frame>
-                    <BoxView 
-                     BackgroundColor="#E4E4E4" 
-                     HorizontalOptions="FillAndExpand" 
-                     VerticalOptions="End" />
+                    <BoxView BackgroundColor="#E4E4E4"
+                             HorizontalOptions="FillAndExpand"
+                             VerticalOptions="End" />
                 </StackLayout>
                 <StackLayout>
-                    <Frame HasShadow="False" 
-                   BorderColor="Transparent">
+                    <Frame HasShadow="False"
+                           BorderColor="Transparent">
                         <HorizontalStackLayout>
                             <Image Source="profile_placeholder.svg"
-                           Aspect="AspectFill"/>
-                            <Label Text="Матвей Абрамов" 
-                           TextColor="#191C30"
-                           FontSize="15"/>
+                                   Aspect="AspectFill" />
+                            <Label Text="Матвей Абрамов"
+                                   TextColor="#191C30"
+                                   FontSize="15" />
                             <Image Source="redirect.svg"
-                           Aspect="AspectFill"/>
+                                   Aspect="AspectFill" />
                         </HorizontalStackLayout>
                     </Frame>
-                    <BoxView
-                     BackgroundColor="#E4E4E4" 
-                     HorizontalOptions="FillAndExpand" 
-                     VerticalOptions="End" />
+                    <BoxView BackgroundColor="#E4E4E4"
+                             HorizontalOptions="FillAndExpand"
+                             VerticalOptions="End" />
                 </StackLayout>
                 <StackLayout>
-                    <Frame HasShadow="False" 
-                   BorderColor="Transparent">
+                    <Frame HasShadow="False"
+                           BorderColor="Transparent">
                         <HorizontalStackLayout>
                             <Image Source="profile_placeholder.svg"
-                           Aspect="AspectFill"/>
-                            <Label Text="Тимофей Багин" 
-                           TextColor="#191C30"/>
+                                   Aspect="AspectFill" />
+                            <Label Text="Тимофей Багин"
+                                   TextColor="#191C30" />
                             <Image Source="redirect.svg"
-                           Aspect="AspectFill"/>
+                                   Aspect="AspectFill" />
                         </HorizontalStackLayout>
                     </Frame>
-                    <BoxView
-                     BackgroundColor="#E4E4E4" 
-                     HorizontalOptions="FillAndExpand" 
-                     VerticalOptions="End" />
+                    <BoxView BackgroundColor="#E4E4E4"
+                             HorizontalOptions="FillAndExpand"
+                             VerticalOptions="End" />
                 </StackLayout>
                 <StackLayout>
-                    <Frame HasShadow="False" 
-                   BorderColor="Transparent">
+                    <Frame HasShadow="False"
+                           BorderColor="Transparent">
                         <HorizontalStackLayout>
                             <Image Source="profile_placeholder.svg"
-                           Aspect="AspectFill"/>
-                            <Label Text="Дмитрий Ушаков" 
-                           TextColor="#191C30"/>
+                                   Aspect="AspectFill" />
+                            <Label Text="Дмитрий Ушаков"
+                                   TextColor="#191C30" />
                             <Image Source="redirect.svg"
-                           Aspect="AspectFill"/>
+                                   Aspect="AspectFill" />
                         </HorizontalStackLayout>
                     </Frame>
                 </StackLayout>

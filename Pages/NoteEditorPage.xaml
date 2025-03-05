@@ -47,26 +47,33 @@
                        HeightRequest="24" />
             </Frame>
         </HorizontalStackLayout>
-
-        <Entry Grid.Row="1"
-               
+        
+        <Frame Grid.Row="1"
+               BorderColor="Transparent"
+               Padding="8,0,0,0">
+        <Entry 
                Placeholder="Введите название..."
                PlaceholderColor="Gray"
                FontSize="20"
-               TextColor="Blue"
-               Text="{Binding Name}"
-               />
-        <Editor Grid.Row="2"
+               TextColor="#0057A6"
+               Text="{Binding Name}"/>
+        </Frame>
+        
+        <Frame Grid.Row="2"
+               BorderColor="Transparent"
+               Padding="8,0,0,0">
+            <Editor Grid.Row="2"
                Placeholder="Введите текст..."
                PlaceholderColor="Gray"
                FontSize="16"
                TextColor="Black"
-               Text="{Binding Description}"
-               />
+               Text="{Binding Description}"/>
+        </Frame>
+
         <HorizontalStackLayout  
                 Grid.Row="4" 
                 HorizontalOptions="End">
-            <ImageButton 
+                <ImageButton 
                      x:Name="AddMediaFileButton"
                      Grid.Row="4" 
                      CornerRadius="16"
@@ -76,13 +83,12 @@
                      Aspect="AspectFill"
                      HeightRequest="60"
                     WidthRequest="60"/>
-            <ImageButton 
+                <ImageButton 
                      x:Name="SendNewsButton"
                      CornerRadius="16"
                      Source="send_note_button."
                      Clicked="SendNewsButton_Clicked"/>
 
-        </HorizontalStackLayout>
-
+            </HorizontalStackLayout>
     </Grid>
 </ContentPage>

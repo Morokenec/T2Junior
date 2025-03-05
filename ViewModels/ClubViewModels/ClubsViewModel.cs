@@ -16,6 +16,8 @@ namespace MauiApp1.ViewModels.ClubViewModel
         private bool _isRefreshing;
 
         private string _searchText;
+        private string _pathClubAvatar;
+
         public string SearchText
         {
             get => _searchText;
@@ -26,6 +28,21 @@ namespace MauiApp1.ViewModels.ClubViewModel
                     _searchText = value;
                     OnPropertyChanged();
                     FilterClubs();
+                }
+            }
+        }
+        public string PathClubAvatar
+        {
+            get => _pathClubAvatar;
+            set
+            {
+                if (_pathClubAvatar != value)
+                {
+                    value = value.Replace("wwwroot/", "");
+                    value = $"https://t2.hahatun.fun/{value}";
+                    _pathClubAvatar = value;
+                    Debug.WriteLine($"[SOURCE]{value}");
+                    OnPropertyChanged();
                 }
             }
         }
@@ -121,6 +138,7 @@ namespace MauiApp1.ViewModels.ClubViewModel
                             Id = clubItem.Id,
                             Name = clubItem.Name,
                             IsUserSubscribed = clubItem.IsSubscribe,
+                            AvatarPath = clubItem.AvatarPath
                         };
                         Debug.WriteLine($"[DATA]{club.Id} - {club.Name} - {club.IsUserSubscribed} ");
                         Clubs.Add(club);
@@ -135,7 +153,7 @@ namespace MauiApp1.ViewModels.ClubViewModel
                 });
             }
             else
-            {
+             {
                 Debug.WriteLine("[ERROR] Не удалось загрузить данные с сервера.");
             }
         }

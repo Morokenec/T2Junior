@@ -81,7 +81,7 @@ public partial class ProfilePage : ContentPage
         if (currentPage?.GetType() == typeof(SubscribersPage))
             return;
 
-        await Navigation.PushAsync(new SubscribersPage());
+        await Navigation.PushAsync(new SubscribersPage(new ViewModels.ProfileModels.SubscribersViewModel(new ProfileService(new HttpClient(), new JsonDeserializerService()))));
     }
 
     private async void OnFollowingButtonTapped(object sender, EventArgs e)

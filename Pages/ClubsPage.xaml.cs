@@ -49,4 +49,23 @@ public partial class ClubsPage : ContentPage
             await Application.Current.MainPage.Navigation.PushAsync(new ClubProfilePage(new ClubProfileViewModel(new ClubService(httpClient, jsonDeserializerService), new NoteService(httpClient, jsonDeserializerService), tappedClub.Id)));
         }
     }
+
+    private async void TapGestureRecognizer_Tapped(object sender, TappedEventArgs e)
+    {
+        var currentPage = Navigation.NavigationStack.LastOrDefault();
+        if (currentPage?.GetType() == typeof(ClubProfilePage))
+            return;
+
+        var tappedClub = (sender as Frame)?.BindingContext as Club;
+        if (tappedClub != null)
+        {
+            HttpClient httpClient = new HttpClient();
+            JsonDeserializerService jsonDeserializerService = new JsonDeserializerService();
+            await Application.Current.MainPage.Navigation.PushAsync(
+                new ClubProfilePage(new ClubProfileViewModel(
+                    new ClubService(httpClient, jsonDeserializerService),
+                    new NoteService(httpClient, jsonDeserializerService),
+                    tappedClub.Id)));
+        }
+    }
 }

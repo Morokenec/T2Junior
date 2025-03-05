@@ -45,4 +45,17 @@ public partial class ClubProfilePage : ContentPage
 
         await Navigation.PushAsync(new NoteEditorPage(new NoteEditorViewModel(new NoteService(new HttpClient(), new JsonDeserializerService()), _viewModel.SelectedClub.Id)));
     }
+
+    private async void ClubAvatar_Tapped(object sender, TappedEventArgs e)
+    {
+        if (BindingContext is ClubProfileViewModel viewModel)
+        {
+            await viewModel.SetAvatarClub();
+        }
+    }
+
+    private void ImageButton_Clicked(object sender, EventArgs e)
+    {
+
+    }
 }
