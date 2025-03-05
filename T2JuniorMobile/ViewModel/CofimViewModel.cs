@@ -4,6 +4,9 @@ using System.Windows.Input;
 
 namespace T2JuniorMobile.ViewModel
 {
+    /// <summary>
+    /// ViewModel для управления подтверждением пароля.
+    /// </summary>
     public class ConfirmViewModel : BaseViewModel
     {
         private string _password;
@@ -11,10 +14,16 @@ namespace T2JuniorMobile.ViewModel
         private Color _passwordBorderColor = Colors.Transparent;
         private Color _confirmPasswordBorderColor = Colors.Transparent;
 
+        /// <summary>
+        /// Конструктор класса ConfirmViewModel.
+        /// </summary>
         public ConfirmViewModel()
         {
         }
 
+        /// <summary>
+        /// Пароль пользователя.
+        /// </summary>
         public string Password
         {
             get => _password;
@@ -28,6 +37,9 @@ namespace T2JuniorMobile.ViewModel
             }
         }
 
+        /// <summary>
+        /// Подтверждение пароля пользователя.
+        /// </summary>
         public string ConfirmPassword
         {
             get => _confirmPassword;
@@ -41,6 +53,9 @@ namespace T2JuniorMobile.ViewModel
             }
         }
 
+        /// <summary>
+        /// Цвет границы поля ввода пароля.
+        /// </summary>
         public Color PasswordBorderColor
         {
             get => _passwordBorderColor;
@@ -51,6 +66,9 @@ namespace T2JuniorMobile.ViewModel
             }
         }
 
+        /// <summary>
+        /// Цвет границы поля ввода подтверждения пароля.
+        /// </summary>
         public Color ConfirmPasswordBorderColor
         {
             get => _confirmPasswordBorderColor;

@@ -16,7 +16,7 @@ namespace T2JuniorAPI.Controllers
         }
 
         /// <summary>
-        /// Получение списка всех ролей клубов
+        /// Получение списка всех ролей клубов.
         /// </summary>
         /// <returns></returns>
         /// <response code="200">Успешное выполнение</response>
@@ -29,7 +29,7 @@ namespace T2JuniorAPI.Controllers
         }
 
         /// <summary>
-        /// Получение роли в клубе по ID
+        /// Получение роли в клубе по ID.
         /// </summary>
         /// <param name="id">Роли в клубе</param>
         /// <returns></returns>
@@ -51,7 +51,7 @@ namespace T2JuniorAPI.Controllers
         }
 
         /// <summary>
-        /// Обновление роли в клубе по ID
+        /// Обновление роли в клубе по ID.
         /// </summary>
         /// <param name="clubRoleDto">Роли в клубе</param>
         /// <returns></returns>
@@ -79,7 +79,7 @@ namespace T2JuniorAPI.Controllers
         }
 
         /// <summary>
-        /// Создание новой роли в клубе
+        /// Создание новой роли в клубе.
         /// </summary>
         /// <param name="roleDTO">Роли в клубе</param>
         /// <returns></returns>
@@ -100,7 +100,7 @@ namespace T2JuniorAPI.Controllers
         }
 
         /// <summary>
-        /// Удаление роли в клубе по ID
+        /// Удаление роли в клубе по ID.
         /// </summary>
         /// <param name="id">Роли в клубе</param>
         /// <returns></returns>

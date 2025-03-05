@@ -12,6 +12,11 @@ namespace T2WebSoket.Hubs
         private readonly ChatDbContext _context;
         private readonly IFileService _fileService;
 
+        /// <summary>
+        /// Конструктор класса ChatHub.
+        /// </summary>
+        /// <param name="context">Контекст базы данных для работы с чатами.</param>
+        /// <param name="fileService">Сервис для работы с файлами.</param>
         public ChatHub(ChatDbContext context, IFileService fileService)
         {
             _context = context;

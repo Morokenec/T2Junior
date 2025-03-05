@@ -14,7 +14,7 @@ public class OrganizationsController : ControllerBase
     }
 
     /// <summary>
-    /// Получения списков всех организаций
+    /// Получение списков всех организаций.
     /// </summary>
     /// <returns></returns>
     /// <response code="200">Успешное выполнение</response>
@@ -26,7 +26,7 @@ public class OrganizationsController : ControllerBase
     }
 
     /// <summary>
-    /// Создание организации
+    /// Создание организации.
     /// </summary>
     /// <param name="organization">Организация</param>
     /// <returns></returns>
@@ -43,7 +43,7 @@ public class OrganizationsController : ControllerBase
     }
 
     /// <summary>
-    /// Обновление данных организации
+    /// Обновление данных организации.
     /// </summary>
     /// <param name="organizationDto">Организация</param>
     /// <returns></returns>
@@ -61,7 +61,7 @@ public class OrganizationsController : ControllerBase
     }
 
     /// <summary>
-    /// Удаление организации по ID
+    /// Удаление организации по ID.
     /// </summary>
     /// <param name="id">Организация</param>
     /// <returns></returns>

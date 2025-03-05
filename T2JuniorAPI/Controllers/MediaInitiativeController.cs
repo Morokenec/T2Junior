@@ -17,7 +17,7 @@ namespace T2JuniorAPI.Controllers
         }
 
         /// <summary>
-        /// Добавление медиафайла к инициативе
+        /// Добавление медиафайла к инициативе.
         /// </summary>
         /// <param name="initiativeId">Идентификатор инициативы</param>
         /// <param name="uploadDTO">Медиафайл</param>
@@ -37,7 +37,7 @@ namespace T2JuniorAPI.Controllers
         }
 
         /// <summary>
-        /// Удаление медиафайла из инициативы
+        /// Удаление медиафайла из инициативы.
         /// </summary>
         /// <param name="initiativeId">Идентификатор инициативы</param>
         /// <param name="mediaId">Идентификатор медиафайла</param>
@@ -51,7 +51,7 @@ namespace T2JuniorAPI.Controllers
         }
 
         /// <summary>
-        /// Получение всех медиафайлов для инициативы
+        /// Получение всех медиафайлов для инициативы.
         /// </summary>
         /// <param name="initiativeId">Идентификатор инициативы</param>
         /// <returns></returns>

@@ -9,16 +9,30 @@ using T2JuniorAPI.Entities;
 
 namespace T2JuniorAPI.Services.Initiatives
 {
+    /// <summary>
+    /// Сервис для управления инициативами.
+    /// </summary>
     public class InitiativeService : IInitiativeService
     {
         private readonly ApplicationDbContext _context;
         private readonly IMapper _mapper;
 
+        /// <summary>
+        /// Конструктор класса InitiativeService.
+        /// </summary>
+        /// <param name="context">Контекст базы данных.</param>
+        /// <param name="mapper">Mapper для маппинга объектов.</param>
         public InitiativeService(ApplicationDbContext context, IMapper mapper)
         {
             _context = context;
             _mapper = mapper;
         }
+
+        /// <summary>
+        /// Создание новой инициативы.
+        /// </summary>
+        /// <param name="initiativeDto">DTO с данными для создания инициативы.</param>
+        /// <returns>Созданная инициатива.</returns>
         public async Task<InitiativeOutputDTO> CreateInitiativeAsync(InitiativeInputDTO initiativeDto)
         {
             // Найдите статус "Предложено"
@@ -38,6 +52,12 @@ namespace T2JuniorAPI.Services.Initiatives
             return _mapper.Map<InitiativeOutputDTO>(initiative);
         }
 
+        /// <summary>
+        /// Обновление существующей инициативы.
+        /// </summary>
+        /// <param name="id">Идентификатор инициативы.</param>
+        /// <param name="initiativeDto">DTO с обновленными данными инициативы.</param>
+        /// <returns>Обновленная инициатива.</returns>
         public async Task<InitiativeOutputDTO> UpdateInitiativeAsync(Guid id, InitiativeInputDTO initiativeDto)
         {
             var initiative = await _context.Initiatives.FindAsync(id);
@@ -48,6 +68,11 @@ namespace T2JuniorAPI.Services.Initiatives
             return _mapper.Map<InitiativeOutputDTO>(initiative); 
         }
 
+        /// <summary>
+        /// Удаление инициативы по её идентификатору.
+        /// </summary>
+        /// <param name="id">Идентификатор инициативы.</param>
+        /// <returns>Результат удаления инициативы.</returns>
         public async Task<bool> DeleteInitiativeAsync(Guid id)
         {
             var initiative = await _context.Initiatives.FindAsync(id);
@@ -60,6 +85,10 @@ namespace T2JuniorAPI.Services.Initiatives
             return true;
         }
 
+        /// <summary>
+        /// Получение всех инициатив с деталями.
+        /// </summary>
+        /// <returns>Список всех инициатив с деталями.</returns>
         public async Task<IEnumerable<InitiativeOutputDTO>> GetAllInitiativesWithDetailsAsync()
         {
             var initiatives = await _context.Initiatives
@@ -93,7 +122,11 @@ namespace T2JuniorAPI.Services.Initiatives
             return initiativeDtos;
         }
 
-        
+        /// <summary>
+        /// Получение инициативы по её идентификатору.
+        /// </summary>
+        /// <param name="id">Идентификатор инициативы.</param>
+        /// <returns>Инициатива, если найдена; иначе, null.</returns>
         public async Task<InitiativeOutputDTO> GetInitiativeByIdAsync(Guid id)
         {
             var initiative = await _context.Initiatives
@@ -121,6 +154,12 @@ namespace T2JuniorAPI.Services.Initiatives
             return initiativeDto;
         }
 
+        /// <summary>
+        /// Голосование за инициативу.
+        /// </summary>
+        /// <param name="id">Идентификатор инициативы.</param>
+        /// <param name="userId">Идентификатор пользователя, голосующего за инициативу.</param>
+        /// <returns>Результат голосования.</returns>
         public async Task<bool> VoteForInitiativeAsync(Guid id, Guid userId)
         {
             var vote = await _context.Votes
@@ -140,6 +179,12 @@ namespace T2JuniorAPI.Services.Initiatives
             return true;
         }
 
+        /// <summary>
+        /// Добавление комментария к инициативе.
+        /// </summary>
+        /// <param name="id">Идентификатор инициативы.</param>
+        /// <param name="commentDto">DTO с данными для создания комментария.</param>
+        /// <returns>Результат добавления комментария.</returns>
         public async Task<bool> CommentOnInitiativeAsync(Guid id, CreateInitiativeComment commentDto)
         {
             var comment = _mapper.Map<InitiativeComment>(commentDto);
@@ -150,6 +195,12 @@ namespace T2JuniorAPI.Services.Initiatives
             return true;
         }
 
+        /// <summary>
+        /// Изменение статуса инициативы.
+        /// </summary>
+        /// <param name="id">Идентификатор инициативы.</param>
+        /// <param name="statusId">Идентификатор нового статуса.</param>
+        /// <returns>Результат изменения статуса.</returns>
         public async Task<bool> ChangeInitiativeStatusAsync(Guid id, Guid statusId)
         {
             var initiative = await _context.Initiatives.FindAsync(id);
@@ -160,6 +211,12 @@ namespace T2JuniorAPI.Services.Initiatives
             return true;
         }
 
+        /// <summary>
+        /// Добавление пользователя к инициативе.
+        /// </summary>
+        /// <param name="initiativeId">Идентификатор инициативы.</param>
+        /// <param name="userId">Идентификатор пользователя.</param>
+        /// <returns>Результат добавления пользователя.</returns>
         public async Task<bool> AddUserToInitiativeAsync(Guid initiativeId, Guid userId)
         {
             var userInitiative = new UserInitiative
@@ -173,6 +230,12 @@ namespace T2JuniorAPI.Services.Initiatives
             return true;
         }
 
+        /// <summary>
+        /// Удаление пользователя из инициативы.
+        /// </summary>
+        /// <param name="initiativeId">Идентификатор инициативы.</param>
+        /// <param name="userId">Идентификатор пользователя.</param>
+        /// <returns>Результат удаления пользователя.</returns>
         public async Task<bool> RemoveUserFromInitiativeAsync(Guid initiativeId, Guid userId)
         {
             var userInitiative = await _context.UserInitiatives
@@ -187,6 +250,10 @@ namespace T2JuniorAPI.Services.Initiatives
             return true;
         }
 
+        /// <summary>
+        /// Получение всех статусов инициатив.
+        /// </summary>
+        /// <returns>Список всех статусов инициатив.</returns>
         public async Task<IEnumerable<InitiativeStatusDTO>> GetInitiativeStatuses()
         {
             var statuses = await _context.InitiativeStatuses

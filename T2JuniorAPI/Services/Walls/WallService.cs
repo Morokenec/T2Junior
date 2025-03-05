@@ -9,6 +9,9 @@ using T2JuniorAPI.Services.WallTypes;
 
 namespace T2JuniorAPI.Services.Walls
 {
+    /// <summary>
+    /// Сервис для управления стенами (Walls).
+    /// </summary>
     public class WallService : IWallService
     {
         private readonly ApplicationDbContext _context;
@@ -16,6 +19,13 @@ namespace T2JuniorAPI.Services.Walls
         private readonly IMapper _mapper;
         private readonly IWallTypeService _typeService;
 
+        /// <summary>
+        /// Конструктор класса WallService.
+        /// </summary>
+        /// <param name="context">Контекст базы данных.</param>
+        /// <param name="mapper">Mapper для маппинга объектов.</param>
+        /// <param name="typeService">Сервис для работы с типами стен.</param>
+        /// <param name="userManager">Менеджер пользователей.</param>
         public WallService(ApplicationDbContext context, IMapper mapper, IWallTypeService typeService, UserManager<ApplicationUser> userManager)
         {
             _context = context;
@@ -24,6 +34,11 @@ namespace T2JuniorAPI.Services.Walls
             _userManager = userManager;
         }
 
+        /// <summary>
+        /// Создание стены для владельца.
+        /// </summary>
+        /// <param name="idOwner">Идентификатор владельца стены.</param>
+        /// <returns>Созданная стена.</returns>
         public async Task<WallDTO> CreateWallAsync(Guid idOwner)
         {
             var existingWall = await _context.Walls.FirstOrDefaultAsync(w => w.IdUserOwner == idOwner || w.IdClubOwner == idOwner);
@@ -50,6 +65,11 @@ namespace T2JuniorAPI.Services.Walls
             return _mapper.Map<WallDTO>(wall);
         }
 
+        /// <summary>
+        /// Определение типа стены на основе владельца.
+        /// </summary>
+        /// <param name="idOwner">Идентификатор владельца.</param>
+        /// <returns>Тип стены.</returns>
         private async Task<string> DetermineWallTypeAsync(Guid idOwner)
         {
             var user = await _context.Users.FindAsync(idOwner);
@@ -63,6 +83,10 @@ namespace T2JuniorAPI.Services.Walls
             throw new ApplicationException("Owner Type Not Found");
         }
 
+        /// <summary>
+        /// Удаление стены по идентификатору владельца.
+        /// </summary>
+        /// <param name="idOwner">Идентификатор владельца стены.</param>
         public async Task DeleteWallAsync(Guid idOwner)
         {
             var wall = await _context.Walls.FirstOrDefaultAsync(w => 
@@ -73,6 +97,11 @@ namespace T2JuniorAPI.Services.Walls
             await _context.SaveChangesAsync();
         }
 
+        /// <summary>
+        /// Получение стены по идентификатору владельца.
+        /// </summary>
+        /// <param name="idOwner">Идентификатор владельца стены.</param>
+        /// <returns>Стена, если найдена; иначе, null.</returns>
         public async Task<WallDTO> GetWallByIdOwnerAsync(Guid idOwner)
         {
             var wall = await _context.Walls

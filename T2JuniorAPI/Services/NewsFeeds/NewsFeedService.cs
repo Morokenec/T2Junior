@@ -5,17 +5,30 @@ using T2JuniorAPI.DTOs.Notes;
 
 namespace T2JuniorAPI.Services.NewsFeeds
 {
+    /// <summary>
+    /// Сервис для получения ленты новостей пользователя.
+    /// </summary>
     public class NewsFeedService : INewsFeedService
     {
         private readonly ApplicationDbContext _context;
         private readonly IMapper _mapper;
 
+        /// <summary>
+        /// Конструктор класса NewsFeedService.
+        /// </summary>
+        /// <param name="mapper">Mapper для маппинга объектов.</param>
+        /// <param name="context">Контекст базы данных.</param>
         public NewsFeedService(IMapper mapper, ApplicationDbContext context)
         {
             _mapper = mapper;
             _context = context;
         }
 
+        /// <summary>
+        /// Получение ленты новостей для пользователя по его идентификатору.
+        /// </summary>
+        /// <param name="userId">Идентификатор пользователя.</param>
+        /// <returns>Список заметок, составляющих ленту новостей.</returns>
         public async Task<IEnumerable<NoteDTO>> GetNewsFeedAsync(Guid userId)
         {
             var userSubscriptions = await _context.UserSubscribers

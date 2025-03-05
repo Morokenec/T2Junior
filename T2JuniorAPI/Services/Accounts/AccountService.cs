@@ -39,7 +39,7 @@ namespace T2JuniorAPI.Services.Accounts
         }
 
         /// <summary>
-        /// Регистрирует нового пользователя в системе.
+        /// Регистрация нового пользователя в системе.
         /// </summary>
         /// <param name="registerUserDto">Объект с данными нового пользователя.</param>
         /// <returns>Строка с результатом регистрации пользователя.</returns>
@@ -74,7 +74,7 @@ namespace T2JuniorAPI.Services.Accounts
         }
 
         /// <summary>
-        /// Получает профиль пользователя по его идентификатору.
+        /// Получение профиля пользователя по его идентификатору.
         /// </summary>
         /// <param name="userId">Идентификатор пользователя.</param>
         /// <returns>Объект профиля пользователя.</returns>
@@ -104,7 +104,7 @@ namespace T2JuniorAPI.Services.Accounts
         }
 
         /// <summary>
-        /// Получение всех профилей пользователей
+        /// Получение всех профилей пользователей.
         /// </summary>
         /// <returns>Объект профилей пользователей.</returns>
         /// <exception cref="ApplicationException">Выбрасывается, если пользователи не найдены или обновление не удалось.</exception>
@@ -128,7 +128,7 @@ namespace T2JuniorAPI.Services.Accounts
         }
 
         /// <summary>
-        /// Обновляет профиль пользователя.
+        /// Обновление профиля пользователя.
         /// </summary>
         /// <param name="userId">Идентификатор пользователя.</param>
         /// <param name="updateUserDto">Объект с новыми данными для обновления.</param>
@@ -170,7 +170,7 @@ namespace T2JuniorAPI.Services.Accounts
         }
 
         /// <summary>
-        /// Удаляет пользователя из системы.
+        /// Удаление пользователя из системы.
         /// </summary>
         /// <param name="userId">Идентификатор пользователя, которого нужно удалить.</param>
         /// <returns>Строка с результатом удаления пользователя.</returns>

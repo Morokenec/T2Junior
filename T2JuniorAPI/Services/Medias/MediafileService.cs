@@ -10,6 +10,9 @@ using T2JuniorAPI.Services.MediaTypes;
 
 namespace T2JuniorAPI.Services.Medias
 {
+    /// <summary>
+    /// Сервис для управления медиафайлами.
+    /// </summary>
     public class MediafileService : IMediafileService
     {
         private readonly ApplicationDbContext _context;
@@ -17,7 +20,13 @@ namespace T2JuniorAPI.Services.Medias
         private readonly IMapper _mapper;
         private readonly IMediaTypeService _mediaTypeService;
 
-
+        /// <summary>
+        /// Конструктор класса MediafileService.
+        /// </summary>
+        /// <param name="context">Контекст базы данных.</param>
+        /// <param name="mapper">Mapper для маппинга объектов.</param>
+        /// <param name="mediaTypeService">Сервис для работы с типами медиафайлов.</param>
+        /// <param name="user">Менеджер пользователей.</param>
         public MediafileService(ApplicationDbContext context, IMapper mapper, IMediaTypeService mediaTypeService, UserManager<ApplicationUser> user)
         {
             _context = context;
@@ -26,11 +35,22 @@ namespace T2JuniorAPI.Services.Medias
             _userManager = user;
         }
 
+        /// <summary>
+        /// Добавление медиафайа для пользователя.
+        /// </summary>
+        /// <param name="uploadDTO">DTO с данными для загрузки медиафайла.</param>
+        /// <returns>Созданный медиафайл.</returns>
         public async Task<Mediafile> AddMediaByUserId(MediafileUploadDTO uploadDTO)
         {
             return await CreateMediafileAsync(uploadDTO);
-            
+
         }
+
+        /// <summary>
+        /// Установка аватара для пользователя.
+        /// </summary>
+        /// <param name="uploadDTO">DTO с данными для загрузки медиафайла.</param>
+        /// <returns>Сообщение об успешной установке аватара.</returns>
         public async Task<string> SetAvatarByUserId(MediafileUploadDTO uploadDTO)
         {
             var mediafile = await CreateMediafileAsync(uploadDTO, true);
@@ -38,6 +58,12 @@ namespace T2JuniorAPI.Services.Medias
             return "Avatar set successfuiiy";
         }
 
+        /// <summary>
+        /// Создание медиафайла.
+        /// </summary>
+        /// <param name="uploadDTO">DTO с данными для загрузки медиафайла.</param>
+        /// <param name="isImage">Флаг, указывающий, является ли файл изображением.</param>
+        /// <returns>Созданный медиафайл.</returns>
         public async Task<Mediafile> CreateMediafileAsync(MediafileUploadDTO uploadDTO, bool isImage = false)
         {
             try
@@ -67,6 +93,12 @@ namespace T2JuniorAPI.Services.Medias
             }
         }
 
+        /// <summary>
+        /// Сохранение файла на сервере.
+        /// </summary>
+        /// <param name="file">Загружаемый файл.</param>
+        /// <param name="newFileName">Новое имя файла.</param>
+        /// <returns>Путь к сохраненному файлу.</returns>
         private async Task<string> SaveFileAsync(IFormFile file, string newFileName)
         {
             var uploadsFolder = Path.Combine("wwwroot", "uploads");
@@ -82,6 +114,11 @@ namespace T2JuniorAPI.Services.Medias
             return path;
         }
 
+        /// <summary>
+        /// Определение типа медиафайла по расширению.
+        /// </summary>
+        /// <param name="fileName">Имя файла.</param>
+        /// <returns>Идентификатор типа медиафайла.</returns>
         private async Task<Guid> GetMediaTypeId(string fileName)
         {
             var extension = Path.GetExtension(fileName).ToLower();
@@ -102,6 +139,11 @@ namespace T2JuniorAPI.Services.Medias
             }
         }
 
+        /// <summary>
+        /// Установка аватара для пользователя.
+        /// </summary>
+        /// <param name="idUser">Идентификатор пользователя.</param>
+        /// <param name="mediafileId">Идентификатор медиафайла.</param>
         private async Task SetAvatarForUserAsync(Guid idUser, Guid mediafileId)
         {
             var userAvatar = _mapper.Map<UserAvatar>(new UserAvatarDTO { IdUser = idUser, IdMedia =  mediafileId });
@@ -109,6 +151,11 @@ namespace T2JuniorAPI.Services.Medias
             await _context.SaveChangesAsync();
         }
 
+        /// <summary>
+        /// Удаление аватара пользователя.
+        /// </summary>
+        /// <param name="deleteDTO">DTO с данными для удаления медиафайла.</param>
+        /// <returns>Сообщение об успешном удалении аватара.</returns>
         public async Task<string> DeleteAvatarByUser(MediafileDeleteDTO deleteDTO)
         {
             var userAvatar = await _context.UserAvatars
@@ -127,6 +174,11 @@ namespace T2JuniorAPI.Services.Medias
             return "Avatar Deleted Successfully";
         }
 
+        /// <summary>
+        /// Удаление медиафайла по идентификатору пользователя.
+        /// </summary>
+        /// <param name="mediafileDeleteDTO">DTO с данными для удаления медиафайла.</param>
+        /// <returns>Сообщение об успешном удалении медиафайла.</returns>
         public async Task<string> DeleteMediaByUserId(MediafileDeleteDTO mediafileDeleteDTO)
         {
             var mediafile = await _context.Mediafiles
@@ -151,6 +203,11 @@ namespace T2JuniorAPI.Services.Medias
             return "Success";
         }
 
+        /// <summary>
+        /// Получение всех медиафайлов пользователя по его идентификатору.
+        /// </summary>
+        /// <param name="userId">Идентификатор пользователя.</param>
+        /// <returns>Список медиафайлов пользователя.</returns>
         public async Task<IEnumerable<MediafileDTO>> GetAllMediaByUserId(Guid userId)
         {
             try

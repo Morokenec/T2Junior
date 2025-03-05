@@ -5,7 +5,7 @@ using T2JuniorAPI.DTOs.Organizations;
 using T2JuniorAPI.Services.Organizations;
 
 /// <summary>
-/// Сервис для работы с организациями
+/// Сервис для работы с организациями.
 /// </summary>
 public class OrganizationService : IOrganizationService
 {
@@ -13,7 +13,7 @@ public class OrganizationService : IOrganizationService
     private readonly IMapper _mapper;
 
     /// <summary>
-    /// Конструктор для внедрения зависимостей
+    /// Конструктор для внедрения зависимостей.
     /// </summary>
     /// <param name="context">Контекст базы данных</param>
     /// <param name="mapper">Маппер для преобразования объектов</param>
@@ -24,7 +24,7 @@ public class OrganizationService : IOrganizationService
     }
 
     /// <summary>
-    /// Возвращает список всех неудаленных организаций
+    /// Возвращение списка всех неудаленных организаций.
     /// </summary>
     /// <returns>Коллекция организаций</returns>
     public async Task<List<OrganizationDto>> GetAllOrganizationsAsync()
@@ -36,7 +36,7 @@ public class OrganizationService : IOrganizationService
     }
 
     /// <summary>
-    /// Создает новую организацию, если такой уже не существует
+    /// Создание новой организации, если такой уже не существует.
     /// </summary>
     /// <param name="organization">Данные о создаваемой организации</param>
     /// <returns>Сообщение о результате операции</returns>
@@ -64,7 +64,7 @@ public class OrganizationService : IOrganizationService
     }
 
     /// <summary>
-    /// Обновляет данные организации
+    /// Обновление данных об организации.
     /// </summary>
     /// <param name="id">Id обновляемой организации</param>
     /// <param name="organizationDto">Данные обновляемой организации</param>
@@ -91,7 +91,7 @@ public class OrganizationService : IOrganizationService
     }
 
     /// <summary>
-    /// Помечает организацию как удаленную
+    /// Метка организации, как удаленной.
     /// </summary>
     /// <param name="id">Id удаляемой организации</param>
     /// <returns>Сообщение о результате операции</returns>

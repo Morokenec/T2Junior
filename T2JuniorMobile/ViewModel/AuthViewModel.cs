@@ -2,6 +2,10 @@
 using System.Windows.Input;
 using T2JuniorMobile.Services;
 
+//Не знаю может смысла нет разжевывать следующее, но лучше будет, чем не будет.
+/// <summary>
+/// ViewModel для управления аутентификацией пользователя.
+/// </summary>
 public class AuthViewModel : BaseViewModel
 {
     public ICommand LoginCommand { get; }
@@ -12,24 +16,37 @@ public class AuthViewModel : BaseViewModel
     private string _token;
     private readonly AccountService _authService;
 
+    /// <summary>
+    /// Электронная почта пользователя.
+    /// </summary>
     public string Email
     {
         get => _email;
         set => SetProperty(ref _email, value);
     }
 
+    /// <summary>
+    /// Пароль пользователя.
+    /// </summary>
     public string Password
     {
         get => _password;
         set => SetProperty(ref _password, value);
     }
 
+    /// <summary>
+    /// Токен аутентификации.
+    /// </summary>
     public string Token
     {
         get => _token;
         set => SetProperty(ref _token, value);
     }
 
+    /// <summary>
+    /// Конструктор класса AuthViewModel.
+    /// </summary>
+    /// <param name="authService">Сервис для аутентификации пользователей.</param>
     public AuthViewModel(AccountService authService)
     {
         _authService = authService;
@@ -37,6 +54,9 @@ public class AuthViewModel : BaseViewModel
         NavigateRegisterCommand = new Command(async () => await NavigateToRegisterPageAsync());
     }
 
+    /// <summary>
+    /// Выполнение входа пользователя в систему.
+    /// </summary>
     private async Task LoginAsync()
     {
         try
@@ -75,6 +95,9 @@ public class AuthViewModel : BaseViewModel
         }
     }
 
+    /// <summary>
+    /// Переход на страницу регистрации.
+    /// </summary>
     private async Task NavigateToRegisterPageAsync()
     {
         await Shell.Current.GoToAsync("/RegisterPage");

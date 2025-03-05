@@ -11,11 +11,20 @@ namespace T2WebSoket.Controllers
     {
         private readonly IFileService _fileService;
 
+        /// <summary>
+        /// Конструктор класса FileController.
+        /// </summary>
+        /// <param name="fileService">Сервис для работы с файлами.</param>
         public FileController(IFileService fileService)
         {
             _fileService = fileService;
         }
 
+        /// <summary>
+        /// Загрузка файла на сервер.
+        /// </summary>
+        /// <param name="fileUploadDTO">DTO с данными для загрузки файла.</param>
+        /// <returns>Результат загрузки файла.</returns>
         [HttpPost("upload")]
         public async Task<IActionResult> UploadFile([FromForm] FileUploadDTO fileUploadDTO)
         {
@@ -23,6 +32,11 @@ namespace T2WebSoket.Controllers
             return Ok(file);
         }
 
+        /// <summary>
+        /// Полуение файла по его идентификатору.
+        /// </summary>
+        /// <param name="fileId">Идентификатор файла.</param>
+        /// <returns>Файл, если найден.</returns>
         [HttpGet("{fileId}")]
         public async Task<IActionResult> GetFile(Guid fileId)
         {
@@ -30,6 +44,11 @@ namespace T2WebSoket.Controllers
             return Ok(file);
         }
 
+        /// <summary>
+        /// Удаление файла по его идентификатору.
+        /// </summary>
+        /// <param name="fileId">Идентификатор файла.</param>
+        /// <returns>Результат удаления файла.</returns>
         [HttpDelete("{fileId}")]
         public async Task<IActionResult> DeleteFile(Guid fileId)
         {

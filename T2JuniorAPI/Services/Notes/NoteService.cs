@@ -8,12 +8,21 @@ using T2JuniorAPI.Services.NoteStatuses;
 
 namespace T2JuniorAPI.Services.Notes
 {
+    /// <summary>
+    /// Сервис для управления заметками.
+    /// </summary>
     public class NoteService : INoteService
     {
         private readonly ApplicationDbContext _context;
         private readonly IMapper _mapper;
         private readonly INoteStatusService _noteStatusService;
 
+        /// <summary>
+        /// Конструктор класса NoteService.
+        /// </summary>
+        /// <param name="mapper">Mapper для маппинга объектов.</param>
+        /// <param name="context">Контекст базы данных.</param>
+        /// <param name="noteStatusService">Сервис для работы со статусами заметок.</param>
         public NoteService(IMapper mapper, ApplicationDbContext context, INoteStatusService noteStatusService)
         {
             _mapper = mapper;
@@ -21,6 +30,12 @@ namespace T2JuniorAPI.Services.Notes
             _noteStatusService = noteStatusService;
         }
 
+        /// <summary>
+        /// Создание новой заметки.
+        /// </summary>
+        /// <param name="idOwner">Идентификатор владельца заметки.</param>
+        /// <param name="noteDTO">DTO с данными для создания заметки.</param>
+        /// <returns>Созданная заметка.</returns>
         public async Task<NoteDTO> CreateNoteAsync(Guid idOwner, CreateNoteDTO noteDTO)
         {
             var wall = await _context.Walls
@@ -41,6 +56,12 @@ namespace T2JuniorAPI.Services.Notes
             return _mapper.Map<NoteDTO>(note);
         }
 
+        /// <summary>
+        /// Обновление существующей заметки.
+        /// </summary>
+        /// <param name="IdNote">Идентификатор заметки.</param>
+        /// <param name="noteDTO">DTO с обновленными данными заметки.</param>
+        /// <returns>Обновленная заметка.</returns>
         public async Task<NoteDTO> UpdateNoteAsync(Guid IdNote, UpdateNoteDTO noteDTO)
         {
             var note = await _context.Notes.FindAsync(IdNote);
@@ -54,6 +75,11 @@ namespace T2JuniorAPI.Services.Notes
             return _mapper.Map<NoteDTO>(note);
         }
 
+        /// <summary>
+        /// Удаление заметки по её идентификатору.
+        /// </summary>
+        /// <param name="idNote">Идентификатор заметки.</param>
+        /// <returns>Результат удаления заметки.</returns>
         public async Task<bool> DeleteNoteAsync(Guid idNote)
         {
             var note = await _context.Notes.FindAsync(idNote);
@@ -68,6 +94,12 @@ namespace T2JuniorAPI.Services.Notes
             return true;
         }
 
+        /// <summary>
+        /// Репост заметки для владельца.
+        /// </summary>
+        /// <param name="idNote">Идентификатор заметки.</param>
+        /// <param name="idOwner">Идентификатор владельца, репостящего заметку.</param>
+        /// <returns>Репостнутая заметка.</returns>
         public async Task<NoteDTO> RepostNoteAsync(Guid idNote, Guid idOwner)
         {
             var originalNote = await _context.Notes
@@ -93,6 +125,11 @@ namespace T2JuniorAPI.Services.Notes
             return _mapper.Map<NoteDTO>(repostNote);
         }
 
+        /// <summary>
+        /// Получение заметок с количеством комментариев.
+        /// </summary>
+        /// <param name="idOwner">Идентификатор владельца заметок.</param>
+        /// <returns>Список заметок с количеством комментариев.</returns>
         public async Task<IEnumerable<NoteDTO>> GetNotesWithCommentCountAsync(Guid idOwner)
         {
             // Загрузка стены
@@ -130,6 +167,11 @@ namespace T2JuniorAPI.Services.Notes
             return notes;
         }
 
+        /// <summary>
+        /// Получение комментариев с подкомментариями для заметки.
+        /// </summary>
+        /// <param name="noteId">Идентификатор заметки.</param>
+        /// <returns>Список комментариев с подкомментариями.</returns>
         public async Task<IEnumerable<CommentDTO>> GetCommentsWithSubCommentsAsync(Guid noteId)
         {
             var comments = await _context.Comments
@@ -163,6 +205,12 @@ namespace T2JuniorAPI.Services.Notes
             return result;
         }
 
+        /// <summary>
+        /// Обновление статуса заметки.
+        /// </summary>
+        /// <param name="idNote">Идентификатор заметки.</param>
+        /// <param name="idStatus">Идентификатор нового статуса.</param>
+        /// <returns>Результат обновления статуса.</returns>
         public async Task<bool> UpdateNoteStatusAsync(Guid idNote, Guid idStatus)
         {
             var note = await _context.Notes.FindAsync(idNote);
@@ -176,6 +224,12 @@ namespace T2JuniorAPI.Services.Notes
             return true;
         }
 
+        /// <summary>
+        /// Переключатель лайков под заметками.
+        /// </summary>
+        /// <param name="idNote">Идентификатор заметки.</param>
+        /// <param name="userId">Идентификатор пользователя, ставящего лайк.</param>
+        /// <returns>Обновленная заметка с измененным статусом лайка.</returns>
         public async Task<NoteDTO> ToggleLikeNoteAsync(Guid idNote, Guid userId)
         {
             var note = await _context.Notes

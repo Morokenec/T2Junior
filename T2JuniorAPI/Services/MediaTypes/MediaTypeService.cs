@@ -9,7 +9,7 @@ using T2JuniorAPI.Entities;
 namespace T2JuniorAPI.Services.MediaTypes
 {
     /// <summary>
-    /// Сервис для работы с типами медиафайлов
+    /// Сервис для работы с типами медиафайлов.
     /// </summary>
     public class MediaTypeService : IMediaTypeService
     {
@@ -23,7 +23,7 @@ namespace T2JuniorAPI.Services.MediaTypes
         }
 
         /// <summary>
-        /// Получает тип медиафайла по имени, либо создает новый, если он не найден
+        /// Получение типа медиафайла по имени, либо создание нового, если медиафайл не найден.
         /// </summary>
         /// <param name="mediaTypeDTO">Данные для создания или обновления типа медиафайла</param>
         /// <returns>Данные о типе медиафайла</returns>
@@ -47,7 +47,7 @@ namespace T2JuniorAPI.Services.MediaTypes
         }
 
         /// <summary>
-        /// Возвращает список всех неудаленных типов медиафайлов
+        /// Возвращение списка всех неудаленных типов медиафайлов.
         /// </summary>
         /// <returns>Коллекция типов медиафайлов</returns>
         public async Task<List<MediaTypeDTO>> GetAllMediaTypes()
@@ -59,7 +59,7 @@ namespace T2JuniorAPI.Services.MediaTypes
         }
 
         /// <summary>
-        /// Помечает тип медиафайла как удаленный
+        /// Метка медиафайла, как удаленного.
         /// </summary>
         /// <param name="id">Id типа медиафайла</param>
         /// <returns>True, если операция прошла успешно, иначе false</returns>

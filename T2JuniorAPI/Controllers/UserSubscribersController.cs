@@ -26,7 +26,7 @@ namespace T2JuniorAPI.Controllers
         }
 
         /// <summary>
-        /// Получение списка подписчиков определенного пользователя
+        /// Получение списка подписчиков определенного пользователя.
         /// </summary>
         /// <param name="userId">Организация</param>
         /// <returns></returns>
@@ -40,7 +40,7 @@ namespace T2JuniorAPI.Controllers
         }
 
         /// <summary>
-        /// Получение списка подписок определенного пользователя
+        /// Получение списка подписок определенного пользователя.
         /// </summary>
         /// <param name="userId">Организация</param>
         /// <returns></returns>
@@ -54,7 +54,7 @@ namespace T2JuniorAPI.Controllers
         }
 
         /// <summary>
-        /// Подписка одного пользователя на другого пользователя
+        /// Подписка одного пользователя на другого пользователя.
         /// </summary>
         /// <param name="subscribeUser">Организация</param>
         /// <returns></returns>
@@ -71,7 +71,7 @@ namespace T2JuniorAPI.Controllers
         }
 
         /// <summary>
-        /// Отмена подписки одного пользователя на другого пользователя
+        /// Отмена подписки одного пользователя на другого пользователя.
         /// </summary>
         /// <param name="unsubscribeUser">Организация</param>
         /// <returns></returns>

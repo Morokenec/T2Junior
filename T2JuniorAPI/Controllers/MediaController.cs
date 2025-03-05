@@ -28,7 +28,7 @@ namespace T2JuniorAPI.Controllers
         }
 
         /// <summary>
-        /// Добавление медиафайла пользователем
+        /// Добавление медиафайла пользователем.
         /// </summary>
         /// <param name="uploadDTO">Медиафайлы</param>
         /// <returns></returns>
@@ -53,7 +53,7 @@ namespace T2JuniorAPI.Controllers
         }
 
         /// <summary>
-        /// Скачивание медиафайлов пользователем
+        /// Скачивание медиафайлов пользователем.
         /// </summary>
         /// <param name="id">Медиафайлы</param>
         /// <returns></returns>
@@ -75,7 +75,7 @@ namespace T2JuniorAPI.Controllers
         }
 
         /// <summary>
-        /// Удаление медиафайлов пользователем
+        /// Удаление медиафайлов пользователем.
         /// </summary>
         /// <param name="mediafileDeleteDTO">Медиафайлы</param>
         /// <returns></returns>
@@ -97,7 +97,7 @@ namespace T2JuniorAPI.Controllers
         }
 
         /// <summary>
-        /// Получения всех медиафайлов, связанных с пользователем
+        /// Получения всех медиафайлов, связанных с пользователем.
         /// </summary>
         /// <param name="userId">Пользователь</param>
         /// <returns></returns>
@@ -126,7 +126,7 @@ namespace T2JuniorAPI.Controllers
         }
 
         /// <summary>
-        /// Установка аватара пользователем
+        /// Установка аватара пользователем.
         /// </summary>
         /// <param name="uploadDTO">Пользователь</param>
         /// <returns></returns>
@@ -148,7 +148,7 @@ namespace T2JuniorAPI.Controllers
         }
 
         /// <summary>
-        /// Удаление аватара пользователем
+        /// Удаление аватара пользователем.
         /// </summary>
         /// <param name="deleteDTO">Пользователь</param>
         /// <returns></returns>

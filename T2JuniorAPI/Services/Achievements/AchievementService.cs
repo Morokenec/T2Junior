@@ -18,7 +18,7 @@ namespace T2JuniorAPI.Services.Achievements
         private readonly IMediafileService _mediafileservice;
 
         /// <summary>
-        /// Функциональность для работы с достижениями
+        /// Функциональность для работы с достижениями.
         /// </summary>
         /// <param name="mediafileservice">Работа с медиафайлами.</param>
         /// <param name="mapper"> отображение объектов из одного типа на другой.</param>
@@ -31,7 +31,7 @@ namespace T2JuniorAPI.Services.Achievements
         }
 
         /// <summary>
-        /// Список всех достижений для указанного пользователя
+        /// Список всех достижений для указанного пользователя.
         /// </summary>
         /// <param name="userId">Для получения списка всех достижений.</param>
         public async Task<List<AchievementDTO>> GetAchievementsAllByUserIdAsync(Guid userId)
@@ -59,7 +59,7 @@ namespace T2JuniorAPI.Services.Achievements
         }
 
         /// <summary>
-        /// Список достижений, которые были получены указанным пользователем
+        /// Список достижений, которые были получены указанным пользователем.
         /// </summary>
         /// <param name="userId">Для получения списка достижений, которые были получены указанным пользователем.</param>
         public async Task<List<AchievementDTO>> GetAchievementsByUserIdAsync(Guid userId)
@@ -84,7 +84,7 @@ namespace T2JuniorAPI.Services.Achievements
         }
 
         /// <summary>
-        /// Создание новых достижений на основе данных
+        /// Создание новых достижений на основе данных.
         /// </summary>
         /// <param name="achievementDTO">данные о новом достижении.</param>
         /// <param name="uploadDTO">Данные о загружаемом медиафайле.</param>
@@ -107,7 +107,7 @@ namespace T2JuniorAPI.Services.Achievements
         }
 
         /// <summary>
-        /// Создание новых достижений на основе данных
+        /// Создание новых достижений на основе данных.
         /// </summary>
         /// <param name="achievementDTO">данные о новом достижении.</param>
         /// <param name="uploadDTO">Данные о загружаемом медиафайле.</param>
@@ -135,7 +135,7 @@ namespace T2JuniorAPI.Services.Achievements
         }
 
         /// <summary>
-        /// Удаляет достижение из базы данных
+        /// Удаление достижений из базы данных.
         /// </summary>
         /// <param name="achievementId">Данные об удаляемом достижении.</param>
         public async Task DeleteAchievementAsync(Guid achievementId)
@@ -153,7 +153,7 @@ namespace T2JuniorAPI.Services.Achievements
         }
 
         /// <summary>
-        /// Активация достижения
+        /// Активация достижения.
         /// </summary>
         /// <param name="achievementId">Данные об активированном достижении.</param>
         public async Task ActivateAchievementAsync(Guid achievementId)
@@ -171,7 +171,7 @@ namespace T2JuniorAPI.Services.Achievements
         }
 
         /// <summary>
-        /// Деактивация достижения
+        /// Деактивация достижения.
         /// </summary>
         /// <param name="achievementId">Данные об деактивированном достижении.</param>
         public async Task DeactivateAchievementAsync(Guid achievementId)
@@ -189,7 +189,7 @@ namespace T2JuniorAPI.Services.Achievements
         }
 
         /// <summary>
-        /// Добавление достижения конкретному пользователю
+        /// Добавление достижения конкретному пользователю.
         /// </summary>
         /// <param name="userId">Пользователь</param>
         /// <param name="achievementId">Достижение, присваемое пользователю</param>

@@ -39,7 +39,7 @@ namespace T2JuniorAPI.Services.MediaClubs
         }
 
         /// <summary>
-        /// Добавляет медиа в медиаклуб.
+        /// Добавление медиа в медиаклуб.
         /// </summary>
         /// <param name="mediafileUpload">Объект с данными медиафайла.</param>
         /// <param name="clubId">Идентификатор медиаклуба.</param>
@@ -60,7 +60,7 @@ namespace T2JuniorAPI.Services.MediaClubs
         }
 
         /// <summary>
-        /// Устанавливает аватар для медиаклуба.
+        /// Устанавка аватара для медиаклуба.
         /// </summary>
         /// <param name="uploadDTO">Объект с данными медиафайла.</param>
         /// <param name="clubId">Идентификатор медиаклуба.</param>
@@ -81,7 +81,7 @@ namespace T2JuniorAPI.Services.MediaClubs
         }
 
         /// <summary>
-        /// Удаление медиа из медиаклуба
+        /// Удаление медиа из медиаклуба.
         /// </summary>
         /// <param name="clubId">Идентификатор медиаклуба</param>
         /// <param name="mediaId">Идентификатор медиа</param>
@@ -111,7 +111,7 @@ namespace T2JuniorAPI.Services.MediaClubs
         }
 
         /// <summary>
-        /// Удаление аватара из медиаклуба
+        /// Удаление аватара из медиаклуба.
         /// </summary>
         /// <param name="clubId">Идентификатор медиаклуба</param>
         /// <param name="mediaId">Идентификатор медиа</param>
@@ -139,7 +139,7 @@ namespace T2JuniorAPI.Services.MediaClubs
         }
 
         /// <summary>
-        /// Получение всех медиаклубов по идентификатору клуба
+        /// Получение всех медиаклубов по идентификатору клуба.
         /// </summary>
         /// <param name="clubId">Идентификатор клуба</param>
         /// <returns>Список медиаклубов</returns>
@@ -154,7 +154,7 @@ namespace T2JuniorAPI.Services.MediaClubs
         }
 
         /// <summary>
-        /// Проверка, является ли пользователь администратором в клубе
+        /// Проверка, является ли пользователь администратором в клубе.
         /// </summary>
         /// <param name="userId">Идентификатор пользователя</param>
         /// <param name="clubId">Идентификатор клуба</param>

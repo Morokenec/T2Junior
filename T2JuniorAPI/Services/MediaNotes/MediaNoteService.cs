@@ -7,12 +7,21 @@ using T2JuniorAPI.Services.Medias;
 
 namespace T2JuniorAPI.Services.MediaNotes
 {
+    /// <summary>
+    /// Сервис для управления медиафайлами в заметках.
+    /// </summary>
     public class MediaNoteService : IMediaNoteService
     {
         private readonly ApplicationDbContext _context;
         private readonly IMapper _mapper;
         private readonly IMediafileService _mediafileservice;
 
+        /// <summary>
+        /// Конструктор класса MediaNoteService.
+        /// </summary>
+        /// <param name="mapper">Mapper для маппинга объектов.</param>
+        /// <param name="context">Контекст базы данных.</param>
+        /// <param name="mediafileservice">Сервис для работы с медиафайлами.</param>
         public MediaNoteService(IMapper mapper, ApplicationDbContext context, IMediafileService mediafileservice)
         {
             _mapper = mapper;
@@ -20,6 +29,12 @@ namespace T2JuniorAPI.Services.MediaNotes
             _mediafileservice = mediafileservice;
         }
 
+        /// <summary>
+        /// Добавление медиафайла к заметке по её идентификатору.
+        /// </summary>
+        /// <param name="idNote">Идентификатор заметки.</param>
+        /// <param name="uploadDTO">DTO с данными для загрузки медиафайла.</param>
+        /// <returns>Созданная связь между заметкой и медиафайлом.</returns>
         public async Task<MediaNoteDTO> AddMediaToNoteAsync(Guid idNote, MediafileUploadDTO uploadDTO)
         {
             var mediafile = await _mediafileservice.CreateMediafileAsync(uploadDTO);
@@ -32,6 +47,12 @@ namespace T2JuniorAPI.Services.MediaNotes
             return _mapper.Map<MediaNoteDTO>(mediaNote);
         }
 
+        /// <summary>
+        /// Удаление медиафайла из заметки по её идентификатору.
+        /// </summary>
+        /// <param name="idNote">Идентификатор заметки.</param>
+        /// <param name="idMedia">Идентификатор медиафайла.</param>
+        /// <returns>Результат удаления медиафайла.</returns>
         public async Task<bool> DeleteMediaFromNoteAsync(Guid idNote, Guid idMedia)
         {
             var mediaNote = await _context.MediaNotes

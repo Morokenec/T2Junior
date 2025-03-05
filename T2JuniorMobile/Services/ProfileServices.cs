@@ -11,16 +11,27 @@ using T2JuniorAPI.DTOs;
 
 namespace T2JuniorMobile.Services
 {
+    /// <summary>
+    /// Сервис для управления профилем пользователя.
+    /// </summary>
     public class ProfileServices
     {
         private readonly HttpClient _httpClient;
         private readonly string ProfileEndpoint = "http://localhost:5138/api/Account/profile/{id}";
 
+        /// <summary>
+        /// Конструктор класса ProfileServices.
+        /// </summary>
+        /// <param name="httpClient">HTTP-клиент для выполнения запросов.</param>
         public ProfileServices(HttpClient httpClient)
         {
             _httpClient = httpClient ?? throw new ArgumentNullException(nameof(httpClient));
         }
 
+        /// <summary>
+        /// Получение идентификатора пользователя из безопасного хранилища.
+        /// </summary>
+        /// <returns>Идентификатор пользователя.</returns>
         private async Task<string> GetUserIdAsync()
         {
             try
@@ -35,6 +46,10 @@ namespace T2JuniorMobile.Services
             }
         }
 
+        /// <summary>
+        /// Получение профиля пользователя.
+        /// </summary>
+        /// <returns>Профиль пользователя.</returns>
         public async Task<UserProfileDTO> GetProfileAsync()
         {
             try

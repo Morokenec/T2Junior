@@ -23,6 +23,13 @@ namespace T2JuniorAPI.Controllers
             _noteStatusService = noteStatusService;
         }
 
+        /// <summary>
+        /// Получение или создание статуса заметки по его названию.
+        /// </summary>
+        /// <param name="statusName">Название статуса заметки.</param>
+        /// <returns>Статус заметки.</returns>
+        /// <response code="200">Успешное выполнение</response>
+        /// <response code="400">Ошибка API</response>
         [HttpPost("get-or-create/{statusName}")]
         public async Task<ActionResult> GetOrCreateNoteStatus(string statusName)
         {
@@ -30,7 +37,13 @@ namespace T2JuniorAPI.Controllers
             return Ok(noteStatus);
         }
 
-
+        /// <summary>
+        /// Обновление существующего статуса заметки.
+        /// </summary>
+        /// <param name="updateDto">DTO с обновленными данными статуса заметки.</param>
+        /// <returns>Обновленный статус заметки.</returns>
+        /// <response code="200">Успешное выполнение</response>
+        /// <response code="400">Ошибка API</response>
         [HttpPut]
         public async Task<ActionResult<NoteStatusDTO>> UpdateNoteStatus([FromBody] NoteStatusDTO updateDto)
         {
@@ -38,6 +51,13 @@ namespace T2JuniorAPI.Controllers
             return Ok(noteStatus);
         }
 
+        /// <summary>
+        /// Удаление статуса заметки по его идентификатору.
+        /// </summary>
+        /// <param name="id">Идентификатор статуса заметки.</param>
+        /// <returns>Результат удаления статуса заметки.</returns>
+        /// <response code="200">Успешное выполнение</response>
+        /// <response code="400">Ошибка API</response>
         [HttpDelete("{id}")]
         public async Task<ActionResult<bool>> DeleteNoteStatus(Guid id)
         {
@@ -45,6 +65,12 @@ namespace T2JuniorAPI.Controllers
             return Ok(result);
         }
 
+        /// <summary>
+        /// Получает статуса всех заметок.
+        /// </summary>
+        /// <returns>Список всех статусов заметок.</returns>
+        /// <response code="200">Успешное выполнение</response>
+        /// <response code="400">Ошибка API</response>
         [HttpGet("get-all")]
         public async Task<ActionResult<IEnumerable<NoteStatusDTO>>> GetAllNoteStatuses()
         {

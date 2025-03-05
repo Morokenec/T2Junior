@@ -24,7 +24,7 @@ namespace T2JuniorAPI.Controllers
         }
 
         /// <summary>
-        /// Получение ленты записей (стены) пользователя
+        /// Получение ленты записей (стены) пользователя.
         /// </summary>
         /// <param name="createWallTypeDTO">Тип стены</param>
         /// <returns></returns>
@@ -38,7 +38,7 @@ namespace T2JuniorAPI.Controllers
         }
 
         /// <summary>
-        /// Создание или получение типа ленты записей (стены)
+        /// Создание или получение типа ленты записей (стены).
         /// </summary>
         /// <param name="id">Тип стены</param>
         /// <returns></returns>
@@ -55,7 +55,7 @@ namespace T2JuniorAPI.Controllers
         }
 
         /// <summary>
-        /// Получение списка всех типов лент записей (стен)
+        /// Получение списка всех типов лент записей (стен).
         /// </summary>
         /// <returns></returns>
         /// <response code="200">Успешное выполнение</response>

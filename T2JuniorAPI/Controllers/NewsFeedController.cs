@@ -16,6 +16,13 @@ namespace T2JuniorAPI.Controllers
             _newsFeedService = newsFeedService;
         }
 
+        /// <summary>
+        /// Получение ленты новостей для пользователя по его идентификатору.
+        /// </summary>
+        /// <param name="userId">Идентификатор пользователя.</param>
+        /// <returns>Лента новостей пользователя.</returns>
+        /// <response code="200">Успешное выполнение</response>
+        /// <response code="400">Ошибка API</response>
         [HttpGet("{userId}")]
         public async Task<ActionResult<IEnumerable<NoteDTO>>> GetNewsFeed(Guid userId)
         {
