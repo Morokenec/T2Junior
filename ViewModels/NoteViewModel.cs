@@ -68,6 +68,7 @@ namespace MauiApp1.ViewModels
         {
             _noteService = noteService;
         }
+
         public async Task RefreshDataAsync()
         {
             IsRefreshing = true;

@@ -5,6 +5,7 @@ using System.Windows.Input;
 using MauiApp1.Services.AppHelper;
 using MauiApp1.Services.UseCase;
 using MauiApp1.Models.ClubModels.Club;
+using CommunityToolkit.Maui.Core.Extensions;
 
 namespace MauiApp1.ViewModels.ClubViewModel
 {
@@ -17,6 +18,8 @@ namespace MauiApp1.ViewModels.ClubViewModel
 
         private string _searchText;
         private string _pathClubAvatar;
+        private bool _isVisibleUserSubscribedClubList;
+        private ObservableCollection<Club> _isUserSubscribedClubList;
 
         public string SearchText
         {
@@ -93,6 +96,20 @@ namespace MauiApp1.ViewModels.ClubViewModel
             }
         }
 
+        public bool IsVisibleUserSubscribedClubList
+        {
+            get => _isVisibleUserSubscribedClubList;
+            set
+            {
+                if (_isVisibleUserSubscribedClubList != value)
+                {
+                    _isVisibleUserSubscribedClubList = !value;
+                    OnPropertyChanged();
+                    OnPropertyChanged(nameof(SubImageSource));
+                }
+            }
+        }
+
         public bool IsRefreshing
         {
             get => _isRefreshing;
@@ -110,6 +127,19 @@ namespace MauiApp1.ViewModels.ClubViewModel
 
         public ClubsViewModel()
         {
+            _httpClient = new HttpClient();
+            _jsonDeserializerService = new JsonDeserializerService();
+            _clubService = new ClubService(_httpClient, _jsonDeserializerService);
+
+            Clubs = new ObservableCollection<Club>();
+            FilteredClubs = new ObservableCollection<Club>();
+
+            SubscriptionCheckCommand = new Command(ToggleSubscription);
+        }
+
+        public ClubsViewModel(bool isVisibleUserSubscribedClubList)
+        {
+            _isVisibleUserSubscribedClubList = isVisibleUserSubscribedClubList;
             _httpClient = new HttpClient();
             _jsonDeserializerService = new JsonDeserializerService();
             _clubService = new ClubService(_httpClient, _jsonDeserializerService);
@@ -144,12 +174,25 @@ namespace MauiApp1.ViewModels.ClubViewModel
                         Clubs.Add(club);
                     }
 
-                    // Изначально фильтр совпадает с полным списком
-                    FilteredClubs.Clear();
-                    foreach (var club in Clubs)
+                    if (_isVisibleUserSubscribedClubList)
                     {
-                        FilteredClubs.Add(club);
+                        _isUserSubscribedClubList = Clubs.Where(c => c.IsUserSubscribed == true).ToObservableCollection();
+                        FilteredClubs.Clear();
+                        foreach (var club in _isUserSubscribedClubList)
+                        {
+                            FilteredClubs.Add(club);
+                        }
                     }
+                    else
+                    {
+                        FilteredClubs.Clear();
+                        Clubs = new ObservableCollection<Club>(Clubs.OrderBy(c => c.IsVisibileSubscribeButton));
+                        foreach (var club in Clubs)
+                        {
+                            FilteredClubs.Add(club);
+                        }
+                    }
+
                 });
             }
             else

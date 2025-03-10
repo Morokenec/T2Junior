@@ -15,7 +15,7 @@
 
         <Label Text="Вход в приложение" 
                FontSize="20"
-               FontFamily="MyriadPro"
+               FontFamily="MyriadProBold"
                HorizontalOptions="Center" 
                VerticalOptions="Center" 
                Margin="0,10,0,10" />
@@ -27,6 +27,7 @@
                        Placeholder="E-mail"
                        PlaceholderColor="Gray"
                        TextColor="Black"
+                       FontFamily="MyriadPro"
                        Text="{Binding Email}"
                        HorizontalOptions="Center" />
                 </Frame>
@@ -36,18 +37,19 @@
                        WidthRequest="300" 
                        IsPassword="True"
                        Placeholder="Пароль"
+                           FontFamily="MyriadPro"
                        Text="{Binding Password}"
                        PlaceholderColor="Gray"
                        TextColor="Black"
                        HorizontalOptions="Center"/>
                 </Frame>
-                <Label Text="Забыли пароль?"
+                <!--<Label Text="Забыли пароль?"
                    HorizontalOptions="End"
                    TextColor="#4986BE">
                     <Label.GestureRecognizers>
                         <TapGestureRecognizer Tapped="OnForgotPasswordTapped" />
                     </Label.GestureRecognizers>
-                </Label>
+                </Label>-->
             </VerticalStackLayout>
 
             <Label x:Name="ValidationLabel" 
@@ -69,6 +71,7 @@
                 <Frame CornerRadius="12" BorderColor="#91B4D7" HasShadow="True" Padding="0">
                     <Button Text="Регистрация"
                             BackgroundColor="Transparent"
+                            FontFamily="MyriadPro"
                             TextColor="#0057A6"/>
                 </Frame>
             </VerticalStackLayout>

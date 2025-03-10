@@ -68,4 +68,9 @@ public partial class ClubsPage : ContentPage
                     tappedClub.Id)));
         }
     }
+
+    private async void BackButtonClicked(object sender, EventArgs e)
+    {
+        await Navigation.PopAsync();
+    }
 }

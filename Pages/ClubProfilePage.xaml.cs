@@ -58,4 +58,9 @@ public partial class ClubProfilePage : ContentPage
     {
 
     }
+
+    private async void OnBackButtonTapped(object sender, TappedEventArgs e)
+    {
+        await Navigation.PopAsync();
+    }
 }

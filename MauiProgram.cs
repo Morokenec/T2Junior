@@ -45,6 +45,7 @@ namespace MauiApp1
                 builder.Services.AddSingleton<ClubProfileViewModel>();
                 builder.Services.AddSingleton<NoteViewModel>();
                 builder.Services.AddSingleton<SubscribersViewModel>();
+                builder.Services.AddSingleton<FollowingViewModel>();
 
                 builder.Services.AddTransient<ProfilePage>();
                 builder.Services.AddTransient<SubscribersPage>();
@@ -52,6 +53,7 @@ namespace MauiApp1
                 builder.Services.AddTransient<ClubProfilePage>();
                 builder.Services.AddTransient<AuthorizationPage>();
                 builder.Services.AddTransient<NotesPage>();
+                builder.Services.AddTransient<FollowingPage>();
 
                 builder.Services.AddSingleton<HttpClient>();
 

@@ -21,11 +21,11 @@ namespace MauiApp1.Services.UseCase
             _jsonDeserializerService = jsonDeserializerService;
         }
 
-        public async Task<ProfileResponse> GetProfileDataAsync()
+        public async Task<ProfileResponse> GetProfileDataAsync(Guid userId)
         {
             try
             {
-                string url = $"{AppSettings.base_url}/api/Account/profile/{AppSettings.test_user_guid}";
+                string url = $"{AppSettings.base_url}/api/Account/profile/{userId.ToString()}";
 
                 HttpResponseMessage response = await _httpClient.GetAsync(url);
 
@@ -101,11 +101,37 @@ namespace MauiApp1.Services.UseCase
             return null;
         }
 
-        public async Task<List<UserSocial>> GetUserSubscribers(Guid userId)
+        public async Task<List<UserSocial>> GetUserSubscriptions(Guid userId)
         {
             try
             {
                 string url = $"{AppSettings.base_url}/api/UserSubscribers/subscriptions?userId={userId.ToString()}";
+
+                HttpResponseMessage response = await _httpClient.GetAsync(url);
+
+                string responseContent = await response.Content.ReadAsStringAsync();
+                Debug.WriteLine($"[DEBUG] Response: {responseContent}");
+
+                if (!response.IsSuccessStatusCode)
+                {
+                    Debug.WriteLine($"[ERROR] HTTP {response.StatusCode}: {responseContent}");
+                    return null;
+                }
+
+                return _jsonDeserializerService.Deserialize<List<UserSocial>>(responseContent);
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine($"[ERROR] Exception: {ex.Message}");
+                return null;
+            }
+        }
+
+        public async Task<List<UserSocial>> GetUserSubscribers(Guid userId)
+        {
+            try
+            {
+                string url = $"{AppSettings.base_url}/api/UserSubscribers/subscribers?userId={userId.ToString()}";
 
                 HttpResponseMessage response = await _httpClient.GetAsync(url);
 

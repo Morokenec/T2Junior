@@ -15,6 +15,7 @@
                 <RowDefinition Height="Auto"/>
                 <RowDefinition Height="Auto"/>
                 <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
             </Grid.RowDefinitions>
 
             <Grid.ColumnDefinitions>
@@ -31,9 +32,9 @@
                 <Frame x:Name="BackFrame"
                    BorderColor="Transparent"
                    Margin="0,0,0,8">
-                    <!--<Frame.GestureRecognizers>
+                    <Frame.GestureRecognizers>
                         <TapGestureRecognizer Tapped="OnBackButtonTapped" />
-                    </Frame.GestureRecognizers>-->
+                    </Frame.GestureRecognizers>
                     <Image Source="back_icon. "
                        Aspect="AspectFill"
                        VerticalOptions="Center"
@@ -44,6 +45,7 @@
                 <Frame x:Name="CalendarTextFrame"
                    BorderColor="Transparent"
                    HeightRequest="24"
+                   
                    Margin="0,0,0,8"
                    WidthRequest="295">
                     <Label Text="Клубы"
@@ -54,18 +56,24 @@
             </HorizontalStackLayout>
 
             <Border Grid.Row="1"
-                    Stroke="Gray"
+                    Margin="0,0,0,0"
                     StrokeThickness="0.2"
                     HorizontalOptions="Fill"
                     Background="White"
                     Padding="16,8">
+                <Border.Stroke>
+                    <LinearGradientBrush EndPoint="0,1">
+                        <GradientStop Color="Transparent" Offset="0.2" />
+                        <GradientStop Color="#9C9B9A" Offset="1.0" />
+                    </LinearGradientBrush>
+                </Border.Stroke>
                 <Border.StrokeShape>
                     <RoundRectangle CornerRadius="0,0,10,10" />
                 </Border.StrokeShape>
                 <Border.Shadow>
                     <Shadow Brush="Black"
                             Offset="0,2"
-                            Radius="40"
+                            Radius="6"
                             Opacity="0.1"/>
                 </Border.Shadow>
                 <StackLayout Grid.Row="1" >
@@ -75,6 +83,7 @@
                            VerticalOptions="Start"
                            CornerRadius="10"
                            HasShadow="True"
+                           IsVisible="False"
                            Padding="8, 4.75"
                            Margin="0, 0, 2, 0">
                         <Frame.GestureRecognizers>
@@ -175,29 +184,7 @@
                             VerticalOptions="Center"
                             Clicked="SubscribeButton_Clicked"
                             Margin="0, 10, 0, 0"/>
-                        <Button x:Name="ProjectButton"
-                            BackgroundColor="White"
-                            BorderWidth="1"
-                            Text="Проекты"
-                            TextColor="#0057A6"
-                            BorderColor="#0057A6"
-                            FontSize="15"
-                            CornerRadius="10"
-                            HorizontalOptions="Fill"
-                            VerticalOptions="Center"
-                            Margin="0, 10, 0, 0"/>
-                        <Button x:Name="SendNewsButton"
-                            BackgroundColor="White"
-                            BorderWidth="1"
-                            Clicked="SendNewsButton_Clicked"
-                            Text="Опубликовать"
-                            TextColor="#0057A6"
-                            BorderColor="#0057A6"
-                            FontSize="15"
-                            CornerRadius="10"
-                            HorizontalOptions="Fill"
-                            VerticalOptions="Center"
-                            Margin="0, 10, 0, 0"/>
+
                     </VerticalStackLayout>
                 </StackLayout>
             </Border>
@@ -284,34 +271,40 @@
                 </Frame>
             </HorizontalStackLayout>
 
-            <Frame Grid.Row="5" HeightRequest="44" CornerRadius="12" Margin="16,0">
-                <HorizontalStackLayout VerticalOptions="Fill">
-                    <Frame HasShadow="True" WidthRequest="295" HeightRequest="44" BorderColor="Transparent">
-                        <Entry x:Name="searchEntry"
-                           Text="{Binding SearchText}"
-                           Placeholder="Поиск"
-                           TextColor="Gray"
-                           PlaceholderColor="#A2A4AF"
-                           FontFamily="Manrope"
-                           HorizontalOptions="Fill"
-                           FontSize="13"
-                           Margin="12,0"/>
-                    </Frame>
-                    <Frame Margin="0,0,88,0" BorderColor="Transparent">
-                        <ImageButton Padding="0"
-                                 Source="search_icon.svg" 
-                                 BackgroundColor="Transparent" 
-                                 Clicked="ImageButton_Clicked"
-                                 VerticalOptions="Start" 
-                                 HorizontalOptions="Center"/>
-                    </Frame>
-                </HorizontalStackLayout>
+            <Frame CornerRadius="10"
+                       Grid.Row="5"
+                        HorizontalOptions="Fill"
+                        VerticalOptions="Fill"
+                        Padding="16,0,0,0"
+                        Margin="8,10,8,2"
+                        BackgroundColor="White">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                    </Grid.RowDefinitions>
+                    <Label FontSize="Large" VerticalOptions="Center" FontFamily="MyriadProBold">Лента</Label>
+                    <ImageButton Source="search_icon.pn" Padding="-2" HorizontalOptions="End"/>
+                </Grid>
             </Frame>
+
+            <Button Grid.Row="6" x:Name="SendNewsButton"
+                            BackgroundColor="White"
+                            BorderWidth="1"
+                            Clicked="SendNewsButton_Clicked"
+                            Text="Опубликовать"
+                            TextColor="#0057A6"
+                            BorderColor="#0057A6"
+                            FontSize="15"
+                            CornerRadius="10"
+                            HorizontalOptions="Fill"
+                            VerticalOptions="Center"
+                            Margin="8"/>
             <CollectionView ItemsSource="{Binding Notes}"
-          x:Name="NotesCollection"
-          Grid.Row="6"
-          Margin="0,12,0,0"
-          BackgroundColor="White">
+                              x:Name="NotesCollection"
+                              Grid.Row="7"
+                              Margin="0,12,0,0"
+                              BackgroundColor="White">
                 <CollectionView.ItemsLayout>
                     <GridItemsLayout Span="1"
                    Orientation="Vertical" />
@@ -322,7 +315,7 @@
              HorizontalOptions="Fill"
              VerticalOptions="Fill"
              Padding="16,20,16,16"
-             Margin="8,10,8,0"
+             Margin="8,10,8,2"
              BackgroundColor="White">
                             <StackLayout>
                                 <!--<StackLayout.GestureRecognizers>
@@ -339,14 +332,14 @@
                                         <Label Text="{Binding Name}"
                              HorizontalOptions="Start"
                              HeightRequest="24"
-                             FontSize="14"
-                             FontFamily="RedRoseBold" />
+                             FontSize="16"
+                             FontFamily="MyriadProBold" />
                                         <Label Text="{Binding Description}"
                              HorizontalOptions="Start"
                              
-                             FontSize="12"
+                             FontSize="14"
                              TextColor="#9C9B9A"
-                             FontFamily="ManropeExtraLight" />
+                             FontFamily="MyriadPro" />
                                         <Image x:Name="NewsHolder"
                              IsVisible="True"
                              Aspect="AspectFill"

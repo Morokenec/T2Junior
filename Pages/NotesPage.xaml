@@ -27,13 +27,7 @@
                     <Frame.GestureRecognizers>
                         <TapGestureRecognizer Tapped="OnBackButtonTapped" />
                     </Frame.GestureRecognizers>
-                    <Image Source="back_icon.
-                       "
-                       Aspect="AspectFill"
-                       VerticalOptions="Center"
-                       HorizontalOptions="Center"
-                       WidthRequest="24"
-                       HeightRequest="24" />
+
                 </Frame>
                 <Frame x:Name="CalendarTextFrame"
                    BorderColor="Transparent"
@@ -77,14 +71,14 @@
                                         <Label Text="{Binding Name}"
                                            HorizontalOptions="Start"
                                            HeightRequest="24"
-                                           FontSize="14"
-                                           FontFamily="RedRoseBold" />
+                                           FontSize="18"
+                                           FontFamily="MyriadProBold" />
                                         <Label Text="{Binding Description}"
                                            HorizontalOptions="Start"
                                            
-                                           FontSize="12"
+                                           FontSize="16"
                                            TextColor="#9C9B9A"
-                                           FontFamily="ManropeExtraLight" />
+                                           FontFamily="MyriadPro" />
                                         <Image x:Name="NewsHolder"
                                            IsVisible="True"
                                            Aspect="AspectFill"

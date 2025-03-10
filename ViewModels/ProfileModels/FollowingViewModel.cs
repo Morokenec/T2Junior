@@ -10,22 +10,22 @@ using System.Threading.Tasks;
 
 namespace MauiApp1.ViewModels.ProfileModels
 {
-    public class SubscribersViewModel : INotifyPropertyChanged
+    public class FollowingViewModel : INotifyPropertyChanged
     {
         public event PropertyChangedEventHandler? PropertyChanged;
         private readonly IProfileService _profileService;
 
         public ObservableCollection<UserSocial> Users { get; set; } = new ObservableCollection<UserSocial>();
 
-        public SubscribersViewModel(IProfileService profileService)
+        public FollowingViewModel(IProfileService profileService)
         {
             _profileService = profileService;
         }
 
-        public async Task LoadUsers(Guid userId)
+        public async Task LoadUsers()
         {
             Users.Clear();
-            var notes = await _profileService.GetUserSubscriptions(Guid.Parse(AppSettings.test_user_guid));
+            var notes = await _profileService.GetUserSubscribers(Guid.Parse(AppSettings.test_user_guid));
             if (notes != null)
             {
                 foreach (var note in notes)

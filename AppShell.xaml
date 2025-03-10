@@ -16,7 +16,7 @@
         <Tab Title="Новости" Icon="news.svg">
         <ShellContent ContentTemplate="{DataTemplate local:NotesPage}" />
     </Tab>
-    <Tab Title="Сообщения" Icon="chat.svg">
+    <Tab Title="Сообщения" Icon="chat.svg" IsVisible="False">
         <ShellContent ContentTemplate="{DataTemplate local:MessagesPage}" />
     </Tab>
     <Tab Title="Клубы" Icon="clubs.svg">

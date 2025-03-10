@@ -16,6 +16,7 @@
                 <RowDefinition Height="Auto" />
                 <RowDefinition Height="Auto" />
                 <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
                 </Grid.RowDefinitions>
 
             <Frame Grid.Row="0"
@@ -51,13 +52,14 @@
                                     <Label x:Name="CoinText"
                                            Text="Коины" 
                                            TextColor="#498CC4"
+                                           FontFamily="MyriadPro"
                                            FontSize="12"/>
                                 </HorizontalStackLayout>
                                 <HorizontalStackLayout x:Name="CoinCounterLayout"
                                                        HorizontalOptions="Center">
                                     <Label x:Name="CoinCountLabel"
                                            FontSize="20"
-                                           Text="0"
+                                           Text="14"
                                            HorizontalOptions="Center"
                                            FontFamily="MyriadProBold"
                                            HeightRequest="22"/>
@@ -89,6 +91,7 @@
                                            HeightRequest="14"/>
                                     <Label x:Name="RatingText"
                                            Text="Рейтинг" 
+                                           FontFamily="MyriadPro"
                                            TextColor="#498CC4"
                                            FontSize="12"/>
                                 </HorizontalStackLayout>
@@ -101,7 +104,7 @@
                                     <Label x:Name="UserRatingLabel"
                                            FontSize="20"
                                            HeightRequest="22"
-                                           Text="0"
+                                           Text="1"
                                            VerticalOptions="End"
                                            FontFamily="MyriadProBold"/>
 
@@ -112,7 +115,7 @@
 
                                     <Label x:Name="RatingCountLabel"
                                            FontSize="9"
-                                           Text="0"
+                                           Text="100"
                                            VerticalOptions="End"
                                            TextColor="#9C9B9A"/>
 
@@ -144,6 +147,7 @@
                             <Frame x:Name="CircleOverlay" 
                                BackgroundColor="#3DC47C" 
                                CornerRadius="25"
+                               IsVisible="False"
                                WidthRequest="20"
                                HeightRequest="20"
                                Margin="150, 87, 31, 0">
@@ -155,29 +159,17 @@
                             <Label x:Name="FullNameLabel"
                                Text="{Binding UserInfo.FullName}" 
                                HorizontalOptions="Center"
+                                   FontFamily="MyriadProBold"
                                FontSize="20"/>
 
                             <Label x:Name="JobLabel"
                                TextColor="#838281"
+                               FontFamily="MyriadPro"
                                Text="{Binding UserInfo.PostAndOrganization}" 
                                HorizontalOptions="Center"
                                VerticalOptions="Center"
                                FontSize="12"
                                Margin="16,10"/>
-
-                            <Button x:Name="NoteCreateButton"
-                                BackgroundColor="White"
-                                BorderWidth="1"
-                                Text="Опубликовать"
-                                CornerRadius="12"
-                                TextColor="#0057A6"
-                                BorderColor="#0057A6"
-                                FontSize="15"
-                                HorizontalOptions="Fill"
-                                VerticalOptions="Center"
-                                WidthRequest="319"
-                                Clicked="NoteCreateButton_Clicked"
-                                Margin="0, 10, 0, 0"/>
                             <!--<Button x:Name="SubscribeButton"
                                 BackgroundColor="#0057A6"
                                 BorderWidth="1"
@@ -212,13 +204,13 @@
                                      Spacing="6">
                             <Label Text="Подписчики"
                                    FontSize="13"
-                                   FontFamily="ManropeMid"
+                                   FontFamily="MyriadPro"
                                    TextColor="#9C9B9A"
                                    HorizontalOptions="Start" />
 
                             <Label x:Name="SubscribersCount"
                                    Text="{Binding UserInfo.SubscriptionsCount}"
-                                   FontFamily="RedRoseBold"
+                                   FontFamily="MyriadProBold"
                                    FontSize="20"
                                    TextColor="#838281" />
                         </StackLayout>
@@ -239,12 +231,12 @@
                                          Spacing="6">
                                 <Label Text="Подписки"
                                        FontSize="13"
-                                       FontFamily="ManropeMid"
+                                       FontFamily="MyriadPro"
                                        TextColor="#9C9B9A" />
 
                                 <Label x:Name="FollowingCount"
                                        Text="{Binding UserInfo.SubscribersCount}"
-                                       FontFamily="RedRoseBold"
+                                       FontFamily="MyriadProBold"
                                        FontSize="20"
                                        TextColor="#838281" />
                             </StackLayout>
@@ -265,12 +257,12 @@
                                          Spacing="6">
                                 <Label Text="Клубы"
                                        FontSize="13"
-                                       FontFamily="ManropeMid"
+                                       FontFamily="MyriadPro"
                                        TextColor="#9C9B9A" />
 
                                 <Label x:Name="ClubsCount"
                                        Text="{Binding UserInfo.ClubsCount}"
-                                       FontFamily="RedRoseBold"
+                                       FontFamily="MyriadProBold"
                                        FontSize="20"
                                        TextColor="#838281" />
                             </StackLayout>
@@ -282,6 +274,7 @@
                 <Frame x:Name="OtherOptionsFrame"
                    Grid.Row="4"
                    CornerRadius="20"
+                   IsVisible="False"
                    Padding="8, 0, 0, 0"
                    Margin="8, 0">
                     <VerticalStackLayout>
@@ -302,6 +295,7 @@
                                    Text="Проекты" 
                                    TextColor="#191C30"
                                    FontSize="15"
+                                   FontFamily="MyriadPro"
                                    VerticalOptions="Center"
                                    WidthRequest="231"/>
                                 <Image Source="redirect.png"
@@ -335,6 +329,7 @@
                                    Text="Календарь" 
                                    TextColor="#191C30"
                                    FontSize="15"
+                                   FontFamily="MyriadPro"
                                    VerticalOptions="Center"
                                    WidthRequest="231"/>
                                 <Image Source="redirect.png"
@@ -368,6 +363,7 @@
                                    Text="Активности" 
                                    TextColor="#191C30"
                                    FontSize="15"
+                                   FontFamily="MyriadPro"
                                    VerticalOptions="Center"
                                    WidthRequest="231"/>
                                 <Image Source="redirect.svg"
@@ -376,10 +372,63 @@
                         </Frame>
                     </VerticalStackLayout>
                 </Frame>
+                <Frame CornerRadius="10"
+                       Grid.Row="5"
+                        HorizontalOptions="Fill"
+                        VerticalOptions="Fill"
+                        Padding="16,0,0,0"
+                        Margin="8,10,8,2"
+                        BackgroundColor="White">
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="*"/>
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="Auto" />
+                        </Grid.ColumnDefinitions>
+                        <Label FontSize="Large" VerticalOptions="Center" FontFamily="MyriadProBold">Лента</Label>
+                        <ImageButton Source="search_icon.pn" Padding="-2" HorizontalOptions="End"/>
+                    </Grid>
+                </Frame>
+                <Border Grid.Row="1" Padding="8,0">
+                    <Border.Stroke>
+                        <LinearGradientBrush EndPoint="0,1">
+                            <GradientStop Color="Transparent" Offset="0.5" />
+                            <GradientStop Color="#9C9B9A" Offset="1.0" />
+                        </LinearGradientBrush>
+                    </Border.Stroke>
+                    <Border.Shadow>
+                        <Shadow 
+                            Brush="#9C9B9A"
+                            Offset="1, 1"
+                            Radius="40"
+                            Opacity="0.2"
+                            />
+                    </Border.Shadow>
+                    <Border.StrokeShape>
+                        <RoundRectangle CornerRadius="25" />
+                    </Border.StrokeShape>
+                    <Button
+                    x:Name="NoteCreateButton"
+                    BackgroundColor="White"
+                    BorderWidth="1"
+                    Text="Опубликовать"
+                    CornerRadius="12"
+                    TextColor="#0057A6"
+                    Grid.RowSpan="2"
+                    BorderColor="#0057A6"
+                    FontSize="16"
+                    FontFamily="MyriadPro"
+                    HorizontalOptions="Fill"
+                    Margin = "0,0,0,6"
+                    Clicked="NoteCreateButton_Clicked" />
+                </Border>
                 <CollectionView ItemsSource="{Binding Notes}"
                         x:Name="NotesCollection"
-                        Grid.Row="6"
-                        Margin="0,12,0,0"
+                        Grid.Row="7"
                         BackgroundColor="#EBEBEB"
                                 Background="White">
                     <CollectionView.ItemsLayout>
@@ -409,13 +458,13 @@
                                             <Label Text="{Binding Name}"
                                            HorizontalOptions="Start"
                                            HeightRequest="24"
-                                           FontSize="14"
-                                           FontFamily="RedRoseBold" />
+                                           FontSize="18"
+                                           FontFamily="MyriadProBold" />
                                             <Label Text="{Binding Description}"
                                            HorizontalOptions="Start"                                      
-                                           FontSize="12"
+                                           FontSize="16"
                                            TextColor="#9C9B9A"
-                                           FontFamily="ManropeExtraLight" />
+                                           FontFamily="MyriadPro" />
                                             <Image x:Name="NewsHolder"
                                            IsVisible="True"
                                            Aspect="AspectFill"

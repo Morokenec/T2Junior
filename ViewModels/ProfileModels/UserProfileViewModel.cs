@@ -22,6 +22,8 @@ namespace MauiApp1.ViewModels.Profile
         public ObservableCollection<Note> Notes { get; set; } = new ObservableCollection<Note>();
         public ObservableCollection<Note> FilteredNotes { get; set; }
 
+        private bool _isOutProfile;
+
         private UserInfo _userInfo;
 
         public ICommand LoadDataCommand { get; }
@@ -31,7 +33,7 @@ namespace MauiApp1.ViewModels.Profile
         {
             _noteService = noteService;
             _profileService = profileService;
-            LoadDataCommand = new Command(async () => await LoadDataAsync());
+            LoadDataCommand = new Command(async () => await LoadDataAsync(Guid.Parse(UserInfo.Id)));
             RefreshCommand = new Command(async () => await RefreshDataAsync());
         }
 
@@ -77,16 +79,28 @@ namespace MauiApp1.ViewModels.Profile
             }
         }
 
-        public async Task LoadDataAsync()
+        public bool IsOutProfile { 
+            get => _isOutProfile; 
+            set
+            {
+                if (_isOutProfile != value)
+                {
+                    _isOutProfile = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
+
+        public async Task LoadDataAsync(Guid userId)
         {
-            await LoadProfile();
+            await LoadProfile(userId);
             await LoadNotes();
 
         }
 
-        private async Task LoadProfile()
+        private async Task LoadProfile(Guid userId)
         {
-            var response = await _profileService.GetProfileDataAsync();
+            var response = await _profileService.GetProfileDataAsync(userId);
             if (response?.Result != null)
             {
                 UserInfo = response.Result;
@@ -112,7 +126,7 @@ namespace MauiApp1.ViewModels.Profile
         {
             IsRefreshing = true;
             Notes.Clear();
-            await LoadDataAsync();
+            await LoadDataAsync(Guid.Parse(UserInfo.Id));
             IsRefreshing = false;
         }
 
@@ -128,7 +142,7 @@ namespace MauiApp1.ViewModels.Profile
                 {
                     using var stream = await chosenImage.OpenReadAsync();
                     await _profileService.SetAvatarProfileUploadServer(Guid.Parse(AppSettings.test_user_guid), stream);
-                    await LoadDataAsync();
+                    await LoadDataAsync(Guid.Parse(UserInfo.Id));
                 }
             }
             catch (Exception ex)
