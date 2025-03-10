@@ -22,8 +22,6 @@ namespace MauiApp1.ViewModels.Profile
         public ObservableCollection<Note> Notes { get; set; } = new ObservableCollection<Note>();
         public ObservableCollection<Note> FilteredNotes { get; set; }
 
-        private bool _isOutProfile;
-
         private UserInfo _userInfo;
 
         public ICommand LoadDataCommand { get; }
@@ -46,6 +44,8 @@ namespace MauiApp1.ViewModels.Profile
                 {
                     _userInfo = value;
                     OnPropertyChanged();
+                    OnPropertyChanged(nameof(IsOutProfile));
+                    OnPropertyChanged(nameof(IsYourProfile));
                 }
             }
         }
@@ -79,17 +79,9 @@ namespace MauiApp1.ViewModels.Profile
             }
         }
 
-        public bool IsOutProfile { 
-            get => _isOutProfile; 
-            set
-            {
-                if (_isOutProfile != value)
-                {
-                    _isOutProfile = value;
-                    OnPropertyChanged();
-                }
-            }
-        }
+        public bool IsOutProfile => UserInfo != null && UserInfo.Id != AppSettings.test_user_guid;
+        public bool IsYourProfile => !IsOutProfile;
+
 
         public async Task LoadDataAsync(Guid userId)
         {

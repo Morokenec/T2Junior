@@ -25,7 +25,7 @@ namespace MauiApp1.ViewModels.ProfileModels
         public async Task LoadUsers(Guid userId)
         {
             Users.Clear();
-            var notes = await _profileService.GetUserSubscriptions(Guid.Parse(AppSettings.test_user_guid));
+            var notes = await _profileService.GetUserSubscriptions(userId);
             if (notes != null)
             {
                 foreach (var note in notes)

@@ -168,7 +168,8 @@ namespace MauiApp1.ViewModels.ClubViewModel
                             Id = clubItem.Id,
                             Name = clubItem.Name,
                             IsUserSubscribed = clubItem.IsSubscribe,
-                            AvatarPath = clubItem.AvatarPath
+                            AvatarPath = clubItem.AvatarPath,
+                            Target = "Спортивный"
                         };
                         Debug.WriteLine($"[DATA]{club.Id} - {club.Name} - {club.IsUserSubscribed} ");
                         Clubs.Add(club);

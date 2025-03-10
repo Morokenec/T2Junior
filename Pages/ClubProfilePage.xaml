@@ -292,7 +292,7 @@
                             BackgroundColor="White"
                             BorderWidth="1"
                             Clicked="SendNewsButton_Clicked"
-                            Text="Опубликовать"
+                            Text="Создать пост"
                             TextColor="#0057A6"
                             BorderColor="#0057A6"
                             FontSize="15"
@@ -315,7 +315,7 @@
              HorizontalOptions="Fill"
              VerticalOptions="Fill"
              Padding="16,20,16,16"
-             Margin="8,10,8,2"
+             Margin="8,0,8,2"
              BackgroundColor="White">
                             <StackLayout>
                                 <!--<StackLayout.GestureRecognizers>

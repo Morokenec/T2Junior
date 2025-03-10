@@ -393,39 +393,55 @@
                         <ImageButton Source="search_icon.pn" Padding="-2" HorizontalOptions="End"/>
                     </Grid>
                 </Frame>
-                <Border Grid.Row="1" Padding="8,0">
-                    <Border.Stroke>
-                        <LinearGradientBrush EndPoint="0,1">
-                            <GradientStop Color="Transparent" Offset="0.5" />
-                            <GradientStop Color="#9C9B9A" Offset="1.0" />
-                        </LinearGradientBrush>
-                    </Border.Stroke>
-                    <Border.Shadow>
-                        <Shadow 
-                            Brush="#9C9B9A"
-                            Offset="1, 1"
-                            Radius="40"
-                            Opacity="0.2"
-                            />
-                    </Border.Shadow>
-                    <Border.StrokeShape>
-                        <RoundRectangle CornerRadius="25" />
-                    </Border.StrokeShape>
-                    <Button
-                    x:Name="NoteCreateButton"
-                    BackgroundColor="White"
-                    BorderWidth="1"
-                    Text="Опубликовать"
-                    CornerRadius="12"
-                    TextColor="#0057A6"
-                    Grid.RowSpan="2"
-                    BorderColor="#0057A6"
-                    FontSize="16"
-                    FontFamily="MyriadPro"
-                    HorizontalOptions="Fill"
-                    Margin = "0,0,0,6"
-                    Clicked="NoteCreateButton_Clicked" />
-                </Border>
+                <VerticalStackLayout Grid.Row="1" Spacing="5">
+                    <Frame Padding="8,0" BorderColor="Transparent" CornerRadius="10" IsVisible="{Binding IsOutProfile}">
+                        <Button x:Name="SubscribeButton"
+                            BackgroundColor="#0057A6"
+                            BorderWidth="1"    
+                            Text="Подписаться"
+                            TextColor="White"
+                            FontSize="15"
+                            CornerRadius="10"
+                            HorizontalOptions="Fill"
+                            VerticalOptions="Center"
+                            Margin="0, 10, 0, 0"/>
+                    </Frame>
+
+                    <Border  Padding="8,0">
+                        <Border.Stroke>
+                            <LinearGradientBrush EndPoint="0,1">
+                                <GradientStop Color="Transparent" Offset="0.5" />
+                                <GradientStop Color="#9C9B9A" Offset="1.0" />
+                            </LinearGradientBrush>
+                        </Border.Stroke>
+                        <Border.Shadow>
+                            <Shadow 
+                                Brush="#9C9B9A"
+                                Offset="1, 1"
+                                Radius="40"
+                                Opacity="0.2"
+                                />
+                        </Border.Shadow>
+                        <Border.StrokeShape>
+                            <RoundRectangle CornerRadius="25" />
+                        </Border.StrokeShape>
+                        <Button 
+                        x:Name="NoteCreateButton"
+                        BackgroundColor="White"
+                        BorderWidth="1"
+                        Text="Создать пост"
+                        CornerRadius="12"
+                        TextColor="#0057A6"
+                        IsVisible="{Binding IsYourProfile}"
+                        Grid.RowSpan="2"
+                        BorderColor="#0057A6"
+                        FontSize="16"
+                        FontFamily="MyriadPro"
+                        HorizontalOptions="Fill"
+                        Margin = "0,0,0,6"
+                        Clicked="NoteCreateButton_Clicked" />
+                    </Border>
+                </VerticalStackLayout>
                 <CollectionView ItemsSource="{Binding Notes}"
                         x:Name="NotesCollection"
                         Grid.Row="7"
