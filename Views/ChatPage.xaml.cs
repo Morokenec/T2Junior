@@ -163,7 +163,7 @@ public partial class ChatPage : ContentPage
         int avgHeight = 44;
         int maxLinesLength = 5;
         double editorHeight;
-        double maxHeight = (DeviceDisplay.MainDisplayInfo.Height / DeviceDisplay.MainDisplayInfo.Density) / 2.5;
+        double maxHeight = (DeviceDisplay.MainDisplayInfo.Height / DeviceDisplay.MainDisplayInfo.Density) / 2;
 
         double editorCharWidth = (double)editor.Width / (editor.FontSize * 0.7);
 
