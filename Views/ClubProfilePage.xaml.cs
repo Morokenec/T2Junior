@@ -2,6 +2,7 @@ using CommunityToolkit.Maui.Views;
 using MauiApp1.Pages.PopupPage;
 using MauiApp1.Services;
 using MauiApp1.ViewModel;
+using MauiApp1.Views;
 
 namespace MauiApp1;
 
@@ -38,7 +39,7 @@ public partial class ClubProfilePage : ContentPage
 
     private void OnCalendarButtonTapped(object sender, EventArgs e)
     {
-         Navigation.PushAsync(new CalendarPage());
+         Navigation.PushAsync(new EventsPage());
     }
 
     private void OnRulesButtonTapped(object sender, EventArgs e)

@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:services="clr-namespace:MauiApp1.Services"
              x:Class="MauiApp1.ClubsPage"
              x:Name="Clubs"
              Title="Клубы">
@@ -78,7 +79,7 @@
         <CollectionView ItemsSource="{Binding FilteredClubs}"
                         x:Name="ClubsCollection"
                         Grid.Row="2"
-                        Margin="8,4,8,0">
+                        Margin="8,10,8,0">
             <CollectionView.ItemsLayout>
                 <GridItemsLayout Span="2"
                                  Orientation="Vertical" />
@@ -89,7 +90,7 @@
                            WidthRequest="156.5"
                            HeightRequest="156.5"
                            HasShadow="True"
-                           Margin="0,12,0,0"
+                           Margin="0,0,0,12"
                            BackgroundColor="White">
                         <Frame.GestureRecognizers>
                             <TapGestureRecognizer Tapped="OnClubTapped" />
@@ -125,7 +126,7 @@
                                     <TapGestureRecognizer Tapped="OnClubTapped" />
                                 </Frame.GestureRecognizers>
                                 <StackLayout>
-                                    <Label Text="{Binding Name}"
+                                    <Label Text="{Binding Name, Converter={StaticResource TextDisplayConverter}, ConverterParameter=13}"
                                            HorizontalOptions="Start"
                                            FontSize="13"
                                            TextColor="#303345" />

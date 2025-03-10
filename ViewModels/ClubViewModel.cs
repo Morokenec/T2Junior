@@ -53,7 +53,7 @@ namespace MauiApp1.ViewModel
             new Club { IdClub = 3 },
             new Club { IdClub = 4 },
             new Club { IdClub = 5 },
-            new Club { IdClub = 6 },
+            new Club { IdClub = 6, Name = "Женский батальон" },
             new Club { IdClub = 7 },
             new Club { IdClub = 8 },
             new Club { IdClub = 9 }

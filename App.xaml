@@ -2,6 +2,7 @@
 <Application xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:local="clr-namespace:MauiApp1"
+             xmlns:services="clr-namespace:MauiApp1.Services"
              x:Class="MauiApp1.App">
     <Application.Resources>
         <ResourceDictionary>
@@ -13,6 +14,9 @@
             <Style TargetType="Frame">
                 <Setter Property="Padding" Value="0" />
             </Style>
+
+            <services:DateColorConverter x:Key="DateColorConverter" />
+            <services:TextDisplayConverter x:Key="TextDisplayConverter" />
 
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="Resources/Styles/Colors.xaml" />

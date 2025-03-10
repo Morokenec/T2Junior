@@ -63,6 +63,7 @@
 
 	<ItemGroup>
 	  <MauiFont Remove="Resources\Fonts\Manrope.ttf" />
+	  <MauiFont Remove="Resources\Fonts\MyanmarSansPro-Regular.ttf" />
 	</ItemGroup>
 
 	<ItemGroup>
@@ -85,6 +86,7 @@
 	  <None Remove="Resources\Fonts\Manrope-ExtraLight.ttf" />
 	  <None Remove="Resources\Fonts\Manrope-Medium.ttf" />
 	  <None Remove="Resources\Fonts\Manrope.ttf" />
+	  <None Remove="Resources\Fonts\MyanmarSansPro-Regular.ttf" />
 	  <None Remove="Resources\Fonts\MyriadPro-Bold.otf" />
 	  <None Remove="Resources\Fonts\MyriadPro-Regular.otf" />
 	  <None Remove="Resources\Fonts\RedRose-Bold.ttf" />
@@ -96,12 +98,14 @@
 	  <None Remove="Resources\Images\back_icon.svg" />
 	  <None Remove="Resources\Images\calendar.png" />
 	  <None Remove="Resources\Images\calendar.svg" />
+	  <None Remove="Resources\Images\calendar_redirect.svg" />
 	  <None Remove="Resources\Images\chat.svg" />
 	  <None Remove="Resources\Images\clubs.svg" />
 	  <None Remove="Resources\Images\club_placeholder.svg" />
 	  <None Remove="Resources\Images\coin_holder.png" />
 	  <None Remove="Resources\Images\coin_holder.svg" />
 	  <None Remove="Resources\Images\dotnet_bot.png" />
+	  <None Remove="Resources\Images\events_redirect.svg" />
 	  <None Remove="Resources\Images\file_option.svg" />
 	  <None Remove="Resources\Images\initium.svg" />
 	  <None Remove="Resources\Images\logo.svg" />
@@ -166,6 +170,9 @@
 	  <MauiXaml Update="Views\DetailedNotePage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
+	  <MauiXaml Update="Views\EventsPage.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
 	  <MauiXaml Update="Views\FollowingPage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
@@ -194,6 +201,9 @@
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	  <MauiXaml Update="Views\SubscribersPage.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="Views\TimePeriodPage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	</ItemGroup>

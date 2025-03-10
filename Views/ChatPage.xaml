@@ -64,9 +64,6 @@
                                    BorderColor="Transparent"
                                    Margin="16,0,16,4"
                                    BackgroundColor="White">
-                                <Frame.GestureRecognizers>
-                                    <TapGestureRecognizer Tapped="OnAvatarTapped" />
-                                </Frame.GestureRecognizers>
                                 <HorizontalStackLayout Spacing="8">
                                     <Frame BorderColor="Transparent"
                                            VerticalOptions="End">
@@ -159,7 +156,7 @@
                                 FontFamily="ManropeMedium"
                                 TextColor="#6B6D80"
                                 TextChanged="OnTextLinesCountChanged"
-                                VerticalOptions="Start"/>
+                                VerticalOptions="Start" />
                     </StackLayout>
                 </Frame>
                 <StackLayout VerticalOptions="Center"

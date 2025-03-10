@@ -17,8 +17,6 @@ public partial class ChatPage : ContentPage
     public ChatPage()
     {
         InitializeComponent();
-        var messageView = new MessageViewModel();
-        BindingContext = messageView;
     }
 
     private void SendBtnClicked(object sender, EventArgs e)
@@ -99,6 +97,8 @@ public partial class ChatPage : ContentPage
     protected override void OnAppearing()
     {
         base.OnAppearing();
+        var messageView = new MessageViewModel();
+        BindingContext = messageView;
         LoadDialogDetails();
     }
 
@@ -119,45 +119,49 @@ public partial class ChatPage : ContentPage
     }
     private void OnAvatarTapped(object sender, EventArgs e)
     {
-        var tappedElement = (sender as Frame)?.BindingContext as IChatElementType;
+        //var tappedElement = (sender as Frame).Parent.Parent.Parent;
+        //var tapped = tappedElement.BindingContext as IChatElementType;
 
-        if (tappedElement != null)
-        {
-            string tappedName = tappedElement.Name;
+        //if (tapped != null)
+        //{
+        //    string tappedName = tapped.Name;
 
-            var userViewModel = new UserViewModel();
-            var clubViewModel = new ClubViewModel();
+        //    var userViewModel = new UserViewModel();
+        //    var clubViewModel = new ClubViewModel();
 
-            var userProfile = userViewModel.UserProfiles.FirstOrDefault(u => u.Name == tappedName);
-            var club = clubViewModel.Clubs.FirstOrDefault(c => c.Name == tappedName);
+        //    var userProfile = userViewModel.UserProfiles.FirstOrDefault(u => u.Name == tappedName);
+        //    var club = clubViewModel.Clubs.FirstOrDefault(c => c.Name == tappedName);
 
-            if (userProfile != null)
-            {
-                ProfileService.SelectedUser = userProfile;
-                ProfilePage profPage = new ProfilePage
-                {
-                    SelectedProfileId = userProfile.IdUser
-                };
+        //    if (userProfile != null)
+        //    {
+        //        ProfileService.SelectedUser = userProfile;
+        //        ProfilePage profPage = new ProfilePage
+        //        {
+        //            SelectedProfileId = userProfile.IdUser
+        //        };
 
-                Navigation.PushAsync(profPage);
-            }
-            else if (club != null)
-            {
-                ProfileService.SelectedClub = club;
-                ClubProfilePage clubPage = new ClubProfilePage
-                {
-                    SelectedClubId = club.IdClub
-                };
+        //        Navigation.PushAsync(profPage);
+        //    }
+        //    else if (club != null)
+        //    {
+        //        ProfileService.SelectedClub = club;
+        //        ClubProfilePage clubPage = new ClubProfilePage
+        //        {
+        //            SelectedClubId = club.IdClub
+        //        };
 
-                Navigation.PushAsync(clubPage);
-            }
-        }
+        //        Navigation.PushAsync(clubPage);
+        //    }
+        //}
+
+        //переделать или добавить?
     }
 
     private void OnTextLinesCountChanged(object sender, TextChangedEventArgs e)
     {
         var editor = sender as Editor;
         int avgHeight = 44;
+        int maxLinesLength = 5;
         double editorHeight;
         double maxHeight = (DeviceDisplay.MainDisplayInfo.Height / DeviceDisplay.MainDisplayInfo.Density) / 2.5;
 
@@ -166,12 +170,12 @@ public partial class ChatPage : ContentPage
         if (editor != null)
         {
             string trimmedText = editor.Text.TrimEnd('\n');
-            double lineHeight = 13;
+            double lineHeight = 13; //размер шрифта
             var lineCount = (int)Math.Ceiling((double)trimmedText.Split(new[] { '\n' }).Length + (int)Math.Ceiling((double)(trimmedText.Length - trimmedText.Split(new[] { '\n' }).Length) / editorCharWidth) - 2);
             
-            if (lineCount > 5)
+            if (lineCount > maxLinesLength)
             {
-                lineCount = 5;
+                lineCount = maxLinesLength;
             }
 
             if (lineCount < 1)

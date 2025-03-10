@@ -17,9 +17,9 @@
             </Grid.RowDefinitions>
 
             <Frame Grid.Row="0"
-               BackgroundColor="White"
-               HasShadow="False"
-               Padding="0,0,0,0">
+                   BackgroundColor="White"
+                   HasShadow="False"
+                   Padding="0,0,0,0">
 
                 <StackLayout>
                     <Grid ColumnDefinitions="*, Auto">
@@ -43,11 +43,11 @@
                                            Source="coin_holder.svg"
                                            Aspect="AspectFill"
                                            WidthRequest="14"
-                                           HeightRequest="14"/>
+                                           HeightRequest="14" />
                                     <Label x:Name="CoinText"
-                                           Text="Коины" 
+                                           Text="Коины"
                                            TextColor="#498CC4"
-                                           FontSize="12"/>
+                                           FontSize="12" />
                                 </HorizontalStackLayout>
                                 <HorizontalStackLayout x:Name="CoinCounterLayout"
                                                        HorizontalOptions="Center">
@@ -56,7 +56,7 @@
                                            FontSize="20"
                                            HorizontalOptions="Center"
                                            FontFamily="MyriadProBold"
-                                           HeightRequest="22"/>
+                                           HeightRequest="22" />
                                 </HorizontalStackLayout>
                             </StackLayout>
                         </Frame>
@@ -82,11 +82,11 @@
                                            Source="rating_holder.svg"
                                            Aspect="AspectFill"
                                            WidthRequest="14"
-                                           HeightRequest="14"/>
+                                           HeightRequest="14" />
                                     <Label x:Name="RatingText"
-                                           Text="Рейтинг" 
+                                           Text="Рейтинг"
                                            TextColor="#498CC4"
-                                           FontSize="12"/>
+                                           FontSize="12" />
                                 </HorizontalStackLayout>
                                 <HorizontalStackLayout x:Name="RatingCounterLayout"
                                                        HorizontalOptions="Center"
@@ -100,20 +100,20 @@
                                            Text="0"
                                            HorizontalOptions="Center"
                                            VerticalOptions="End"
-                                           FontFamily="MyriadProBold"/>
+                                           FontFamily="MyriadProBold" />
 
                                     <Label FontSize="9"
                                            Text="из"
                                            HorizontalOptions="Center"
                                            VerticalOptions="End"
-                                           TextColor="#9C9B9A"/>
+                                           TextColor="#9C9B9A" />
 
                                     <Label x:Name="RatingCountLabel"
                                            FontSize="9"
                                            Text="0"
                                            HorizontalOptions="Center"
                                            VerticalOptions="End"
-                                           TextColor="#9C9B9A"/>
+                                           TextColor="#9C9B9A" />
 
                                 </HorizontalStackLayout>
                             </StackLayout>
@@ -121,7 +121,7 @@
                     </Grid>
 
                     <Grid x:Name="UserInfoGrid"
-                      Grid.Row="1">
+                          Grid.Row="1">
                         <Frame BorderColor="Transparent"
                                WidthRequest="100"
                                HeightRequest="100"
@@ -130,15 +130,15 @@
                                Margin="0,8,0,8">
 
                             <StackLayout>
-                            <Image x:Name="AvatarImage"
-                                   Source="profile_placeholder.svg"
-                                   Aspect="AspectFill"
-                                   VerticalOptions="Start"/>
-                        </StackLayout>
+                                <Image x:Name="AvatarImage"
+                                       Source="profile_placeholder.svg"
+                                       Aspect="AspectFill"
+                                       VerticalOptions="Start" />
+                            </StackLayout>
 
                         </Frame>
-                        <Frame x:Name="CircleOverlay" 
-                               BackgroundColor="#3DC47C" 
+                        <Frame x:Name="CircleOverlay"
+                               BackgroundColor="#3DC47C"
                                CornerRadius="25"
                                WidthRequest="20"
                                HeightRequest="20"
@@ -151,20 +151,20 @@
                         <Label x:Name="FullNameLabel"
                                Text="-"
                                HorizontalOptions="Center"
-                               FontSize="20"/>
+                               FontSize="20" />
 
                         <Label x:Name="RoleLabel"
-                               Text="Роль участника" 
+                               Text="Роль участника"
                                HorizontalOptions="Center"
                                VerticalOptions="Center"
-                               FontSize="15"/>
+                               FontSize="15" />
 
                         <Label x:Name="JobLabel"
                                TextColor="#838281"
-                               Text="Организация" 
+                               Text="Организация"
                                HorizontalOptions="Center"
                                VerticalOptions="Center"
-                               FontSize="12"/>
+                               FontSize="12" />
 
                         <Button x:Name="SubscribeButton"
                                 BackgroundColor="#0057A6"
@@ -176,12 +176,12 @@
                                 HorizontalOptions="Fill"
                                 VerticalOptions="Center"
                                 Clicked="OnSubUnsubButtonTapped"
-                                Margin="16,10"/>
+                                Margin="16,10" />
                     </VerticalStackLayout>
                 </StackLayout>
             </Frame>
 
-            <HorizontalStackLayout x:Name="HorizontalContentLayout" 
+            <HorizontalStackLayout x:Name="HorizontalContentLayout"
                                    Grid.Row="3"
                                    Spacing="10"
                                    Margin="8, 16">
@@ -213,57 +213,57 @@
                     </Frame>
                 </Grid>
                 <Grid WidthRequest="107.76"
-                          HeightRequest="76">
-                        <Frame x:Name="FollowingFrame"
-                               CornerRadius="16"
-                               HasShadow="True"
-                               HorizontalOptions="FillAndExpand"
-                               VerticalOptions="Fill"
-                               Padding="12">
-                            <Frame.GestureRecognizers>
-                                <TapGestureRecognizer Tapped="OnFollowingButtonTapped" />
-                            </Frame.GestureRecognizers>
-                            <StackLayout x:Name="FollowingLayout"
-                                         Spacing="6">
-                                <Label Text="Подписки"
-                                       FontSize="13"
-                                       FontFamily="ManropeMid"
-                                       TextColor="#9C9B9A" />
+                      HeightRequest="76">
+                    <Frame x:Name="FollowingFrame"
+                           CornerRadius="16"
+                           HasShadow="True"
+                           HorizontalOptions="FillAndExpand"
+                           VerticalOptions="Fill"
+                           Padding="12">
+                        <Frame.GestureRecognizers>
+                            <TapGestureRecognizer Tapped="OnFollowingButtonTapped" />
+                        </Frame.GestureRecognizers>
+                        <StackLayout x:Name="FollowingLayout"
+                                     Spacing="6">
+                            <Label Text="Подписки"
+                                   FontSize="13"
+                                   FontFamily="ManropeMid"
+                                   TextColor="#9C9B9A" />
 
-                                <Label x:Name="FollowingCount"
-                                       Text="0"
-                                       FontFamily="RedRoseBold"
-                                       FontSize="20"
-                                       TextColor="#838281" />
-                            </StackLayout>
-                        </Frame>
-                    </Grid>
-                    <Grid WidthRequest="107.76"
-                          HeightRequest="76">
-                        <Frame x:Name="ClubsFrame"
-                               CornerRadius="16"
-                               HasShadow="True"
-                               HorizontalOptions="FillAndExpand"
-                               VerticalOptions="Fill"
-                               Padding="12">
-                            <Frame.GestureRecognizers>
-                                <TapGestureRecognizer Tapped="OnClubsButtonTapped" />
-                            </Frame.GestureRecognizers>
-                            <StackLayout x:Name="ClubsLayout"
-                                         Spacing="6">
-                                <Label Text="Клубы"
-                                       FontSize="13"
-                                       FontFamily="ManropeMid"
-                                       TextColor="#9C9B9A" />
+                            <Label x:Name="FollowingCount"
+                                   Text="0"
+                                   FontFamily="RedRoseBold"
+                                   FontSize="20"
+                                   TextColor="#838281" />
+                        </StackLayout>
+                    </Frame>
+                </Grid>
+                <Grid WidthRequest="107.76"
+                      HeightRequest="76">
+                    <Frame x:Name="ClubsFrame"
+                           CornerRadius="16"
+                           HasShadow="True"
+                           HorizontalOptions="FillAndExpand"
+                           VerticalOptions="Fill"
+                           Padding="12">
+                        <Frame.GestureRecognizers>
+                            <TapGestureRecognizer Tapped="OnClubsButtonTapped" />
+                        </Frame.GestureRecognizers>
+                        <StackLayout x:Name="ClubsLayout"
+                                     Spacing="6">
+                            <Label Text="Клубы"
+                                   FontSize="13"
+                                   FontFamily="ManropeMid"
+                                   TextColor="#9C9B9A" />
 
-                                <Label x:Name="ClubsCount"
-                                       Text="0"
-                                       FontFamily="RedRoseBold"
-                                       FontSize="20"
-                                       TextColor="#838281" />
-                            </StackLayout>
-                        </Frame>
-                    </Grid>
+                            <Label x:Name="ClubsCount"
+                                   Text="0"
+                                   FontFamily="RedRoseBold"
+                                   FontSize="20"
+                                   TextColor="#838281" />
+                        </StackLayout>
+                    </Frame>
+                </Grid>
             </HorizontalStackLayout>
 
 
@@ -274,7 +274,7 @@
                    Margin="8, 0">
                 <VerticalStackLayout>
                     <Frame x:Name="ProjectsFrame"
-                           HasShadow="False" 
+                           HasShadow="False"
                            BorderColor="Transparent"
                            WidthRequest="303"
                            HeightRequest="48"
@@ -288,27 +288,27 @@
                                    Aspect="AspectFill"
                                    VerticalOptions="Center"
                                    WidthRequest="24"
-                                   HeightRequest="24"/>
+                                   HeightRequest="24" />
 
                             <Label x:Name="ProjectsText"
-                                   Text="Проекты" 
+                                   Text="Проекты"
                                    TextColor="#191C30"
                                    FontSize="15"
                                    VerticalOptions="Center"
-                                   WidthRequest="231"/>
+                                   WidthRequest="231" />
                             <Image Source="redirect.svg"
-                                   Aspect="AspectFill"/>
+                                   Aspect="AspectFill" />
                         </HorizontalStackLayout>
                     </Frame>
                     <BoxView x:Name="ProjectsBoxView"
-                             BackgroundColor="#E4E4E4" 
-                             HorizontalOptions="Fill" 
+                             BackgroundColor="#E4E4E4"
+                             HorizontalOptions="Fill"
                              VerticalOptions="End"
                              HeightRequest="2"
-                             Margin="16, 0"/>
+                             Margin="16, 0" />
 
                     <Frame x:Name="CalendarFrame"
-                           HasShadow="False" 
+                           HasShadow="False"
                            BorderColor="Transparent"
                            WidthRequest="303"
                            HeightRequest="48"
@@ -321,27 +321,27 @@
                                    Source="calendar.svg"
                                    Aspect="AspectFill"
                                    WidthRequest="24"
-                                   HeightRequest="24"/>
+                                   HeightRequest="24" />
 
                             <Label x:Name="CalendarText"
-                                   Text="Календарь" 
+                                   Text="Календарь"
                                    TextColor="#191C30"
                                    FontSize="15"
                                    VerticalOptions="Center"
-                                   WidthRequest="231"/>
+                                   WidthRequest="231" />
                             <Image Source="redirect.svg"
-                                   Aspect="AspectFill"/>
+                                   Aspect="AspectFill" />
                         </HorizontalStackLayout>
                     </Frame>
                     <BoxView x:Name="CalendarBoxView"
-                             BackgroundColor="#E4E4E4" 
-                             HorizontalOptions="Fill" 
+                             BackgroundColor="#E4E4E4"
+                             HorizontalOptions="Fill"
                              VerticalOptions="End"
                              HeightRequest="2"
-                             Margin="16, 0"/>
+                             Margin="16, 0" />
 
-                    <Frame x:Name="ActivitiesFrame" 
-                           HasShadow="False" 
+                    <Frame x:Name="ActivitiesFrame"
+                           HasShadow="False"
                            BorderColor="Transparent"
                            WidthRequest="303"
                            HeightRequest="48"
@@ -354,27 +354,27 @@
                                    Source="activities.svg"
                                    Aspect="AspectFill"
                                    WidthRequest="24"
-                                   HeightRequest="24"/>
+                                   HeightRequest="24" />
 
                             <Label x:Name="ActivitiesText"
-                                   Text="Активности" 
+                                   Text="Активности"
                                    TextColor="#191C30"
                                    FontSize="15"
                                    VerticalOptions="Center"
-                                   WidthRequest="231"/>
+                                   WidthRequest="231" />
                             <Image Source="redirect.svg"
-                                   Aspect="AspectFill"/>
+                                   Aspect="AspectFill" />
                         </HorizontalStackLayout>
                     </Frame>
                     <BoxView x:Name="ActivitiesBoxView"
-                             BackgroundColor="#E4E4E4" 
-                             HorizontalOptions="FillAndExpand" 
+                             BackgroundColor="#E4E4E4"
+                             HorizontalOptions="FillAndExpand"
                              VerticalOptions="End"
                              HeightRequest="2"
-                             Margin="16, 0"/>
+                             Margin="16, 0" />
 
                     <Frame x:Name="NewsFrame"
-                           HasShadow="False" 
+                           HasShadow="False"
                            BorderColor="Transparent"
                            WidthRequest="303"
                            HeightRequest="48"
@@ -385,20 +385,20 @@
                         <HorizontalStackLayout Spacing="12">
                             <Image x:Name="NewsImage"
                                    Source="profile_news.svg"
-                                   Aspect="AspectFill" 
+                                   Aspect="AspectFill"
                                    WidthRequest="24"
-                                   HeightRequest="24"/>
+                                   HeightRequest="24" />
 
                             <Label x:Name="NewsText"
-                                   Text="Новости" 
+                                   Text="Новости"
                                    TextColor="#191C30"
                                    FontSize="15"
                                    HorizontalOptions="FillAndExpand"
                                    VerticalOptions="Center"
-                                   WidthRequest="231"/>
-                            
+                                   WidthRequest="231" />
+
                             <Image Source="redirect.svg"
-                                   Aspect="AspectFill"/>
+                                   Aspect="AspectFill" />
                         </HorizontalStackLayout>
                     </Frame>
                 </VerticalStackLayout>

@@ -1,0 +1,154 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="MauiApp1.Views.EventsPage"
+             Title="EventsPage">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+
+        <HorizontalStackLayout x:Name="EventLayout"
+                               Grid.Row="0"
+                               Margin="20,16"
+                               Padding="0,8"
+                               WidthRequest="343"
+                               HeightRequest="40">
+            <Frame x:Name="BackFrame"
+                   BorderColor="Transparent"
+                   Margin="8,0,0,8"
+                   HeightRequest="26">
+                <Frame.GestureRecognizers>
+                    <TapGestureRecognizer Tapped="OnBackButtonTapped" />
+                </Frame.GestureRecognizers>
+                <StackLayout>
+                    <Image Source="back_icon.svg"
+                           Aspect="AspectFill"
+                           VerticalOptions="Center"
+                           HorizontalOptions="Center"
+                           WidthRequest="24"
+                           HeightRequest="24" />
+                </StackLayout>
+            </Frame>
+            <Frame x:Name="EventTextFrame"
+                   BorderColor="Transparent"
+                   HeightRequest="24"
+                   Margin="0,0,0,8"
+                   WidthRequest="275">
+                <Label Text="События"
+                       FontSize="20"
+                       HorizontalOptions="Center"
+                       HeightRequest="24" />
+            </Frame>
+
+            <Frame HasShadow="False"
+                   HeightRequest="26"
+                   Margin="0,0,0,8">
+                <StackLayout>
+                    <StackLayout.GestureRecognizers>
+                        <TapGestureRecognizer Tapped="CalendarRedirectTapped" />
+                    </StackLayout.GestureRecognizers>
+                    <Image Source="calendar_redirect.svg" />
+                </StackLayout>
+            </Frame>
+        </HorizontalStackLayout>
+
+        <Frame Grid.Row="1"
+               HeightRequest="44"
+               CornerRadius="12"
+               Margin="20,0">
+            <HorizontalStackLayout VerticalOptions="Center">
+                <Frame HasShadow="True"
+                       WidthRequest="295"
+                       HeightRequest="44"
+                       BorderColor="Transparent">
+                    <StackLayout>
+                        <Entry x:Name="searchEntry"
+                               Text="{Binding SearchText}"
+                               Placeholder="Поиск"
+                               PlaceholderColor="#A2A4AF"
+                               FontFamily="Manrope"
+                               HorizontalOptions="FillAndExpand"
+                               FontSize="13"
+                               Margin="12,0" />
+                    </StackLayout>
+                </Frame>
+            </HorizontalStackLayout>
+        </Frame>
+
+        <CollectionView ItemsSource="{Binding FilteredEvents}"
+                        x:Name="ChatsCollection"
+                        Grid.Row="2"
+                        Margin="0,5,0,0"
+                        Background="Transparent">
+            <CollectionView.ItemsLayout>
+                <GridItemsLayout Span="1"
+                                 Orientation="Vertical" />
+            </CollectionView.ItemsLayout>
+            <CollectionView.ItemTemplate>
+                <DataTemplate>
+                    <Grid ColumnDefinitions="Auto, *, Auto">
+                        <Frame CornerRadius="10"
+                               HorizontalOptions="Fill"
+                               HeightRequest="183"
+                               HasShadow="True"
+                               Margin="16,5,16,5"
+                               Padding="20,20,20,16"
+                               Grid.ColumnSpan="3">
+                            <StackLayout HorizontalOptions="Fill"
+                                         VerticalOptions="Fill">
+                                <Frame HorizontalOptions="Fill"
+                                       VerticalOptions="Fill"
+                                       BorderColor="Transparent">
+                                    <StackLayout HorizontalOptions="Fill"
+                                                 VerticalOptions="Fill">
+                                        <Grid RowDefinitions="Auto, *">
+                                        <Label Text="{Binding Name}"
+                                               HorizontalOptions="Start"
+                                               FontSize="15"
+                                               TextColor="#303345"
+                                               FontFamily="RedRoseBold"
+                                               Grid.Row="0" />
+                                        <Label Text="{Binding Date}"
+                                               HorizontalOptions="End"
+                                               VerticalOptions="Center"
+                                               FontSize="12"
+                                               TextColor="#9091A0"
+                                               Grid.Row="0" />
+                                        </Grid>
+
+
+                                        <Label Text="{Binding Description}"
+                                               HorizontalOptions="Start"
+                                               FontSize="12"
+                                               TextColor="#838281" />
+
+                                        <Button Text="Записаться"
+                                                BackgroundColor="#0057A6"
+                                                TextColor="White"
+                                                BorderColor="White"
+                                                BorderWidth="1"
+                                                Margin="0,63,0,0"
+                                                Padding="24,0"
+                                                Grid.ColumnSpan="3"
+                                                Clicked="OnEventSubRequest"
+                                                CommandParameter="{Binding .}"/>
+                                    </StackLayout>
+                                </Frame>
+
+                            </StackLayout>
+                        </Frame>
+                    </Grid>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+            <CollectionView.EmptyView>
+                <Label Text="Диалоги отсутствуют."
+                       HorizontalOptions="Center"
+                       VerticalOptions="Center"
+                       FontSize="24" />
+            </CollectionView.EmptyView>
+        </CollectionView>
+    </Grid>
+</ContentPage>

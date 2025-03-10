@@ -12,11 +12,11 @@ namespace MauiApp1.Models
         [Required]
         public int IdMessage { get; set; }
 
-        public static Chat Chat { get; } = new Chat();
+        public static Chat Chat { get; } = new Chat(); //нужны конкретные значения
 
         public int IdChat { get; set; } = Chat.IdChat;
 
-        public static UserProfileDTO User { get; set; } = new UserProfileDTO();
+        public static UserProfileDTO User { get; set; } = new UserProfileDTO(); // нужны конкретные значения
 
         public int IdUser { get; set; } = User.IdUser;
 

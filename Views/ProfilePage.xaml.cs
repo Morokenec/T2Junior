@@ -46,69 +46,67 @@ public partial class ProfilePage : ContentPage
 
     private void OnCoinButtonTapped(object sender, EventArgs e)
     {
-         Navigation.PushAsync(new CoinsPage());
+        Navigation.PushAsync(new CoinsPage());
     }
 
     private void OnRatingButtonTapped(object sender, EventArgs e)
     {
-         Navigation.PushAsync(new RatingPage());
+        Navigation.PushAsync(new RatingPage());
     }
 
     private void OnSubscribersButtonTapped(object sender, EventArgs e)
     {
-         Navigation.PushAsync(new SubscribersPage());
+        Navigation.PushAsync(new SubscribersPage());
     }
 
     private void OnFollowingButtonTapped(object sender, EventArgs e)
     {
-         Navigation.PushAsync(new FollowingPage());
+        Navigation.PushAsync(new FollowingPage());
     }
 
     private void OnClubsButtonTapped(object sender, EventArgs e)
     {
-         Navigation.PushAsync(new ClubsPage());
+        Navigation.PushAsync(new ClubsPage());
     }
 
     private void OnProjectsFrameTapped(object sender, EventArgs e)
     {
-         Navigation.PushAsync(new ProjectsPage());
+        Navigation.PushAsync(new ProjectsPage());
     }
 
     private void OnActivitiesFrameTapped(object sender, EventArgs e)
     {
-         Navigation.PushAsync(new ActivitiesPage());
+        Navigation.PushAsync(new ActivitiesPage());
     }
 
     private void OnCalendarFrameTapped(object sender, EventArgs e)
     {
-         Navigation.PushAsync(new CalendarPage());
+        Navigation.PushAsync(new CalendarPage());
     }
 
     private void OnNewsFrameTapped(object sender, EventArgs e)
     {
-         Navigation.PushAsync(new NotesPage());
+        Navigation.PushAsync(new NotesPage());
     }
 
     private void OnSubUnsubButtonTapped(object sender, EventArgs e)
     {
-        {
-            clickCount++;
+        clickCount++;
 
-            if (clickCount == 1)
-            {
-                SubscribeButton.BackgroundColor = Colors.White;
-                SubscribeButton.BorderColor = Color.FromArgb("#0057A6");
-                SubscribeButton.Text = "Вы подписаны";
-                SubscribeButton.TextColor = Color.FromArgb("#0057A6");
-            }
-            else if (clickCount == 2)
-            {
-                SubscribeButton.BackgroundColor = Color.FromArgb("#0057A6");
-                SubscribeButton.BorderColor = Colors.White;
-                SubscribeButton.Text = "Подписаться";
-                SubscribeButton.TextColor = Colors.White;
-                clickCount = 0;
-            }
+        if (clickCount == 1)
+        {
+            SubscribeButton.BackgroundColor = Colors.White;
+            SubscribeButton.BorderColor = Color.FromArgb("#0057A6");
+            SubscribeButton.Text = "Вы подписаны";
+            SubscribeButton.TextColor = Color.FromArgb("#0057A6");
+        }
+        else if (clickCount == 2)
+        {
+            SubscribeButton.BackgroundColor = Color.FromArgb("#0057A6");
+            SubscribeButton.BorderColor = Colors.White;
+            SubscribeButton.Text = "Подписаться";
+            SubscribeButton.TextColor = Colors.White;
+            clickCount = 0;
         }
     }
 
