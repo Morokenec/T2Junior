@@ -11,8 +11,8 @@ using T2JuniorAPI.Data;
 namespace T2JuniorAPI.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20250304115102_UpdateClubMigration")]
-    partial class UpdateClubMigration
+    [Migration("20250311081741_InitialCreate")]
+    partial class InitialCreate
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
