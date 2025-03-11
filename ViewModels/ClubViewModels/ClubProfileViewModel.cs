@@ -10,6 +10,12 @@ using System.Windows.Input;
 
 namespace MauiApp1.ViewModels.ClubProfileViewModel
 {
+    /// <summary>
+    /// ViewModel для управления профилем клуба.
+    /// </summary>
+    /// <remarks>
+    /// Предоставление методов для загрузки списка клубов и профиля выбранного клуба.
+    /// </remarks>
     public class ClubProfileViewModel : BindableObject
     {
         private readonly IClubService _clubService;
@@ -19,10 +25,20 @@ namespace MauiApp1.ViewModels.ClubProfileViewModel
         private Club _selectedClub;
         private Guid _selectedClubId;
 
+        /// <summary>
+        /// Список клубов.
+        /// </summary>
         public ObservableCollection<ClubList> Clubs { get; set; }
+
+        /// <summary>
+        /// Профили клубов.
+        /// </summary>
         public ObservableCollection<Club> ClubProfiles { get; set; }
         public ObservableCollection<Note> Notes { get; set; } = new ObservableCollection<Note>();
 
+        /// <summary>
+        /// Выбранный клуб.
+        /// </summary>
         public Club SelectedClub
         {
             get => _selectedClub;
@@ -49,6 +65,9 @@ namespace MauiApp1.ViewModels.ClubProfileViewModel
             }
         }
 
+        /// <summary>
+        /// Идентификатор выбранного клуба.
+        /// </summary>
         public Guid SelectedClubId
         {
             get => _selectedClubId;

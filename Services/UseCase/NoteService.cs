@@ -12,11 +12,22 @@ using System.Threading.Tasks;
 
 namespace MauiApp1.Services.UseCase
 {
+    /// <summary>
+    /// Сервис для работы с заметками.
+    /// </summary>
+    /// <remarks>
+    /// Предоставление методов для получения списка заметок и информации о конкретной заметке.
+    /// </remarks>
     public class NoteService : INoteService
     {
         private readonly HttpClient _httpClient;
         private readonly IJsonDeserializerService _jsonDeserializerService;
 
+        /// <summary>
+        /// Конструктор сервиса NoteService.
+        /// </summary>
+        /// <param name="httpClient">HTTP-клиент для выполнения запросов.</param>
+        /// <param name="jsonDeserializerService">Сервис для десериализации JSON.</param>
         public NoteService(HttpClient httpClient, IJsonDeserializerService jsonDeserializerService)
         {
             _httpClient = httpClient;
@@ -49,6 +60,11 @@ namespace MauiApp1.Services.UseCase
             }
         }
 
+        /// <summary>
+        /// Получение информации о заметке по её идентификатору.
+        /// </summary>
+        /// <param name="noteId">Идентификатор заметки.</param>
+        /// <returns>Информация о заметке или null в случае ошибки.</returns>
         public async Task<Note> GetNoteByIdAsync(string noteId)
         {
             try

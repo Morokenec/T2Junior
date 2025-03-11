@@ -8,6 +8,12 @@ using System.Text;
 
 namespace MauiApp1.Services.UseCase
 {
+    /// <summary>
+    /// Сервис для работы с клубами.
+    /// </summary>
+    /// <remarks>
+    /// Этот сервис предоставляет методы для получения списка клубов и информации о конкретном клубе.
+    /// </remarks>
     public class ClubService : IClubService
     {
         private readonly HttpClient _httpClient;
@@ -20,6 +26,10 @@ namespace MauiApp1.Services.UseCase
             _jsonDeserializerService = jsonDeserializerService;
         }
 
+        /// <summary>
+        /// Получает список клубов для текущего пользователя.
+        /// </summary>
+        /// <returns>Список клубов или null в случае ошибки.</returns>
         public async Task<List<ClubList>> GetClubsAsync()
         {
             try

@@ -10,6 +10,9 @@ using Microsoft.Maui.Controls;
 
 namespace MauiApp1;
 
+/// <summary>
+/// Страница подписчиков, отображающая список подписчиков.
+/// </summary>
 public partial class SubscribersPage : ContentPage
 {
     private readonly SubscribersViewModel _viewModel;

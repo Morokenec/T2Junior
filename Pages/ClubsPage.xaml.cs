@@ -7,6 +7,9 @@ using MauiApp1.ViewModels.ClubViewModel;
 
 namespace MauiApp1;
 
+/// <summary>
+/// Страница с клубами в приложении.
+/// </summary>
 public partial class ClubsPage : ContentPage
 {
     private readonly ClubsViewModel _clubsViewModel;
@@ -24,17 +27,32 @@ public partial class ClubsPage : ContentPage
         _clubsViewModel.LoadClubsAsync();
     }
 
+    /// <summary>
+    /// Обработчик события нажатия на кнопку "Назад".
+    /// </summary>
+    /// <param name="sender">Объект, вызвавший событие.</param>
+    /// <param name="e">Аргументы события.</param>
     private void OnBackButtonTapped(object sender, EventArgs e)
     {
         BackClick.OnPageClicked();
     }
 
+    /// <summary>
+    /// Обработчик события поиска.
+    /// </summary>
+    /// <param name="sender">Объект, вызвавший событие.</param>
+    /// <param name="e">Аргументы события.</param>
     private void OnSearch(object sender, EventArgs e)
     {
         var clubContext = (ClubsViewModel)BindingContext;
         clubContext.FilterClubs();
     }
 
+    /// <summary>
+    /// Обработчик события нажатия на клуб.
+    /// </summary>
+    /// <param name="sender">Объект, вызвавший событие.</param>
+    /// <param name="e">Аргументы события.</param>
     private async void OnClubTapped(object sender, EventArgs e)
     {
         var currentPage = Navigation.NavigationStack.LastOrDefault();

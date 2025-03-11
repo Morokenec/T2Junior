@@ -17,6 +17,10 @@ namespace MauiApp1.ViewModels
     {
 
         private string _searchText;
+
+        /// <summary>
+        /// Текст для поиска заметок.
+        /// </summary>
         public string SearchText
         {
             get => _searchText;
@@ -41,6 +45,9 @@ namespace MauiApp1.ViewModels
         private Note _selectedNote;
         private bool _isRefreshing;
 
+        /// <summary>
+        /// Выбранная заметка.
+        /// </summary>
         public Note SelectedNote
         {
             get => _selectedNote;
@@ -83,6 +90,9 @@ namespace MauiApp1.ViewModels
         //    SelectedNote = viewModel.GetNoteById(DetailedNotePage.SelectedNoteId);
         //}
 
+        /// <summary>
+        /// Фильтрация заметок на основе текста поиска.
+        /// </summary>
         public void FilterNotes()
         {
             if (string.IsNullOrWhiteSpace(SearchText))

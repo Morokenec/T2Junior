@@ -6,6 +6,9 @@ using MauiApp1.ViewModels;
 
 namespace MauiApp1;
 
+/// <summary>
+/// Страница заметок в приложении.
+/// </summary>
 public partial class NotesPage : ContentPage
 {
     public bool HolderIsVisible { get; set; } = true; 

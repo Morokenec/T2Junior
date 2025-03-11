@@ -6,6 +6,9 @@ using System.Text.RegularExpressions;
 
 namespace MauiApp1
 {
+    /// <summary>
+    /// Страница авторизации в приложении.
+    /// </summary>
     public partial class AuthorizationPage : ContentPage
     {
 
@@ -29,6 +32,11 @@ namespace MauiApp1
         {
         }
 
+        /// <summary>
+        /// Обработчик события нажатия на кнопку видимости пароля.
+        /// </summary>
+        /// <param name="sender">Объект, вызвавший событие.</param>
+        /// <param name="e">Аргументы события.</param>
         private void OnPasswordVisibilityClicked(object sender, EventArgs e)
         {
             _isVisible = !_isVisible;

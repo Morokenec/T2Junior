@@ -10,11 +10,22 @@ using MauiApp1.Models.ProfileModels;
 
 namespace MauiApp1.Services.UseCase
 {
+    /// <summary>
+    /// Сервис для получения данных профиля пользователя.
+    /// </summary>
+    /// <remarks>
+    /// Предоставление методов для получения информации о профиле пользователя.
+    /// </remarks>
     public class ProfileService : IProfileService
     {
         private readonly HttpClient _httpClient;
         private readonly IJsonDeserializerService _jsonDeserializerService;
 
+        /// <summary>
+        /// Конструктор сервиса ProfileService.
+        /// </summary>
+        /// <param name="httpClient">HTTP-клиент для выполнения запросов.</param>
+        /// <param name="jsonDeserializerService">Сервис для десериализации JSON.</param>
         public ProfileService(HttpClient httpClient, IJsonDeserializerService jsonDeserializerService)
         {
             _httpClient = httpClient;

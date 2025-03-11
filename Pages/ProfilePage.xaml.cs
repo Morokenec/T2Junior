@@ -12,6 +12,9 @@ using System.Windows.Input;
 
 namespace MauiApp1;
 
+/// <summary>
+/// Страница профиля пользователя в приложении.
+/// </summary>
 public partial class ProfilePage : ContentPage
 {
     int netStatus = 1;
@@ -22,6 +25,10 @@ public partial class ProfilePage : ContentPage
 
     public bool DirectAccessed { get; set; } = BackNavigationState.IsDirectAccess;
 
+    /// <summary>
+    /// Конструктор класса ProfilePage.
+    /// </summary>
+    /// <param name="userProfileViewModel">Модель представления профиля пользователя.</param>
     public ProfilePage(UserProfileViewModel userProfileViewModel)
     {
         InitializeComponent();
@@ -51,6 +58,9 @@ public partial class ProfilePage : ContentPage
         }
     }
 
+    /// <summary>
+    /// Метод для установки статуса сети.
+    /// </summary>
     private void NetStatus()
     {
         if (netStatus == 0)
@@ -63,6 +73,11 @@ public partial class ProfilePage : ContentPage
         }
     }
 
+    /// <summary>
+    /// Обработчик события нажатия на фото профиля.
+    /// </summary>
+    /// <param name="sender">Объект, вызвавший событие.</param>
+    /// <param name="e">Аргументы события.</param>
     private async void OnProfilePhotoTapped(object sender, EventArgs e)
     {
         if (BindingContext is UserProfileViewModel viewModel)
@@ -71,6 +86,11 @@ public partial class ProfilePage : ContentPage
         }
     }
 
+    /// <summary>
+    /// Обработчик события нажатия на кнопку монет.
+    /// </summary>
+    /// <param name="sender">Объект, вызвавший событие.</param>
+    /// <param name="e">Аргументы события.</param>
     private async void OnCoinButtonTapped(object sender, EventArgs e)
     {
         var currentPage = Navigation.NavigationStack.LastOrDefault();
@@ -80,6 +100,11 @@ public partial class ProfilePage : ContentPage
         await Navigation.PushAsync(new NotesPage(new NoteViewModel(new NoteService(new HttpClient(), new JsonDeserializerService()))), true);
     }
 
+    /// <summary>
+    /// Обработчик события нажатия на кнопку рейтинга.
+    /// </summary>
+    /// <param name="sender">Объект, вызвавший событие.</param>
+    /// <param name="e">Аргументы события.</param>
     private async void OnRatingButtonTapped(object sender, EventArgs e)
     {
         var currentPage = Navigation.NavigationStack.LastOrDefault();
@@ -89,6 +114,11 @@ public partial class ProfilePage : ContentPage
          await Navigation.PushAsync(new RatingPage());
     }
 
+    /// <summary>
+    /// Обработчик события нажатия на кнопку подписчиков.
+    /// </summary>
+    /// <param name="sender">Объект, вызвавший событие.</param>
+    /// <param name="e">Аргументы события.</param>
     private async void OnSubscribersButtonTapped(object sender, EventArgs e)
     {
         var currentPage = Navigation.NavigationStack.LastOrDefault();
@@ -98,6 +128,11 @@ public partial class ProfilePage : ContentPage
         await Navigation.PushAsync(new SubscribersPage(new SubscribersViewModel(new ProfileService(new HttpClient(), new JsonDeserializerService())), Guid.Parse(_viewModel.UserInfo.Id)));
     }
 
+    /// <summary>
+    /// Обработчик события нажатия на кнопку подписок.
+    /// </summary>
+    /// <param name="sender">Объект, вызвавший событие.</param>
+    /// <param name="e">Аргументы события.</param>
     private async void OnFollowingButtonTapped(object sender, EventArgs e)
     {
         var currentPage = Navigation.NavigationStack.LastOrDefault();
@@ -107,6 +142,11 @@ public partial class ProfilePage : ContentPage
         await Navigation.PushAsync(new FollowingPage(new FollowingViewModel(new ProfileService(new HttpClient(), new JsonDeserializerService()))));
     }
 
+    /// <summary>
+    /// Обработчик события нажатия на кнопку клубов.
+    /// </summary>
+    /// <param name="sender">Объект, вызвавший событие.</param>
+    /// <param name="e">Аргументы события.</param>
     private async void OnClubsButtonTapped(object sender, EventArgs e)
     {
         var currentPage = Navigation.NavigationStack.LastOrDefault();
@@ -125,6 +165,11 @@ public partial class ProfilePage : ContentPage
         await Navigation.PushAsync(new ProjectsPage());
     }
 
+    /// <summary>
+    /// Обработчик события нажатия на фрейм активностей.
+    /// </summary>
+    /// <param name="sender">Объект, вызвавший событие.</param>
+    /// <param name="e">Аргументы события.</param>
     private async void OnActivitiesFrameTapped(object sender, EventArgs e)
     {
         var currentPage = Navigation.NavigationStack.LastOrDefault();
@@ -134,6 +179,11 @@ public partial class ProfilePage : ContentPage
         await Navigation.PushAsync(new ActivitiesPage());
     }
 
+    /// <summary>
+    /// Обработчик события нажатия на фрейм календаря.
+    /// </summary>
+    /// <param name="sender">Объект, вызвавший событие.</param>
+    /// <param name="e">Аргументы события.</param>
     private async void OnCalendarFrameTapped(object sender, EventArgs e)
     {
         var currentPage = Navigation.NavigationStack.LastOrDefault();
@@ -143,6 +193,11 @@ public partial class ProfilePage : ContentPage
         await Navigation.PushAsync(new CalendarPage());
     }
 
+    /// <summary>
+    /// Обработчик события нажатия на фрейм новостей.
+    /// </summary>
+    /// <param name="sender">Объект, вызвавший событие.</param>
+    /// <param name="e">Аргументы события.</param>
     private async void OnNewsFrameTapped(object sender, EventArgs e)
     {
         var currentPage = Navigation.NavigationStack.LastOrDefault();

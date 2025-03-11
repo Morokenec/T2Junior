@@ -4,6 +4,9 @@ using MauiApp1.ViewModels.ProfileModels;
 
 namespace MauiApp1;
 
+/// <summary>
+/// Страница подписок пользователя в приложении.
+/// </summary>
 public partial class FollowingPage : ContentPage
 {
     private FollowingViewModel _viewModel;

@@ -11,6 +11,12 @@ using System.Windows.Input;
 
 namespace MauiApp1.ViewModels.Profile
 {
+    /// <summary>
+    /// ViewModel для управления профилем пользователя и его заметками.
+    /// </summary>
+    /// <remarks>
+    /// Предоставление методов для загрузки данных профиля и заметок пользователя, а также для обновления данных.
+    /// </remarks>
     public class UserProfileViewModel : INotifyPropertyChanged 
     {
         private readonly INoteService _noteService;
@@ -19,14 +25,33 @@ namespace MauiApp1.ViewModels.Profile
         private string _pathAvatarUser;
         private bool _isRefreshing;
 
+        /// <summary>
+        /// Список заметок пользователя.
+        /// </summary>
         public ObservableCollection<Note> Notes { get; set; } = new ObservableCollection<Note>();
+
+        /// <summary>
+        /// Отфильтрованный список заметок пользователя.
+        /// </summary>
         public ObservableCollection<Note> FilteredNotes { get; set; }
 
         private UserInfo _userInfo;
 
+        /// <summary>
+        /// Команда для загрузки данных.
+        /// </summary>
         public ICommand LoadDataCommand { get; }
+
+        /// <summary>
+        /// Команда для обновления данных.
+        /// </summary>
         public ICommand RefreshCommand { get; }
 
+        /// <summary>
+        /// Конструктор класса UserProfileViewModel.
+        /// </summary>
+        /// <param name="profileService">Сервис для получения данных профиля.</param>
+        /// <param name="noteService">Сервис для работы с заметками.</param>
         public UserProfileViewModel(IProfileService profileService, INoteService noteService)
         {
             _noteService = noteService;
@@ -35,6 +60,9 @@ namespace MauiApp1.ViewModels.Profile
             RefreshCommand = new Command(async () => await RefreshDataAsync());
         }
 
+        /// <summary>
+        /// Информация о пользователе.
+        /// </summary>
         public UserInfo UserInfo
         {
             get => _userInfo;
@@ -50,6 +78,9 @@ namespace MauiApp1.ViewModels.Profile
             }
         }
 
+        /// <summary>
+        /// Путь к аватару пользователя.
+        /// </summary>
         public string PathAvatarUser
         {
             get => _pathAvatarUser;
@@ -66,6 +97,9 @@ namespace MauiApp1.ViewModels.Profile
             }
         }
 
+        /// <summary>
+        /// Флаг, указывающий, на статус выполнения обновления данных.
+        /// </summary>
         public bool IsRefreshing
         {
             get => _isRefreshing;
@@ -143,7 +177,15 @@ namespace MauiApp1.ViewModels.Profile
             }
         }
 
+        /// <summary>
+        /// Событие, вызываемое при изменении свойства.
+        /// </summary>
         public event PropertyChangedEventHandler PropertyChanged;
+
+        /// <summary>
+        /// Метод для вызова события PropertyChanged.
+        /// </summary>
+        /// <param name="propertyName">Имя изменённого свойства.</param>
         protected void OnPropertyChanged([CallerMemberName] string propertyName = null)
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
