@@ -1,0 +1,13 @@
+<ContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="T2JuniorMobile.View.Components.ProfileButton"
+             x:Name="profileButton">
+    <VerticalStackLayout Spacing="8" WidthRequest="100">
+        <Image Source="{Binding Icon, Source={x:Reference profileButton}}"
+               HeightRequest="40"
+               Aspect="AspectFit"/>
+        <Label Text="{Binding Text, Source={x:Reference profileButton}}" 
+               HorizontalOptions="Center"
+               FontSize="12"/>
+    </VerticalStackLayout>
+</ContentView>

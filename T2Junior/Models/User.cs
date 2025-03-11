@@ -19,7 +19,7 @@ public partial class User
 
     public string? Post { get; set; }
 
-    public int? Age { get; set; }
+    public DateTime? Birthday { get; set; }
 
     public sbyte Sex { get; set; }
 
@@ -30,6 +30,8 @@ public partial class User
     public string Phone { get; set; } = null!;
 
     public string Password { get; set; } = null!;
+
+    public sbyte IsActive { get; set; }
 
     public virtual ICollection<ClubUser> ClubUsers { get; set; } = new List<ClubUser>();
 

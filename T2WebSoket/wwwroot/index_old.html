@@ -1,0 +1,227 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Chat App</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/microsoft-signalr/3.1.19/signalr.min.js"></script>
+</head>
+<body>
+    <div>
+        <label>User ID:</label>
+        <input type="text" id="userId" />
+        <button onclick="loadChats()">Load Chats</button>
+    </div>
+    <div id="chats"></div>
+    <div id="messages"></div>
+    <input type="text" id="messageInput" placeholder="Type a message" />
+    <input type="button" id="sendBtn" value="Send" />
+    <input type="file" id="fileInput" />
+    <button onclick="sendMessageWithFile()">Send Message with File</button>
+
+    <script>
+        let connection;
+        let currentChatId = null; // Переменная для хранения текущего идентификатора чата
+
+        // Инициализация соединения SignalR
+        async function initializeConnection() {
+            connection = new signalR.HubConnectionBuilder()
+                .withUrl("/chatHub")
+                .build();
+
+            // Обработчик для получения новых сообщений
+            connection.on("ReceiveMessage", (userName, message, timestamp, filePath, fileType) => {
+                displayMessage(userName, message, timestamp, filePath, fileType);
+            });
+
+            // Запуск соединения
+            try {
+                await connection.start();
+                console.log("Connection started.");
+            } catch (err) {
+                console.error("Error connecting to chat hub:", err);
+            }
+        }
+
+        // Функция для отображения сообщений
+        function displayMessage(userName, message, timestamp, filePath, fileType) {
+            const messagesDiv = document.getElementById("messages");
+            const messageElement = document.createElement("div");
+
+            // Отображение текста сообщения
+            const textElement = document.createElement("p");
+            textElement.textContent = `${userName} (${new Date(timestamp).toLocaleTimeString()}): ${message}`;
+            messageElement.appendChild(textElement);
+
+            // Отображение файла, если он есть
+            if (filePath) {
+                switch (fileType) {
+                    case "image":
+                        displayImage(messageElement, filePath);
+                        break;
+                    case "video":
+                        displayVideo(messageElement, filePath);
+                        break;
+                    default:
+                        displayFileLink(messageElement, filePath);
+                        break;
+                }
+            }
+
+            messagesDiv.appendChild(messageElement);
+        }
+
+        // Функция для отображения изображения
+        function displayImage(messageElement, filePath) {
+            const imgElement = document.createElement("img");
+            imgElement.src = `${filePath}?t=${new Date().getTime()}`;
+            resizeMedia(imgElement, 300, 200);
+            messageElement.appendChild(imgElement);
+        }
+
+        // Функция для отображения видео
+        function displayVideo(messageElement, filePath) {
+            const videoElement = document.createElement("video");
+            videoElement.src = `${filePath}?t=${new Date().getTime()}`;
+            videoElement.controls = true;
+            resizeMedia(videoElement, 400, 300);
+            messageElement.appendChild(videoElement);
+        }
+
+        // Функция для отображения ссылки на файл
+        function displayFileLink(messageElement, filePath) {
+            const fileLink = document.createElement("a");
+            fileLink.href = `${filePath}?t=${new Date().getTime()}`;
+            fileLink.textContent = "Download File";
+            fileLink.download = "";
+            messageElement.appendChild(fileLink);
+        }
+
+        // Функция для изменения размера медиафайлов
+        function resizeMedia(element, maxWidth, maxHeight) {
+            element.style.maxWidth = `${maxWidth}px`;
+            element.style.maxHeight = `${maxHeight}px`;
+        }
+
+        // Загрузка списка чатов
+        async function loadChats() {
+            const userId = document.getElementById("userId").value;
+            const response = await fetch(`/api/chat/${userId}`);
+            const chats = await response.json();
+
+            const chatsDiv = document.getElementById("chats");
+            chatsDiv.innerHTML = "";
+            chats.forEach(chat => {
+                const chatButton = document.createElement("button");
+                chatButton.textContent = chat.name;
+                chatButton.onclick = () => joinChat(chat.id);
+                chatsDiv.appendChild(chatButton);
+            });
+        }
+
+        // Присоединение к чату
+        async function joinChat(chatId) {
+            console.log(`Switching to chat ${chatId}`);
+
+            // Закрытие текущего соединения, если оно активно
+            if (connection && connection.state === signalR.HubConnectionState.Connected) {
+                await connection.stop();
+            }
+
+            // Инициализация нового соединения
+            await initializeConnection();
+
+            currentChatId = chatId;
+            try {
+                await connection.invoke("JoinGroup", currentChatId);
+
+                // Загрузка истории сообщений чата
+                const chatHistory = await connection.invoke("GetChatHistory", chatId);
+                renderChatHistory(chatHistory);
+            } catch (err) {
+                console.error("Error joining chat:", err);
+            }
+        }
+
+        // Отображение истории сообщений чата
+        function renderChatHistory(chatHistory) {
+            const messagesDiv = document.getElementById("messages");
+            messagesDiv.innerHTML = "";
+            chatHistory.forEach(message => {
+                displayMessage(message.userName, message.text, message.creationDate, message.filePath, message.fileType);
+            });
+        }
+
+        // Отправка текстового сообщения
+        async function sendMessage() {
+            const messageInput = document.getElementById("messageInput");
+            const message = messageInput.value;
+            const userId = document.getElementById("userId").value;
+
+            if (!currentChatId) {
+                alert("Please select a chat first.");
+                return;
+            }
+
+            try {
+                if (connection.state === signalR.HubConnectionState.Disconnected) {
+                    await connection.start();
+                }
+                await connection.invoke("Send", userId, message, currentChatId);
+                messageInput.value = "";
+            } catch (err) {
+                console.error("Error sending message:", err);
+                alert("Failed to send message. Please check the console for more details.");
+            }
+        }
+
+        // Отправка сообщения с файлом
+        async function sendMessageWithFile() {
+            const messageInput = document.getElementById("messageInput");
+            const message = messageInput.value;
+            const userId = document.getElementById("userId").value;
+            const fileInput = document.getElementById("fileInput");
+            const file = fileInput.files[0];
+
+            if (!currentChatId) {
+                alert("Please select a chat first.");
+                return;
+            }
+
+            if (!file) {
+                alert("Please select a file to upload.");
+                return;
+            }
+
+            const formData = new FormData();
+            formData.append("file", file);
+            formData.append("IdUser", userId);
+
+            try {
+                const response = await fetch("/api/File/upload", {
+                    method: "POST",
+                    body: formData,
+                });
+
+                if (!response.ok) {
+                    throw new Error("Failed to upload file.");
+                }
+
+                const result = await response.json();
+                await connection.invoke("SendWithFileNotification", userId, message, currentChatId, result.id, result.filePath);
+
+                messageInput.value = "";
+                fileInput.value = "";
+            } catch (err) {
+                console.error("Error sending message with file:", err);
+                alert("Failed to send message with file. Please check the console for more details.");
+            }
+        }
+
+        // Инициализация соединения при загрузке страницы
+        initializeConnection().catch(err => console.error("Error initializing connection:", err));
+
+        // Обработчик для кнопки отправки сообщения
+        document.getElementById("sendBtn").addEventListener("click", sendMessage);
+    </script>
+</body>
+</html>

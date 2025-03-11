@@ -6,13 +6,13 @@ using T2Junior.Models;
 
 namespace T2Junior.Data;
 
-public partial class AppDbContext : DbContext
+public partial class AppDBContext : DbContext
 {
-    public AppDbContext()
+    public AppDBContext()
     {
     }
 
-    public AppDbContext(DbContextOptions<AppDbContext> options)
+    public AppDBContext(DbContextOptions<AppDBContext> options)
         : base(options)
     {
     }
@@ -321,7 +321,9 @@ public partial class AppDbContext : DbContext
 
             entity.Property(e => e.IdUser).HasColumnName("id_user");
             entity.Property(e => e.AccumulatedPoints).HasColumnName("accumulated_points");
-            entity.Property(e => e.Age).HasColumnName("age");
+            entity.Property(e => e.Birthday)
+                .HasColumnType("datetime")
+                .HasColumnName("birthday");
             entity.Property(e => e.Email)
                 .HasMaxLength(100)
                 .HasColumnName("email");
@@ -332,6 +334,7 @@ public partial class AppDbContext : DbContext
                 .HasCharSet("utf8mb3");
             entity.Property(e => e.IdOrganization).HasColumnName("id_organization");
             entity.Property(e => e.IdRole).HasColumnName("id_role");
+            entity.Property(e => e.IsActive).HasColumnName("is_active");
             entity.Property(e => e.LastName)
                 .HasMaxLength(45)
                 .HasColumnName("last_name")
@@ -358,6 +361,9 @@ public partial class AppDbContext : DbContext
             entity.Property(e => e.Sex)
                 .HasDefaultValueSql("'1'")
                 .HasColumnName("sex");
+            entity.Property(e => e.IsActive)
+                .HasDefaultValueSql("'0'")
+                .HasColumnName("is_active");
 
             entity.HasOne(d => d.IdOrganizationNavigation).WithMany(p => p.Users)
                 .HasForeignKey(d => d.IdOrganization)
