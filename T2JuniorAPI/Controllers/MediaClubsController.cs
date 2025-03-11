@@ -17,7 +17,7 @@ namespace T2JuniorAPI.Controllers
 
 
         /// <summary>
-        /// Добавление медиафайла в клуб
+        /// Добавление медиафайла в клуб.
         /// </summary>
         /// <param name="clubId">Клуб</param>
         /// <param name="uploadDTO">Медиафайлы</param>
@@ -39,7 +39,7 @@ namespace T2JuniorAPI.Controllers
         }
 
         /// <summary>
-        /// Удаление медиафайла из клуба
+        /// Удаление медиафайла из клуба.
         /// </summary>
         /// <param name="clubId">Клуб</param>
         /// <param name="mediaId">Медиафайлы</param>
@@ -62,7 +62,7 @@ namespace T2JuniorAPI.Controllers
         }
 
         /// <summary>
-        /// Получение всех медиафайлов, связанных с клубом
+        /// Получение всех медиафайлов, связанных с клубом.
         /// </summary>
         /// <param name="clubId">Клуб</param>
         /// <returns></returns>
@@ -84,7 +84,7 @@ namespace T2JuniorAPI.Controllers
         }
 
         /// <summary>
-        /// Установка аватара для клуба
+        /// Установка аватара для клуба.
         /// </summary>
         /// <param name="clubId">Клуб</param>
         /// <param name="uploadDTO">Медиафайлы</param>
@@ -106,7 +106,7 @@ namespace T2JuniorAPI.Controllers
         }
 
         /// <summary>
-        /// Удаление аватара из клуба
+        /// Удаление аватара из клуба.
         /// </summary>
         /// <param name="clubId">Клуб</param>
         /// <param name="mediaId">Медиафайлы</param>

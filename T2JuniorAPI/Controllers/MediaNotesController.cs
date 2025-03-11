@@ -23,6 +23,14 @@ namespace T2JuniorAPI.Controllers
             _mediaNoteService = mediaNoteService;
         }
 
+        /// <summary>
+        /// Добавление медиафайла к заметке по её идентификатору.
+        /// </summary>
+        /// <param name="idNote">Идентификатор заметки.</param>
+        /// <param name="uploadDTO">DTO с данными для загрузки медиафайла.</param>
+        /// <returns>Обновленная заметка с добавленным медиафайлом.</returns>>
+        /// <response code="200">Успешное выполнение</response>
+        /// <response code="400">Ошибка API</response>
         [HttpPost("add-media-to-note/{idNote}")]
         public async Task<ActionResult<MediaNoteDTO>> AddMediaToNote(Guid idNote, MediafileUploadDTO uploadDTO)
         {
@@ -30,6 +38,14 @@ namespace T2JuniorAPI.Controllers
             return Ok(mediaNote);
         }
 
+        /// <summary>
+        /// Удаление медиафайла из заметок по её идентификатору.
+        /// </summary>
+        /// <param name="idNote">Идентификатор заметки.</param>
+        /// <param name="idMedia">Идентификатор медиафайла.</param>
+        /// <returns>Результат удаления медиафайла.</returns>
+        /// <response code="200">Успешное выполнение</response>
+        /// <response code="400">Ошибка API</response>
         [HttpDelete("delete-media-from-note/{idNote}/{idMedia}")]
         public async Task<ActionResult<bool>> DeleteMediaFromNote(Guid idNote, Guid idMedia)
         {

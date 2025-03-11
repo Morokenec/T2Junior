@@ -25,7 +25,7 @@ namespace T2JuniorAPI.Controllers
 
 
         /// <summary>
-        /// Получение всех типов медиафайлов
+        /// Получение всех типов медиафайлов.
         /// </summary>
         /// <returns></returns>
         /// <response code="200">Успешное выполнение</response>
@@ -39,7 +39,7 @@ namespace T2JuniorAPI.Controllers
 
 
         /// <summary>
-        /// Создание нового типа медиафайлов
+        /// Создание нового типа медиафайлов.
         /// </summary>
         /// <param name="mediaTypeDTO">Пользователь</param>
         /// <returns></returns>
@@ -59,7 +59,7 @@ namespace T2JuniorAPI.Controllers
         }
 
         /// <summary>
-        /// Удаление типа медиафайла
+        /// Удаление типа медиафайла.
         /// </summary>
         /// <param name="id">Пользователь</param>
         /// <returns></returns>

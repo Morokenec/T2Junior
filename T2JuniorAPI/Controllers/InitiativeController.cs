@@ -18,6 +18,13 @@ namespace T2JuniorAPI.Controllers
             _initiativeService = initiativeService;
         }
 
+        /// <summary>
+        /// Создание новой инициативы.
+        /// </summary>
+        /// <param name="initiativeDto">DTO с данными для создания инициативы.</param>
+        /// <returns>Созданная инициатива.</returns>
+        /// <response code="200">Успешное выполнение</response>
+        /// <response code="400">Ошибка API</response>
         [HttpPost]
         public async Task<ActionResult<InitiativeOutputDTO>> CreateInitiative(InitiativeInputDTO initiativeDto)
         {
@@ -25,6 +32,13 @@ namespace T2JuniorAPI.Controllers
             return Ok(initiative);
         }
 
+        /// <summary>
+        /// Получение инициативы по её идентификатору.
+        /// </summary>
+        /// <param name="id">Идентификатор инициативы.</param>
+        /// <returns>Инициатива, если найдена.</returns>
+        /// <response code="200">Успешное выполнение</response>
+        /// <response code="400">Ошибка API</response>
         [HttpGet("{id}")]
         public async Task<ActionResult<Initiative>> GetInitiative(Guid id)
         {
@@ -33,6 +47,12 @@ namespace T2JuniorAPI.Controllers
             return Ok(initiative);
         }
 
+        /// <summary>
+        /// Получение всех инициатив.
+        /// </summary>
+        /// <returns>Список всех инициатив.</returns>
+        /// <response code="200">Успешное выполнение</response>
+        /// <response code="400">Ошибка API</response>
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Initiative>>> GetAllInitiatives()
         {
@@ -40,6 +60,13 @@ namespace T2JuniorAPI.Controllers
             return Ok(initiatives);
         }
 
+        /// <summary>
+        /// Обновление существующей инициативы.
+        /// </summary>
+        /// <param name="id">Идентификатор инициативы.</param>
+        /// <param name="initiativeDto">DTO с обновленными данными инициативы.</param>
+        /// <response code="200">Успешное выполнение</response>
+        /// <response code="400">Ошибка API</response>
         [HttpPut("{id}")]
         public async Task<IActionResult> UpdateInitiative(Guid id, InitiativeInputDTO initiativeDto)
         {
@@ -48,6 +75,12 @@ namespace T2JuniorAPI.Controllers
             return NoContent();
         }
 
+        /// <summary>
+        /// Удаление инициативы по её идентификатору.
+        /// </summary>
+        /// <param name="id">Идентификатор инициативы.</param>
+        /// <response code="200">Успешное выполнение</response>
+        /// <response code="400">Ошибка API</response>
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteInitiative(Guid id)
         {
@@ -56,6 +89,13 @@ namespace T2JuniorAPI.Controllers
             return NoContent();
         }
 
+        /// <summary>
+        /// Голосование за инициативу.
+        /// </summary>
+        /// <param name="id">Идентификатор инициативы.</param>
+        /// <param name="userId">Идентификатор пользователя, голосующего за инициативу.</param>
+        /// <response code="200">Успешное выполнение</response>
+        /// <response code="400">Ошибка API</response>
         [HttpPost("{id}/vote")]
         public async Task<IActionResult> VoteForInitiative(Guid id, Guid userId)
         {
@@ -64,6 +104,13 @@ namespace T2JuniorAPI.Controllers
             return Ok();
         }
 
+        /// <summary>
+        /// Добавление комментария к инициативе.
+        /// </summary>
+        /// <param name="id">Идентификатор инициативы.</param>
+        /// <param name="commentDto">DTO с данными комментария.</param>
+        /// <response code="200">Успешное выполнение</response>
+        /// <response code="400">Ошибка API</response>
         [HttpPost("{id}/comment")]
         public async Task<IActionResult> CommentOnInitiative(Guid id, CreateInitiativeComment commentDto)
         {
@@ -72,6 +119,13 @@ namespace T2JuniorAPI.Controllers
             return Ok();
         }
 
+        /// <summary>
+        /// Изменение статуса инициативы.
+        /// </summary>
+        /// <param name="id">Идентификатор инициативы.</param>
+        /// <param name="statusId">Идентификатор нового статуса.</param>
+        /// <response code="200">Успешное выполнение</response>
+        /// <response code="400">Ошибка API</response>
         [HttpPut("{id}/status")]
         public async Task<IActionResult> ChangeInitiativeStatus(Guid id, [FromQuery] Guid statusId)
         {
@@ -80,6 +134,13 @@ namespace T2JuniorAPI.Controllers
             return Ok();
         }
 
+        /// <summary>
+        /// Добавление пользователя к инициативе.
+        /// </summary>
+        /// <param name="id">Идентификатор инициативы.</param>
+        /// <param name="userId">Идентификатор пользователя.</param>
+        /// <response code="200">Успешное выполнение</response>
+        /// <response code="400">Ошибка API</response>
         [HttpPost("{id}/add-user")]
         public async Task<IActionResult> AddUserToInitiative(Guid id, Guid userId)
         {
@@ -88,6 +149,13 @@ namespace T2JuniorAPI.Controllers
             return Ok();
         }
 
+        /// <summary>
+        /// Удаление пользователя из инициативы.
+        /// </summary>
+        /// <param name="id">Идентификатор инициативы.</param>
+        /// <param name="userId">Идентификатор пользователя.</param>
+        /// <response code="200">Успешное выполнение</response>
+        /// <response code="400">Ошибка API</response>
         [HttpDelete("{id}/del-user")]
         public async Task<IActionResult> RemoveUserFromInitiative(Guid id, Guid userId)
         {
@@ -96,6 +164,12 @@ namespace T2JuniorAPI.Controllers
             return Ok();
         }
 
+        /// <summary>
+        /// Получение всех статусов инициатив.
+        /// </summary>
+        /// <returns>Список всех статусов инициатив.</returns>
+        /// <response code="200">Успешное выполнение</response>
+        /// <response code="400">Ошибка API</response>
         [HttpGet("statuses")]
         public async Task<ActionResult<IEnumerable<InitiativeStatusDTO>>> GetInitiativeStatuses()
         {

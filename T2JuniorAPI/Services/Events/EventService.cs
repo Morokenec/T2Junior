@@ -21,7 +21,7 @@ namespace T2JuniorAPI.Services.Events
         private readonly IMediafileService _mediafileService;
 
         /// <summary>
-        /// Инициализирует новый класс
+        /// Инициализация нового класса.
         /// </summary>
         /// <param name="context">Контекст базы данных.</param>
         /// <param name="mapper">Маппер для преобразования объектов.</param>
@@ -36,7 +36,7 @@ namespace T2JuniorAPI.Services.Events
         }
 
         /// <summary>
-        /// Возвращает календарь событий для указанного пользователя.
+        /// Возвращение календаря событий для указанного пользователя.
         /// </summary>
         /// <param name="userId">Идентификатор пользователя.</param>
         /// <param name="month">Месяц.</param>
@@ -66,7 +66,7 @@ namespace T2JuniorAPI.Services.Events
         }
 
         /// <summary>
-        /// Возвращает календарь событий для указанного медиаклуба.
+        /// Возвращение календаря событий для указанного медиаклуба.
         /// </summary>
         /// <param name="clubId">Идентификатор медиаклуба.</param>
         /// <param name="month">Месяц.</param>
@@ -86,7 +86,7 @@ namespace T2JuniorAPI.Services.Events
         }
 
         /// <summary>
-        /// Создает событие.
+        /// Создание события.
         /// </summary>
         /// <param name="createEventDto">Данные для создания события.</param>
         /// <param name="uploadDTO">Данные для загрузки медиафайла.</param>
@@ -138,7 +138,7 @@ namespace T2JuniorAPI.Services.Events
 
 
         /// <summary>
-        /// Удаляет событие по идентификатору.
+        /// Удаление события по идентификатору.
         /// </summary>
         /// <param name="eventId">Идентификатор события.</param>
         /// <returns>Задача, которая удаляет событие.</returns>
@@ -166,7 +166,7 @@ namespace T2JuniorAPI.Services.Events
         }
 
         /// <summary>
-        /// Обновляет существующее событие.
+        /// Обновление существующего событие.
         /// </summary>
         /// <param name="updateEventDTO">Данные для обновления события.</param>
         /// <returns>Задача, которая обновляет событие.</returns>
@@ -183,7 +183,7 @@ namespace T2JuniorAPI.Services.Events
 
 
         /// <summary>
-        /// Возвращает детальную информацию о событии по идентификатору.
+        /// Возвращение детальной информации о событии по идентификатору.
         /// </summary>
         /// <param name="eventId">Идентификатор события.</param>
         /// <returns>Задача, которая возвращает детальную информацию о событии.</returns>
@@ -199,7 +199,7 @@ namespace T2JuniorAPI.Services.Events
 
 
         /// <summary>
-        /// Возвращает список всех направлений событий.
+        /// Возвращение списка всех направлений событий.
         /// </summary>
         /// <returns>Задача, которая возвращает список всех направлений событий.</returns>
         public async Task<List<EventDirectionDTO>> GetEventDirection()
@@ -213,7 +213,7 @@ namespace T2JuniorAPI.Services.Events
         }
 
         /// <summary>
-        /// Создает новое направление события.
+        /// Создание нового направления события.
         /// </summary>
         /// <param name="createEventDirectionDto">Данные для создания направления события.</param>
         /// <returns>Задача, которая создает новое направление события.</returns>
@@ -228,7 +228,7 @@ namespace T2JuniorAPI.Services.Events
         }
 
         /// <summary>
-        /// Удаляет направление события по идентификатору.
+        /// Удаление направления события по идентификатору.
         /// </summary>
         /// <param name="directionId">Идентификатор направления события.</param>
         /// <returns>Задача, которая удаляет направление события.</returns>
@@ -244,7 +244,7 @@ namespace T2JuniorAPI.Services.Events
         }
 
         /// <summary>
-        /// Обновляет существующее направление события.
+        /// Обновление существующего направления события.
         /// </summary>
         /// <param name="updateEventDirectionDto">Данные для обновления направления события.</param>
         /// <returns>Задача, которая обновляет направление события.</returns>

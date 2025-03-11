@@ -23,7 +23,7 @@ namespace T2JuniorAPI.Services.Clubs
         }
 
         /// <summary>
-        /// Возвращает список всех неудалённых клубов с их медиафайлами.
+        /// Возвращение списка всех неудалённых клубов с их медиафайлами.
         /// </summary>
         /// <returns>Список DTO-объектов клубов.</returns>
         public async Task<List<AllClubsDTO>> GetAllClubs()
@@ -38,7 +38,7 @@ namespace T2JuniorAPI.Services.Clubs
         }
 
         /// <summary>
-        /// Возвращает информацию о клубе по уникальному идентификатору.
+        /// Возвращение информации о клубе по уникальному идентификатору.
         /// </summary>
         /// <param name="clubId">Уникальный идентификатор клуба.</param>
         /// <returns>DTO-объект клуба или null, если клуб не найден.</returns>
@@ -71,7 +71,7 @@ namespace T2JuniorAPI.Services.Clubs
         }
 
         /// <summary>
-        /// Создаёт новый клуб.
+        /// Создание нового клуба.
         /// </summary>
         /// <param name="club">DTO-объект с новыми данными для нового клуба.</param>
         /// <returns>Строка с результатом создания клуба.</returns>
@@ -116,7 +116,7 @@ namespace T2JuniorAPI.Services.Clubs
         }
 
         /// <summary>
-        /// Проверяет, существует ли клуб с указанным идентификатором.
+        /// Проверка существования клуба с указанным идентификатором.
         /// </summary>
         /// <param name="id">Уникальный идентификатор клуба.</param>
         /// <returns>`true`, если клуб существует, иначе `false`.</returns>
@@ -126,7 +126,7 @@ namespace T2JuniorAPI.Services.Clubs
         }
 
         /// <summary>
-        /// Добавляет пользователя в клуб.
+        /// Добавление пользователя в клуб.
         /// </summary>
         /// <param name="clubId">Уникальный идентификатор клуба.</param>
         /// <param name="user">DTO-объект с данными о пользователе.</param>
@@ -156,7 +156,7 @@ namespace T2JuniorAPI.Services.Clubs
         }
 
         /// <summary>
-        /// Удаляет пользователя из клуба.
+        /// Удаление пользователя из клуба.
         /// </summary>
         /// <param name="clubId">Уникальный идентификатор клуба.</param>
         /// <param name="userId">Уникальный идентификатор пользователя.</param>
@@ -185,7 +185,7 @@ namespace T2JuniorAPI.Services.Clubs
         }
 
         /// <summary>
-        /// Возвращает профиль клуба по уникальному идентификатору.
+        /// Возвращение профиля клуба по уникальному идентификатору.
         /// </summary>
         /// <param name="clubId">Уникальный идентификатор клуба.</param>
         /// <param name="userId">Уникальный идентификатор пользователя.</param>
@@ -221,7 +221,7 @@ namespace T2JuniorAPI.Services.Clubs
         }
 
         /// <summary>
-        /// Возвращает список клубов, в которые подписан пользователь.
+        /// Возвращение списка клубов, на которые подписан пользователь.
         /// </summary>
         /// <param name="userId">Уникальный идентификатор пользователя.</param>
         /// <returns>Список DTO-объектов клубов.</returns>
@@ -248,7 +248,7 @@ namespace T2JuniorAPI.Services.Clubs
         }
 
         /// <summary>
-        /// Обновляет информацию о клубе.
+        /// Обновление информации о клубе.
         /// </summary>
         /// <param name="clubId">Уникальный идентификатор клуба.</param>
         /// <param name="updateClubDTO">DTO-объект с новыми данными для обновления.</param>
@@ -267,7 +267,7 @@ namespace T2JuniorAPI.Services.Clubs
         }
 
         /// <summary>
-        /// Удаляет клуб.
+        /// Удаление клуба.
         /// </summary>
         /// <param name="id">Уникальный идентификатор клуба.</param>
         /// <returns>Строка с результатом удаления.</returns>

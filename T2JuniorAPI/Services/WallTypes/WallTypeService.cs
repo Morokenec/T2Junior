@@ -8,7 +8,7 @@ using T2JuniorAPI.Entities;
 namespace T2JuniorAPI.Services.WallTypes
 {
     /// <summary>
-    /// Сервис для работы с типами стен
+    /// Сервис для работы с типами стен.
     /// </summary>
     public class WallTypeService : IWallTypeService
     {
@@ -17,7 +17,7 @@ namespace T2JuniorAPI.Services.WallTypes
 
 
         /// <summary>
-        /// Конструктор для внедрения зависимостей
+        /// Конструктор для внедрения зависимостей.
         /// </summary>
         /// <param name="context">Контекст базы данных</param>
         /// <param name="mapper">Маппер для преобразования объектов</param>
@@ -29,7 +29,7 @@ namespace T2JuniorAPI.Services.WallTypes
 
 
         /// <summary>
-        /// Возвращает тип стены по названию, или создает новый тип, если он не найден
+        /// Возвращение типа стены по названию, или создание нового типа, если он не найден.
         /// </summary>
         /// <param name="createWallTypeDTO">Данные для создания или обновления типа стены</param>
         /// <returns>Данные о типе стены</returns>
@@ -55,7 +55,7 @@ namespace T2JuniorAPI.Services.WallTypes
         }
 
         /// <summary>
-        /// Возвращает список всех неудаленных типов стен
+        /// Возвращение списка всех неудаленных типов стен.
         /// </summary>
         /// <returns>Коллекция типов стен</returns>
         public async Task<List<WallTypeDTO>> GetAllWallTypesAsync()
@@ -67,7 +67,7 @@ namespace T2JuniorAPI.Services.WallTypes
         }
 
         /// <summary>
-        /// Помечает тип стены как удаленную
+        /// Метка типа стены, как удаленного.
         /// </summary>
         /// <param name="id">Id удаляемого типа стены</param>
         /// <returns>True, если операция прошла успешно, иначе false</returns>

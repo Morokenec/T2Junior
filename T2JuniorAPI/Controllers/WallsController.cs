@@ -24,7 +24,7 @@ namespace T2JuniorAPI.Controllers
         }
 
         /// <summary>
-        /// Получение ленты записей (стены) пользователя
+        /// Получение ленты записей (стены) пользователя.
         /// </summary>
         /// <param name="idOwner">Стена</param>
         /// <returns></returns>

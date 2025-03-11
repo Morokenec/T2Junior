@@ -22,7 +22,7 @@ public class AccountController : ControllerBase
     }
 
     /// <summary>
-    /// Регистрация аккаунта
+    /// Регистрация аккаунта.
     /// </summary>
     /// <param name="registerUserDto">Пользователь</param>
     /// <returns></returns>
@@ -43,7 +43,7 @@ public class AccountController : ControllerBase
     }
 
     /// <summary>
-    /// Авторизация пользователя
+    /// Авторизация пользователя.
     /// </summary>
     /// <param name="loginDto">Пользователь</param>
     /// <returns></returns>
@@ -72,7 +72,7 @@ public class AccountController : ControllerBase
     }
 
     /// <summary>
-    /// Получение профиля по ID
+    /// Получение профиля по ID.
     /// </summary>
     /// <param name="id">Пользователь</param>
     /// <returns></returns>
@@ -92,7 +92,7 @@ public class AccountController : ControllerBase
     }
 
     /// <summary>
-    /// Получение всех профилей
+    /// Получение всех профилей.
     /// </summary>
     /// <returns></returns>
     /// <response code="200">Успешное выполнение</response>
@@ -111,7 +111,7 @@ public class AccountController : ControllerBase
     }
 
     /// <summary>
-    /// Обновление профиля пользователя
+    /// Обновление профиля пользователя.
     /// </summary>
     /// <param name="id">Пользователь</param>
     /// <param name="updateUserDto">Пользователь</param>
@@ -133,7 +133,7 @@ public class AccountController : ControllerBase
     }
 
     /// <summary>
-    /// Восстановление пароля пользователя
+    /// Восстановление пароля пользователя.
     /// </summary>
     /// <param name="recoveryPassword">Пользователь</param>
     /// <returns></returns>
@@ -154,7 +154,7 @@ public class AccountController : ControllerBase
     }
 
     /// <summary>
-    /// Удаление пользователя по ID
+    /// Удаление пользователя по ID.
     /// </summary>
     /// <param name="id">Пользователь</param>
     /// <returns></returns>

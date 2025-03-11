@@ -8,12 +8,21 @@ using T2JuniorAPI.Services.Medias;
 
 namespace T2JuniorAPI.Services.MediaComments
 {
+    /// <summary>
+    /// Сервис для управления медиафайлами в комментариях.
+    /// </summary>
     public class MediaCommentService : IMediaCommentService
     {
         private readonly ApplicationDbContext _context;
         private readonly IMapper _mapper;
         private readonly IMediafileService _mediafileservice;
 
+        /// <summary>
+        /// Конструктор класса MediaCommentService.
+        /// </summary>
+        /// <param name="mediafileservice">Сервис для работы с медиафайлами.</param>
+        /// <param name="mapper">Mapper для маппинга объектов.</param>
+        /// <param name="context">Контекст базы данных.</param>
         public MediaCommentService(IMediafileService mediafileservice, IMapper mapper, ApplicationDbContext context)
         {
             _mediafileservice = mediafileservice;
@@ -21,6 +30,12 @@ namespace T2JuniorAPI.Services.MediaComments
             _context = context;
         }
 
+        /// <summary>
+        /// Добавление медиафайла к комментарию по его идентификатору.
+        /// </summary>
+        /// <param name="commentId">Идентификатор комментария.</param>
+        /// <param name="uploadDTO">DTO с данными для загрузки медиафайла.</param>
+        /// <returns>Обновленный комментарий с добавленным медиафайлом.</returns>
         public async Task<CommentDTO> AddMediaToComment(Guid commentId, MediafileUploadDTO uploadDTO)
         {
             var comment = await _context.Comments.FindAsync(commentId);
@@ -37,6 +52,12 @@ namespace T2JuniorAPI.Services.MediaComments
             return _mapper.Map<CommentDTO>(comment);
         }
 
+        /// <summary>
+        /// Удаление медиафайла из комментария по его идентификатору.
+        /// </summary>
+        /// <param name="commentId">Идентификатор комментария.</param>
+        /// <param name="mediaId">Идентификатор медиафайла.</param>
+        /// <returns>Результат удаления медиафайла.</returns>
         public async Task<bool> DeleteMediaFromComment(Guid commentId, Guid mediaId)
         {
             var mediaComment = await _context.MediaComments

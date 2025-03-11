@@ -26,7 +26,7 @@ namespace T2JuniorAPI.Controllers
         }
 
         /// <summary>
-        /// Получение списка направлений событий
+        /// Получение списка направлений событий.
         /// </summary>
         /// <returns></returns>
         /// <response code="200">Успешное выполнение</response>
@@ -39,7 +39,7 @@ namespace T2JuniorAPI.Controllers
         }
 
         /// <summary>
-        /// Создание нового направления события
+        /// Создание нового направления события.
         /// </summary>
         /// <param name="createEventDirectionDto">Направление событий</param>
         /// <returns></returns>
@@ -53,7 +53,7 @@ namespace T2JuniorAPI.Controllers
         }
 
         /// <summary>
-        /// Удаление направления события по ID
+        /// Удаление направления события по ID.
         /// </summary>
         /// <param name="directionId">Направление событий</param>
         /// <returns></returns>
@@ -67,7 +67,7 @@ namespace T2JuniorAPI.Controllers
         }
 
         /// <summary>
-        /// Обновление существующего направления события
+        /// Обновление существующего направления события.
         /// </summary>
         /// <param name="updateEventDirectionDto">Направление событий</param>
         /// <returns></returns>

@@ -18,7 +18,7 @@ namespace T2JuniorAPI.Controllers
         }
 
         /// <summary>
-        /// Получение календаря событий пользователя за указанный месяц и год
+        /// Получение календаря событий пользователя за указанный месяц и год.
         /// </summary>
         /// <param name="userId">Пользователь</param>
         /// <param name="year">Год</param>
@@ -44,7 +44,7 @@ namespace T2JuniorAPI.Controllers
         }
 
         /// <summary>
-        /// Получение календаря событий клуба за указанный месяц и год
+        /// Получение календаря событий клуба за указанный месяц и год.
         /// </summary>
         /// <param name="clubId">Пользователь</param>
         /// <param name="year">Год</param>
@@ -71,7 +71,7 @@ namespace T2JuniorAPI.Controllers
 
 
         /// <summary>
-        /// Создание новых событий
+        /// Создание новых событий.
         /// </summary>
         /// <param name="createEventDTO">Событие</param>
         /// <param name="mediafile">Медиафайлы</param>
@@ -97,7 +97,7 @@ namespace T2JuniorAPI.Controllers
         }
 
         /// <summary>
-        /// Удаление события по его ID
+        /// Удаление события по его ID.
         /// </summary>
         /// <param name="eventId">Событие</param>
         /// <returns></returns>
@@ -111,7 +111,7 @@ namespace T2JuniorAPI.Controllers
         }
 
         /// <summary>
-        /// Обновление существующего события
+        /// Обновление существующего события.
         /// </summary>
         /// <param name="updateEventDTO">Событие</param>
         /// <returns></returns>
@@ -125,7 +125,7 @@ namespace T2JuniorAPI.Controllers
         }
 
         /// <summary>
-        /// Получение информации о событии по его ID
+        /// Получение информации о событии по его ID.
         /// </summary>
         /// <param name="eventId">Событие</param>
         /// <returns></returns>

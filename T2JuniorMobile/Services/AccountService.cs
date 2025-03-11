@@ -8,16 +8,29 @@ using T2JuniorMobile.Model.Auth;
 
 namespace T2JuniorMobile.Services
 {
+    /// <summary>
+    /// Сервис для управления аутентификацией пользователей.
+    /// </summary>
     public class AccountService
     {
         private readonly HttpClient _httpClient;
-        private const string AuthEndpoint = "http://localhost:5138/api/Account/login"; 
+        private const string AuthEndpoint = "http://localhost:5138/api/Account/login";
 
+        /// <summary>
+        /// Конструктор класса AccountService.
+        /// </summary>
+        /// <param name="httpClient">HTTP-клиент для выполнения запросов.</param>
         public AccountService(HttpClient httpClient)
         {
             _httpClient = httpClient;
         }
 
+
+        /// <summary>
+        /// Выполнение входа пользователя в систему.
+        /// </summary>
+        /// <param name="email">Электронная почта пользователя.</param>
+        /// <param name="password">Пароль пользователя.</param>
         public async Task<string?> LoginAsync(string email, string password)
         {
             var authRequest = new AuthRequest { Email = email, Password = password };

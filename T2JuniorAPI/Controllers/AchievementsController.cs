@@ -17,7 +17,7 @@ namespace T2JuniorAPI.Controllers
         }
 
         /// <summary>
-        /// Получение всех достижений, с выделением пользовательских по его ID
+        /// Получение всех достижений, с выделением пользовательских по его ID.
         /// </summary>
         /// <param name="id">Достижения</param>
         /// <returns></returns>
@@ -39,7 +39,7 @@ namespace T2JuniorAPI.Controllers
         }
 
         /// <summary>
-        /// Получение достижения пользователя по ID
+        /// Получение достижения пользователя по ID.
         /// </summary>
         /// <param name="id">Достижения</param>
         /// <returns></returns>
@@ -61,7 +61,7 @@ namespace T2JuniorAPI.Controllers
         }
 
         /// <summary>
-        /// Создание нового достижения
+        /// Создание нового достижения.
         /// </summary>
         /// <param name="achievementDto">Достижение</param>
         /// <param name="uploadDTO">Медиафайл</param>
@@ -84,7 +84,7 @@ namespace T2JuniorAPI.Controllers
         }
 
         /// <summary>
-        /// Обновление существующего достижение
+        /// Обновление существующего достижение.
         /// </summary>
         /// <param name="achievementDto">Достижения</param>
         /// <param name="uploadDTO">Медиафайл</param>
@@ -108,7 +108,7 @@ namespace T2JuniorAPI.Controllers
 
 
         /// <summary>
-        /// Выдача достижения пользователю
+        /// Выдача достижения пользователю.
         /// </summary>
         /// <param name="userId)">Пользователь</param>
         /// <param name="achievementId)">Достижения</param>
@@ -132,7 +132,7 @@ namespace T2JuniorAPI.Controllers
 
 
         /// <summary>
-        /// Удаление достижения
+        /// Удаление достижения.
         /// </summary>
         /// <param name="id">Достижения</param>
         /// <returns></returns>
@@ -154,7 +154,7 @@ namespace T2JuniorAPI.Controllers
         }
 
         /// <summary>
-        /// Активация достижения
+        /// Активация достижения.
         /// </summary>
         /// <param name="id)">Достижения</param>
         /// <returns></returns>
@@ -176,7 +176,7 @@ namespace T2JuniorAPI.Controllers
         }
 
         /// <summary>
-        /// Деактивация достижения
+        /// Деактивация достижения.
         /// </summary>
         /// <param name="id)">Достижения</param>
         /// <returns></returns>

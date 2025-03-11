@@ -20,7 +20,7 @@ namespace T2JuniorAPI.Controllers
         }
 
         /// <summary>
-        /// Получение списка всех клубов, с выделением участия пользователем в них
+        /// Получение списка всех клубов, с выделением участия пользователем в них.
         /// </summary>
         /// <param name="userId">Клуб</param>
         /// <returns></returns>
@@ -34,7 +34,7 @@ namespace T2JuniorAPI.Controllers
         }
 
         /// <summary>
-        /// Получение списка всех клубов
+        /// Получение списка всех клубов.
         /// </summary>
         /// <returns></returns>
         /// <response code="200">Успешное выполнение</response>
@@ -60,7 +60,7 @@ namespace T2JuniorAPI.Controllers
         //}
 
         /// <summary>
-        /// Получение профиля клуба по ID
+        /// Получение профиля клуба по ID.
         /// </summary>
         /// <param name="clubId">Клуб</param>
         /// <param name="userId">Пользователь</param>
@@ -75,7 +75,7 @@ namespace T2JuniorAPI.Controllers
         }
 
         /// <summary>
-        /// Получение информации о клубе по ID
+        /// Получение информации о клубе по ID.
         /// </summary>
         /// <param name="clubId">Клуб</param>
         /// <returns></returns>
@@ -100,7 +100,7 @@ namespace T2JuniorAPI.Controllers
         }
 
         /// <summary>
-        /// Обновление информации о клубе по ID
+        /// Обновление информации о клубе по ID.
         /// </summary>
         /// <param name="id">Пользователь</param>
         /// <param name="updateClubDTO">Клуб</param>
@@ -124,7 +124,7 @@ namespace T2JuniorAPI.Controllers
         }
 
         /// <summary>
-        /// Создание нового клуба
+        /// Создание нового клуба.
         /// </summary>
         /// <param name="club">Клуб</param>
         /// <returns></returns>
@@ -161,7 +161,7 @@ namespace T2JuniorAPI.Controllers
         }
 
         /// <summary>
-        /// Удаление пользователя из клуба
+        /// Удаление пользователя из клуба.
         /// </summary>
         /// <param name="clubId">Клуб</param>
         /// <param name="userId">Пользователь</param>
@@ -177,7 +177,7 @@ namespace T2JuniorAPI.Controllers
         }
 
         /// <summary>
-        /// Удаление клуба по его ID
+        /// Удаление клуба по его ID.
         /// </summary>
         /// <param name="id">Клуб</param>
         /// <returns></returns>

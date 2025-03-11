@@ -8,7 +8,7 @@ using T2JuniorAPI.DTOs.Users;
 namespace T2JuniorAPI.Services.Users
 {
     /// <summary>
-    /// Сервис для работы с пользователями
+    /// Сервис для работы с пользователями.
     /// </summary>
     public class UserService : IUserService
     {
@@ -18,7 +18,7 @@ namespace T2JuniorAPI.Services.Users
         private readonly IMapper _mapper;
 
         /// <summary>
-        /// Конструктор для внедрения зависимостей
+        /// Конструктор для внедрения зависимостей.
         /// </summary>
         /// <param name="context">Контекст базы данных</param>
         /// <param name="subscribersProfile">Профиль маппера для работы с подписчиками</param>
@@ -33,7 +33,7 @@ namespace T2JuniorAPI.Services.Users
         }
 
         /// <summary>
-        /// Подписывает пользователя на другого пользователя
+        /// Подписка одного пользователя на другого пользователя.
         /// </summary>
         /// <param name="subscribeUser">Данные о подписчике и подписке</param>
         /// <returns>Сообщение о результате операции</returns>
@@ -67,7 +67,7 @@ namespace T2JuniorAPI.Services.Users
         }
 
         /// <summary>
-        /// Отписывает пользователя от другого пользователя
+        /// Отписка одного пользователя от другого пользователя.
         /// </summary>
         /// <param name="unsubscribeUser">Данные о отписке</param>
         /// <returns>Сообщение о результате операции</returns>
@@ -95,7 +95,7 @@ namespace T2JuniorAPI.Services.Users
         }
 
         /// <summary>
-        /// Возвращает список подписчиков указанного пользователя
+        /// Возвращение списка подписчиков указанного пользователя.
         /// </summary>
         /// <param name="userId">Id пользователя, чьи подписчики требуется получить</param>
         /// <returns>Коллекция подписчиков</returns>
@@ -110,7 +110,7 @@ namespace T2JuniorAPI.Services.Users
         }
 
         /// <summary>
-        /// Возвращает список подписок указанного пользователя
+        /// Возвращение списка подписок указанного пользователя.
         /// </summary>
         /// <param name="userId">Id пользователя, чьи подписки требуется получить</param>
         /// <returns>Коллекция подписок</returns>

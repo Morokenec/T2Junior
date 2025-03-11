@@ -16,7 +16,7 @@ namespace T2JuniorAPI.Services.ClubRoles
         private readonly IMapper _mapper;
 
         /// <summary>
-        /// Конструктор для инициализации сервисов ApplicationDbContext и IMapper
+        /// Конструктор для инициализации сервисов ApplicationDbContext и IMapper.
         /// </summary>
         /// <param name="context">Доступ к базе данных</param>  
         /// <param name="mapper">Сопоставление данных между объектами</param>
@@ -27,7 +27,7 @@ namespace T2JuniorAPI.Services.ClubRoles
         }
 
         /// <summary>
-        /// Получение списка всех неудалённых ролей
+        /// Получение списка всех неудалённых ролей.
         /// </summary>
         public async Task<List<ClubRolesDTO>> GetAllClubRolesAsync()
         {

@@ -9,14 +9,14 @@ using System.Threading.Tasks;
 using T2JuniorAPI.Services.Tokens;
 
 /// <summary>
-/// Сервис для работы с токенами
+/// Сервис для работы с токенами.
 /// </summary>
 public class TokenService : ITokenService
 {
     private readonly IConfiguration _configuration;
 
     /// <summary>
-    /// Конструктор для внедрения зависимостей
+    /// Конструктор для внедрения зависимостей.
     /// </summary>
     /// <param name="configuration">Конфигурация приложения</param>
     public TokenService(IConfiguration configuration)
@@ -25,7 +25,7 @@ public class TokenService : ITokenService
     }
 
     /// <summary>
-    /// Генерирует токен для указанного пользователя
+    /// Генерация токена для указанного пользователя.
     /// </summary>
     /// <param name="user">Пользователь, для которого генерируется токен</param>
     /// <returns>Строка-токен</returns>
