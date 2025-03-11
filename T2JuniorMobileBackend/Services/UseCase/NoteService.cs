@@ -12,23 +12,35 @@ using System.Threading.Tasks;
 
 namespace MauiApp1.Services.UseCase
 {
+    /// <summary>
+    /// Сервис для работы с постами, включает получение, создание и загрузку медиафайлов.
+    /// </summary>
     public class NoteService : INoteService
     {
         private readonly HttpClient _httpClient;
         private readonly IJsonDeserializerService _jsonDeserializerService;
 
+        /// <summary>
+        /// Конструктор сервиса постаов.
+        /// </summary>
+        /// <param name="httpClient">Экземпляр HttpClient для выполнения HTTP-запросов.</param>
+        /// <param name="jsonDeserializerService">Сервис для десериализации JSON-ответов.</param>
         public NoteService(HttpClient httpClient, IJsonDeserializerService jsonDeserializerService)
         {
             _httpClient = httpClient;
             _jsonDeserializerService = jsonDeserializerService;
         }
 
+        /// <summary>
+        /// Получает список постов по идентификатору владельца.
+        /// </summary>
+        /// <param name="idOwner">Идентификатор владельца постов.</param>
+        /// <returns>Список объектов Note или null в случае ошибки.</returns>
         public async Task<List<Note>> GetNotesAsync(Guid idOwner)
         {
             try
             {
-                string url = $"{AppSettings.base_url}/api/Notes/get-by-id-owner/{idOwner.ToString()}";
-
+                string url = $"{AppSettings.base_url}/api/Notes/get-by-id-owner/{idOwner}";
                 HttpResponseMessage response = await _httpClient.GetAsync(url);
                 string responseContent = await response.Content.ReadAsStringAsync();
                 Debug.WriteLine($"[DEBUG] Response: {responseContent}");
@@ -39,7 +51,6 @@ namespace MauiApp1.Services.UseCase
                     return null;
                 }
 
-                // Десериализация ответа в список заметок
                 return _jsonDeserializerService.Deserialize<List<Note>>(responseContent);
             }
             catch (Exception ex)
@@ -49,12 +60,16 @@ namespace MauiApp1.Services.UseCase
             }
         }
 
+        /// <summary>
+        /// Получает пост по его идентификатору.
+        /// </summary>
+        /// <param name="noteId">Идентификатор поста.</param>
+        /// <returns>Объект Note или null в случае ошибки.</returns>
         public async Task<Note> GetNoteByIdAsync(string noteId)
         {
             try
             {
                 string url = $"{AppSettings.base_url}/api/Notes/{noteId}";
-
                 HttpResponseMessage response = await _httpClient.GetAsync(url);
                 string responseContent = await response.Content.ReadAsStringAsync();
                 Debug.WriteLine($"[DEBUG] Response: {responseContent}");
@@ -74,6 +89,10 @@ namespace MauiApp1.Services.UseCase
             }
         }
 
+        /// <summary>
+        /// Получает список новостей.
+        /// </summary>
+        /// <returns>Список объектов Note или null в случае ошибки.</returns>
         public async Task<List<Note>> GetNewsAsync()
         {
             try
@@ -98,10 +117,17 @@ namespace MauiApp1.Services.UseCase
             }
         }
 
+        /// <summary>
+        /// Создаёт новый пост.
+        /// </summary>
+        /// <param name="idOwner">Идентификатор владельца поста.</param>
+        /// <param name="name">Название поста.</param>
+        /// <param name="description">Описание поста.</param>
+        /// <returns>Идентификатор созданной поста или null в случае ошибки.</returns>
         public async Task<string> SendNoteAsync(Guid idOwner, string name, string description)
         {
-            string url = $"{AppSettings.base_url}/api/Notes/create/{idOwner.ToString()}";
-            var noteDto = new { name = name, description = description};
+            string url = $"{AppSettings.base_url}/api/Notes/create/{idOwner}";
+            var noteDto = new { name = name, description = description };
 
             try
             {
@@ -114,17 +140,24 @@ namespace MauiApp1.Services.UseCase
                 else
                 {
                     var error = await response.Content.ReadAsStringAsync();
-                    Console.WriteLine($"Ошибка авторизации: {response.StatusCode}, {error}");
+                    Console.WriteLine($"Ошибка: {response.StatusCode}, {error}");
                 }
             }
             catch (Exception ex)
             {
-                Console.WriteLine($"Не коректное значение: {ex.Message}");
+                Console.WriteLine($"Некорректное значение: {ex.Message}");
             }
 
             return null;
         }
 
+        /// <summary>
+        /// Создаёт пост и прикрепляет к нему медиафайл.
+        /// </summary>
+        /// <param name="idOwner">Идентификатор владельца поста.</param>
+        /// <param name="name">Название поста.</param>
+        /// <param name="description">Описание поста.</param>
+        /// <param name="mediaFile">Поток файла с медиа.</param>
         public async Task SendNoteAsync(Guid idOwner, string name, string description, Stream mediaFile)
         {
             try
@@ -147,7 +180,6 @@ namespace MauiApp1.Services.UseCase
 
                 var fileContent = new StreamContent(mediaFile);
                 content.Add(fileContent, "File", "uploaded_file.png");
-
                 content.Add(new StringContent(AppSettings.test_user_guid), "IdUser");
 
                 using var response = await _httpClient.PostAsync(url, content);
@@ -156,10 +188,6 @@ namespace MauiApp1.Services.UseCase
             catch (Exception ex)
             {
                 Debug.WriteLine($"Ошибка загрузки: {ex.Message}");
-                if (ex.InnerException != null)
-                {
-                    Debug.WriteLine($"Внутренняя ошибка: {ex.InnerException.Message}");
-                }
             }
         }
     }
