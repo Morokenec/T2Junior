@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="MauiApp1.NotesPage"
+             x:Name="Notes"
+             Title="Новости"
+             Background="White">
+    <RefreshView IsRefreshing="{Binding IsRefreshing}"
+             Command="{Binding RefreshCommand}">
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="*" />
+            </Grid.RowDefinitions>
+
+            <HorizontalStackLayout x:Name="CalendarLayout"
+                               Grid.Row="0"
+                               Margin="20,16"
+                               Padding="0,8"
+                               WidthRequest="343"
+                               HeightRequest="40"
+                               Background="White">
+                <Frame x:Name="BackFrame"
+                   BorderColor="Transparent"
+                   Margin="0,0,0,8">
+                    <Frame.GestureRecognizers>
+                        <TapGestureRecognizer Tapped="OnBackButtonTapped" />
+                    </Frame.GestureRecognizers>
+
+                </Frame>
+                <Frame x:Name="CalendarTextFrame"
+                   BorderColor="Transparent"
+                   HeightRequest="24"
+                   Margin="0,0,0,8"
+                   WidthRequest="295">
+                    <Label Text="Новости"
+                       FontSize="20"
+                       HorizontalOptions="Center"
+                       HeightRequest="24" />
+                </Frame>
+            </HorizontalStackLayout>
+            <CollectionView ItemsSource="{Binding Notes}"
+                        x:Name="NotesCollection"
+                        Grid.Row="2"
+                        BackgroundColor="#EBEBEB">
+                <CollectionView.ItemsLayout>
+                    <GridItemsLayout Span="1"
+                                 Orientation="Vertical" />
+                </CollectionView.ItemsLayout>
+                <CollectionView.ItemTemplate>
+                    <DataTemplate>
+                        <Frame CornerRadius="10"
+                           HorizontalOptions="Fill"
+                           VerticalOptions="Fill"
+                           Padding="16,20,16,16"
+                           Margin="8,10,8,2"
+                           BackgroundColor="White">
+                            <StackLayout>
+                                <StackLayout.GestureRecognizers>
+                                    <TapGestureRecognizer Tapped="OnNoteTapped" />
+                                </StackLayout.GestureRecognizers>
+                                <Frame HorizontalOptions="Fill"
+                                   VerticalOptions="Fill"
+                                   BorderColor="Transparent"
+                                   HasShadow="True">
+                                    <StackLayout>
+                                        <StackLayout.GestureRecognizers>
+                                            <TapGestureRecognizer Tapped="OnNoteTapped" />
+                                        </StackLayout.GestureRecognizers>
+                                        <Label Text="{Binding Name}"
+                                           HorizontalOptions="Start"
+                                           HeightRequest="24"
+                                           FontSize="18"
+                                           FontFamily="MyriadProBold" />
+                                        <Label Text="{Binding Description}"
+                                           HorizontalOptions="Start"
+                                           
+                                           FontSize="16"
+                                           TextColor="#9C9B9A"
+                                           FontFamily="MyriadPro" />
+                                        <Image x:Name="NewsHolder"
+                                           IsVisible="True"
+                                           Aspect="AspectFill"
+                                           Source="{Binding MediaHandler}"
+                                           HorizontalOptions="Fill"
+                                           VerticalOptions="Fill"
+                                           Margin="0,12,0,0" />
+                                    </StackLayout>
+                                </Frame>
+                            </StackLayout>
+                        </Frame>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+                <CollectionView.EmptyView>
+                    <Label Text="Результаты не найдены."
+                       HorizontalOptions="Center"
+                       VerticalOptions="Start"
+                       Margin="0,50,0,0"
+                       FontSize="24" />
+                </CollectionView.EmptyView>
+            </CollectionView>
+        </Grid>
+    </RefreshView>
+</ContentPage>

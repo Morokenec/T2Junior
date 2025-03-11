@@ -1,0 +1,512 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="MauiApp1.ProfilePage"
+             xmlns:idk="clr-namespace:Indiko.Maui.Controls.Markdown;assembly=Indiko.Maui.Controls.Markdown"
+             Title="Профиль">
+    <RefreshView IsRefreshing="{Binding IsRefreshing}"
+             Command="{Binding RefreshCommand}">
+    <ScrollView>
+        <Grid Background="White">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                </Grid.RowDefinitions>
+
+            <Frame Grid.Row="0"
+               HasShadow="False"
+               Padding="0,0,0,0">
+
+                    <StackLayout>
+                        <Grid ColumnDefinitions="*, Auto">
+                        <Frame x:Name="CoinFrame"
+                               HorizontalOptions="Start"
+                               BackgroundColor="#FFFFFF"
+                               CornerRadius="10"
+                               HasShadow="True"
+                               Padding="10, 2.25, 10, 0"
+                               Margin="16,20,0,0">
+                            <Frame.GestureRecognizers>
+                                <TapGestureRecognizer Tapped="OnCoinButtonTapped" />
+                            </Frame.GestureRecognizers>
+      
+
+                            <StackLayout x:Name="VerticalCoinLayout"
+                                         HorizontalOptions="Center"
+                                         VerticalOptions="Center"
+                                         Spacing="-5">
+                                
+                                <HorizontalStackLayout x:Name="HorizontalCoinLayout"
+                                                       Spacing="4">
+                                    <Image x:Name="CoinHolder"
+                                           Source="coin_holder.svg"
+                                           Aspect="AspectFill"
+                                           WidthRequest="14"
+                                           HeightRequest="14"/>
+                                    <Label x:Name="CoinText"
+                                           Text="Коины" 
+                                           TextColor="#498CC4"
+                                           FontFamily="MyriadPro"
+                                           FontSize="12"/>
+                                </HorizontalStackLayout>
+                                <HorizontalStackLayout x:Name="CoinCounterLayout"
+                                                       HorizontalOptions="Center">
+                                    <Label x:Name="CoinCountLabel"
+                                           FontSize="20"
+                                           Text="14"
+                                           HorizontalOptions="Center"
+                                           FontFamily="MyriadProBold"
+                                           HeightRequest="22"/>
+                                </HorizontalStackLayout>
+                            </StackLayout>
+                        </Frame>
+
+                        <Frame x:Name="RatingFrame"
+                               BackgroundColor="#FFFFFF"
+                               HorizontalOptions="End"
+                               VerticalOptions="Start"
+                               CornerRadius="10"
+                               HasShadow="True"
+                               Padding="8, 4.75"
+                               Margin="0, 20, 16, 0">
+                            <Frame.GestureRecognizers>
+                                <TapGestureRecognizer Tapped="OnRatingButtonTapped" />
+                            </Frame.GestureRecognizers>
+                            <StackLayout x:Name="VerticalRatingLayout"
+                                         HorizontalOptions="Center"
+                                         VerticalOptions="Center"
+                                         Spacing="5">
+                                <HorizontalStackLayout x:Name="HorizontalRatingLayout"
+                                                       Spacing="4">
+                                    <Image x:Name="RatingHolder"
+                                           Source="rating_holder.svg"
+                                           Aspect="AspectFill"
+                                           WidthRequest="14"
+                                           HeightRequest="14"/>
+                                    <Label x:Name="RatingText"
+                                           Text="Рейтинг" 
+                                           FontFamily="MyriadPro"
+                                           TextColor="#498CC4"
+                                           FontSize="12"/>
+                                </HorizontalStackLayout>
+                                <HorizontalStackLayout x:Name="RatingCounterLayout"
+                                                       HorizontalOptions="Center"
+                                                       WidthRequest="36"
+                                                       HeightRequest="14"
+                                                       Spacing="1">
+
+                                    <Label x:Name="UserRatingLabel"
+                                           FontSize="20"
+                                           HeightRequest="22"
+                                           Text="1"
+                                           VerticalOptions="End"
+                                           FontFamily="MyriadProBold"/>
+
+                                    <Label FontSize="9" 
+                                           Text="из"
+                                           VerticalOptions="End"
+                                           TextColor="#9C9B9A"/>
+
+                                    <Label x:Name="RatingCountLabel"
+                                           FontSize="9"
+                                           Text="100"
+                                           VerticalOptions="End"
+                                           TextColor="#9C9B9A"/>
+
+                                </HorizontalStackLayout>
+                            </StackLayout>
+                        </Frame>
+                    </Grid>
+
+                    <Grid x:Name="UserInfoGrid"
+                      Grid.Row="1">
+                            <Border Stroke="Transparent" HeightRequest="150" WidthRequest="150">
+                                <Border.StrokeShape>
+                                    <RoundRectangle CornerRadius="190" />
+                                </Border.StrokeShape>
+                                <Image x:Name="AvatarImage"
+                                           Aspect="AspectFill"
+                                           WidthRequest="200"
+                                           HeightRequest="200"
+                                           VerticalOptions="Start">
+                                    <Image.Source>
+                                        <UriImageSource Uri="{Binding PathAvatarUser}"
+                                                           CacheValidity="2:00:00.0"/>
+                                    </Image.Source>
+                                    <Image.GestureRecognizers>
+                                        <TapGestureRecognizer Tapped="OnProfilePhotoTapped" />
+                                    </Image.GestureRecognizers>
+                                </Image>
+                            </Border>
+                            <Frame x:Name="CircleOverlay" 
+                               BackgroundColor="#3DC47C" 
+                               CornerRadius="25"
+                               IsVisible="False"
+                               WidthRequest="20"
+                               HeightRequest="20"
+                               Margin="150, 87, 31, 0">
+                        </Frame>
+                    </Grid>
+                    <VerticalStackLayout x:Name="FullInfoLayout"
+                                         Grid.Row="2"
+                                         Spacing="6">
+                            <Label x:Name="FullNameLabel"
+                               Text="{Binding UserInfo.FullName}" 
+                               HorizontalOptions="Center"
+                                   FontFamily="MyriadProBold"
+                               FontSize="20"/>
+
+                            <Label x:Name="JobLabel"
+                               TextColor="#838281"
+                               FontFamily="MyriadPro"
+                               Text="{Binding UserInfo.PostAndOrganization}" 
+                               HorizontalOptions="Center"
+                               VerticalOptions="Center"
+                               FontSize="12"
+                               Margin="16,10"/>
+                            <!--<Button x:Name="SubscribeButton"
+                                BackgroundColor="#0057A6"
+                                BorderWidth="1"
+                                CornerRadius="12"
+                                Text="Подписаться"
+                                TextColor="White"
+                                FontSize="15"
+                                HorizontalOptions="Fill"
+                                VerticalOptions="Center"
+                                Clicked="OnSubUnsubButtonTapped"
+                                Margin="16,10"/>-->
+                    </VerticalStackLayout>
+                </StackLayout>
+            </Frame>
+
+            <HorizontalStackLayout x:Name="HorizontalContentLayout" 
+                                   Grid.Row="3"
+                                   Spacing="10"
+                                   Margin="8, 16">
+                <Grid WidthRequest="107.76"
+                      HeightRequest="76">
+                    <Frame x:Name="SubscribersFrame"
+                           CornerRadius="16"
+                           HasShadow="True"
+                           HorizontalOptions="FillAndExpand"
+                           VerticalOptions="Fill"
+                           Padding="12">
+                        <Frame.GestureRecognizers>
+                            <TapGestureRecognizer Tapped="OnSubscribersButtonTapped" />
+                        </Frame.GestureRecognizers>
+                        <StackLayout x:Name="SubscribersLayout"
+                                     Spacing="6">
+                            <Label Text="Подписчики"
+                                   FontSize="13"
+                                   FontFamily="MyriadPro"
+                                   TextColor="#9C9B9A"
+                                   HorizontalOptions="Start" />
+
+                            <Label x:Name="SubscribersCount"
+                                   Text="{Binding UserInfo.SubscriptionsCount}"
+                                   FontFamily="MyriadProBold"
+                                   FontSize="20"
+                                   TextColor="#838281" />
+                        </StackLayout>
+                    </Frame>
+                </Grid>
+                <Grid WidthRequest="107.76"
+                          HeightRequest="76">
+                        <Frame x:Name="FollowingFrame"
+                               CornerRadius="16"
+                               HasShadow="True"
+                               HorizontalOptions="FillAndExpand"
+                               VerticalOptions="Fill"
+                               Padding="12">
+                            <Frame.GestureRecognizers>
+                                <TapGestureRecognizer Tapped="OnFollowingButtonTapped" />
+                            </Frame.GestureRecognizers>
+                            <StackLayout x:Name="FollowingLayout"
+                                         Spacing="6">
+                                <Label Text="Подписки"
+                                       FontSize="13"
+                                       FontFamily="MyriadPro"
+                                       TextColor="#9C9B9A" />
+
+                                <Label x:Name="FollowingCount"
+                                       Text="{Binding UserInfo.SubscribersCount}"
+                                       FontFamily="MyriadProBold"
+                                       FontSize="20"
+                                       TextColor="#838281" />
+                            </StackLayout>
+                        </Frame>
+                    </Grid>
+                    <Grid WidthRequest="107.76"
+                          HeightRequest="76">
+                        <Frame x:Name="ClubsFrame"
+                               CornerRadius="16"
+                               HasShadow="True"
+                               HorizontalOptions="FillAndExpand"
+                               VerticalOptions="Fill"
+                               Padding="12">
+                            <Frame.GestureRecognizers>
+                                <TapGestureRecognizer Tapped="OnClubsButtonTapped" />
+                            </Frame.GestureRecognizers>
+                            <StackLayout x:Name="ClubsLayout"
+                                         Spacing="6">
+                                <Label Text="Клубы"
+                                       FontSize="13"
+                                       FontFamily="MyriadPro"
+                                       TextColor="#9C9B9A" />
+
+                                <Label x:Name="ClubsCount"
+                                       Text="{Binding UserInfo.ClubsCount}"
+                                       FontFamily="MyriadProBold"
+                                       FontSize="20"
+                                       TextColor="#838281" />
+                            </StackLayout>
+                        </Frame>
+                    </Grid>
+            </HorizontalStackLayout>
+
+
+                <Frame x:Name="OtherOptionsFrame"
+                   Grid.Row="4"
+                   CornerRadius="20"
+                   IsVisible="False"
+                   Padding="8, 0, 0, 0"
+                   Margin="8, 0">
+                    <VerticalStackLayout>
+                        <Frame x:Name="ProjectsFrame"
+                           HasShadow="False" 
+                           BorderColor="Transparent"
+                           WidthRequest="303"
+                           HeightRequest="48"
+                           Padding="0, 8">
+                            <HorizontalStackLayout Spacing="12">
+                                <Image x:Name="ProjectsImage"
+                                       Source="projects.svg"
+                                       Aspect="AspectFill"
+                                       VerticalOptions="Center"
+                                       WidthRequest="24"
+                       HeightRequest="24"/>
+                                <Label x:Name="ProjectsText"
+                                   Text="Проекты" 
+                                   TextColor="#191C30"
+                                   FontSize="15"
+                                   FontFamily="MyriadPro"
+                                   VerticalOptions="Center"
+                                   WidthRequest="231"/>
+                                <Image Source="redirect.png"
+                                   Aspect="AspectFill"/>
+                            </HorizontalStackLayout>
+                        </Frame>
+                        <BoxView x:Name="ProjectsBoxView"
+                             BackgroundColor="#E4E4E4" 
+                             HorizontalOptions="Fill" 
+                             VerticalOptions="End"
+                             HeightRequest="2"
+                             Margin="16, 0"/>
+
+                        <Frame x:Name="CalendarFrame"
+                           HasShadow="False" 
+                           BorderColor="Transparent"
+                           WidthRequest="303"
+                           HeightRequest="48"
+                           Padding="0, 8">
+                            <Frame.GestureRecognizers>
+                                <TapGestureRecognizer Tapped="OnCalendarFrameTapped" />
+                            </Frame.GestureRecognizers>
+                            <HorizontalStackLayout Spacing="12">
+                                <Image x:Name="CalendarImage"
+                                   Source="calendar.svg"
+                                   Aspect="AspectFill"
+                                   WidthRequest="24"
+                                   HeightRequest="24"/>
+
+                                <Label x:Name="CalendarText"
+                                   Text="Календарь" 
+                                   TextColor="#191C30"
+                                   FontSize="15"
+                                   FontFamily="MyriadPro"
+                                   VerticalOptions="Center"
+                                   WidthRequest="231"/>
+                                <Image Source="redirect.png"
+                                   Aspect="AspectFill"/>
+                            </HorizontalStackLayout>
+                        </Frame>
+                        <BoxView x:Name="CalendarBoxView"
+                             BackgroundColor="#E4E4E4" 
+                             HorizontalOptions="Fill" 
+                             VerticalOptions="End"
+                             HeightRequest="2"
+                             Margin="16, 0"/>
+
+                        <Frame x:Name="ActivitiesFrame" 
+                           HasShadow="False" 
+                           BorderColor="Transparent"
+                           WidthRequest="303"
+                           HeightRequest="48"
+                           Padding="0, 8">
+                            <Frame.GestureRecognizers>
+                                <TapGestureRecognizer Tapped="OnActivitiesFrameTapped" />
+                            </Frame.GestureRecognizers>
+                            <HorizontalStackLayout Spacing="12">
+                                <Image x:Name="ActivitiesImage"
+                                   Source="activities.svg"
+                                   Aspect="AspectFill"
+                                   WidthRequest="24"
+                                   HeightRequest="24"/>
+
+                                <Label x:Name="ActivitiesText"
+                                   Text="Активности" 
+                                   TextColor="#191C30"
+                                   FontSize="15"
+                                   FontFamily="MyriadPro"
+                                   VerticalOptions="Center"
+                                   WidthRequest="231"/>
+                                <Image Source="redirect.svg"
+                                   Aspect="AspectFill"/>
+                            </HorizontalStackLayout>
+                        </Frame>
+                    </VerticalStackLayout>
+                </Frame>
+                <Frame CornerRadius="10"
+                       Grid.Row="5"
+                        HorizontalOptions="Fill"
+                        VerticalOptions="Fill"
+                        Padding="16,0,0,0"
+                        Margin="8,10,8,2"
+                        BackgroundColor="White">
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="*"/>
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="Auto" />
+                        </Grid.ColumnDefinitions>
+                        <Label FontSize="Large" VerticalOptions="Center" FontFamily="MyriadProBold">Лента</Label>
+                        <ImageButton Source="search_icon.pn" Padding="-2" HorizontalOptions="End"/>
+                    </Grid>
+                </Frame>
+                <VerticalStackLayout Grid.Row="1" Spacing="5">
+                    <Frame Padding="8,0" BorderColor="Transparent" CornerRadius="10" IsVisible="{Binding IsOutProfile}">
+                        <Button x:Name="SubscribeButton"
+                            BackgroundColor="#0057A6"
+                            BorderWidth="1"    
+                            Text="Подписаться"
+                            TextColor="White"
+                            FontSize="15"
+                            CornerRadius="10"
+                            HorizontalOptions="Fill"
+                            VerticalOptions="Center"
+                            Margin="0, 10, 0, 0"/>
+                    </Frame>
+
+                    <Border  Padding="8,0">
+                        <Border.Stroke>
+                            <LinearGradientBrush EndPoint="0,1">
+                                <GradientStop Color="Transparent" Offset="0.5" />
+                                <GradientStop Color="#9C9B9A" Offset="1.0" />
+                            </LinearGradientBrush>
+                        </Border.Stroke>
+                        <Border.Shadow>
+                            <Shadow 
+                                Brush="#9C9B9A"
+                                Offset="1, 1"
+                                Radius="40"
+                                Opacity="0.2"
+                                />
+                        </Border.Shadow>
+                        <Border.StrokeShape>
+                            <RoundRectangle CornerRadius="25" />
+                        </Border.StrokeShape>
+                        <Button 
+                        x:Name="NoteCreateButton"
+                        BackgroundColor="White"
+                        BorderWidth="1"
+                        Text="Создать пост"
+                        CornerRadius="12"
+                        TextColor="#0057A6"
+                        IsVisible="{Binding IsYourProfile}"
+                        Grid.RowSpan="2"
+                        BorderColor="#0057A6"
+                        FontSize="16"
+                        FontFamily="MyriadPro"
+                        HorizontalOptions="Fill"
+                        Margin = "0,0,0,6"
+                        Clicked="NoteCreateButton_Clicked" />
+                    </Border>
+                </VerticalStackLayout>
+                <CollectionView ItemsSource="{Binding Notes}"
+                        x:Name="NotesCollection"
+                        Grid.Row="7"
+                        BackgroundColor="#EBEBEB"
+                                Background="White">
+                    <CollectionView.ItemsLayout>
+                        <GridItemsLayout Span="1"
+                                 Orientation="Vertical" />
+                    </CollectionView.ItemsLayout>
+                    <CollectionView.ItemTemplate>
+                        <DataTemplate>
+                            <Frame CornerRadius="10"
+                           HorizontalOptions="Fill"
+                           VerticalOptions="Fill"
+                           Padding="16,20,16,16"
+                           Margin="8,10,8,2"
+                           BackgroundColor="White">
+                                <StackLayout>
+                                    <!--<StackLayout.GestureRecognizers>
+                                        <TapGestureRecognizer Tapped="OnNoteTapped" />
+                                    </StackLayout.GestureRecognizers>-->
+                                    <Frame HorizontalOptions="Fill"
+                                   VerticalOptions="Fill"
+                                   BorderColor="Transparent"
+                                   HasShadow="True">
+                                        <StackLayout>
+                                            <!--<StackLayout.GestureRecognizers>
+                                                <TapGestureRecognizer Tapped="OnNoteTapped" />
+                                            </StackLayout.GestureRecognizers>-->
+                                            <Label Text="{Binding Name}"
+                                           HorizontalOptions="Start"
+                                           HeightRequest="24"
+                                           FontSize="18"
+                                           FontFamily="MyriadProBold" />
+                                            <Label Text="{Binding Description}"
+                                           HorizontalOptions="Start"                                      
+                                           FontSize="16"
+                                           TextColor="#9C9B9A"
+                                           FontFamily="MyriadPro" />
+                                            <Image x:Name="NewsHolder"
+                                           IsVisible="True"
+                                           Aspect="AspectFill"
+                                           HorizontalOptions="Fill"
+                                           VerticalOptions="Fill"
+                                           Margin="0,12,0,0">
+                                                <Image.Source>
+                                                    <UriImageSource Uri="{Binding MediaHandler}"
+                                                           CacheValidity="2:00:00.0"/>
+                                                </Image.Source>
+                                            </Image>
+                                        </StackLayout>
+                                    </Frame>
+                                </StackLayout>
+                            </Frame>
+                        </DataTemplate>
+                    </CollectionView.ItemTemplate>
+                    <CollectionView.EmptyView>
+                        <Label Text="Результаты не найдены."
+                       HorizontalOptions="Center"
+                       VerticalOptions="Start"
+                       Margin="0,50,0,0"
+                       FontSize="24" />
+                    </CollectionView.EmptyView>
+                </CollectionView>
+            </Grid>
+        </ScrollView>
+    </RefreshView>
+</ContentPage>

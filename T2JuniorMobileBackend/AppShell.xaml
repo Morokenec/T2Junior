@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<Shell
+    x:Class="MauiApp1.AppShell"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:local="clr-namespace:MauiApp1"
+    Shell.FlyoutBehavior="Disabled"
+    Shell.NavBarIsVisible="False"
+    TabBarForegroundColor="#0057A6"
+    TabBarTitleColor="#0057A6"
+    Shell.TabBarBackgroundColor="White"
+    Shell.TabBarUnselectedColor="Gray">
+
+    <!-- Основная страница с заметками -->
+    <TabBar>
+        <Tab Title="Новости" Icon="news.svg">
+        <ShellContent ContentTemplate="{DataTemplate local:NotesPage}" />
+    </Tab>
+    <Tab Title="Сообщения" Icon="chat.svg" IsVisible="False">
+        <ShellContent ContentTemplate="{DataTemplate local:MessagesPage}" />
+    </Tab>
+    <Tab Title="Клубы" Icon="clubs.svg">
+        <ShellContent ContentTemplate="{DataTemplate local:ClubsPage}" />
+    </Tab>
+    <Tab Title="Профиль" Icon="profile.svg">
+        <ShellContent ContentTemplate="{DataTemplate local:ProfilePage}" />
+    </Tab>
+</TabBar>
+</Shell>

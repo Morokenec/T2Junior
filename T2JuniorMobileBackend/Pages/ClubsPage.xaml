@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:vm="clr-namespace:MauiApp1.ViewModels.ClubViewModel"
+             x:Class="MauiApp1.ClubsPage"
+             x:Name="Clubs"
+             Title="Клубы"
+             Background="White">
+    <RefreshView IsRefreshing="{Binding IsRefreshing}"
+             Command="{Binding RefreshCommand}">
+        <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <HorizontalStackLayout x:Name="ClubLayout" 
+                               Grid.Row="0"
+                               Margin="20,16" 
+                               Padding="0,8"
+                               WidthRequest="343"
+                               HeightRequest="40">
+                <ImageButton Source="back_icon.svg"
+                                   Aspect="AspectFill"
+                             Clicked="BackButtonClicked"
+                             IsVisible="{Binding IsVisibleUserSubscribedClubList}"/>
+ 
+            <Frame x:Name="ClubTextFrame"
+                   BorderColor="Transparent"
+                   HeightRequest="24"
+                   Margin="0,0,0,8" 
+                   WidthRequest="295">
+                <Label Text="Клубы"
+                       FontSize="20"
+                       HorizontalOptions="Center"
+                       HeightRequest="24"/>
+            </Frame>
+            
+        </HorizontalStackLayout>
+
+        <Frame Grid.Row="1" HeightRequest="44" CornerRadius="12" Margin="16,0">
+            <HorizontalStackLayout VerticalOptions="Center">
+                <Frame HasShadow="True" WidthRequest="295" HeightRequest="44" BorderColor="Transparent">
+                    <Entry x:Name="searchEntry"
+                           Text="{Binding SearchText}"
+                           Placeholder="Поиск"
+                           PlaceholderColor="#A2A4AF"
+                           FontFamily="Manrope"
+                           TextColor="Black"
+                           HorizontalOptions="FillAndExpand"
+                           FontSize="13"
+                           Margin="12,0"/>
+                </Frame>
+                <Frame Margin="0,0,88,0" BorderColor="Transparent">
+                    <ImageButton Padding="0"
+                                 Source="search_icon.svg" 
+                                 BackgroundColor="Transparent" 
+                                 Clicked="OnSearch"
+                                 VerticalOptions="Start" 
+                                 HorizontalOptions="Center"/>
+                </Frame>
+            </HorizontalStackLayout>
+        </Frame>
+
+            <CollectionView ItemsSource="{Binding FilteredClubs}"
+                x:Name="ClubsCollection"
+                Grid.Row="2"
+                Margin="8,4,8,0">
+                <CollectionView.ItemsLayout>
+                    <GridItemsLayout Span="2" Orientation="Vertical"/>
+                </CollectionView.ItemsLayout>
+                <CollectionView.ItemTemplate>
+                    <DataTemplate>
+                        <Frame CornerRadius="10" 
+                   WidthRequest="156.5" 
+                   HeightRequest="156.5" 
+                   HasShadow="True"
+                   Margin="0,12,0,10" 
+                   BackgroundColor="White">
+                            <Frame.GestureRecognizers>
+                                <TapGestureRecognizer Tapped="TapGestureRecognizer_Tapped" />
+                            </Frame.GestureRecognizers>
+                            <!-- Внешний контейнер передает все касания -->
+                            <StackLayout InputTransparent="True">
+                                <Frame WidthRequest="132" HeightRequest="100" BorderColor="Transparent" InputTransparent="True">
+                                    <HorizontalStackLayout Spacing="30" InputTransparent="True">
+                                        <Border Stroke="Transparent" HeightRequest="75" WidthRequest="75" InputTransparent="True">
+                                            <Border.StrokeShape>
+                                                <RoundRectangle CornerRadius="190" />
+                                            </Border.StrokeShape>
+                                            <Image Source="{Binding AvatarPath}"
+                                       VerticalOptions="Center"
+                                       HorizontalOptions="Center"
+                                       WidthRequest="100"
+                                       HeightRequest="100"
+                                       Margin="0,16,0,15"
+                                       InputTransparent="True"/>
+                                        </Border>
+                                        <Image x:Name="SubStatus" 
+                                   Source="{Binding SubImageSource}" 
+                                   WidthRequest="24" 
+                                   HeightRequest="24"
+                                   VerticalOptions="Start"
+                                   Margin="0,16,0,0"
+                                   InputTransparent="True"/>
+                                    </HorizontalStackLayout>
+                                </Frame>
+                                <Frame WidthRequest="131" 
+                           HeightRequest="36" 
+                           BorderColor="Transparent"
+                           Margin="0,12,0,0"
+                           InputTransparent="True">
+                                    <StackLayout InputTransparent="True">
+                                        <Label Text="{Binding Name}" 
+                                   HorizontalOptions="Start" 
+                                   FontSize="13"
+                                   TextColor="#303345"
+                                   FontFamily="MyriadProBold"
+                                   InputTransparent="True"/>
+                                        <Label Text="{Binding Target}" 
+                                   HorizontalOptions="Start" 
+                                   FontSize="11"
+                                   TextColor="#6B6D80"
+                                   FontFamily="MyriadPro"
+                                   InputTransparent="True"/>
+                                    </StackLayout>
+                                </Frame>
+                            </StackLayout>
+                        </Frame>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+                <CollectionView.EmptyView>
+                    <Label Text="Результаты не найдены." 
+               HorizontalOptions="Center" 
+               VerticalOptions="Center"
+               FontSize="24"/>
+                </CollectionView.EmptyView>
+            </CollectionView>
+
+
+        </Grid>
+    </RefreshView>
+</ContentPage>

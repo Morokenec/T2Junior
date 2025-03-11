@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="MauiApp1.Pages.NoteEditorPage"
+             Title="NewsEditorPage"
+             Background="White">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="Auto"/>
+        </Grid.ColumnDefinitions>
+
+        <HorizontalStackLayout x:Name="ActivitiesLayout"
+                               Grid.Row="0"
+                               Margin="20,16"
+                               Padding="0,8"
+                               WidthRequest="343"
+                               HeightRequest="40">
+            <Frame x:Name="BackFrame"
+                   BorderColor="Transparent"
+                   Margin="0,0,0,8">
+                <!--<Frame.GestureRecognizers>
+                    <TapGestureRecognizer Tapped="OnBackButtonTapped" />
+                </Frame.GestureRecognizers>-->
+                <Image Source="back_icon.svg"
+                       Aspect="AspectFill"
+                       VerticalOptions="Center"
+                       HorizontalOptions="Center"
+                       WidthRequest="24"
+                       HeightRequest="24" />
+            </Frame>
+            <Frame x:Name="ActivitiesTextFrame"
+                   BorderColor="Transparent"
+                   HeightRequest="24"
+                   Margin="0,0,0,8"
+                   WidthRequest="295">
+                <Label Text="Создание новости"
+                       FontSize="20"
+                       HorizontalOptions="Center"
+                       HeightRequest="24" />
+            </Frame>
+        </HorizontalStackLayout>
+        
+        <Frame Grid.Row="1"
+               BorderColor="Transparent"
+               Padding="8,0,0,0">
+        <Entry 
+               Placeholder="Введите название..."
+               PlaceholderColor="Gray"
+               FontSize="20"
+               TextColor="#0057A6"
+               Text="{Binding Name}"/>
+        </Frame>
+        
+        <Frame Grid.Row="2"
+               BorderColor="Transparent"
+               Padding="8,0,0,0">
+            <Editor Grid.Row="2"
+               Placeholder="Введите текст..."
+               PlaceholderColor="Gray"
+               FontSize="16"
+               TextColor="Black"
+               Text="{Binding Description}"/>
+        </Frame>
+
+        <HorizontalStackLayout  
+                Grid.Row="4" 
+                HorizontalOptions="End">
+                <ImageButton 
+                     x:Name="AddMediaFileButton"
+                     Grid.Row="4" 
+                     CornerRadius="16"
+                     HorizontalOptions="Center"
+                     Source="add_media_button."
+                     Clicked="AddMediaFileButton_Clicked"
+                     Aspect="AspectFill"
+                     HeightRequest="60"
+                    WidthRequest="60"/>
+                <ImageButton 
+                     x:Name="SendNewsButton"
+                     CornerRadius="16"
+                     Source="send_note_button."
+                     Clicked="SendNewsButton_Clicked"/>
+
+            </HorizontalStackLayout>
+    </Grid>
+</ContentPage>
