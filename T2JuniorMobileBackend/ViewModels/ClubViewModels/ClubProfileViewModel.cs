@@ -10,6 +10,9 @@ using System.Windows.Input;
 
 namespace MauiApp1.ViewModels.ClubProfileViewModel
 {
+    /// <summary>
+    /// ViewModel для профиля клуба.
+    /// </summary>
     public class ClubProfileViewModel : BindableObject
     {
         private readonly IClubService _clubService;
@@ -19,10 +22,24 @@ namespace MauiApp1.ViewModels.ClubProfileViewModel
         private Club _selectedClub;
         private Guid _selectedClubId;
 
+        /// <summary>
+        /// Коллекция клубов.
+        /// </summary>
         public ObservableCollection<ClubList> Clubs { get; set; }
+
+        /// <summary>
+        /// Коллекция профилей клубов.
+        /// </summary>
         public ObservableCollection<Club> ClubProfiles { get; set; }
+
+        /// <summary>
+        /// Коллекция заметок клуба.
+        /// </summary>
         public ObservableCollection<Note> Notes { get; set; } = new ObservableCollection<Note>();
 
+        /// <summary>
+        /// Выбранный клуб.
+        /// </summary>
         public Club SelectedClub
         {
             get => _selectedClub;
@@ -33,6 +50,9 @@ namespace MauiApp1.ViewModels.ClubProfileViewModel
             }
         }
 
+        /// <summary>
+        /// Путь к аватару клуба.
+        /// </summary>
         public string PathClubAvatar
         {
             get => _pathClubAvatar;
@@ -49,6 +69,9 @@ namespace MauiApp1.ViewModels.ClubProfileViewModel
             }
         }
 
+        /// <summary>
+        /// Идентификатор выбранного клуба.
+        /// </summary>
         public Guid SelectedClubId
         {
             get => _selectedClubId;
@@ -59,6 +82,11 @@ namespace MauiApp1.ViewModels.ClubProfileViewModel
             }
         }
 
+        /// <summary>
+        /// Конструктор ViewModel профиля клуба.
+        /// </summary>
+        /// <param name="clubService">Сервис клуба</param>
+        /// <param name="noteService">Сервис заметок</param>
         public ClubProfileViewModel(IClubService clubService, INoteService noteService)
         {
             _clubService = clubService;
@@ -67,11 +95,20 @@ namespace MauiApp1.ViewModels.ClubProfileViewModel
             ClubProfiles = new ObservableCollection<Club>();
         }
 
+        /// <summary>
+        /// Конструктор с идентификатором клуба.
+        /// </summary>
+        /// <param name="clubService">Сервис клуба</param>
+        /// <param name="noteService">Сервис заметок</param>
+        /// <param name="id">Идентификатор клуба</param>
         public ClubProfileViewModel(IClubService clubService, INoteService noteService, Guid id) : this(clubService, noteService)
         {
             SelectedClubId = id;
         }
 
+        /// <summary>
+        /// Загрузка данных профиля клуба.
+        /// </summary>
         public async Task LoadClubProfileAsync()
         {
             SelectedClub = null;
@@ -81,9 +118,12 @@ namespace MauiApp1.ViewModels.ClubProfileViewModel
                 SelectedClub = clubProfile;
                 PathClubAvatar = clubProfile.AvatarPath;
             }
-           await LoadNotes();
+            await LoadNotes();
         }
 
+        /// <summary>
+        /// Загрузка заметок клуба.
+        /// </summary>
         private async Task LoadNotes()
         {
             Notes.Clear();
@@ -97,23 +137,26 @@ namespace MauiApp1.ViewModels.ClubProfileViewModel
             }
         }
 
+        /// <summary>
+        /// Подписка на клуб.
+        /// </summary>
         public async Task SubscribeClub()
         {
-            if(SelectedClub.IsUserSubscribed == false)
+            if (SelectedClub.IsUserSubscribed == false)
             {
                 await _clubService.SubscribeClub(SelectedClubId, Guid.Parse(AppSettings.test_user_guid), Guid.Parse(AppSettings.role_id_user_guid));
             }
         }
 
+        /// <summary>
+        /// Установка аватара клуба.
+        /// </summary>
         public async Task SetAvatarClub()
         {
             try
             {
-
                 var chosenImage = await MediaPicker.PickPhotoAsync();
-
                 if (chosenImage != null)
-
                 {
                     using var stream = await chosenImage.OpenReadAsync();
                     await _clubService.SetAvatarClubUploadServer(SelectedClub.Id, Guid.Parse(AppSettings.test_user_guid), stream);
