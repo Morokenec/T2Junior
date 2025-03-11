@@ -1,4 +1,6 @@
-﻿using MauiApp1.Services.UseCase;
+﻿using MauiApp1.DataModel;
+using MauiApp1.Services.UseCase;
+using MauiApp1.ViewModels;
 using MauiApp1.ViewModels.Profile;
 using System.Text.RegularExpressions;
 
@@ -9,26 +11,25 @@ namespace MauiApp1
     /// </summary>
     public partial class AuthorizationPage : ContentPage
     {
+
         private bool _isVisible = false;
 
-        private readonly UserProfileViewModel _userViewModel;
+        private readonly AuthorizationViewModel _viewModel;
 
-        /// <summary>
-        /// Конструктор класса AuthorizationPage.
-        /// </summary>
-        public AuthorizationPage()
+        public AuthorizationPage(AuthorizationViewModel userViewModel)
         {
+            _viewModel = userViewModel;
+            BindingContext = _viewModel;
             InitializeComponent();
         }
 
-        /// <summary>
-        /// Обработчик события нажатия на кнопку "Забыли пароль".
-        /// </summary>
-        /// <param name="sender">Объект, вызвавший событие.</param>
-        /// <param name="e">Аргументы события.</param>
+        protected override void OnAppearing()
+        {
+            base.OnAppearing();
+        }
+
         private async void OnForgotPasswordTapped(object sender, EventArgs e)
         {
-            await Navigation.PushAsync(new ProfilePage(_userViewModel));
         }
 
         /// <summary>
@@ -40,16 +41,9 @@ namespace MauiApp1
         {
             _isVisible = !_isVisible;
             PswdEntry.IsPassword = !_isVisible;
-
-            TogglePasswordVisibilityButton.Source = _isVisible ? "eye_open.svg" : "eye_closed.svg";
         }
 
-        /// <summary>
-        /// Обработчик события нажатия на кнопку "Войти".
-        /// </summary>
-        /// <param name="sender">Объект, вызвавший событие.</param>
-        /// <param name="e">Аргументы события.</param>
-        private void OnEnterClicked(object sender, EventArgs e)
+        private async void OnEnterClicked(object sender, EventArgs e)
         {
             string pattern = @"^(?=.*[a-zа-я])(?=.*[A-ZА-Я])(?=.*[!@#$%^=&*(),.?"":{}|<>]).{8,}$";
             string phonePattern = @"^(?:\+7|8)\d{10}$";
@@ -61,21 +55,17 @@ namespace MauiApp1
 
             }
             else
-            {
-                if (Regex.IsMatch(PswdEntry.Text, pattern) && Regex.IsMatch(EmailEntry.Text, phonePattern))
-                {
-                    ValidationLabel.IsVisible = true;
-                    ValidationLabel.Text = "Всё ништяк!";
-                    ValidationLabel.TextColor = Colors.Green;
-                }
-                else
-                {
-                    ValidationLabel.IsVisible = true;
-                    ValidationLabel.Text = "It's over";
-                    ValidationLabel.TextColor = Colors.Red;
-                }
-
+            { 
+                ValidationLabel.IsVisible = true;
+                ValidationLabel.TextColor = Colors.Green;
+                await _viewModel.LoginAsync();
             }
+
+        }
+
+        protected override bool OnBackButtonPressed()
+        {
+            return true; // Предотвращает навигацию назад
         }
     }
 

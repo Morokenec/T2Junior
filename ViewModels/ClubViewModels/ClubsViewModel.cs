@@ -5,6 +5,7 @@ using System.Windows.Input;
 using MauiApp1.Services.AppHelper;
 using MauiApp1.Services.UseCase;
 using MauiApp1.Models.ClubModels.Club;
+using CommunityToolkit.Maui.Core.Extensions;
 
 namespace MauiApp1.ViewModels.ClubViewModel
 {
@@ -22,6 +23,10 @@ namespace MauiApp1.ViewModels.ClubViewModel
         private bool _isRefreshing;
 
         private string _searchText;
+        private string _pathClubAvatar;
+        private bool _isVisibleUserSubscribedClubList;
+        private ObservableCollection<Club> _isUserSubscribedClubList;
+
         public string SearchText
         {
             get => _searchText;
@@ -32,6 +37,21 @@ namespace MauiApp1.ViewModels.ClubViewModel
                     _searchText = value;
                     OnPropertyChanged();
                     FilterClubs();
+                }
+            }
+        }
+        public string PathClubAvatar
+        {
+            get => _pathClubAvatar;
+            set
+            {
+                if (_pathClubAvatar != value)
+                {
+                    value = value.Replace("wwwroot/", "");
+                    value = $"https://t2.hahatun.fun/{value}";
+                    _pathClubAvatar = value;
+                    Debug.WriteLine($"[SOURCE]{value}");
+                    OnPropertyChanged();
                 }
             }
         }
@@ -101,9 +121,20 @@ namespace MauiApp1.ViewModels.ClubViewModel
             }
         }
 
-        /// <summary>
-        /// Флаг, указывающий, на статус выполнения обновления списка клубов.
-        /// </summary>
+        public bool IsVisibleUserSubscribedClubList
+        {
+            get => _isVisibleUserSubscribedClubList;
+            set
+            {
+                if (_isVisibleUserSubscribedClubList != value)
+                {
+                    _isVisibleUserSubscribedClubList = !value;
+                    OnPropertyChanged();
+                    OnPropertyChanged(nameof(SubImageSource));
+                }
+            }
+        }
+
         public bool IsRefreshing
         {
             get => _isRefreshing;
@@ -117,7 +148,6 @@ namespace MauiApp1.ViewModels.ClubViewModel
             }
         }
 
-        // Отображение изображения зависит от статуса подписки
         public string SubImageSource => IsSubscribed ? "already_subbed.svg" : "add_a_new.svg";
 
         /// <summary>
@@ -133,19 +163,29 @@ namespace MauiApp1.ViewModels.ClubViewModel
             FilteredClubs = new ObservableCollection<Club>();
 
             SubscriptionCheckCommand = new Command(ToggleSubscription);
+        }
 
-            LoadClubsAsync();
+        public ClubsViewModel(bool isVisibleUserSubscribedClubList)
+        {
+            _isVisibleUserSubscribedClubList = isVisibleUserSubscribedClubList;
+            _httpClient = new HttpClient();
+            _jsonDeserializerService = new JsonDeserializerService();
+            _clubService = new ClubService(_httpClient, _jsonDeserializerService);
+
+            Clubs = new ObservableCollection<Club>();
+            FilteredClubs = new ObservableCollection<Club>();
+
+            SubscriptionCheckCommand = new Command(ToggleSubscription);
         }
 
         /// <summary>
         /// Асинхронная загрузка данных о клубах и обновление коллекции.
         /// </summary>
-        public async void LoadClubsAsync()
+        public async Task LoadClubsAsync()
         {
             var clubLists = await _clubService.GetClubsAsync();
             if (clubLists != null)
             {
-                // Обновление коллекций на главном потоке
                 MainThread.BeginInvokeOnMainThread(() =>
                 {
                     Clubs.Clear();
@@ -153,24 +193,39 @@ namespace MauiApp1.ViewModels.ClubViewModel
                     {
                         var club = new Club
                         {
-                            id = clubItem.Id,
-                            name = clubItem.Name,
-                            IsSubscribed = clubItem.IsSubscribe,
+                            Id = clubItem.Id,
+                            Name = clubItem.Name,
+                            IsUserSubscribed = clubItem.IsSubscribe,
+                            AvatarPath = clubItem.AvatarPath,
+                            Target = "Спортивный"
                         };
-                        Debug.WriteLine($"[DATA]{club.id} - {club.name} - {club.IsSubscribed} ");
+                        Debug.WriteLine($"[DATA]{club.Id} - {club.Name} - {club.IsUserSubscribed} ");
                         Clubs.Add(club);
                     }
 
-                    // Изначально фильтр совпадает с полным списком
-                    FilteredClubs.Clear();
-                    foreach (var club in Clubs)
+                    if (_isVisibleUserSubscribedClubList)
                     {
-                        FilteredClubs.Add(club);
+                        _isUserSubscribedClubList = Clubs.Where(c => c.IsUserSubscribed == true).ToObservableCollection();
+                        FilteredClubs.Clear();
+                        foreach (var club in _isUserSubscribedClubList)
+                        {
+                            FilteredClubs.Add(club);
+                        }
                     }
+                    else
+                    {
+                        FilteredClubs.Clear();
+                        Clubs = new ObservableCollection<Club>(Clubs.OrderBy(c => c.IsVisibileSubscribeButton));
+                        foreach (var club in Clubs)
+                        {
+                            FilteredClubs.Add(club);
+                        }
+                    }
+
                 });
             }
             else
-            {
+             {
                 Debug.WriteLine("[ERROR] Не удалось загрузить данные с сервера.");
             }
         }
@@ -193,7 +248,7 @@ namespace MauiApp1.ViewModels.ClubViewModel
                 }
                 else
                 {
-                    var filtered = Clubs.Where(c => c.name.Contains(SearchText, StringComparison.OrdinalIgnoreCase)).ToList();
+                    var filtered = Clubs.Where(c => c.Name.Contains(SearchText, StringComparison.OrdinalIgnoreCase)).ToList();
                     FilteredClubs.Clear();
                     foreach (var club in filtered)
                     {
@@ -211,10 +266,10 @@ namespace MauiApp1.ViewModels.ClubViewModel
             IsSubscribed = !IsSubscribed;
         }
 
-        public void RefreshDataAsync()
+        public async Task RefreshDataAsync()
         {
             IsRefreshing = true;
-            LoadClubsAsync();
+            await LoadClubsAsync();
             IsRefreshing = false;
         }
 
@@ -225,7 +280,7 @@ namespace MauiApp1.ViewModels.ClubViewModel
         /// <returns>Клуб с заданным идентификатором или null, если не найден.</returns>
         public Club GetClubById(Guid idClub)
         {
-            return Clubs.FirstOrDefault(c => c.id == idClub);
+            return Clubs.FirstOrDefault(c => c.Id == idClub);
         }
     }
 }

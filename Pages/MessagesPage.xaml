@@ -3,7 +3,8 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="MauiApp1.MessagesPage"
              x:Name="Messages"
-             Title="Сообщения">
+             Title="Сообщения"
+             Background="White">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />

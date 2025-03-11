@@ -3,6 +3,8 @@ using MauiApp1.Models.ClubModels.ClubList;
 using MauiApp1.Services.AppHelper;
 using MauiApp1.Services.UseCase.Interface;
 using System.Diagnostics;
+using System.Text.Json;
+using System.Text;
 
 namespace MauiApp1.Services.UseCase
 {
@@ -17,11 +19,7 @@ namespace MauiApp1.Services.UseCase
         private readonly HttpClient _httpClient;
         private readonly IJsonDeserializerService _jsonDeserializerService;
 
-        /// <summary>
-        /// Конструктор сервиса ClubService.
-        /// </summary>
-        /// <param name="httpClient">HTTP-клиент для выполнения запросов.</param>
-        /// <param name="jsonDeserializerService">Сервис для десериализации JSON.</param>
+
         public ClubService(HttpClient httpClient, IJsonDeserializerService jsonDeserializerService)
         {
             _httpClient = httpClient;
@@ -36,7 +34,7 @@ namespace MauiApp1.Services.UseCase
         {
             try
             {
-                string url = $"{AppSetings.base_url}/api/Clubs/by-user/{AppSetings.test_user_guid}";
+                string url = $"{AppSettings.base_url}/api/Clubs/by-user/{AppSettings.test_user_guid}";
 
                 HttpResponseMessage response = await _httpClient.GetAsync(url);
                 string responseContent = await response.Content.ReadAsStringAsync();
@@ -58,16 +56,11 @@ namespace MauiApp1.Services.UseCase
             }
         }
 
-        /// <summary>
-        /// Получает информацию о клубе по его идентификатору.
-        /// </summary>
-        /// <param name="clubId">Идентификатор клуба.</param>
-        /// <returns>Информация о клубе или null в случае ошибки.</returns>
-        public async Task<Club> GetClubById(string clubId)
+        public async Task<Club> GetClubById(Guid clubId)
         {
             try
             {
-                string url = $"{AppSetings.base_url}/api/Clubs/{clubId}/profile";
+                string url = $"{AppSettings.base_url}/api/Clubs/{clubId.ToString()}/profile?userId={AppSettings.test_user_guid}";
                 HttpResponseMessage response = await _httpClient.GetAsync(url);
                 string responseContent = await response.Content.ReadAsStringAsync();
                 Debug.WriteLine($"[DEBUG] Response: {responseContent}");
@@ -85,6 +78,51 @@ namespace MauiApp1.Services.UseCase
             {
                 Debug.WriteLine($"[ERROR] Exception: {ex.Message}");
                 return null;
+            }
+        }
+
+        public async Task SubscribeClub(Guid clubId, Guid userId, Guid roleId)
+        {
+            string url = $"{AppSettings.base_url}/api/Clubs/{clubId}/add-user";
+
+            var requestBody = new
+            {
+                userId = userId.ToString(),
+                roleId = roleId.ToString()
+            };
+
+            using var content = new StringContent(
+                JsonSerializer.Serialize(requestBody),
+                Encoding.UTF8,
+                "application/json");
+
+            using var response = await _httpClient.PostAsync(url, content);
+            response.EnsureSuccessStatusCode();
+        }
+
+        public async Task SetAvatarClubUploadServer(Guid clubId, Guid userId, Stream chosenImage)
+        {
+            try
+            {
+                string url = $"{AppSettings.base_url}/api/MediaClubs/set-avatar/{clubId.ToString()}";
+
+                using var content = new MultipartFormDataContent();
+
+                content.Add(
+                    new StreamContent(chosenImage),
+                    fileName: "1.png",
+                    name: "File");
+
+                content.Add(
+                    new StringContent(userId.ToString()),
+                    name: "IdUser");
+
+                using var response = await _httpClient.PostAsync(url, content);
+                response.EnsureSuccessStatusCode();
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine($"[ERROR] Exception: {ex.Message}");
             }
         }
     }

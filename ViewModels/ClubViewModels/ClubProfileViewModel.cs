@@ -1,9 +1,12 @@
-﻿using MauiApp1.Models.ClubModels.Club;
+﻿using MauiApp1.DataModel;
+using MauiApp1.Models.ClubModels.Club;
 using MauiApp1.Models.ClubModels.ClubList;
+using MauiApp1.Models.Profile;
 using MauiApp1.Services.UseCase.Interface;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.Threading.Tasks;
+using System.Windows.Input;
 
 namespace MauiApp1.ViewModels.ClubProfileViewModel
 {
@@ -16,7 +19,10 @@ namespace MauiApp1.ViewModels.ClubProfileViewModel
     public class ClubProfileViewModel : BindableObject
     {
         private readonly IClubService _clubService;
-        private Club _selectedClubI;
+        private readonly INoteService _noteService;
+
+        private string _pathClubAvatar;
+        private Club _selectedClub;
         private Guid _selectedClubId;
 
         /// <summary>
@@ -28,17 +34,34 @@ namespace MauiApp1.ViewModels.ClubProfileViewModel
         /// Профили клубов.
         /// </summary>
         public ObservableCollection<Club> ClubProfiles { get; set; }
+        public ObservableCollection<Note> Notes { get; set; } = new ObservableCollection<Note>();
 
         /// <summary>
         /// Выбранный клуб.
         /// </summary>
         public Club SelectedClub
         {
-            get => _selectedClubI;
+            get => _selectedClub;
             set
             {
-                _selectedClubI = value;
+                _selectedClub = value;
                 OnPropertyChanged();
+            }
+        }
+
+        public string PathClubAvatar
+        {
+            get => _pathClubAvatar;
+            set
+            {
+                if (_pathClubAvatar != value)
+                {
+                    value = value.Replace("wwwroot/", "");
+                    value = $"https://t2.hahatun.fun/{value}";
+                    _pathClubAvatar = value;
+                    Debug.WriteLine($"[SOURCE]{value}");
+                    OnPropertyChanged();
+                }
             }
         }
 
@@ -55,43 +78,70 @@ namespace MauiApp1.ViewModels.ClubProfileViewModel
             }
         }
 
-        /// <summary>
-        /// Конструктор класса ClubProfileViewModel.
-        /// </summary>
-        /// <param name="clubService">Сервис для работы с клубами.</param>
-        public ClubProfileViewModel(IClubService clubService)
+        public ClubProfileViewModel(IClubService clubService, INoteService noteService)
         {
             _clubService = clubService;
+            _noteService = noteService;
             Clubs = new ObservableCollection<ClubList>();
             ClubProfiles = new ObservableCollection<Club>();
         }
 
-        /// <summary>
-        /// Загрузка списка клубов.
-        /// </summary>
-        public async Task LoadClubsAsync()
+        public ClubProfileViewModel(IClubService clubService, INoteService noteService, Guid id) : this(clubService, noteService)
         {
-            var clubs = await _clubService.GetClubsAsync();
-            if (clubs != null)
+            SelectedClubId = id;
+        }
+
+        public async Task LoadClubProfileAsync()
+        {
+            SelectedClub = null;
+            var clubProfile = await _clubService.GetClubById(SelectedClubId);
+            if (clubProfile != null)
             {
-                Clubs.Clear();
-                foreach (var club in clubs)
+                SelectedClub = clubProfile;
+                PathClubAvatar = clubProfile.AvatarPath;
+            }
+           await LoadNotes();
+        }
+
+        private async Task LoadNotes()
+        {
+            Notes.Clear();
+            var notes = await _noteService.GetNotesAsync(SelectedClub.Id);
+            if (notes != null)
+            {
+                foreach (var note in notes)
                 {
-                    Clubs.Add(club);
+                    Notes.Add(note);
                 }
             }
         }
 
-        /// <summary>
-        /// Загрузка профиля клуба по его идентификатору.
-        /// </summary>
-        /// <param name="clubId">Идентификатор клуба.</param>
-        public async Task LoadClubProfileAsync(string clubId)
+        public async Task SubscribeClub()
         {
-            var clubProfile = await _clubService.GetClubById(clubId);
-            if (clubProfile != null)
+            if(SelectedClub.IsUserSubscribed == false)
             {
-                SelectedClub = clubProfile;
+                await _clubService.SubscribeClub(SelectedClubId, Guid.Parse(AppSettings.test_user_guid), Guid.Parse(AppSettings.role_id_user_guid));
+            }
+        }
+
+        public async Task SetAvatarClub()
+        {
+            try
+            {
+
+                var chosenImage = await MediaPicker.PickPhotoAsync();
+
+                if (chosenImage != null)
+
+                {
+                    using var stream = await chosenImage.OpenReadAsync();
+                    await _clubService.SetAvatarClubUploadServer(SelectedClub.Id, Guid.Parse(AppSettings.test_user_guid), stream);
+                    await LoadClubProfileAsync();
+                }
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine($"[ERROR] {ex.Message}");
             }
         }
     }

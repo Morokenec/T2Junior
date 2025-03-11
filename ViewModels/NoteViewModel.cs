@@ -1,20 +1,19 @@
 ﻿using MauiApp1.DataModel;
+using MauiApp1.Services.UseCase.Interface;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.ComponentModel;
+using System.Diagnostics;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Input;
 
 namespace MauiApp1.ViewModels
 {
-    /// <summary>
-    /// ViewModel для управления заметками.
-    /// </summary>
-    /// <remarks>
-    /// Предоставление методов для фильтрации и отображения заметок.
-    /// </remarks>
-    public class NoteViewModel : BindableObject
+    public class NoteViewModel : BindableObject, INotifyPropertyChanged
     {
 
         private string _searchText;
@@ -36,17 +35,15 @@ namespace MauiApp1.ViewModels
             }
         }
 
-        /// <summary>
-        /// Полный список заметок.
-        /// </summary>
-        public ObservableCollection<Note> Notes { get; set; }
+        private readonly INoteService _noteService;
+        public ICommand LoadDataCommand { get; }
+        public ICommand RefreshCommand { get; }
 
-        /// <summary>
-        /// Отфильтрованный список заметок.
-        /// </summary>
+        public ObservableCollection<Note> Notes { get; } = new ObservableCollection<Note>();
         public ObservableCollection<Note> FilteredNotes { get; set; }
 
         private Note _selectedNote;
+        private bool _isRefreshing;
 
         /// <summary>
         /// Выбранная заметка.
@@ -61,23 +58,30 @@ namespace MauiApp1.ViewModels
             }
         }
 
-        /// <summary>
-        /// Конструктор класса NoteViewModel.
-        /// </summary>
-        public NoteViewModel()
+        public bool IsRefreshing
         {
-            //LoadDetailedNote();
-            Notes = new ObservableCollection<Note>
-        {
-            new Note { Id = new Guid().ToString(),
-                Name = "День защитника Отечества",
-                Description = "«День защитника Отечества» — праздник, отмечаемый ежегодно 23 февраля в Белоруссии, Кыргызстане, России, Таджикистане и непризнанной ПМР.ие проекта",
-                 },
-            new Note { Id = new Guid().ToString(), Name = "НазваниеНовости", Description = "ТекстНовости"},
-            new Note { Id = new Guid().ToString() }
-        };
+            get => _isRefreshing;
+            set
+            {
+                if (_isRefreshing != value)
+                {
+                    _isRefreshing = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
 
-            FilteredNotes = new ObservableCollection<Note>(Notes);
+        public NoteViewModel(INoteService noteService)
+        {
+            _noteService = noteService;
+        }
+
+        public async Task RefreshDataAsync()
+        {
+            IsRefreshing = true;
+            Notes.Clear();
+            await LoadNotes();
+            IsRefreshing = false;
         }
 
         //private void LoadDetailedNote()
@@ -110,14 +114,31 @@ namespace MauiApp1.ViewModels
             }
         }
 
-        /// <summary>
-        /// Получение заметки по идентификатору.
-        /// </summary>
-        /// <param name="idNote">Идентификатор заметки.</param>
-        /// <returns>Заметка с заданным идентификатором или null, если не найдена.</returns>
-        public Note GetNoteById(string idNote)
+        public async Task LoadNotes()
         {
-            return Notes.FirstOrDefault(c => c.Id == idNote);
+            try
+            {
+                Notes.Clear();
+                var notes = await _noteService.GetNewsAsync();
+                if (notes != null)
+                {
+                    foreach (var note in notes)
+                    {
+                        Debug.WriteLine($"[DATA] {note.Name}");
+                        Notes.Add(note);
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine($"[ERROR]{ex.Message}");
+            }
+        }
+
+        public event PropertyChangedEventHandler PropertyChanged;
+        protected void OnPropertyChanged([CallerMemberName] string propertyName = null)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
     }
 }

@@ -1,9 +1,14 @@
 using MauiApp1.DataModel;
+using MauiApp1.Pages;
 using MauiApp1.Services.AppHelper;
 using MauiApp1.Services.UseCase;
 using MauiApp1.Services.UseCase.Interface;
+using MauiApp1.ViewModels;
+using MauiApp1.ViewModels.ClubViewModel;
 using MauiApp1.ViewModels.Profile;
+using MauiApp1.ViewModels.ProfileModels;
 using System.Collections.ObjectModel;
+using System.Windows.Input;
 
 namespace MauiApp1;
 
@@ -16,9 +21,8 @@ public partial class ProfilePage : ContentPage
 
     private readonly UserProfileViewModel _viewModel;
 
-    /// <summary>
-    /// Флаг, указывающий, был ли доступ к странице напрямую.
-    /// </summary>
+    private Guid _userId;
+
     public bool DirectAccessed { get; set; } = BackNavigationState.IsDirectAccess;
 
     /// <summary>
@@ -28,22 +32,29 @@ public partial class ProfilePage : ContentPage
     public ProfilePage(UserProfileViewModel userProfileViewModel)
     {
         InitializeComponent();
+        _userId = Guid.Parse(AppSettings.test_user_guid);
         _viewModel = userProfileViewModel;
         BindingContext = _viewModel;
         NetStatus();
     }
 
-    /// <summary>
-    /// Метод, вызываемый при отображении страницы.
-    /// </summary>
+    public ProfilePage(UserProfileViewModel userProfileViewModel, Guid userId)
+    {
+        InitializeComponent();
+        _userId = userId;
+        _viewModel = userProfileViewModel;
+        BindingContext = _viewModel;
+        NetStatus();
+    }
+
     protected override async void OnAppearing()
     {
         base.OnAppearing();
-
+        
         if (BindingContext is UserProfileViewModel viewModel)
         {
-            await viewModel.LoadDataAsync();
-
+            await viewModel.LoadDataAsync(_userId);
+         
         }
     }
 
@@ -69,22 +80,9 @@ public partial class ProfilePage : ContentPage
     /// <param name="e">Аргументы события.</param>
     private async void OnProfilePhotoTapped(object sender, EventArgs e)
     {
-        try
+        if (BindingContext is UserProfileViewModel viewModel)
         {
-            var chosenImage = await FilePicker.PickAsync(new PickOptions
-            {
-                PickerTitle = "Выберите изображение"
-            });
-
-            if (chosenImage != null)
-            {
-                var stream = await chosenImage.OpenReadAsync();
-                //AvatarImage.Source = ImageSource.FromStream(() => stream);
-            }
-        }
-        catch (Exception ex)
-        {
-            await DisplayAlert("Фото не было выбрано.", ex.Message, "OK");
+            await viewModel.SetAvatarProfile();
         }
     }
 
@@ -95,7 +93,11 @@ public partial class ProfilePage : ContentPage
     /// <param name="e">Аргументы события.</param>
     private async void OnCoinButtonTapped(object sender, EventArgs e)
     {
-        await Navigation.PushAsync(new NotesPage());
+        var currentPage = Navigation.NavigationStack.LastOrDefault();
+        if (currentPage?.GetType() == typeof(NotesPage))
+            return;
+
+        await Navigation.PushAsync(new NotesPage(new NoteViewModel(new NoteService(new HttpClient(), new JsonDeserializerService()))), true);
     }
 
     /// <summary>
@@ -105,7 +107,11 @@ public partial class ProfilePage : ContentPage
     /// <param name="e">Аргументы события.</param>
     private async void OnRatingButtonTapped(object sender, EventArgs e)
     {
-        await Navigation.PushAsync(new RatingPage());
+        var currentPage = Navigation.NavigationStack.LastOrDefault();
+        if (currentPage?.GetType() == typeof(RatingPage))
+            return;
+
+         await Navigation.PushAsync(new RatingPage());
     }
 
     /// <summary>
@@ -115,7 +121,11 @@ public partial class ProfilePage : ContentPage
     /// <param name="e">Аргументы события.</param>
     private async void OnSubscribersButtonTapped(object sender, EventArgs e)
     {
-        await Navigation.PushAsync(new SubscribersPage());
+        var currentPage = Navigation.NavigationStack.LastOrDefault();
+        if (currentPage?.GetType() == typeof(SubscribersPage))
+            return;
+
+        await Navigation.PushAsync(new SubscribersPage(new SubscribersViewModel(new ProfileService(new HttpClient(), new JsonDeserializerService())), Guid.Parse(_viewModel.UserInfo.Id)));
     }
 
     /// <summary>
@@ -125,7 +135,11 @@ public partial class ProfilePage : ContentPage
     /// <param name="e">Аргументы события.</param>
     private async void OnFollowingButtonTapped(object sender, EventArgs e)
     {
-        await Navigation.PushAsync(new FollowingPage());
+        var currentPage = Navigation.NavigationStack.LastOrDefault();
+        if (currentPage?.GetType() == typeof(FollowingPage))
+            return;
+
+        await Navigation.PushAsync(new FollowingPage(new FollowingViewModel(new ProfileService(new HttpClient(), new JsonDeserializerService()))));
     }
 
     /// <summary>
@@ -135,15 +149,19 @@ public partial class ProfilePage : ContentPage
     /// <param name="e">Аргументы события.</param>
     private async void OnClubsButtonTapped(object sender, EventArgs e)
     {
+        var currentPage = Navigation.NavigationStack.LastOrDefault();
+        if (currentPage?.GetType() == typeof(ClubsPage))
+            return;
+
+        await Navigation.PushAsync(new ClubsPage(new ClubsViewModel(true)));
     }
 
-    /// <summary>
-    /// Обработчик события нажатия на фрейм проектов.
-    /// </summary>
-    /// <param name="sender">Объект, вызвавший событие.</param>
-    /// <param name="e">Аргументы события.</param>
-    private async void OnProjectsFrameTapped(object sender, EventArgs e)
+    private  async void OnProjectsFrameTapped(object sender, EventArgs e)
     {
+        var currentPage = Navigation.NavigationStack.LastOrDefault();
+        if (currentPage?.GetType() == typeof(ProjectsPage))
+            return;
+
         await Navigation.PushAsync(new ProjectsPage());
     }
 
@@ -154,6 +172,10 @@ public partial class ProfilePage : ContentPage
     /// <param name="e">Аргументы события.</param>
     private async void OnActivitiesFrameTapped(object sender, EventArgs e)
     {
+        var currentPage = Navigation.NavigationStack.LastOrDefault();
+        if (currentPage?.GetType() == typeof(ActivitiesPage))
+            return;
+
         await Navigation.PushAsync(new ActivitiesPage());
     }
 
@@ -164,6 +186,10 @@ public partial class ProfilePage : ContentPage
     /// <param name="e">Аргументы события.</param>
     private async void OnCalendarFrameTapped(object sender, EventArgs e)
     {
+        var currentPage = Navigation.NavigationStack.LastOrDefault();
+        if (currentPage?.GetType() == typeof(CalendarPage))
+            return;
+
         await Navigation.PushAsync(new CalendarPage());
     }
 
@@ -174,7 +200,20 @@ public partial class ProfilePage : ContentPage
     /// <param name="e">Аргументы события.</param>
     private async void OnNewsFrameTapped(object sender, EventArgs e)
     {
-        await Navigation.PushAsync(new NotesPage());
+        var currentPage = Navigation.NavigationStack.LastOrDefault();
+        if (currentPage?.GetType() == typeof(NotesPage))
+            return;
+
+        await Navigation.PushAsync(new NotesPage(new NoteViewModel(new NoteService(new HttpClient(), new JsonDeserializerService()))), true);
+    }
+
+    private async void NoteCreateButton_Clicked(object sender, EventArgs e)
+    {
+        var currentPage = Navigation.NavigationStack.LastOrDefault();
+        if (currentPage?.GetType() == typeof(NoteEditorPage))
+            return;
+
+        await Navigation.PushAsync(new NoteEditorPage(new NoteEditorViewModel(new NoteService(new HttpClient(), new JsonDeserializerService()), Guid.Parse(AppSettings.test_user_guid))));
     }
 
     //private void OnSubUnsubButtonTapped(object sender, EventArgs e)
@@ -198,5 +237,5 @@ public partial class ProfilePage : ContentPage
     //            clickCount = 0;
     //        }
     //    }
-    //}
+    //}   
 }

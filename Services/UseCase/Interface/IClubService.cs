@@ -11,7 +11,9 @@ namespace MauiApp1.Services.UseCase.Interface
 {
     public interface IClubService
     {
-        Task<Club> GetClubById(string idClub);
+        Task<Club> GetClubById(Guid idClub);
         Task<List<ClubList>> GetClubsAsync();
+        Task SubscribeClub(Guid clubId, Guid userId, Guid roleId);
+        Task SetAvatarClubUploadServer(Guid clubId, Guid userId, Stream chosenImage);
     }
 }

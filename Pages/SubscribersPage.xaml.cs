@@ -1,5 +1,12 @@
+using MauiApp1.Models;
+using MauiApp1.Models.ProfileModels;
+using MauiApp1.Services;
 using MauiApp1.Services.AppHelper;
+using MauiApp1.Services.UseCase;
+using MauiApp1.ViewModels;
 using MauiApp1.ViewModels.Profile;
+using MauiApp1.ViewModels.ProfileModels;
+using Microsoft.Maui.Controls;
 
 namespace MauiApp1;
 
@@ -8,179 +15,44 @@ namespace MauiApp1;
 /// </summary>
 public partial class SubscribersPage : ContentPage
 {
-    string portProfileName;
-    private UserProfileViewModel _userViewModel;
+    private readonly SubscribersViewModel _viewModel;
 
-    /// <summary>
-    /// Конструктор класса SubscribersPage.
-    /// </summary>
-    public SubscribersPage()
+    HttpClient _httpClient = new HttpClient();
+    JsonDeserializerService _jsonDeserializerService = new JsonDeserializerService();
+    private Guid _userId;
+
+
+    public SubscribersPage(SubscribersViewModel subscribersViewModel, Guid userId)
     {
+        _viewModel = subscribersViewModel;
+        _userId = userId;
+        BindingContext = _viewModel;
         InitializeComponent();
-        ElementsProperties();
-        ResizeFunction();
-        GetLabelTextFromFrame();
     }
 
-    /// <summary>
-    /// Обработчик события нажатия на кнопку "Назад".
-    /// </summary>
-    /// <param name="sender">Объект, вызвавший событие.</param>
-    /// <param name="e">Аргументы события.</param>
-    private void OnBackButtonTapped(object sender, EventArgs e)
+    private void OnBackButtonTapped(object sender, EventArgs e) 
     {
         BackClick.OnPageClicked();
     }
 
-    /// <summary>
-    /// Метод для получения текста метки из фрейма.
-    /// </summary>
-    private void GetLabelTextFromFrame()
+    protected async override void OnAppearing()
     {
-        foreach (var childOfLayout in ProfilesLayout.Children)
+        base.OnAppearing();
+        await _viewModel.LoadUsers(_userId);
+    }
+
+    private async void OnProfileFrameTapped(object sender, EventArgs e)
+    {
+        var currentPage = Navigation.NavigationStack.LastOrDefault();
+        if (currentPage?.GetType() == typeof(ProfilePage))
+            return;
+
+        var tappedItem = (sender as Frame)?.BindingContext as UserSocial;
+        if (tappedItem != null)
         {
-            if (childOfLayout is StackLayout stackLayout)
-            {
-                foreach (var clickedFrame in stackLayout.Children)
-                {
-                    if (clickedFrame is Frame frame)
-                    {
-                        var tapGestureRecognizer = new TapGestureRecognizer();
-                        tapGestureRecognizer.Tapped += async (s, e) => await OnProfileFrameTapped(frame);
-                        frame.GestureRecognizers.Add(tapGestureRecognizer);
-                    }
-                }
-            }
-        }
-    }
-
-    /// <summary>
-    /// Обработчик события нажатия на фрейм профиля.
-    /// </summary>
-    /// <param name="choosedFrame">Выбранный фрейм.</param>
-    private async Task OnProfileFrameTapped(Frame choosedFrame)
-    {
-        var hsl = (HorizontalStackLayout)choosedFrame.Content;
-
-        var fullNameLabel = (Label)hsl.Children[1];
-
-        var profilePage = new ProfilePage(_userViewModel);
-
-        await Navigation.PushAsync(profilePage);
-    }
-
-    /// <summary>
-    /// Установка свойств элементов интерфейса.
-    /// </summary>
-    private void ElementsProperties()
-    {
-        SubFrame.WidthRequest = 343;
-        SubFrame.HeightRequest = 40;
-        SubFrame.Margin = new Thickness(20, 16);
-        SubFrame.Padding = new Thickness(0, 8);
-
-        BackFrame.WidthRequest = 24;
-        BackFrame.HeightRequest = 24;
-        BackFrame.Padding = new Thickness(0);
-
-        SubTextFrame.WidthRequest = 319;
-        SubTextFrame.HeightRequest = 24;
-        SubTextFrame.Padding = new Thickness(0, 0, 24, 0);
-
-        ProfilesLayout.Spacing = 4;
-
-        ProfContainerFrame.WidthRequest = 343;
-        ProfContainerFrame.HeightRequest = 312;
-        ProfContainerFrame.Padding = new Thickness(8, 10);
-    }
-
-    /// <summary>
-    /// Метод для выбора профиля.
-    /// </summary>
-    /// <param name="sender">Объект, вызвавший событие.</param>
-    /// <param name="e">Аргументы события.</param>
-    private void ProfileChoosingFactor(object sender, EventArgs e)
-    {
-        if (sender is Frame clickedFrame)
-        {
-            foreach (var childOfFrame in clickedFrame.Children)
-            {
-                if (childOfFrame is HorizontalStackLayout hsl)
-                {
-                    hsl.Spacing = 10;
-
-                    foreach (var child in hsl.Children)
-                    {
-                        if (child is Label label)
-                        {
-                            portProfileName = label.Text;
-                        }
-                    }
-                }
-            }
-        }
-    }
-
-    /// <summary>
-    /// Метод для изменения размеров элементов интерфейса.
-    /// </summary>
-    private void ResizeFunction()
-    {
-        foreach (var childOfLayout in ProfilesLayout.Children)
-        {
-            if (childOfLayout is StackLayout stackLayout)
-            {
-                foreach (var childFrame in stackLayout.Children)
-                {
-                    if (childFrame is Frame frame)
-                    {
-                        frame.WidthRequest = 327;
-                        frame.HeightRequest = 56;
-                        frame.Padding = new Thickness(8);
-
-                        foreach (var childOfFrame in frame.Children)
-                        {
-                            if (childOfFrame is HorizontalStackLayout hsl)
-                            {
-                                hsl.Spacing = 10;
-
-                                foreach (var child in hsl.Children)
-                                {
-
-                                    if (child is Label label)
-                                    {
-                                        label.WidthRequest = 231;
-                                        label.HeightRequest = 24;
-                                        label.FontSize = 15;
-                                    }
-
-                                    if (child is Image image)
-                                    {
-                                        if (image.Source is FileImageSource fileImageSource)
-                                        {
-                                            if (fileImageSource.File == "redirect.svg")
-                                            {
-                                                image.WidthRequest = 24;
-                                                image.HeightRequest = 24;
-                                            }
-                                            else if (fileImageSource.File == "profile_placeholder.svg")
-                                            {
-                                                image.WidthRequest = 36;
-                                                image.HeightRequest = 36;
-                                            }
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                    }
-
-                    if (childFrame is BoxView boxView)
-                    {
-                        boxView.HeightRequest = 2;
-                    }
-                }
-            }
+            Guid userId = Guid.Parse(tappedItem.Id); // Получаем ID нажатого объекта
+            await Navigation.PushAsync(new ProfilePage(new UserProfileViewModel(new ProfileService(_httpClient, _jsonDeserializerService),
+                new NoteService(_httpClient, _jsonDeserializerService)), userId), true);
         }
     }
 }

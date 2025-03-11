@@ -4,6 +4,7 @@ using MauiApp1.Services.UseCase.Interface;
 using System;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
 using System.Windows.Input;
@@ -55,7 +56,7 @@ namespace MauiApp1.ViewModels.Profile
         {
             _noteService = noteService;
             _profileService = profileService;
-            LoadDataCommand = new Command(async () => await LoadDataAsync());
+            LoadDataCommand = new Command(async () => await LoadDataAsync(Guid.Parse(UserInfo.Id)));
             RefreshCommand = new Command(async () => await RefreshDataAsync());
         }
 
@@ -71,6 +72,8 @@ namespace MauiApp1.ViewModels.Profile
                 {
                     _userInfo = value;
                     OnPropertyChanged();
+                    OnPropertyChanged(nameof(IsOutProfile));
+                    OnPropertyChanged(nameof(IsYourProfile));
                 }
             }
         }
@@ -86,7 +89,9 @@ namespace MauiApp1.ViewModels.Profile
                 if (_pathAvatarUser != value)
                 {
                     value = value.Replace("wwwroot/", "");
-                    _pathAvatarUser = $"t2.hahatun.fun/{value}";
+                    value = $"https://t2.hahatun.fun/{value}";
+                    _pathAvatarUser = value;
+                    Debug.WriteLine($"[SOURCE]{value}");
                     OnPropertyChanged();
                 }
             }
@@ -108,22 +113,20 @@ namespace MauiApp1.ViewModels.Profile
             }
         }
 
-        /// <summary>
-        /// Загрузка данных профиля и заметок пользователя.
-        /// </summary>
-        public async Task LoadDataAsync()
+        public bool IsOutProfile => UserInfo != null && UserInfo.Id != AppSettings.test_user_guid;
+        public bool IsYourProfile => !IsOutProfile;
+
+
+        public async Task LoadDataAsync(Guid userId)
         {
-            await LoadProfile();
+            await LoadProfile(userId);
             await LoadNotes();
 
         }
 
-        /// <summary>
-        /// Загрузка данных профиля пользователя.
-        /// </summary>
-        private async Task LoadProfile()
+        private async Task LoadProfile(Guid userId)
         {
-            var response = await _profileService.GetProfileDataAsync();
+            var response = await _profileService.GetProfileDataAsync(userId);
             if (response?.Result != null)
             {
                 UserInfo = response.Result;
@@ -131,29 +134,46 @@ namespace MauiApp1.ViewModels.Profile
             }
         }
 
-
-        /// <summary>
-        /// Обновление данных профиля и заметок пользователя.
-        /// </summary>
-        public async Task RefreshDataAsync()
-        {
-            IsRefreshing = true;
-            await LoadDataAsync();
-            IsRefreshing = false;
-        }
-
-        /// <summary>
-        /// Загрузка заметки пользователя.
-        /// </summary>
         private async Task LoadNotes()
         {
-            var notes = await _noteService.GetNotesAsync();
+            Notes.Clear();
+            var notes = await _noteService.GetNotesAsync(Guid.Parse(UserInfo.Id));
             if (notes != null)
             {
                 foreach (var note in notes)
                 {
                     Notes.Add(note);
                 }
+            }
+            Notes.OrderBy(n => n.CreationDate);
+        }
+
+        public async Task RefreshDataAsync()
+        {
+            IsRefreshing = true;
+            Notes.Clear();
+            await LoadDataAsync(Guid.Parse(UserInfo.Id));
+            IsRefreshing = false;
+        }
+
+        public async Task SetAvatarProfile()
+        {
+            try
+            {
+
+                var chosenImage = await MediaPicker.PickPhotoAsync();
+
+                if (chosenImage != null)
+
+                {
+                    using var stream = await chosenImage.OpenReadAsync();
+                    await _profileService.SetAvatarProfileUploadServer(Guid.Parse(AppSettings.test_user_guid), stream);
+                    await LoadDataAsync(Guid.Parse(UserInfo.Id));
+                }
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine($"[ERROR] {ex.Message}");
             }
         }
 
