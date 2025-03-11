@@ -188,12 +188,14 @@ namespace T2JuniorAPI.Services.Clubs
         /// Возвращает профиль клуба по уникальному идентификатору.
         /// </summary>
         /// <param name="clubId">Уникальный идентификатор клуба.</param>
+        /// <param name="userId">Уникальный идентификатор пользователя.</param>
         /// <returns>DTO-объект профиля клуба или `null`, если клуб не найден.</returns>
         public async Task<ClubProfileDTO> GetClubProfileById(Guid clubId, Guid userId)
         {
             var club = await _context.Clubs
                 .Include(c => c.MediaClubs)
                     .ThenInclude(mc => mc.MediaFilesNavigation)
+                .Include(c => c.ClubUsers)
                 .Where(c => c.Id == clubId && !c.IsDelete)
                 .ProjectTo<ClubProfileDTO>(_mapper.ConfigurationProvider)
                 .FirstOrDefaultAsync();
@@ -205,6 +207,15 @@ namespace T2JuniorAPI.Services.Clubs
 
             //Проверка подписки пользователя
             club.IsUserSubscribed = await _context.ClubUsers.AnyAsync(cu => cu.IdClub == clubId && cu.IdUser == userId && !cu.IsDelete);
+            var userClubRole = await _context.ClubUsers
+                .Where(cu => cu.IdClub == clubId && cu.IdUser == userId && !cu.IsDelete)
+                .Select(cu => cu.IdRole)
+                .FirstOrDefaultAsync();
+
+            if (userClubRole != Guid.Empty)
+            {
+                club.UserClubRole = userClubRole;
+            }
 
             return club;
         }

@@ -24,7 +24,8 @@ namespace T2JuniorAPI.MappingProfiles
                     .Where(mc => mc.IsAvatar && !mc.IsDelete)
                     .OrderByDescending(mc => mc.CreationDate)
                     .FirstOrDefault().MediaFilesNavigation.Path))
-                .ForMember(dest => dest.IsUserSubscribed, opt => opt.Ignore());
+                .ForMember(dest => dest.IsUserSubscribed, opt => opt.Ignore())
+                .ForMember(dest => dest.UserClubRole, opt => opt.Ignore());
 
             CreateMap<CreateClubDTO, Club>()
                 .ForMember(dest => dest.Id, opt => opt.Ignore()) // Ignore Id because auto increment
